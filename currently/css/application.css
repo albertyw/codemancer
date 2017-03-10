@@ -1,0 +1,360 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+@font-face {
+    font-family: "FontAwesome";
+    src: url('../font/fontawesome-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@media all and (max-width:750px) {
+    body #weather ul {
+    display: none;
+}
+body #weather {
+    position: static;
+    width: 100%;
+    padding: 0;
+}
+body #weather .now {
+    margin: 0 auto;
+    float: none;
+}
+body #content {
+    width: 90%;
+    height: 100%;
+    left: auto;
+    margin-left: 0;
+}
+body .second {
+    display: none!important;
+}
+body #time {
+    display: none;
+}
+body #clock {
+    margin: 0 auto;
+    display: block;
+    stroke-linecap: round;
+    fill: none!important;
+}
+body #face {
+    stroke-width: 5px;
+}
+body #ticks {
+    stroke-width: 1;
+}
+body #hourhand {
+    stroke-width: 4px;
+}
+body #minutehand {
+    stroke-width: 2px;
+}
+body #secondhand {
+    stroke-width: 1px;
+}
+body #numbers {
+    font-family: sans-serif;
+    font-size: 7pt;
+    text-anchor: middle;
+    stroke: none;
+}
+body .home, body .main-return, body .options {
+    font-size: 1.3em;
+    bottom: 5px;
+}
+body .wunder {
+    bottom: 5px;
+    right: 60px;
+}
+body .wunder svg {
+    height: 23px;
+}
+body .options {
+    right: 40px;
+}
+}@font-face {
+    font-family: 'Weather';
+    src: url('../font/weather.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Open-Light';
+    src: url('../font/OpenSans-Light.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Open-Reg';
+    src: url('../font/OpenSans-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Open-Bold';
+    src: url('../font/OpenSans-Bold.ttf') format('truetype');
+}
+html {
+    min-height: 100%;
+    height: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    background-color: #111;
+    background-repeat: repeat;
+}
+body {
+    font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', 'Open-Light', sans-serif;
+    background-color: #111;
+    margin: 0 auto;
+    height: 100%}
+#main {
+    -webkit-user-select: none;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+i {
+    font-style: none;
+}
+a {
+    text-decoration: none;
+}
+b {
+    font-weight: 600;
+    font: 'Helvetica Neue', 'Open-Bold', sans-serif;
+}
+.dark-text {
+    color: rgba(0, 0, 0, 0.5);
+}
+.dark-text .home, .dark-text .main-return, .dark-text .options, .dark-text .title {
+    color: rgba(0, 0, 0, 0.3);
+}
+.dark-text .wunder path {
+    fill: rgba(0, 0, 0, 0.3);
+}
+.dark-text .home:hover, .dark-text .main-return:hover, .dark-text .options:hover {
+    color: rgba(0, 0, 0, 0.7);
+}
+.dark-text .wunder:hover path {
+    fill: rgba(0, 0, 0, 0.7);
+}
+.dark-text #clock {
+    stroke: rgba(0, 0, 0, 0.5);
+    fill: rgba(0, 0, 0, 0.5);
+}
+.dark-text #weather .day, .dark-text #weather .now p {
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.5);
+}
+.light-text {
+    color: rgba(255, 255, 255, 0.8);
+}
+.light-text .home, .light-text .main-return, .light-text .options, .light-text .title {
+    color: rgba(0, 0, 0, 0.3);
+}
+.light-text .wunder path {
+    fill: rgba(0, 0, 0, 0.3);
+}
+.light-text .home:hover, .light-text .main-return:hover, .light-text .options:hover {
+    color: #fff;
+}
+.light-text .wunder:hover path {
+    fill: #fff;
+}
+.light-text #clock {
+    stroke: rgba(255, 255, 255, 0.8);
+    fill: rgba(255, 255, 255, 0.8);
+}
+.light-text #weather .day, .light-text #weather .now p {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+}
+.no-seconds .second {
+    display: none!important;
+}
+.no-seconds #time {
+    font-size: 17em;
+    line-height: .9;
+}
+.no-seconds .hour {
+    margin-right: 50px;
+    letter-spacing: 10px;
+}
+.no-seconds .minute {
+    margin-left: 50px;
+    letter-spacing: 10px;
+}
+.no-seconds .title {
+    margin: 20px auto;
+}
+#update {
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 9999999;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: .9em;
+    cursor: pointer;
+    color: inherit;
+    max-width: 300px;
+    line-height: 1.4;
+}
+#update li {
+    list-style-type: disc;
+    list-style-position: inside;
+}
+#update a {
+    text-decoration: underline;
+    color: inherit;
+}
+#update a:hover {
+    color: #1b94b7;
+}
+#update i {
+    top: 16px;
+    position: absolute;
+    right: -50px;
+    padding-top: 4px;
+    text-align: center;
+    width: 40px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    font-size: 1.6em;
+    color: #6fb269;
+}
+#update i:hover {
+    color: #286822;
+}
+.smooth-light {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.7);
+}
+.smooth-dark {
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.5);
+}
+.clearfix {
+    zoom: 1;
+}
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+.hidden {
+    display: none;
+}
+#content {
+    width: 840px;
+    height: 608px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -304px;
+    margin-left: -420px;
+}
+.weather-icon {
+    font-family: 'Weather'}
+#clock {
+    display: none;
+}
+#time {
+    font-size: 12em;
+    text-align: center;
+}
+#time span {
+    display: inline-block;
+    width: 280px;
+    text-align: center;
+    -webkit-transition: none;
+    -webkit-transform: rotate3d(0, 0, 0, 0);
+}
+.title {
+    font-size: 2em;
+    color: white;
+    text-align: center;
+    font-weight: normal;
+    margin: 30px 0;
+    font-family: 'Helvetica Neue', 'Open-Reg', sans-serif;
+}
+.icon-warning-sign {
+    color: #fff;
+}
+#set-location button {
+    background: #fff;
+    border: 0;
+    outline: 0;
+    color: #444;
+    font-weight: bold;
+    display: inline-block;
+    font-size: .8em;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+    cursor: pointer;
+    -webkit-transition: all 200ms ease-in-out;
+}
+@-webkit-keyframes spin {
+    from {
+    -webkit-transform: rotate(0deg);
+}
+to {
+    -webkit-transform: rotate(360deg);
+}
+}#loader {
+    font-family: 'Weather';
+    -webkit-animation: spin 900ms linear infinite;
+    -webkit-transform-origin: 50% 100%}
+#error {
+    font-size: 1.7em;
+    font-weight: bold;
+    padding-top: 20px;
+    text-align: center;
+    display: none;
+}
+#error input {
+    width: 70%;
+    margin: 15px auto;
+    border: 0;
+    outline: 0;
+    padding: 5px;
+    font-size: .7em;
+}
+#error button {
+    font-size: .5em;
+}
+.home, .main-return {
+    right: 10px;
+}
+.home:hover, .main-return:hover {
+    color: #fff;
+}
+.options {
+    right: 50px;
+}
+.options:hover {
+    color: #fff;
+}
