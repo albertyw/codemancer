@@ -1,17 +1,3 @@
-// Setup google analytics
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-33402958-1']);
-_gaq.push(['_trackPageview']);
-
-function OSType() {
-  var OSName="Unknown OS";
-  if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
-  if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
-  if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX";
-  if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux";
-  return OSName;
-}
-
 function inBeta() {
   if (chrome.runtime.getManifest().name.indexOf("Beta") !== -1) {
     return true;
@@ -56,7 +42,6 @@ var ErrorHandler = {
   },
 
   noLocation: function () {
-    _gaq.push(['_trackEvent', 'nolocation', "missing geolocation"]);
     ErrorHandler.show($("#locationError").html());
 
     $("#set-location").submit(function() {
@@ -420,7 +405,6 @@ var Storage = {
         }
         seen.push(id);
         data.seen = seen;
-        _gaq.push(['_trackEvent', 'notifications', "seen", id.toString(), 1]);
         return Storage.save("notifications", data);
       });
   },
@@ -672,7 +656,6 @@ var Weather = {
 
       default:
         console.log("MISSING", code);
-        _gaq.push(['_trackEvent', 'unknowweather', code]);
         return "T";
     }
   },
@@ -698,9 +681,7 @@ var Weather = {
     });
 
     // Change link to weather underground
-    $('a.wunder').attr('href', Weather.link(wd)).click(function() {
-      _gaq.push(['_trackEvent', 'button', 'click', 'weather-underground']);
-    });
+    $('a.wunder').attr('href', Weather.link(wd));
   },
 
   link: function(data) {
@@ -905,7 +886,6 @@ function main() {
     } else {
       // Unknown error
       console.error(reason);
-      _gaq.push(['_trackEvent', 'error', reason.message]);
     }
   });
 
@@ -918,7 +898,6 @@ function main() {
   // Notifications
   Location.current().then(Notifications.current).then(function(messages) {
     if (!_.isEmpty(messages)) {
-      _gaq.push(['_trackEvent', 'notifications', "show", messages[0].id.toString(), 1]);
       $("#update p").html(messages[0].html).parent().data('id', messages[0].id).show(0);
     }
   });
@@ -933,11 +912,7 @@ function main() {
 style();
 main();
 
-if (navigator.onLine) {
-  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-  ga.src = 'https://ssl.google-analytics.com/ga.js';
-  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-} else {
+if (!navigator.onLine) {
   $(window).bind('online', function() {
     setTimeout(function() {
       // wait one second before trying.
@@ -951,42 +926,17 @@ if (navigator.onLine) {
 ################################################*/
 
 $(".home").click(function() {
-  _gaq.push(['_trackEvent', 'button', 'click', 'default-home']);
   chrome.tabs.update({url:"chrome-internal://newtab/"});
   return false;
 });
 
 var settings = $('.settings');
 
-// Analytics
-_gaq.push(['_trackEvent', 'currently', 'version', chrome.runtime.getManifest().version]);
-
-$('#gift').click(function() {
-  _gaq.push(['_trackEvent', 'button', 'click', 'donation']);
-});
-
-$('#share').click(function() {
-  _gaq.push(['_trackEvent', 'button', 'click', 'share']);
-});
-
-$('.vitaly').click(function() {
-  _gaq.push(['_trackEvent', 'button', 'click', 'twitter-vitaly']);
-});
-
-$('.henry').click(function() {
-  _gaq.push(['_trackEvent', 'button', 'click', 'twitter-henry']);
-});
-
-$('#support').click(function() {
-  _gaq.push(['_trackEvent', 'button', 'click', 'twitter-henry']);
-});
-
 setTimeout(function() {
   settings.first().fadeIn(0); // Unhide first settings panel.
 }, 100);
 
 $(".options").click(function() {
-  _gaq.push(['_trackEvent', 'button', 'click', 'options']);
   Storage.getOptions().done(function(options) {
 
     OptionsView.set(options);
@@ -1018,8 +968,6 @@ $('#options #list li').click(function(){
   // Update List
   $('#options #list li.active').removeClass('active');
   $el.addClass('active');
-
-  _gaq.push(['_trackEvent', 'tab', 'change', $el.text()]);
 
   // Load New Content
   $('.settings.show').fadeOut(0).removeClass('show');
