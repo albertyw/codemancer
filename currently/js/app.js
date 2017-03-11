@@ -234,16 +234,6 @@ var Storage = {
     }
   },
 
-  bestStorageLocation: function(type) {
-    // Check if recommended location exists if not, save to local;
-    if (Storage[type].location === "sync") {
-      if (chrome.storage.sync) {
-        return chrome.storage.sync;
-      }
-    }
-    return chrome.storage.local;
-  },
-
   load: function(type, use_cache) {
     if (_.isUndefined(use_cache)) use_cache = true;
 
@@ -251,13 +241,12 @@ var Storage = {
       return Storage.cache[type];
     } else if (!use_cache || !Storage.cache[type]) {
       var deferred = Q.defer();
-      Storage.bestStorageLocation(type).get(Storage[type].key, function(value) {
-        if (!_.isEmpty(value)) {
-          deferred.resolve(value[Storage[type].key]);
-        } else{
-          deferred.reject(new Error("Missing Data"));
-        }
-      });
+      var value = localStorage.getItem(Storage[type].key);
+      if (!_.isEmpty(value)) {
+        deferred.resolve(value[Storage[type].key]);
+      } else{
+        deferred.reject(new Error("Missing Data"));
+      }
       Storage.cache[type] = deferred.promise;
     }
     return Storage.cache[type];
@@ -274,10 +263,11 @@ var Storage = {
         saveData[key] = data;
       }
 
-      Storage.bestStorageLocation(type).set(saveData, function(value) {
-        deferred.resolve(value);
-        Storage.cache[type] = null;
+      Object.keys(saveData).forEach(function (key) {
+        localStorage.setItem(key, saveData[key]);
       });
+      deferred.resolve(undefined);
+      Storage.cache[type] = null;
     }
     Storage.load(type, false).then(_save, function(){
       _save(null);
@@ -288,10 +278,9 @@ var Storage = {
   remove: function(type) {
     var deferred = Q.defer();
     var key = Storage[type].key;
-    Storage.bestStorageLocation(type).remove(key, function(value){
-      Storage.cache[type] = null;
-      deferred.resolve(value);
-    });
+    localStorage.removeItem(key);
+    Storage.cache[type] = null;
+    deferred.resolve(undefined);
     return deferred.promise;
   },
 
