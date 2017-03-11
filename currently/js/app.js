@@ -3,9 +3,6 @@ var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-33402958-1']);
 _gaq.push(['_trackPageview']);
 
-Raven.config('https://b37dffa6de1b4e908c01f26629f20e65@app.getsentry.com/4859');
-window.onerror = Raven.process;
-
 function OSType() {
   var OSName="Unknown OS";
   if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
