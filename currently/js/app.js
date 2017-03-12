@@ -32,40 +32,9 @@ var ErrorHandler = {
   offline: function() {
     ErrorHandler.show($("#offlineError").html());
   },
-
-  noLocation: function () {
-    ErrorHandler.show($("#locationError").html());
-
-    $("#set-location").submit(function() {
-      var address = $('#error form input').val();
-
-      if (!_.isEmpty(address)) {
-        // Geocode address
-        Location.gecodeAddress(address).then(function(data) {
-          var options = {};
-          options.location = data.location;
-          options.address = data.address;
-          main();
-        }, function() {
-          // FIXME: Add waring about not finding address.
-        });
-      } else {
-        // FIXME: Add validation to address
-      }
-      return false;
-    });
-  }
 };
 
 var Storage = {
-  cache: {},
-
-  weather: {
-    key: "weather",
-    location: "local",
-    defaults: {}
-  },
-
   options: {
     key: "options",
     location: "sync",
@@ -114,23 +83,6 @@ var Location = {
         return locData.join(", ");
       } else {
         throw new Error("Failed to geocode");
-      }
-    });
-  },
-
-  gecodeAddress: function(address) {
-    return Q.when(
-      $.ajax({
-        url : "https://maps.googleapis.com/maps/api/geocode/json",
-        data: {"address": address, sensor: false},
-        dataType: "json"
-      })
-    ).then(function(data) {
-      if (data.status == "OK") {
-        return {
-          'location' : data.results[0].geometry.location,
-          'address' : data.results[0].formatted_address
-        };
       }
     });
   },
@@ -384,7 +336,6 @@ var Weather = {
     Loader.show();
     var deferred = Q.defer();
     var l = Location.current();
-    l.fail(ErrorHandler.noLocation);
     deferred.resolve(l);
     deferred = deferred.promise.then(Weather.atLocation);
     return deferred;
