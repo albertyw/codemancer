@@ -80,15 +80,6 @@ var Storage = {
       color: "blue-bg"
     }
   },
-
-  remove: function(type) {
-    var deferred = Q.defer();
-    var key = Storage[type].key;
-    localStorage.removeItem(key);
-    Storage.cache[type] = null;
-    deferred.resolve(undefined);
-    return deferred.promise;
-  }
 };
 
 var Location = {
