@@ -131,12 +131,6 @@ var Storage = {
     return deferred.promise;
   },
 
-  getOption: function(key) {
-    var deferred = Q.defer();
-    deferred.resolve(Storage.options.defaults[key]);
-    return deferred.promise;
-  },
-
   getCachedWeather: function() {
     return Storage.load("weather")
       .then(function(data){
@@ -252,51 +246,51 @@ var Weather = {
   },
 
   atLocation: function (location) {
-    return Storage.getOption("lang").then(function(lang) {
-      return Q.when($.ajax({
-        url: Weather.urlBuilder("conditions/forecast/", location, lang),
-        type: 'GET',
-        dataType: "json"
-      }))
-      .then(function(data) {
-        return Location.getDisplayName(location).then(function(name) {
-          data.locationDisplayName = name;
-          return data;
-        });
-      })
-      .then(Weather.parse)
-      .then(Storage.cacheWeather);
-    });
+    var lang = Storage.options.defaults.lang;
+    return Q.when($.ajax({
+      url: Weather.urlBuilder("conditions/forecast/", location, lang),
+      type: 'GET',
+      dataType: "json"
+    }))
+    .then(function(data) {
+      return Location.getDisplayName(location).then(function(name) {
+        data.locationDisplayName = name;
+        return data;
+      });
+    })
+    .then(Weather.parse)
+    .then(Storage.cacheWeather);
   },
 
   parse: function(data) {
-    return Storage.getOption("unitType").then(function(unitType) {
-      var startUnitType = "f";
+    var unitType = Storage.options.defaults.unitType;
+    var deferred = Q.defer();
+    var startUnitType = "f";
 
-      // Lets only keep what we need.
-      var w2 = {
-        city: data.locationDisplayName,
-        weatherUrl: data.current_observation.forecast_url,
-        current: {
-          condition: data.current_observation.weather,
-          conditionCode: Weather.condition(data.current_observation.icon_url),
-          temp: Weather.tempConvert(data.current_observation.temp_f, startUnitType, unitType)
-        },
-        forecast: []
+    // Lets only keep what we need.
+    var w2 = {
+      city: data.locationDisplayName,
+      weatherUrl: data.current_observation.forecast_url,
+      current: {
+        condition: data.current_observation.weather,
+        conditionCode: Weather.condition(data.current_observation.icon_url),
+        temp: Weather.tempConvert(data.current_observation.temp_f, startUnitType, unitType)
+      },
+      forecast: []
+    };
+
+    for (var i = Weather.$el.forecast.length - 1; i >= 0; i--) {
+      var df = data.forecast.simpleforecast.forecastday[i];
+      w2.forecast[i] = {
+        day: df.date.weekday,
+        condition: df.conditions,
+        conditionCode: Weather.condition(df.icon_url),
+        high: Weather.tempConvert(df.high.fahrenheit, startUnitType, unitType),
+        low: Weather.tempConvert(df.low.fahrenheit, startUnitType, unitType)
       };
-
-      for (var i = Weather.$el.forecast.length - 1; i >= 0; i--) {
-        var df = data.forecast.simpleforecast.forecastday[i];
-        w2.forecast[i] = {
-          day: df.date.weekday,
-          condition: df.conditions,
-          conditionCode: Weather.condition(df.icon_url),
-          high: Weather.tempConvert(df.high.fahrenheit, startUnitType, unitType),
-          low: Weather.tempConvert(df.low.fahrenheit, startUnitType, unitType)
-        };
-      }
-      return w2;
-    });
+    }
+    deferred.resolve(w2);
+    return deferred.promise;
   },
 
   condition: function (url){
@@ -411,15 +405,13 @@ var Weather = {
     $('#weather-inner').removeClass('hidden').show();
 
     // Show Forecast
-    Storage.getOption('animation').done(function(animation) {
-      Weather.$el.forecast.each(function(i, el) {
-        var $el = $(el);
-          if (animation) {
-            $el.css("-webkit-animation-delay",150 * i +"ms").addClass('animated fadeInUp');
-          }
-        var dayWeather = wd.forecast[i];
-        Weather.renderDay($el, dayWeather);
-      });
+    Weather.$el.forecast.each(function(i, el) {
+      var $el = $(el);
+        if (Storage.options.defaults.animation) {
+          $el.css("-webkit-animation-delay",150 * i +"ms").addClass('animated fadeInUp');
+        }
+      var dayWeather = wd.forecast[i];
+      Weather.renderDay($el, dayWeather);
     });
 
     // Change link to weather underground
@@ -466,18 +458,12 @@ var Weather = {
     return Storage.getCachedWeather()
       .fail(function() {
         // No Cache
-        return Storage.getOption("location")
-          .then(function(location) {
-            if (!_.isEmpty(location)) {
-              return location;
-            } else {
-              var l = Location.current();
-              l.fail(ErrorHandler.noLocation);
-
-              return l;
-            }
-          })
-          .then(Weather.atLocation);
+        var deferred = Q.defer();
+        var l = Location.current();
+        l.fail(ErrorHandler.noLocation);
+        deferred.resolve(l);
+        deferred = deferred.promise.then(Weather.atLocation);
+        return deferred;
       });
   }
 };
