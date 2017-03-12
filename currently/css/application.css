@@ -84,7 +84,7 @@ body #numbers {
     text-anchor: middle;
     stroke: none;
 }
-body .home, body .main-return, body .options {
+body .main-return {
     font-size: 1.3em;
     bottom: 5px;
 }
@@ -94,9 +94,6 @@ body .wunder {
 }
 body .wunder svg {
     height: 23px;
-}
-body .options {
-    right: 40px;
 }
 }@font-face {
     font-family: 'Weather';
@@ -147,13 +144,13 @@ b {
 .dark-text {
     color: rgba(0, 0, 0, 0.5);
 }
-.dark-text .home, .dark-text .main-return, .dark-text .options, .dark-text .title {
+.dark-text .main-return, .dark-text .title {
     color: rgba(0, 0, 0, 0.3);
 }
 .dark-text .wunder path {
     fill: rgba(0, 0, 0, 0.3);
 }
-.dark-text .home:hover, .dark-text .main-return:hover, .dark-text .options:hover {
+.dark-text .main-return:hover {
     color: rgba(0, 0, 0, 0.7);
 }
 .dark-text .wunder:hover path {
@@ -169,13 +166,13 @@ b {
 .light-text {
     color: rgba(255, 255, 255, 0.8);
 }
-.light-text .home, .light-text .main-return, .light-text .options, .light-text .title {
+.light-text .main-return, .light-text .title {
     color: rgba(0, 0, 0, 0.3);
 }
 .light-text .wunder path {
     fill: rgba(0, 0, 0, 0.3);
 }
-.light-text .home:hover, .light-text .main-return:hover, .light-text .options:hover {
+.light-text .main-return:hover {
     color: #fff;
 }
 .light-text .wunder:hover path {
@@ -304,15 +301,9 @@ to {
 #error button {
     font-size: .5em;
 }
-.home, .main-return {
+.main-return {
     right: 10px;
 }
-.home:hover, .main-return:hover {
-    color: #fff;
-}
-.options {
-    right: 50px;
-}
-.options:hover {
+.main-return:hover {
     color: #fff;
 }

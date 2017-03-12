@@ -111,7 +111,7 @@
     margin-top: 10px;
     letter-spacing: 2px;
 }
-.home, .main-return, .wunder {
+.main-return, .wunder {
     cursor: pointer;
     position: fixed;
     bottom: 10px;

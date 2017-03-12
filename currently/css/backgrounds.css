@@ -10,13 +10,13 @@
 .dark-bg.dark-text {
     background: #444;
 }
-.dark-bg.light-text .home, .dark-bg.light-text .main-return, .dark-bg.light-text .options, .dark-bg.light-text .title {
+.dark-bg.light-text .main-return, .dark-bg.light-text .title {
     color: #ffffff;
 }
 .dark-bg.light-text .wunder path {
     fill: rgba(255, 255, 255, 0.3);
 }
-.dark-bg.light-text .home:hover, .dark-bg.light-text .main-return:hover, .dark-bg.light-text .options:hover {
+.dark-bg.light-text .main-return:hover {
     color: #fff;
 }
 .dark-bg.light-text .wunder:hover path {
