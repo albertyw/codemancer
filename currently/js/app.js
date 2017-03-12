@@ -618,12 +618,6 @@ function main() {
   loader.fail(function(reason) {
     console.error(reason);
   });
-
-  loader.then(function() {
-    $('.tipsy').tipsy({fade: true, delayIn:500, gravity: 's'});
-    $('#weather-inner li').tipsy({fade: true, delayIn:500, offset:5, gravity: 's'});
-    $('#weather-inner .now').tipsy({fade: true, delayIn:500, offset:-20, gravity: 's'});
-  });
 }
 
 // Start your engine....
