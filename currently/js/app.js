@@ -90,14 +90,19 @@ var Location = {
   current: function() {
     var deferred = Q.defer();
     if (navigator.geolocation) {
-    // if (false) {
+      var positionOptions = {
+        enableHighAccuracy: false,
+        timeout: Infinity,
+        maximumAge: 30 * 60 * 1000
+      };
       navigator.geolocation.getCurrentPosition(
         function(position) {
           deferred.resolve({lat: position.coords.latitude, lng: position.coords.longitude});
           // deferred.resolve({lat: -222, lng: 2})
         }, function() {
           deferred.reject(new Error("Couldn't find location"));
-        }
+        },
+        positionOptions
       );
     } else {
       deferred.reject(new Error("Geolocation is missing"));
