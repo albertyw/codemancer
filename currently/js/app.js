@@ -352,9 +352,7 @@ var Storage = {
   cacheWeather: function(data) {
     var date = new Date();
     data.cachedAt = date.getTime();
-    return Storage.save("weather", data).then(function() {
-      return data;
-    });
+    return data;
   },
 
   clearWeather: function() {
@@ -853,11 +851,6 @@ function style() {
 
     if (!options.seconds) {
       $('#main').addClass('no-seconds');
-    }
-
-    // Remove weather
-    if (!options.weather) {
-      $('#main #weather').addClass('hidden');
     }
   });
 }
