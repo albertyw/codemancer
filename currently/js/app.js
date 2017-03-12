@@ -77,7 +77,7 @@ var Storage = {
       location: {}, // Used to store you own location.
       animation: true,
       textColor: "light-text",
-      color: "dark-bg"
+      color: "blue-bg"
     }
   },
 
