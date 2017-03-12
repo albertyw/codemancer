@@ -81,47 +81,6 @@ var Storage = {
     }
   },
 
-  load: function(type, use_cache) {
-    if (_.isUndefined(use_cache)) use_cache = true;
-
-    if (use_cache && Storage.cache[type]) {
-      return Storage.cache[type];
-    } else if (!use_cache || !Storage.cache[type]) {
-      var deferred = Q.defer();
-      var value = localStorage.getItem(Storage[type].key);
-      if (!_.isEmpty(value)) {
-        deferred.resolve(value[Storage[type].key]);
-      } else{
-        deferred.reject(new Error("Missing Data"));
-      }
-      Storage.cache[type] = deferred.promise;
-    }
-    return Storage.cache[type];
-  },
-
-  save: function(type, data) {
-    var deferred = Q.defer();
-    var key = Storage[type].key;
-    function _save(current) {
-      var saveData = {};
-      if (!_.isNull(current)) {
-        saveData[key] = _.extend(current, data);
-      } else {
-        saveData[key] = data;
-      }
-
-      Object.keys(saveData).forEach(function (key) {
-        localStorage.setItem(key, saveData[key]);
-      });
-      deferred.resolve(undefined);
-      Storage.cache[type] = null;
-    }
-    Storage.load(type, false).then(_save, function(){
-      _save(null);
-    });
-    return deferred.promise;
-  },
-
   remove: function(type) {
     var deferred = Q.defer();
     var key = Storage[type].key;
