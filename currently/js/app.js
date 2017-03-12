@@ -45,7 +45,7 @@ var ErrorHandler = {
           var options = {};
           options.location = data.location;
           options.address = data.address;
-          Storage.clearWeather().then(main);
+          main();
         }, function() {
           // FIXME: Add waring about not finding address.
         });
@@ -129,29 +129,7 @@ var Storage = {
     Storage.cache[type] = null;
     deferred.resolve(undefined);
     return deferred.promise;
-  },
-
-  getCachedWeather: function() {
-    return Storage.load("weather")
-      .then(function(data){
-        var now = new Date();
-        if (now.getTime() < (parseInt(data.cachedAt) + 60000 * 60)) { // Valid for one hour
-          return data;
-        }
-
-        throw new Error("Invalid Cache");
-      });
-  },
-
-  cacheWeather: function(data) {
-    var date = new Date();
-    data.cachedAt = date.getTime();
-    return data;
-  },
-
-  clearWeather: function() {
-    return Storage.remove("weather");
-  },
+  }
 };
 
 var Location = {
@@ -258,8 +236,7 @@ var Weather = {
         return data;
       });
     })
-    .then(Weather.parse)
-    .then(Storage.cacheWeather);
+    .then(Weather.parse);
   },
 
   parse: function(data) {
@@ -455,16 +432,12 @@ var Weather = {
 
   load: function() {
     Loader.show();
-    return Storage.getCachedWeather()
-      .fail(function() {
-        // No Cache
-        var deferred = Q.defer();
-        var l = Location.current();
-        l.fail(ErrorHandler.noLocation);
-        deferred.resolve(l);
-        deferred = deferred.promise.then(Weather.atLocation);
-        return deferred;
-      });
+    var deferred = Q.defer();
+    var l = Location.current();
+    l.fail(ErrorHandler.noLocation);
+    deferred.resolve(l);
+    deferred = deferred.promise.then(Weather.atLocation);
+    return deferred;
   }
 };
 
