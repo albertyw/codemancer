@@ -53,9 +53,7 @@ var ErrorHandler = {
           var options = {};
           options.location = data.location;
           options.address = data.address;
-          Storage.clearWeather().then(function() {
-            Storage.setOptions(options).then(main);
-          });
+          Storage.clearWeather().then(main);
         }, function() {
           // FIXME: Add waring about not finding address.
         });
@@ -284,57 +282,10 @@ var Storage = {
     return deferred.promise;
   },
 
-  castOptions: function(key, value) {
-    // Case boolean if it is a boolean
-    if (value === 'true') {
-      return true;
-    } else if (value === 'false') {
-      return false;
-    } else if (!_.isNaN(parseInt(value)) && !isNaN(value)) {
-      return parseInt(value);
-    } else if (_.isUndefined(value)) {
-      return Storage.options.defaults[key];
-    } else {
-      return value;
-    }
-  },
-
   getOption: function(key) {
-    return Storage.load("options").then(function(data) {
-      return Storage.castOptions(key, data[key]);
-    }, function() {
-      return Storage.options.defaults[key];
-    });
-  },
-
-  getOptions: function() {
-    return Storage.load("options").then(function(data) {
-
-      var options = _.clone(Storage.options.defaults);
-      _.each(data, function(value, key) {
-        options[key] = Storage.castOptions(key, value);
-      });
-
-      return options;
-    }, function() {
-      return Storage.options.defaults;
-    });
-  },
-
-  setOption: function(key, value) {
-    value = Storage.castOptions(key, value);
-    var obj = {};
-    obj[key] = value;
-    return Storage.save("options", obj);
-  },
-
-  setOptions: function(data) {
-    var options = _.clone(data);
-    _.each(options, function(value, key) {
-      options[key] = Storage.castOptions(key, value);
-    });
-
-    return Storage.save("options", options);
+    var deferred = Q.defer();
+    deferred.resolve(Storage.options.defaults[key]);
+    return deferred.promise;
   },
 
   getCachedWeather: function() {
@@ -821,38 +772,37 @@ var Clock = {
 };
 
 function style() {
-    Storage.getOptions().done(function(options) {
-    // Kick off the clock
-    Clock.start(options);
-    var $main = $('#main');
+  var options = Storage.options.defaults;
+  // Kick off the clock
+  Clock.start(options);
+  var $main = $('#main');
 
-    // background Color
-    if (!$main.hasClass(options.color)) {
-      if ($main.is("[class*='-bg']")) {
-        $main[0].className = $main[0].className.replace(/\w*-bg/g, '');
-      }
-      $main.addClass(options.color);
+  // background Color
+  if (!$main.hasClass(options.color)) {
+    if ($main.is("[class*='-bg']")) {
+      $main[0].className = $main[0].className.replace(/\w*-bg/g, '');
     }
+    $main.addClass(options.color);
+  }
 
-    // Text Color
-    if (!$main.hasClass(options.textColor)) {
-      if ($main.is("[class*='-text']")) {
-        $main[0].className = $main[0].className.replace(/\w*-text/g, '');
-      }
-      $main.addClass(options.textColor);
+  // Text Color
+  if (!$main.hasClass(options.textColor)) {
+    if ($main.is("[class*='-text']")) {
+      $main[0].className = $main[0].className.replace(/\w*-text/g, '');
     }
+    $main.addClass(options.textColor);
+  }
 
-    // Remove animation
-    if (!options.animation) {
-      $(".animated").removeClass('animated');
-      $(".fadeIn").removeClass('fadeIn');
-      $(".fadeInDown").removeClass('fadeInDown');
-    }
+  // Remove animation
+  if (!options.animation) {
+    $(".animated").removeClass('animated');
+    $(".fadeIn").removeClass('fadeIn');
+    $(".fadeInDown").removeClass('fadeInDown');
+  }
 
-    if (!options.seconds) {
-      $('#main').addClass('no-seconds');
-    }
-  });
+  if (!options.seconds) {
+    $('#main').addClass('no-seconds');
+  }
 }
 
 function main() {
@@ -919,17 +869,14 @@ setTimeout(function() {
 }, 100);
 
 $(".options").click(function() {
-  Storage.getOptions().done(function(options) {
+  OptionsView.set(Storage.options.defaults);
 
-    OptionsView.set(options);
+  switchPreviewBgColor($("#options #color-pick input").val());
+  switchPreviewTextColor($("input[name=textColor]:checked").val());
 
-    switchPreviewBgColor($("#options #color-pick input").val());
-    switchPreviewTextColor($("input[name=textColor]:checked").val());
-
-    Avgrund.show( "#options" );
-    $('#options #list li:not(#options .active)').each(function(index){
-      $(this).css("-webkit-animation-delay",80 * index +"ms").addClass('animated fadeInLeft');
-    });
+  Avgrund.show( "#options" );
+  $('#options #list li:not(#options .active)').each(function(index){
+    $(this).css("-webkit-animation-delay",80 * index +"ms").addClass('animated fadeInLeft');
   });
 
   return false;
@@ -995,10 +942,8 @@ $("#options #close").click(function() {
 
 function save(options) {
   Storage.clearWeather().then(function() {
-    Storage.setOptions(options).then(function() {
-      style();
-      main();
-    });
+    style();
+    main();
 
     // Save options
     $("#options button[type=submit]").addClass("saved");
