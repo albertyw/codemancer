@@ -616,13 +616,7 @@ function main() {
   });
 
   loader.fail(function(reason) {
-    if (!navigator.onLine) {
-      // We are offline
-      ErrorHandler.offline();
-    } else {
-      // Unknown error
-      console.error(reason);
-    }
+    console.error(reason);
   });
 
   loader.then(function() {
@@ -635,13 +629,3 @@ function main() {
 // Start your engine....
 style();
 main();
-
-if (!navigator.onLine) {
-  $(window).bind('online', function() {
-    setTimeout(function() {
-      // wait one second before trying.
-      ErrorHandler.hide();
-      main();
-    }, 1000);
-  });
-}
