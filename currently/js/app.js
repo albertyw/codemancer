@@ -1,11 +1,3 @@
-function inBeta() {
-  if (chrome.runtime.getManifest().name.indexOf("Beta") !== -1) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 var Loader = {
   loader: $('#loader'),
   show: function() {
@@ -180,11 +172,7 @@ var Notifications = {
   },
 
   url: function() {
-    if (inBeta()) {
       return Notifications.urls.beta;
-    } else {
-      return Notifications.urls.gold;
-    }
   },
 
   request: function() {
@@ -825,18 +813,6 @@ function main() {
     $('.tipsy').tipsy({fade: true, delayIn:500, gravity: 's'});
     $('#weather-inner li').tipsy({fade: true, delayIn:500, offset:5, gravity: 's'});
     $('#weather-inner .now').tipsy({fade: true, delayIn:500, offset:-20, gravity: 's'});
-  });
-
-  // Notifications
-  Location.current().then(Notifications.current).then(function(messages) {
-    if (!_.isEmpty(messages)) {
-      $("#update p").html(messages[0].html).parent().data('id', messages[0].id).show(0);
-    }
-  });
-
-  $('#update').click(function(){
-    $(this).fadeOut(100);
-    Notifications.finish($(this).data('id'));
   });
 }
 
