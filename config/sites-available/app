@@ -8,19 +8,19 @@ server_tokens off;
 server {
     include         sites-enabled/headers;
     server_name     $server_addr;
-    return          301 https://www.WEBSITE.com$request_uri;
+    return          301 https://www.codemancer.com$request_uri;
 }
 
 server {
     listen          80;
     server_name     _; # catch-all
-    rewrite         ^ https://www.WEBSITE.com$request_uri;
+    rewrite         ^ https://www.codemancer.com$request_uri;
 }
 
 # Change naked domain to www
 server {
     listen          443 ssl http2;
-    server_name     WEBSITE.com;
+    server_name     codemancer.com;
 
     ssl on;
     ssl_protocols               TLSv1 TLSv1.1 TLSv1.2;
@@ -28,11 +28,11 @@ server {
     ssl_prefer_server_ciphers   on;
     ssl_session_cache           shared:SSL:10m;
     ssl_session_timeout         10m;
-    ssl_certificate             /etc/nginx/ssl/1_WEBSITE.com_bundle.crt;
+    ssl_certificate             /etc/nginx/ssl/1_codemancer.com_bundle.crt;
     ssl_certificate_key         /etc/nginx/ssl/server.key;
     ssl_dhparam                 /etc/nginx/ssl/dhparams.pem;
 
-    rewrite         ^ https://www.WEBSITE.com$request_uri;
+    rewrite         ^ https://www.codemancer.com$request_uri;
 }
 
 
@@ -40,7 +40,7 @@ server {
 
 server {
     listen          443 ssl http2 default_server;
-    server_name     www.WEBSITE.com;
+    server_name     www.codemancer.com;
     access_log      /var/log/nginx/website.access.log;
     error_log       /var/log/nginx/website.error.log;
 
@@ -50,7 +50,7 @@ server {
     ssl_prefer_server_ciphers   on;
     ssl_session_cache           shared:SSL:10m;
     ssl_session_timeout         10m;
-    ssl_certificate             /etc/nginx/ssl/1_WEBSITE.com_bundle.crt;
+    ssl_certificate             /etc/nginx/ssl/1_codemancer.com_bundle.crt;
     ssl_certificate_key         /etc/nginx/ssl/server.key;
     ssl_dhparam                 /etc/nginx/ssl/dhparams.pem;
 
@@ -58,7 +58,7 @@ server {
     # http://blog.mozilla.org/security/2013/07/29/ocsp-stapling-in-firefox/
     resolver 8.8.8.8;
     ssl_stapling on;
-    ssl_trusted_certificate /etc/nginx/ssl/1_WEBSITE.com_bundle.crt;
+    ssl_trusted_certificate /etc/nginx/ssl/1_codemancer.com_bundle.crt;
 
     # config to enable HSTS(HTTP Strict Transport Security) https://developer.mozilla.org/en-US/docs/Security/HTTP_Strict_Transport_Security
     # to avoid ssl stripping https://en.wikipedia.org/wiki/SSL_stripping#SSL_stripping

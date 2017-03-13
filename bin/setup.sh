@@ -1,16 +1,12 @@
 #!/bin/bash
 
 # Setup directories
-sudo mkdir -p /var/www/log/nginx
-sudo chmod -R 777 /var/www/log
-sudo ln -s /var/www/log/nginx /var/log/nginx
 sudo ln -s ~/website /var/www/website
 
 # Clone repository
-git clone GIT_REPOSITORY
-sudo mv GIT_REPOSITORY_NAME /var/www/website
+git clone git@github.com:albertyw/currently-website
+sudo mv git@github.com:albertyw/currently-website /var/www/website
 cd /var/www/website || exit 1
-ln -s .env.production .env
 
 # Install nginx
 sudo add-apt-repository ppa:nginx/stable
