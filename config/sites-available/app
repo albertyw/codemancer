@@ -85,10 +85,6 @@ server {
 
     location / {
         include         sites-enabled/headers;
-        uwsgi_pass      unix://tmp/website.sock;
-        include         uwsgi_params;
-        uwsgi_param     UWSGI_SCHEME $scheme;
-        uwsgi_param     SERVER_SOFTWARE    nginx/$nginx_version;
         expires     7d;
         add_header Cache-Control "public";
     }
