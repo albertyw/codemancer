@@ -303,7 +303,7 @@ var Weather = {
   },
 
   link: function(data) {
-    return data.weatherUrl + "?apiref=846edca2fe64735c";
+    return data.weatherUrl + "?apiref=d1bfeac98cad347b";
   },
 
   renderDay: function(el, data) {
