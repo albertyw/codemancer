@@ -121,7 +121,7 @@ var Weather = {
   },
 
   urlBuilder: function(type, location, lang) {
-    var url = "https://api.wunderground.com/api/dc203fba39f6674e/" + type + "/";
+    var url = "https://api.wunderground.com/api/d1bfeac98cad347b/" + type + "/";
 
     if (lang) {
       url = url + "lang:" + lang + "/";
