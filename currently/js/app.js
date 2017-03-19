@@ -46,7 +46,6 @@ var Storage = {
       location: {}, // Used to store you own location.
       animation: true,
       textColor: "light-text",
-      color: "blue-bg"
     }
   },
 };
@@ -445,14 +444,6 @@ function style() {
   // Kick off the clock
   Clock.start(options);
   var $main = $('#main');
-
-  // background Color
-  if (!$main.hasClass(options.color)) {
-    if ($main.is("[class*='-bg']")) {
-      $main[0].className = $main[0].className.replace(/\w*-bg/g, '');
-    }
-    $main.addClass(options.color);
-  }
 
   // Text Color
   if (!$main.hasClass(options.textColor)) {
