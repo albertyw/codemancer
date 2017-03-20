@@ -10,6 +10,7 @@ colors[timeToSeconds(21, 0)] = [0, 0, 0];
 colors[timeToSeconds(24, 0)] = colors[timeToSeconds(0, 0)];
 
 var colorsTimestamp = [];
+var updateBackgroundColorPeriod = 5 * 60 * 1000;
 
 function generateColorsArray(){
     colorsTimestamp = Object.keys(colors);
@@ -59,7 +60,7 @@ function updateBackgroundColor(){
     document.body.style.backgroundColor = currentColor;
     setTimeout(function() {
         updateBackgroundColor();
-    }, 5 * 60 * 1000);
+    }, updateBackgroundColorPeriod);
 }
 generateColorsArray();
 updateBackgroundColor();
