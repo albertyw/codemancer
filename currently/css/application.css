@@ -167,10 +167,10 @@ b {
     color: rgba(255, 255, 255, 0.8);
 }
 .light-text .main-return, .light-text .title {
-    color: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.3);
 }
 .light-text .wunder path {
-    fill: rgba(0, 0, 0, 0.3);
+    fill: rgba(255, 255, 255, 0.3);
 }
 .light-text .main-return:hover {
     color: #fff;
