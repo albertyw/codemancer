@@ -4,4 +4,4 @@
     setTimeout(function(){
         location.reload();
     }, refreshTime);
-})();
+}());

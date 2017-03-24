@@ -18,7 +18,7 @@ function generateColorsArray(){
 
 function componentToHex(c) {
     var hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
+    return hex.length === 1 ? "0" + hex : hex;
 }
 
 function rgbToHex(r, g, b) {
@@ -47,7 +47,7 @@ function getCurrentColor(current) {
     var colorBefore = colors[before];
     var colorAfter = colors[after];
     var currentColor = [0, 0, 0];
-    for (var i=0; i<colorBefore.length; i++) {
+    for (i=0; i<colorBefore.length; i++) {
         currentColor[i] = colorBefore[i] + (colorAfter[i] - colorBefore[i]) * percentage;
         currentColor[i] = Math.round(currentColor[i]);
     }
