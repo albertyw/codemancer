@@ -45,7 +45,7 @@ var Storage = {
       lang: "EN",
       location: {}, // Used to store you own location.
       animation: true,
-      textColor: "light-text",
+      textColor: "light-text"
     }
   }
 };
@@ -62,18 +62,14 @@ var Location = {
         var result=data.results[0].address_components;
         var info=[];
         for(var i=0;i<result.length;++i) {
-            if(result[i].types[0]==="country"){
+            var type = result[i].types[0];
+            if(type==="country"){
               info.push(result[i].long_name);
-            }
-
-            if(result[i].types[0]==="administrative_area_level_1"){
+            } else if(type==="administrative_area_level_1"){
               info.push(result[i].short_name);
-            }
-
-            if(result[i].types[0]==="locality"){
+            } else if(type==="locality"){
               info.unshift(result[i].long_name);
             }
-
         }
         var locData = _.uniq(info);
         if (locData.length === 3) {
