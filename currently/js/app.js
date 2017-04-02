@@ -83,9 +83,7 @@ var Location = {
   },
 
   current: function() {
-    var deferred = Q.defer();
-    deferred.resolve(Storage.options.defaults.location);
-    return deferred.promise;
+    return Storage.options.defaults.location;
   }
 
 };
@@ -317,11 +315,8 @@ var Weather = {
 
   load: function() {
     Loader.show();
-    var deferred = Q.defer();
     var l = Location.current();
-    deferred.resolve(l);
-    deferred = deferred.promise.then(Weather.atLocation);
-    return deferred;
+    return Weather.atLocation(l);
   }
 };
 
