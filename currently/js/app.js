@@ -43,7 +43,7 @@ var Storage = {
       clock: 12,
       seconds: true,
       lang: "EN",
-      location: {}, // Used to store you own location.
+      location: {lat: 37.778519, lng: -122.40564},
       animation: true,
       textColor: "light-text"
     }
@@ -83,26 +83,7 @@ var Location = {
   },
 
   current: function() {
-    var deferred = Q.defer();
-    if (navigator.geolocation) {
-      var positionOptions = {
-        enableHighAccuracy: false,
-        timeout: Infinity,
-        maximumAge: 30 * 60 * 1000
-      };
-      navigator.geolocation.getCurrentPosition(
-        function(position) {
-          deferred.resolve({lat: position.coords.latitude, lng: position.coords.longitude});
-          // deferred.resolve({lat: -222, lng: 2})
-        }, function() {
-          deferred.reject(new Error("Couldn't find location"));
-        },
-        positionOptions
-      );
-    } else {
-      deferred.reject(new Error("Geolocation is missing"));
-    }
-    return deferred.promise;
+    return Storage.options.defaults.location;
   }
 
 };
@@ -334,11 +315,8 @@ var Weather = {
 
   load: function() {
     Loader.show();
-    var deferred = Q.defer();
     var l = Location.current();
-    deferred.resolve(l);
-    deferred = deferred.promise.then(Weather.atLocation);
-    return deferred;
+    return Weather.atLocation(l);
   }
 };
 
