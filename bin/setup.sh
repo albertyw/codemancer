@@ -14,9 +14,8 @@ sudo apt-get update
 sudo apt-get install -y nginx
 
 # Configure nginx
-sudo mv /etc/nginx/sites-available /etc/nginx/sites-available.bak
-sudo mv /etc/nginx/sites-enabled /etc/nginx/sites-enabled.bak
-sudo ln -s /var/www/website/config/sites-available /etc/nginx/sites-available
+sudo rm -r /etc/nginx/sites-available
+sudo rm -r /etc/nginx/sites-enabled
 sudo ln -s /var/www/website/config/sites-enabled /etc/nginx/sites-enabled
 sudo service nginx restart
 sudo rm -r /var/www/html
