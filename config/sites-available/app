@@ -72,7 +72,7 @@ server {
         include         sites-enabled/headers;
         alias           "/var/www/website/currently/";
         try_files       $uri.html $uri $uri/ =404;
-        expires         7d;
+        expires         1d;
         add_header      Cache-Control "public";
     }
 }
