@@ -35,7 +35,7 @@ var weatherIconConversions = {
   "nt_clear": "/",
   "nt_sunny": "/",
   "nt_cloudy": "2",
-  "nt_mostlycloudy":
+  "nt_mostlycloudy": "2",
   "nt_partlysunny": "2",
   "nt_partlycloudy": "2",
   "nt_mostlysunny": "2"
