@@ -70,7 +70,7 @@ server {
 
     location / {
         include         sites-enabled/headers;
-        alias           "/var/www/website/currently/";
+        alias           "/var/www/website/codemancer/";
         try_files       $uri.html $uri $uri/ =404;
         expires         1d;
         add_header      Cache-Control "public";

@@ -4,8 +4,8 @@
 sudo ln -s ~/website /var/www/website
 
 # Clone repository
-git clone git@github.com:albertyw/currently-website
-sudo mv git@github.com:albertyw/currently-website /var/www/website
+git clone git@github.com:albertyw/codemancer
+sudo mv git@github.com:albertyw/codemancer /var/www/website
 cd /var/www/website || exit 1
 
 # Install nginx

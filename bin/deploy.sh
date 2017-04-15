@@ -9,4 +9,4 @@ git pull
 sudo service nginx restart
 
 # Write current version to temp file
-git rev-parse HEAD > currently/version
+git rev-parse HEAD > codemancer/version
