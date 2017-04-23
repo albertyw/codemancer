@@ -1,0 +1,22 @@
+{
+  "name": "codemancer",
+  "version": "1.0.0",
+  "description": "https://www.codemancer.com/",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albertyw/codemancer.git"
+  },
+  "author": "Albert Wang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/albertyw/codemancer/issues"
+  },
+  "homepage": "https://github.com/albertyw/codemancer#readme",
+  "private": true
+}
