@@ -1,3 +1,4 @@
+var weatherRefreshInterval = 20 * 60 * 1000;
 var weatherIconConversions = {
   "chanceflurries": "p",
   "chancesnow": "p",
@@ -413,3 +414,4 @@ function main() {
 // Start your engine....
 style();
 main();
+setInterval(main, weatherRefreshInterval);
