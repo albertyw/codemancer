@@ -18,5 +18,6 @@
     "url": "https://github.com/albertyw/codemancer/issues"
   },
   "homepage": "https://github.com/albertyw/codemancer#readme",
-  "private": true
+  "private": true,
+  "devDependencies": {}
 }
