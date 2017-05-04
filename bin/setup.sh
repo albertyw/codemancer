@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Setup directories
-sudo ln -s ~/website /var/www/website
+sudo ln -s ~/codemancer /var/www/codemancer
 
 # Clone repository
 git clone git@github.com:albertyw/codemancer
-sudo mv git@github.com:albertyw/codemancer /var/www/website
-cd /var/www/website || exit 1
+sudo mv git@github.com:albertyw/codemancer /var/www/codemancer
+cd /var/www/codemancer || exit 1
 
 # Install nginx
 sudo add-apt-repository ppa:nginx/stable
@@ -15,8 +15,8 @@ sudo apt-get install -y nginx
 
 # Configure nginx
 sudo rm -r /etc/nginx/sites-available
-sudo rm -r /etc/nginx/sites-enabled
-sudo ln -s /var/www/website/config/sites-enabled /etc/nginx/sites-enabled
+sudo ln -s /var/www/codemancer/config/sites-available/app /etc/nginx/sites-enabled/codemancer-app
+sudo ln -s /var/www/codemancer/config/sites-available/headers /etc/nginx/sites-enabled/codemancer-headers
 sudo service nginx restart
 sudo rm -r /var/www/html
 
