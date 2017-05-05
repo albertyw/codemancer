@@ -1,4 +1,10 @@
 ### Redirects ###
+server {
+    listen          80;
+    server_name     codemancer.com www.codemancer.com;
+    return          301 https://www.codemancer.com$request_uri;
+}
+
 # Change naked domain to www
 server {
     listen          443 ssl http2;
