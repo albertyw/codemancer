@@ -29,7 +29,6 @@ function generateColorsArray(){
             colors[sunset] = midEvening;
             colors[sunset + 60] = lateEvening;
             colors[sunset + 120] = fullNight;
-            console.log(data);
             colorsTimestamp = Object.keys(colors);
             updateBackgroundColor();
         }
