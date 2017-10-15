@@ -7,8 +7,8 @@ var midEvening = [255, 155, 0];
 var lateEvening = [0, 0, 255];
 
 var colors = {};
-colors[timeToSeconds(0, 0)] = fullNight;
-colors[timeToSeconds(24, 0)] = colors[timeToSeconds(0, 0)];
+colors[0] = fullNight;
+colors[24 * 60] = colors[0];
 
 var colorsTimestamp = [];
 var updateBackgroundColorPeriod = 5 * 60 * 1000;
@@ -17,8 +17,8 @@ function generateColorsArray(){
     $.get(sunRiseSetAPI,
         function(data) {
             data = parseData(data);
-            var sunrise = dateToSeconds(data['sunrise']);
-            var sunset = dateToSeconds(data['sunset']);
+            var sunrise = dateToMinutes(data['sunrise']);
+            var sunset = dateToMinutes(data['sunset']);
             colors[sunrise - 120] = fullNight;
             colors[sunrise - 60] = lateEvening;
             colors[sunrise] = midEvening;
@@ -46,6 +46,11 @@ function parseData(data) {
     return data;
 }
 
+function dateToMinutes(date) {
+    var timestamp = date.getHours() * 60 + date.getMinutes();
+    return timestamp;
+}
+
 function componentToHex(c) {
     var hex = c.toString(16);
     return hex.length === 1 ? "0" + hex : hex;
@@ -55,14 +60,9 @@ function rgbToHex(r, g, b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
-function timeToSeconds(hour, minute) {
-    var timestamp = hour * 60 + minute;
-    return timestamp;
-}
-
 function currentTimestamp() {
     var currentDate = new Date();
-    return timeToSeconds(currentDate.getHours(), currentDate.getMinutes())
+    return dateToMinutes(currentDate);
 }
 
 function getCurrentColor(current) {
