@@ -8,13 +8,6 @@ var lateEvening = [0, 0, 255];
 
 var colors = {};
 colors[timeToSeconds(0, 0)] = fullNight;
-colors[timeToSeconds(5, 0)] = fullNight;
-colors[timeToSeconds(8, 0)] = lateEvening;
-colors[timeToSeconds(12, 0)] = fullDay;
-colors[timeToSeconds(16, 0)] = fullDay;
-colors[timeToSeconds(17, 0)] = brightEvening;
-colors[timeToSeconds(18, 0)] = midEvening;
-colors[timeToSeconds(21, 0)] = fullNight;
 colors[timeToSeconds(24, 0)] = colors[timeToSeconds(0, 0)];
 
 var colorsTimestamp = [];
@@ -24,6 +17,18 @@ function generateColorsArray(){
     $.get(sunRiseSetAPI,
         function(data) {
             data = parseData(data);
+            var sunrise = dateToSeconds(data['sunrise']);
+            var sunset = dateToSeconds(data['sunset']);
+            colors[sunrise - 120] = fullNight;
+            colors[sunrise - 60] = lateEvening;
+            colors[sunrise] = midEvening;
+            colors[sunrise + 60] = brightEvening;
+            colors[sunrise + 120] = fullDay;
+            colors[sunset - 120] = fullDay;
+            colors[sunset - 60] = brightEvening;
+            colors[sunset] = midEvening;
+            colors[sunset + 60] = lateEvening;
+            colors[sunset + 120] = fullNight;
             console.log(data);
             colorsTimestamp = Object.keys(colors);
             updateBackgroundColor();
