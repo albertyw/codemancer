@@ -25,9 +25,10 @@ function generateColorsArray(){
         function(data) {
             data = parseData(data);
             console.log(data);
+            colorsTimestamp = Object.keys(colors);
+            updateBackgroundColor();
         }
     );
-    colorsTimestamp = Object.keys(colors);
 }
 
 function parseData(data) {
@@ -86,7 +87,4 @@ function updateBackgroundColor(){
         updateBackgroundColor();
     }, updateBackgroundColorPeriod);
 }
-$(function() {
-    generateColorsArray();
-    updateBackgroundColor();
-});
+$(generateColorsArray);
