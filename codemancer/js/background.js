@@ -1,3 +1,5 @@
+var sunRiseSetAPI = "https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0";
+
 var fullNight = [0, 0, 0];
 var fullDay = [0, 204, 255];
 var brightEvening = [255, 110, 30];
@@ -5,21 +7,47 @@ var midEvening = [255, 155, 0];
 var lateEvening = [0, 0, 255];
 
 var colors = {};
-colors[timeToSeconds(0, 0)] = fullNight;
-colors[timeToSeconds(5, 0)] = fullNight;
-colors[timeToSeconds(8, 0)] = lateEvening;
-colors[timeToSeconds(12, 0)] = fullDay;
-colors[timeToSeconds(16, 0)] = fullDay;
-colors[timeToSeconds(17, 0)] = brightEvening;
-colors[timeToSeconds(18, 0)] = midEvening;
-colors[timeToSeconds(21, 0)] = fullNight;
-colors[timeToSeconds(24, 0)] = colors[timeToSeconds(0, 0)];
+colors[0] = fullNight;
+colors[24 * 60] = colors[0];
 
 var colorsTimestamp = [];
 var updateBackgroundColorPeriod = 5 * 60 * 1000;
 
 function generateColorsArray(){
-    colorsTimestamp = Object.keys(colors);
+    $.get(sunRiseSetAPI,
+        function(data) {
+            data = parseData(data);
+            var sunrise = dateToMinutes(data['sunrise']);
+            var sunset = dateToMinutes(data['sunset']);
+            colors[sunrise - 120] = fullNight;
+            colors[sunrise - 60] = lateEvening;
+            colors[sunrise] = midEvening;
+            colors[sunrise + 60] = brightEvening;
+            colors[sunrise + 120] = fullDay;
+            colors[sunset - 120] = fullDay;
+            colors[sunset - 60] = brightEvening;
+            colors[sunset] = midEvening;
+            colors[sunset + 60] = lateEvening;
+            colors[sunset + 120] = fullNight;
+            colorsTimestamp = Object.keys(colors);
+            updateBackgroundColor();
+        }
+    );
+}
+
+function parseData(data) {
+    data = data.results;
+    Object.keys(data).forEach(function(key) {
+        if (key !== "day_length") {
+            data[key] = new Date(data[key]);
+        }
+    });
+    return data;
+}
+
+function dateToMinutes(date) {
+    var timestamp = date.getHours() * 60 + date.getMinutes();
+    return timestamp;
 }
 
 function componentToHex(c) {
@@ -31,14 +59,9 @@ function rgbToHex(r, g, b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
-function timeToSeconds(hour, minute) {
-    var timestamp = hour * 60 + minute;
-    return timestamp;
-}
-
 function currentTimestamp() {
     var currentDate = new Date();
-    return timeToSeconds(currentDate.getHours(), currentDate.getMinutes())
+    return dateToMinutes(currentDate);
 }
 
 function getCurrentColor(current) {
@@ -68,7 +91,4 @@ function updateBackgroundColor(){
         updateBackgroundColor();
     }, updateBackgroundColorPeriod);
 }
-$(function() {
-    generateColorsArray();
-    updateBackgroundColor();
-});
+$(generateColorsArray);
