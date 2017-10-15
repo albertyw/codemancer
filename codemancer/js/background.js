@@ -1,12 +1,18 @@
+var fullNight = [0, 0, 0];
+var fullDay = [0, 204, 255];
+var brightEvening = [255, 110, 30];
+var midEvening = [255, 155, 0];
+var lateEvening = [0, 0, 255];
+
 var colors = {};
-colors[timeToSeconds(0, 0)] = [0, 0, 0];
-colors[timeToSeconds(5, 0)] = [0, 0, 0];
-colors[timeToSeconds(8, 0)] = [0, 0, 255];
-colors[timeToSeconds(12, 0)] = [0, 204, 255];
-colors[timeToSeconds(16, 0)] = [0, 204, 255];
-colors[timeToSeconds(17, 0)] = [253, 94, 83];
-colors[timeToSeconds(18, 0)] = [255, 155, 0];
-colors[timeToSeconds(21, 0)] = [0, 0, 0];
+colors[timeToSeconds(0, 0)] = fullNight;
+colors[timeToSeconds(5, 0)] = fullNight;
+colors[timeToSeconds(8, 0)] = lateEvening;
+colors[timeToSeconds(12, 0)] = fullDay;
+colors[timeToSeconds(16, 0)] = fullDay;
+colors[timeToSeconds(17, 0)] = brightEvening;
+colors[timeToSeconds(18, 0)] = midEvening;
+colors[timeToSeconds(21, 0)] = fullNight;
 colors[timeToSeconds(24, 0)] = colors[timeToSeconds(0, 0)];
 
 var colorsTimestamp = [];
