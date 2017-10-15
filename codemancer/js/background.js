@@ -62,5 +62,7 @@ function updateBackgroundColor(){
         updateBackgroundColor();
     }, updateBackgroundColorPeriod);
 }
-generateColorsArray();
-updateBackgroundColor();
+$(function() {
+    generateColorsArray();
+    updateBackgroundColor();
+});
