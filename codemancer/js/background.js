@@ -1,4 +1,4 @@
-var sunRiseSetAPI = 'https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564?formatted=0';
+var sunRiseSetAPI = "https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0";
 
 var fullNight = [0, 0, 0];
 var fullDay = [0, 204, 255];
@@ -23,11 +23,21 @@ var updateBackgroundColorPeriod = 5 * 60 * 1000;
 function generateColorsArray(){
     $.get(sunRiseSetAPI,
         function(data) {
-            // data.results['civil_twilight_begin']
+            data = parseData(data);
             console.log(data);
         }
     );
     colorsTimestamp = Object.keys(colors);
+}
+
+function parseData(data) {
+    data = data.results;
+    Object.keys(data).forEach(function(key) {
+        if (key !== "day_length") {
+            data[key] = new Date(data[key]);
+        }
+    });
+    return data;
 }
 
 function componentToHex(c) {
