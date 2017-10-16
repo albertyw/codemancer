@@ -285,11 +285,6 @@ var Clock = {
     digital : {
       time : $('#time'),
       date : $('#date')
-    },
-    analog: {
-      second : $('#secondhand'),
-      minute : $('#minutehand'),
-      hour : $('#hourhand')
     }
   },
 
@@ -340,14 +335,6 @@ var Clock = {
     var oldParts = Clock._parts || {};
 
     Clock.$el.digital.date.html(Clock.dateTemplate(parts));
-
-    _.each(['hour', 'minute', 'second'], function(unit){
-      if( parts[unit] !== oldParts[unit] ){
-        Clock.$el.digital.time.find('.' + unit).text(parts[unit]);
-        Clock.$el.analog[unit].attr("transform", Clock.transformTemplate(parts[unit + 'Angle']));
-      }
-    });
-
     Clock._parts = parts;
   },
 
