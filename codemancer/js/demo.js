@@ -1,5 +1,6 @@
 var originalDate = Date;
 var originalUpdateBackgroundColorPeriod = updateBackgroundColorPeriod;
+var demoOn = false;
 
 mockDate = function() {
     var date = new originalDate();
@@ -20,4 +21,13 @@ function startDemo() {
 function stopDemo() {
     Date = originalDate;
     updateBackgroundColorPeriod = originalUpdateBackgroundColorPeriod;
+}
+
+function toggleDemo() {
+    if (demoOn) {
+        stopDemo();
+    } else {
+        startDemo();
+    }
+    demoOn = !demoOn;
 }
