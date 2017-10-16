@@ -84,7 +84,6 @@ var Storage = {
     location: "sync",
     defaults: {
       unitType: "f",
-      clock: 12,
       seconds: true,
       lang: "EN",
       location: {lat: 37.778519, lng: -122.40564},
@@ -286,11 +285,6 @@ var Clock = {
     digital : {
       time : $('#time'),
       date : $('#date')
-    },
-    analog: {
-      second : $('#secondhand'),
-      minute : $('#minutehand'),
-      hour : $('#hourhand')
     }
   },
 
@@ -301,12 +295,9 @@ var Clock = {
     var date = new Date(),
         hour = date.getHours();
 
-    if (options.clock === 12) {
-      if(hour > 12) {
-          hour = hour - 12;
-      } else if(hour === 0) {
-        hour = 12;
-      }
+    hour = hour % 12;
+    if(hour === 0) {
+      hour = 12;
     }
     return {
       // Digital
@@ -344,14 +335,6 @@ var Clock = {
     var oldParts = Clock._parts || {};
 
     Clock.$el.digital.date.html(Clock.dateTemplate(parts));
-
-    _.each(['hour', 'minute', 'second'], function(unit){
-      if( parts[unit] !== oldParts[unit] ){
-        Clock.$el.digital.time.find('.' + unit).text(parts[unit]);
-        Clock.$el.analog[unit].attr("transform", Clock.transformTemplate(parts[unit + 'Angle']));
-      }
-    });
-
     Clock._parts = parts;
   },
 
