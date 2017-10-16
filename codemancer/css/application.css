@@ -293,3 +293,8 @@ to {
 .main-return:hover {
     color: #fff;
 }
+.wunder a {
+    font-size: 1em;
+    font-weight: normal;
+    color: rgba(255, 255, 255, 0.3);
+}
