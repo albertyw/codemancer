@@ -307,11 +307,6 @@ var Clock = {
       hour: Clock.appendZero(hour),
       minute: Clock.appendZero(date.getMinutes()),
       second: Clock.appendZero(date.getSeconds()),
-
-      // Analog
-      secondAngle: date.getSeconds() * 6,
-      minuteAngle: date.getMinutes() * 6,
-      hourAngle: ((date.getHours() % 12) + date.getMinutes()/60) * 30
     };
   },
 
@@ -335,6 +330,13 @@ var Clock = {
     var oldParts = Clock._parts || {};
 
     Clock.$el.digital.date.html(Clock.dateTemplate(parts));
+
+    _.each(['hour', 'minute', 'second'], function(unit){
+      if( parts[unit] !== oldParts[unit] ){
+        Clock.$el.digital.time.find('.' + unit).text(parts[unit]);
+      }
+    });
+
     Clock._parts = parts;
   },
 
