@@ -89,7 +89,7 @@
     font-weight: bold;
     font-size: 1.5em;
 }
-#weather li .day {
+#weather li .hour {
     font-size: 1.1em;
     margin-top: 10px;
     letter-spacing: 2px;

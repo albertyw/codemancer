@@ -160,7 +160,7 @@ b {
     stroke: rgba(0, 0, 0, 0.5);
     fill: rgba(0, 0, 0, 0.5);
 }
-.dark-text #weather .day, .dark-text #weather .now p {
+.dark-text #weather .hour, .dark-text #weather .now p {
     -webkit-text-stroke: 1px rgba(0, 0, 0, 0.5);
 }
 .light-text {
@@ -182,7 +182,7 @@ b {
     stroke: rgba(255, 255, 255, 0.8);
     fill: rgba(255, 255, 255, 0.8);
 }
-.light-text #weather .day, .light-text #weather .now p {
+.light-text #weather .hour, .light-text #weather .now p {
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
 }
 .no-seconds .second {

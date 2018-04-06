@@ -185,7 +185,7 @@ var Weather = {
     for (var i = Weather.$el.forecast.length - 1; i >= 0; i--) {
       var df = data.hourly_forecast[i*3];
       w2.forecast[i] = {
-        day: df.FCTTIME.weekday_name,
+        hour: df.FCTTIME.civil,
         condition: df.condition,
         conditionCode: Weather.condition(df.icon_url),
         temp: Math.round(df.temp.english),
@@ -234,8 +234,8 @@ var Weather = {
     el.attr("title", data.condition);
     el.find('.weather').html(data.conditionCode);
     el.find('.temp').html(data.temp);
-    if(data.day) {
-      el.find('.day').html(data.day);
+    if(data.hour) {
+      el.find('.hour').html(data.hour);
     }
   },
 
