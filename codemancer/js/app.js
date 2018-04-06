@@ -177,7 +177,6 @@ var Weather = {
     // Lets only keep what we need.
     var w2 = {
       city: data.locationDisplayName,
-      weatherUrl: data.current_observation.forecast_url,
       current: {
         condition: data.current_observation.weather,
         conditionCode: Weather.condition(data.current_observation.icon_url),
