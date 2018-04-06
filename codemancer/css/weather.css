@@ -84,27 +84,10 @@
 #weather li .temp:after {
     clear: both;
 }
-#weather li .temp .w-left, #weather li .temp .w-right {
-    float: left;
-    width: 40px;
-}
-#weather li .temp .w-mid {
-    float: left;
-    width: 10px;
-    height: 20px;
-}
-#weather li .temp p {
+#weather li div.temp {
     display: block;
     font-weight: bold;
     font-size: 1.5em;
-}
-#weather li .temp .low {
-    opacity: .4;
-    text-align: left;
-    -webkit-text-stroke: 0;
-}
-#weather li .temp .high {
-    text-align: right;
 }
 #weather li .day {
     font-size: 1.1em;

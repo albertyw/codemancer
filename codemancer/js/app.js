@@ -188,8 +188,7 @@ var Weather = {
         day: df.FCTTIME.weekday_name,
         condition: df.condition,
         conditionCode: Weather.condition(df.icon_url),
-        high: Math.round(df.temp.english),
-        low: Math.round(df.temp.english)
+        temp: Math.round(df.temp.english),
       };
     }
     deferred.resolve(w2);
@@ -234,12 +233,7 @@ var Weather = {
   renderDay: function(el, data) {
     el.attr("title", data.condition);
     el.find('.weather').html(data.conditionCode);
-    if (!_.isUndefined(data.high) && !_.isUndefined(data.low)) {
-      el.find('.high').html(data.high);
-      el.find('.low').html(data.low);
-    } else {
-      el.find('.temp').html(data.temp);
-    }
+    el.find('.temp').html(data.temp);
     if(data.day) {
       el.find('.day').html(data.day);
     }
