@@ -6,8 +6,9 @@
     "test": "tests"
   },
   "scripts": {
+    "eslint": "eslint codemancer/js",
     "stylelint": "stylelint codemancer/css/*",
-    "test": "npm run stylelint"
+    "test": "npm run stylelint && npm run eslint"
   },
   "repository": {
     "type": "git",
