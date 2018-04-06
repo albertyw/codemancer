@@ -233,13 +233,6 @@ var Weather = {
       var dayWeather = wd.forecast[i];
       Weather.renderDay($el, dayWeather);
     });
-
-    // Change link to weather underground
-    $('a.wunder').attr('href', Weather.link(wd));
-  },
-
-  link: function(data) {
-    return data.weatherUrl + "?apiref=d1bfeac98cad347b";
   },
 
   renderDay: function(el, data) {
