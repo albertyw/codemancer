@@ -83,7 +83,6 @@ var Storage = {
     key: "options",
     location: "sync",
     defaults: {
-      unitType: "f",
       seconds: true,
       lang: "EN",
       location: {lat: 37.778519, lng: -122.40564},
@@ -170,9 +169,7 @@ var Weather = {
   },
 
   parse: function(data) {
-    var unitType = Storage.options.defaults.unitType;
     var deferred = Q.defer();
-    var startUnitType = "f";
 
     // Lets only keep what we need.
     var w2 = {
@@ -180,7 +177,7 @@ var Weather = {
       current: {
         condition: data.current_observation.weather,
         conditionCode: Weather.condition(data.current_observation.icon_url),
-        temp: Weather.tempConvert(data.current_observation.temp_f, startUnitType, unitType)
+        temp: Math.round(data.current_observation.temp_f)
       },
       forecast: []
     };
@@ -191,8 +188,8 @@ var Weather = {
         day: df.date.weekday,
         condition: df.conditions,
         conditionCode: Weather.condition(df.icon_url),
-        high: Weather.tempConvert(df.high.fahrenheit, startUnitType, unitType),
-        low: Weather.tempConvert(df.low.fahrenheit, startUnitType, unitType)
+        high: Math.round(df.high.fahrenheit),
+        low: Math.round(df.low.fahrenheit)
       };
     }
     deferred.resolve(w2);
@@ -245,23 +242,6 @@ var Weather = {
     }
     if(data.day) {
       el.find('.day').html(data.day);
-    }
-  },
-
-  tempConvert: function(temp, startType, endType) {
-    temp = Math.round(parseFloat(temp));
-    if (startType === "f") {
-      if (endType === 'c') {
-        return Math.round((5/9)*(temp-32));
-      } else {
-        return temp;
-      }
-    } else {
-      if (endType === 'c') {
-        return temp;
-      } else {
-        return Math.round((9/5) * temp + 32);
-      }
     }
   },
 
