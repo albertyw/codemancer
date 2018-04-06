@@ -183,7 +183,7 @@ var Weather = {
     };
 
     for (var i = Weather.$el.forecast.length - 1; i >= 0; i--) {
-      var df = data.hourly_forecast[i*3];
+      var df = data.hourly_forecast[(i+1)*3];
       w2.forecast[i] = {
         hour: df.FCTTIME.civil,
         condition: df.condition,
