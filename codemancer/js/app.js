@@ -155,7 +155,7 @@ var Weather = {
   atLocation: function (location) {
     var lang = Storage.options.defaults.lang;
     return Q.when($.ajax({
-      url: Weather.urlBuilder("conditions/forecast/", location, lang),
+      url: Weather.urlBuilder("hourly/", location, lang),
       type: 'GET',
       dataType: "json"
     }))
@@ -175,21 +175,20 @@ var Weather = {
     var w2 = {
       city: data.locationDisplayName,
       current: {
-        condition: data.current_observation.weather,
-        conditionCode: Weather.condition(data.current_observation.icon_url),
-        temp: Math.round(data.current_observation.temp_f)
+        condition: data.hourly_forecast[0].wx,
+        conditionCode: Weather.condition(data.hourly_forecast[0].icon_url),
+        temp: Math.round(data.hourly_forecast[0].temp.english)
       },
       forecast: []
     };
 
     for (var i = Weather.$el.forecast.length - 1; i >= 0; i--) {
-      var df = data.forecast.simpleforecast.forecastday[i];
+      var df = data.hourly_forecast[(i+1)*3];
       w2.forecast[i] = {
-        day: df.date.weekday,
-        condition: df.conditions,
+        hour: df.FCTTIME.civil,
+        condition: df.condition,
         conditionCode: Weather.condition(df.icon_url),
-        high: Math.round(df.high.fahrenheit),
-        low: Math.round(df.low.fahrenheit)
+        temp: Math.round(df.temp.english),
       };
     }
     deferred.resolve(w2);
@@ -234,14 +233,9 @@ var Weather = {
   renderDay: function(el, data) {
     el.attr("title", data.condition);
     el.find('.weather').html(data.conditionCode);
-    if (!_.isUndefined(data.high) && !_.isUndefined(data.low)) {
-      el.find('.high').html(data.high);
-      el.find('.low').html(data.low);
-    } else {
-      el.find('.temp').html(data.temp);
-    }
-    if(data.day) {
-      el.find('.day').html(data.day);
+    el.find('.temp').html(data.temp);
+    if(data.hour) {
+      el.find('.hour').html(data.hour);
     }
   },
 
