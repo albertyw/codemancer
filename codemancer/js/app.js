@@ -58,7 +58,6 @@ const Storage = {
   options: {
     key: "options",
     defaults: {
-      seconds: true,
       lang: "EN",
       animation: true,
       textColor: "light-text"
@@ -312,10 +311,6 @@ function style() {
     $(".animated").removeClass('animated');
     $(".fadeIn").removeClass('fadeIn');
     $(".fadeInDown").removeClass('fadeInDown');
-  }
-
-  if (!options.seconds) {
-    $('#main').addClass('no-seconds');
   }
 }
 

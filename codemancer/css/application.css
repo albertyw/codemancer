@@ -185,24 +185,6 @@ b {
 .light-text #weather .hour, .light-text #weather .now p {
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
 }
-.no-seconds .second {
-    display: none!important;
-}
-.no-seconds #time {
-    font-size: 17em;
-    line-height: .9;
-}
-.no-seconds .hour {
-    margin-right: 50px;
-    letter-spacing: 10px;
-}
-.no-seconds .minute {
-    margin-left: 50px;
-    letter-spacing: 10px;
-}
-.no-seconds .title {
-    margin: 20px auto;
-}
 .smooth-light {
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.7);
 }
