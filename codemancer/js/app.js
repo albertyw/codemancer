@@ -42,6 +42,7 @@ const weatherIconConversions = {
   "nt_mostlysunny": "2"
 };
 const targetLocation = {lat: 37.778519, lng: -122.40564};
+const geocodingAPIKey = "AIzaSyC0LuOBNZphx2zE520aewdJ1LSe1xdC5yY";
 
 const Loader = {
   loader: $('#loader'),
@@ -65,7 +66,11 @@ const Location = {
   getDisplayName: function(location) {
     return Q.when($.ajax({
       url : "https://maps.googleapis.com/maps/api/geocode/json",
-      data: {"latlng": location.lat +","+ location.lng, sensor:false},
+      data: {
+        latlng: location.lat +","+ location.lng,
+        sensor: false,
+        key: geocodingAPIKey,
+      },
       dataType: "json"
     }))
     .then(function(data) {
