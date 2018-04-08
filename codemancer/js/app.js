@@ -226,13 +226,13 @@ const Clock = {
       day: Clock.weekdays[date.getDay()],
       date: date.getDate(),
       month: Clock.months[date.getMonth()],
-      hour: Clock.appendZero(hour),
-      minute: Clock.appendZero(date.getMinutes()),
-      second: Clock.appendZero(date.getSeconds()),
+      hour: Clock.prependZero(hour),
+      minute: Clock.prependZero(date.getMinutes()),
+      second: Clock.prependZero(date.getSeconds()),
     };
   },
 
-  appendZero : function(num) {
+  prependZero : function(num) {
     if(num < 10) {
       return "0" + num;
     }
