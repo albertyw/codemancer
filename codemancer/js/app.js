@@ -53,31 +53,6 @@ var Loader = {
   }
 };
 
-var ErrorHandler = {
-  $el: {
-    error: $("#error"),
-    weather: $("#weather-inner"),
-    city: $("#city")
-  },
-
-  show: function(message) {
-    Loader.hide();
-    ErrorHandler.$el.error.html(message);
-    ErrorHandler.$el.error.show();
-    ErrorHandler.$el.weather.hide();
-    ErrorHandler.$el.city.hide();
-  },
-
-  hide: function() {
-    ErrorHandler.$el.error.hide();
-    ErrorHandler.$el.weather.show();
-  },
-
-  offline: function() {
-    ErrorHandler.show($("#offlineError").html());
-  }
-};
-
 var Storage = {
   options: {
     key: "options",
