@@ -224,17 +224,14 @@ const Clock = {
       day: Clock.weekdays[date.getDay()],
       date: date.getDate(),
       month: Clock.months[date.getMonth()],
-      hour: Clock.prependZero(hour, true),
+      hour: Clock.prependZero(hour),
       minute: Clock.prependZero(date.getMinutes()),
       second: Clock.prependZero(date.getSeconds()),
     };
   },
 
-  prependZero : function(num, dark) {
+  prependZero : function(num) {
     if(num < 10) {
-      if(dark) {
-        return '<span class="transparent">0</span>' + num;
-      }
       return "0" + num;
     }
     return num;
@@ -256,7 +253,7 @@ const Clock = {
 
     _.each(['hour', 'minute', 'second'], function(unit){
       if( parts[unit] !== oldParts[unit] ){
-        Clock.$el.digital.time.find('.' + unit).html(parts[unit]);
+        Clock.$el.digital.time.find('.' + unit).text(parts[unit]);
       }
     });
 
