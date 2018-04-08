@@ -58,7 +58,6 @@ const Storage = {
   options: {
     key: "options",
     defaults: {
-      lang: "EN",
       animation: true,
       textColor: "light-text"
     }
@@ -110,20 +109,15 @@ const Weather = {
     city : $('#city')
   },
 
-  urlBuilder: function(type, location, lang) {
-    let url = "https://api.wunderground.com/api/d1bfeac98cad347b/" + type + "/";
-
-    if (lang) {
-      url = url + "lang:" + lang + "/";
-    }
-
-    return url + "q/" + location.lat + "," + location.lng + ".json";
+  urlBuilder: function(type, location) {
+    const url = "https://api.wunderground.com/api/d1bfeac98cad347b/" +
+        type + "/lang:EN/q/" + location.lat + "," + location.lng + ".json";
+    return url;
   },
 
   atLocation: function () {
-    const lang = Storage.options.defaults.lang;
     return Q.when($.ajax({
-      url: Weather.urlBuilder("hourly/", targetLocation, lang),
+      url: Weather.urlBuilder("hourly/", targetLocation),
       type: 'GET',
       dataType: "json"
     }))
