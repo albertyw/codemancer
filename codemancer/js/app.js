@@ -57,8 +57,7 @@ const Loader = {
 
 const Storage = {
   options: {
-    key: "options",
-    defaults: {}
+    key: "options"
   }
 };
 
@@ -218,7 +217,7 @@ const Clock = {
   weekdays : ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
   months : ["January","February","March","April","May","June","July","August","September","October","November","December"],
 
-  timeParts: function(options) {
+  timeParts: function() {
     const date = new Date();
     let hour = date.getHours();
 
@@ -255,8 +254,8 @@ const Clock = {
     return "rotate(" + angle + ",50,50)";
   },
 
-  refresh: function(options) {
-    const parts = Clock.timeParts(options);
+  refresh: function() {
+    const parts = Clock.timeParts();
     const oldParts = Clock._parts || {};
 
     Clock.$el.digital.date.html(Clock.dateTemplate(parts));
@@ -270,7 +269,7 @@ const Clock = {
     Clock._parts = parts;
   },
 
-  start: function(options) {
+  start: function() {
     if (Clock._running) {
       clearInterval(Clock._running);
     }
@@ -278,7 +277,7 @@ const Clock = {
     function tick() {
       const delayTime = 500;
 
-      Clock.refresh(options);
+      Clock.refresh();
 
       Clock._running = setTimeout(function(){
         window.requestAnimationFrame( tick );
@@ -290,9 +289,8 @@ const Clock = {
 };
 
 function style() {
-  const options = Storage.options.defaults;
   // Kick off the clock
-  Clock.start(options);
+  Clock.start();
   const $main = $('#main');
 
   // Text Color
