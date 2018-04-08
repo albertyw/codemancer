@@ -58,7 +58,6 @@ const Storage = {
   options: {
     key: "options",
     defaults: {
-      animation: true,
       textColor: "light-text"
     }
   }
@@ -184,9 +183,7 @@ const Weather = {
     // Show Forecast
     Weather.$el.forecast.each(function(i, el) {
       const $el = $(el);
-        if (Storage.options.defaults.animation) {
-          $el.css("-webkit-animation-delay",150 * i +"ms").addClass('animated fadeInUp');
-        }
+      $el.css("-webkit-animation-delay",150 * i +"ms").addClass('animated fadeInUp');
       const dayWeather = wd.forecast[i];
       Weather.renderDay($el, dayWeather);
     });
@@ -298,13 +295,6 @@ function style() {
       $main[0].className = $main[0].className.replace(/\w*-text/g, '');
     }
     $main.addClass(options.textColor);
-  }
-
-  // Remove animation
-  if (!options.animation) {
-    $(".animated").removeClass('animated');
-    $(".fadeIn").removeClass('fadeIn');
-    $(".fadeInDown").removeClass('fadeInDown');
   }
 }
 
