@@ -55,12 +55,6 @@ const Loader = {
   }
 };
 
-const Storage = {
-  options: {
-    key: "options"
-  }
-};
-
 const Location = {
   getDisplayName: function(location) {
     return Q.when($.ajax({
