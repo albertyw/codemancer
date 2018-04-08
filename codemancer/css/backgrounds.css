@@ -1,9 +1,6 @@
 .light-bg.light-text {
     background: #aaa;
 }
-.dark-bg.dark-text {
-    background: #444;
-}
 .dark-bg.light-text .main-return, .dark-bg.light-text .title {
     color: #ffffff;
 }

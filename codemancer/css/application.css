@@ -141,28 +141,6 @@ b {
     font-weight: 600;
     font: 'Helvetica Neue', 'Open-Bold', sans-serif;
 }
-.dark-text {
-    color: rgba(0, 0, 0, 0.5);
-}
-.dark-text .main-return, .dark-text .title {
-    color: rgba(0, 0, 0, 0.3);
-}
-.dark-text .wunder path {
-    fill: rgba(0, 0, 0, 0.3);
-}
-.dark-text .main-return:hover {
-    color: rgba(0, 0, 0, 0.7);
-}
-.dark-text .wunder:hover path {
-    fill: rgba(0, 0, 0, 0.7);
-}
-.dark-text #clock {
-    stroke: rgba(0, 0, 0, 0.5);
-    fill: rgba(0, 0, 0, 0.5);
-}
-.dark-text #weather .hour, .dark-text #weather .now p {
-    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.5);
-}
 .light-text {
     color: rgba(255, 255, 255, 0.8);
 }
