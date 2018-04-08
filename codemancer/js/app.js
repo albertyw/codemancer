@@ -41,6 +41,7 @@ const weatherIconConversions = {
   "nt_partlycloudy": "2",
   "nt_mostlysunny": "2"
 };
+const targetLocation = {lat: 37.778519, lng: -122.40564};
 
 const Loader = {
   loader: $('#loader'),
@@ -56,11 +57,9 @@ const Loader = {
 const Storage = {
   options: {
     key: "options",
-    location: "sync",
     defaults: {
       seconds: true,
       lang: "EN",
-      location: {lat: 37.778519, lng: -122.40564},
       animation: true,
       textColor: "light-text"
     }
@@ -101,12 +100,7 @@ const Location = {
       locData.pop(2);
     }
     return locData.join(", ");
-  },
-
-  current: function() {
-    return Storage.options.defaults.location;
   }
-
 };
 
 const Weather = {
@@ -127,15 +121,15 @@ const Weather = {
     return url + "q/" + location.lat + "," + location.lng + ".json";
   },
 
-  atLocation: function (location) {
+  atLocation: function () {
     const lang = Storage.options.defaults.lang;
     return Q.when($.ajax({
-      url: Weather.urlBuilder("hourly/", location, lang),
+      url: Weather.urlBuilder("hourly/", targetLocation, lang),
       type: 'GET',
       dataType: "json"
     }))
     .then(function(data) {
-      return Location.getDisplayName(location).then(function(name) {
+      return Location.getDisplayName(targetLocation).then(function(name) {
         data.locationDisplayName = name;
         return data;
       });
@@ -216,8 +210,7 @@ const Weather = {
 
   load: function() {
     Loader.show();
-    const l = Location.current();
-    return Weather.atLocation(l);
+    return Weather.atLocation();
   }
 };
 
