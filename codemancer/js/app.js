@@ -57,9 +57,7 @@ const Loader = {
 const Storage = {
   options: {
     key: "options",
-    defaults: {
-      textColor: "light-text"
-    }
+    defaults: {}
   }
 };
 
@@ -290,12 +288,10 @@ function style() {
   const $main = $('#main');
 
   // Text Color
-  if (!$main.hasClass(options.textColor)) {
-    if ($main.is("[class*='-text']")) {
-      $main[0].className = $main[0].className.replace(/\w*-text/g, '');
-    }
-    $main.addClass(options.textColor);
+  if ($main.is("[class*='-text']")) {
+    $main[0].className = $main[0].className.replace(/\w*-text/g, '');
   }
+  $main.addClass("light-text");
 }
 
 function main() {
