@@ -1,5 +1,5 @@
-var weatherRefreshInterval = 20 * 60 * 1000;
-var weatherIconConversions = {
+const weatherRefreshInterval = 20 * 60 * 1000;
+const weatherIconConversions = {
   "chanceflurries": "p",
   "chancesnow": "p",
   "/ig/images/weather/flurries.gif": "]",
@@ -42,7 +42,7 @@ var weatherIconConversions = {
   "nt_mostlysunny": "2"
 };
 
-var Loader = {
+const Loader = {
   loader: $('#loader'),
   show: function() {
     this.loader.siblings('div').hide();
@@ -53,7 +53,7 @@ var Loader = {
   }
 };
 
-var Storage = {
+const Storage = {
   options: {
     key: "options",
     location: "sync",
@@ -67,7 +67,7 @@ var Storage = {
   }
 };
 
-var Location = {
+const Location = {
   getDisplayName: function(location) {
     return Q.when($.ajax({
       url : "https://maps.googleapis.com/maps/api/geocode/json",
@@ -84,10 +84,10 @@ var Location = {
   },
 
   parseDisplayName: function(data) {
-    var result=data.results[0].address_components;
-    var info=[];
-    for(var i=0;i<result.length;++i) {
-      var type = result[i].types[0];
+    const result=data.results[0].address_components;
+    const info=[];
+    for(let i=0;i<result.length;++i) {
+      const type = result[i].types[0];
       if(type==="country"){
         info.push(result[i].long_name);
       } else if(type==="administrative_area_level_1"){
@@ -96,7 +96,7 @@ var Location = {
         info.unshift(result[i].long_name);
       }
     }
-    var locData = _.uniq(info);
+    const locData = _.uniq(info);
     if (locData.length === 3) {
       locData.pop(2);
     }
@@ -109,7 +109,7 @@ var Location = {
 
 };
 
-var Weather = {
+const Weather = {
 
   $el: {
     now : $('.now'),
@@ -118,7 +118,7 @@ var Weather = {
   },
 
   urlBuilder: function(type, location, lang) {
-    var url = "https://api.wunderground.com/api/d1bfeac98cad347b/" + type + "/";
+    let url = "https://api.wunderground.com/api/d1bfeac98cad347b/" + type + "/";
 
     if (lang) {
       url = url + "lang:" + lang + "/";
@@ -128,7 +128,7 @@ var Weather = {
   },
 
   atLocation: function (location) {
-    var lang = Storage.options.defaults.lang;
+    const lang = Storage.options.defaults.lang;
     return Q.when($.ajax({
       url: Weather.urlBuilder("hourly/", location, lang),
       type: 'GET',
@@ -144,10 +144,10 @@ var Weather = {
   },
 
   parse: function(data) {
-    var deferred = Q.defer();
+    const deferred = Q.defer();
 
     // Lets only keep what we need.
-    var w2 = {
+    const w2 = {
       city: data.locationDisplayName,
       current: {
         condition: data.hourly_forecast[0].wx,
@@ -157,8 +157,8 @@ var Weather = {
       forecast: []
     };
 
-    for (var i = Weather.$el.forecast.length - 1; i >= 0; i--) {
-      var df = data.hourly_forecast[(i+1)*3];
+    for (let i = Weather.$el.forecast.length - 1; i >= 0; i--) {
+      const df = data.hourly_forecast[(i+1)*3];
       w2.forecast[i] = {
         hour: df.FCTTIME.civil,
         condition: df.condition,
@@ -171,7 +171,7 @@ var Weather = {
   },
 
   condition: function (url){
-    var matcher = /\/(\w+).gif$/;
+    const matcher = /\/(\w+).gif$/;
     var code = matcher.exec(url);
     if (code) {
       code = code[1];
@@ -179,7 +179,7 @@ var Weather = {
       // We can't find the code
       code = null;
     }
-    var weatherIconCode = weatherIconConversions[code];
+    const weatherIconCode = weatherIconConversions[code];
     if (weatherIconCode === undefined) {
         return "T";
     }
@@ -196,11 +196,11 @@ var Weather = {
 
     // Show Forecast
     Weather.$el.forecast.each(function(i, el) {
-      var $el = $(el);
+      const $el = $(el);
         if (Storage.options.defaults.animation) {
           $el.css("-webkit-animation-delay",150 * i +"ms").addClass('animated fadeInUp');
         }
-      var dayWeather = wd.forecast[i];
+      const dayWeather = wd.forecast[i];
       Weather.renderDay($el, dayWeather);
     });
   },
@@ -216,12 +216,12 @@ var Weather = {
 
   load: function() {
     Loader.show();
-    var l = Location.current();
+    const l = Location.current();
     return Weather.atLocation(l);
   }
 };
 
-var Clock = {
+const Clock = {
   $el : {
     digital : {
       time : $('#time'),
@@ -233,8 +233,8 @@ var Clock = {
   months : ["January","February","March","April","May","June","July","August","September","October","November","December"],
 
   timeParts: function(options) {
-    var date = new Date(),
-        hour = date.getHours();
+    const date = new Date();
+    let hour = date.getHours();
 
     hour = hour % 12;
     if(hour === 0) {
@@ -267,8 +267,8 @@ var Clock = {
   },
 
   refresh: function(options) {
-    var parts = Clock.timeParts(options);
-    var oldParts = Clock._parts || {};
+    const parts = Clock.timeParts(options);
+    const oldParts = Clock._parts || {};
 
     Clock.$el.digital.date.html(Clock.dateTemplate(parts));
 
@@ -287,7 +287,7 @@ var Clock = {
     }
 
     function tick() {
-      var delayTime = 500;
+      const delayTime = 500;
 
       Clock.refresh(options);
 
@@ -301,10 +301,10 @@ var Clock = {
 };
 
 function style() {
-  var options = Storage.options.defaults;
+  const options = Storage.options.defaults;
   // Kick off the clock
   Clock.start(options);
-  var $main = $('#main');
+  const $main = $('#main');
 
   // Text Color
   if (!$main.hasClass(options.textColor)) {
@@ -327,7 +327,7 @@ function style() {
 }
 
 function main() {
-  var loader = Weather.load().then(function(data) {
+  const loader = Weather.load().then(function(data) {
     Loader.hide(0);
     Weather.render(data);
   });
