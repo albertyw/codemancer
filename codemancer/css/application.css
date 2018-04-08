@@ -207,6 +207,10 @@ b {
     -webkit-transition: none;
     -webkit-transform: rotate3d(0, 0, 0, 0);
 }
+#time span .transparent {
+    opacity: 0;
+    display: inline;
+}
 .title {
     font-size: 2em;
     color: white;
