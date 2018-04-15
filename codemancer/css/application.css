@@ -57,12 +57,6 @@ table {
     body #time {
         display: none;
     }
-    body #clock {
-        margin: 0 auto;
-        display: block;
-        stroke-linecap: round;
-        fill: none!important;
-    }
     body #face {
         stroke-width: 5px;
     }
@@ -157,10 +151,6 @@ b {
 .light-text .wunder:hover path {
     fill: #fff;
 }
-.light-text #clock {
-    stroke: rgba(255, 255, 255, 0.8);
-    fill: rgba(255, 255, 255, 0.8);
-}
 .light-text #weather .hour, .light-text #weather .now p {
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
 }
@@ -193,9 +183,7 @@ b {
     margin-left: -420px;
 }
 .weather-icon {
-    font-family: 'Weather'}
-#clock {
-    display: none;
+    font-family: 'Weather';
 }
 #time {
     font-size: 12em;
