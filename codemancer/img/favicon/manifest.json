@@ -1,5 +1,6 @@
 {
- "name": "App",
+ "name": "Codemancer",
+ "short_name": "Codemancer",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
