@@ -2,7 +2,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
     font: inherit;
     vertical-align: baseline;
 }
@@ -13,6 +12,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 body {
     line-height: 1;
+    font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', 'Open-Light', sans-serif;
+    background-color: #111;
+    margin: 0 auto;
+    height: 100%;
 }
 
 ol, ul {
@@ -23,7 +26,7 @@ blockquote, q {
     quotes: none;
 }
 
-blockquote:before, blockquote:after, q:before, q:after {
+blockquote::before, blockquote::after, q::before, q::after {
     content: '';
     content: none;
 }
@@ -34,13 +37,13 @@ table {
 }
 
 @font-face {
-    font-family: "FontAwesome";
+    font-family: 'FontAwesome';
     src: url('../font/fontawesome-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
-@media all and (max-width:750px) {
+@media all and (max-width: 750px) {
     body #weather ul {
         display: none;
     }
@@ -64,7 +67,7 @@ table {
     }
 
     body .second {
-        display: none!important;
+        display: none !important;
     }
 
     body #time {
@@ -143,13 +146,6 @@ html {
     background-repeat: repeat;
 }
 
-body {
-    font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', 'Open-Light', sans-serif;
-    background-color: #111;
-    margin: 0 auto;
-    height: 100%;
-}
-
 #main {
     -webkit-user-select: none;
     width: 100%;
@@ -166,8 +162,24 @@ a {
 }
 
 b {
-    font-weight: 600;
     font: 'Helvetica Neue', 'Open-Bold', sans-serif;
+}
+
+.title {
+    font-size: 2em;
+    color: white;
+    text-align: center;
+    font-weight: normal;
+    margin: 30px 0;
+    font-family: 'Helvetica Neue', 'Open-Reg', sans-serif;
+}
+
+.main-return {
+    right: 10px;
+}
+
+.main-return:hover {
+    color: #fff;
 }
 
 .light-text {
@@ -206,12 +218,12 @@ b {
     zoom: 1;
 }
 
-.clearfix:before, .clearfix:after {
+.clearfix::before, .clearfix::after {
     content: "";
     display: table;
 }
 
-.clearfix:after {
+.clearfix::after {
     clear: both;
 }
 
@@ -230,7 +242,7 @@ b {
 }
 
 .weather-icon {
-    font-family: 'Weather';
+    font-family: 'Weather', sans-serif;
 }
 
 #time {
@@ -244,15 +256,6 @@ b {
     text-align: center;
     -webkit-transition: none;
     -webkit-transform: rotate3d(0, 0, 0, 0);
-}
-
-.title {
-    font-size: 2em;
-    color: white;
-    text-align: center;
-    font-weight: normal;
-    margin: 30px 0;
-    font-family: 'Helvetica Neue', 'Open-Reg', sans-serif;
 }
 
 .icon-warning-sign {
@@ -270,7 +273,7 @@ b {
 }
 
 #loader {
-    font-family: 'Weather';
+    font-family: 'Weather', sans-serif;
     -webkit-animation: spin 900ms linear infinite;
     -webkit-transform-origin: 50% 100%;
 }
@@ -294,14 +297,6 @@ b {
 
 #error button {
     font-size: 0.5em;
-}
-
-.main-return {
-    right: 10px;
-}
-
-.main-return:hover {
-    color: #fff;
 }
 
 .wunder a {

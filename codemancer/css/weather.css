@@ -2,6 +2,17 @@
     font-size: 2em;
 }
 
+#weather span {
+    display: block;
+    font-family: 'Weather', sans-serif;
+}
+
+#weather .now span {
+    font-size: 11.5em;
+    height: 170px;
+    margin: 0 0 7px 10px;
+}
+
 #weather #error span {
     font-size: 0.8em;
     margin-left: 0;
@@ -28,18 +39,13 @@
     width: 780px;
 }
 
-#weather:before, #weather:after {
+#weather::before, #weather::after {
     content: "";
     display: table;
 }
 
-#weather:after {
+#weather::after {
     clear: both;
-}
-
-#weather span {
-    display: block;
-    font-family: 'Weather';
 }
 
 #weather .now {
@@ -47,12 +53,6 @@
     width: 150px;
     text-align: center;
     margin-top: -15px;
-}
-
-#weather .now span {
-    font-size: 11.5em;
-    height: 170px;
-    margin: 0 0 7px 10px;
 }
 
 #weather .now b {
@@ -93,12 +93,12 @@
     margin: 0 auto;
 }
 
-#weather li .temp:before, #weather li .temp:after {
+#weather li .temp::before, #weather li .temp::after {
     content: "";
     display: table;
 }
 
-#weather li .temp:after {
+#weather li .temp::after {
     clear: both;
 }
 
@@ -127,12 +127,9 @@
 
 .wunder path {
     -webkit-transition: all 200ms ease-in-out;
+    fill: #555;
 }
 
 .wunder {
     right: 90px;
-}
-
-.wunder path {
-    fill: #555;
 }
