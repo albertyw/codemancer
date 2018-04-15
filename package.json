@@ -6,7 +6,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "stylelint": "stylelint codemancer/css/*",
+    "test": "npm run stylelint"
   },
   "repository": {
     "type": "git",
