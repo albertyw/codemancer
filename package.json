@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/albertyw/codemancer#readme",
   "private": true,
-  "devDependencies": {},
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "stylelint": "^9.2.0",
     "stylelint-config-standard": "^18.2.0"
   }
