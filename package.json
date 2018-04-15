@@ -1,0 +1,28 @@
+{
+  "name": "codemancer",
+  "version": "1.0.0",
+  "description": "https://www.codemancer.com/",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "stylelint": "stylelint codemancer/css/*",
+    "test": "npm run stylelint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albertyw/codemancer.git"
+  },
+  "author": "Albert Wang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/albertyw/codemancer/issues"
+  },
+  "homepage": "https://github.com/albertyw/codemancer#readme",
+  "private": true,
+  "devDependencies": {},
+  "dependencies": {
+    "stylelint": "^9.2.0",
+    "stylelint-config-standard": "^18.2.0"
+  }
+}

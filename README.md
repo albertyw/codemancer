@@ -26,3 +26,12 @@ Changes from Currently Extension
    [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/Using_geolocation) instead.
  - Made background color change based on time of day
  - Minor code cleanup, updated javascript libraries, refactored some code.
+
+Setup and Testing
+-----------------
+
+```
+nvm use 8
+npm install
+npm test
+```
