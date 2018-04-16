@@ -298,7 +298,7 @@ function main() {
     });
 
     loader.fail(function(reason) {
-        console.error(reason);
+        Rollbar.error(reason);
     });
 }
 

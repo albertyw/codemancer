@@ -25,6 +25,7 @@ module.exports = {
     "globals": {
         "$": true,
         "_": true,
-        "Q": true
+        "Q": true,
+        "Rollbar": true,
     }
 };
