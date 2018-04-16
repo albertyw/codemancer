@@ -27,5 +27,7 @@ module.exports = {
         "_": true,
         "Q": true,
         "Rollbar": true,
+        "updateBackgroundColorPeriod": true,
+        "updateBackgroundColor": true
     }
 };
