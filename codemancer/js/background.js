@@ -39,7 +39,7 @@ function parseData(data) {
     data = data.results;
     Object.keys(data).forEach(function(key) {
         if (key !== "day_length") {
-            data[key] = new Date(data[key]);
+            data[key] = new AppDate(data[key]);
         }
     });
     return data;
@@ -60,7 +60,7 @@ function rgbToHex(r, g, b) {
 }
 
 function currentTimestamp() {
-    var currentDate = new Date();
+    var currentDate = new AppDate();
     return dateToMinutes(currentDate);
 }
 
