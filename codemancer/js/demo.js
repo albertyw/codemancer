@@ -10,7 +10,7 @@ mockDate = function() {
     date.setMinutes(0);
     date.setSeconds(0);
     return date;
-}
+};
 
 function startDemo() {
     Date = mockDate;

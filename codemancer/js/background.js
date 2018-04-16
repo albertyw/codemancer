@@ -17,8 +17,8 @@ function generateColorsArray(){
     $.get(sunRiseSetAPI,
         function(data) {
             data = parseData(data);
-            var sunrise = dateToMinutes(data['sunrise']);
-            var sunset = dateToMinutes(data['sunset']);
+            var sunrise = dateToMinutes(data["sunrise"]);
+            var sunset = dateToMinutes(data["sunset"]);
             colors[sunrise - 120] = fullNight;
             colors[sunrise - 60] = lateEvening;
             colors[sunrise] = midEvening;
