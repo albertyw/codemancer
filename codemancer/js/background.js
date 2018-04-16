@@ -17,8 +17,8 @@ function generateColorsArray(){
     $.get(sunRiseSetAPI,
         function(data) {
             data = parseData(data);
-            var sunrise = dateToMinutes(data['sunrise']);
-            var sunset = dateToMinutes(data['sunset']);
+            var sunrise = dateToMinutes(data["sunrise"]);
+            var sunset = dateToMinutes(data["sunset"]);
             colors[sunrise - 120] = fullNight;
             colors[sunrise - 60] = lateEvening;
             colors[sunrise] = midEvening;
@@ -39,7 +39,7 @@ function parseData(data) {
     data = data.results;
     Object.keys(data).forEach(function(key) {
         if (key !== "day_length") {
-            data[key] = new Date(data[key]);
+            data[key] = new AppDate(data[key]);
         }
     });
     return data;
@@ -60,7 +60,7 @@ function rgbToHex(r, g, b) {
 }
 
 function currentTimestamp() {
-    var currentDate = new Date();
+    var currentDate = new AppDate();
     return dateToMinutes(currentDate);
 }
 

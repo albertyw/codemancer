@@ -1,29 +1,28 @@
-var originalDate = Date;
 var originalUpdateBackgroundColorPeriod = updateBackgroundColorPeriod;
 var demoOn = false;
 
-mockDate = function() {
-    var date = new originalDate();
+var mockDate = function() {
+    var date = new Date();
     var timestep = date.getSeconds() + date.getMinutes() * 60;
     var hours = timestep % 24;
     date.setHours(hours);
     date.setMinutes(0);
     date.setSeconds(0);
     return date;
-}
+};
 
 function startDemo() {
-    Date = mockDate;
+    AppDate = mockDate;
     updateBackgroundColorPeriod = 500;
     updateBackgroundColor();
 }
 
 function stopDemo() {
-    Date = originalDate;
+    AppDate = Date;
     updateBackgroundColorPeriod = originalUpdateBackgroundColorPeriod;
 }
 
-function toggleDemo() {
+function toggleDemo() { // eslint-disable-line no-unused-vars
     if (demoOn) {
         stopDemo();
     } else {
