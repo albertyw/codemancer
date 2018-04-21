@@ -28,7 +28,7 @@ const weatherIconConversions = {
     "nt_rain": "6",
     "snow": "o",
     "nt_snow": "o",
-  // Night Specific
+    // Night Specific
     "nt_chanceflurries": "a",
     "nt_chancerain": "8",
     "nt_chancesleet": "5",
@@ -67,13 +67,13 @@ const Location = {
             },
             dataType: "json"
         }))
-    .then(function(data) {
-        if (data.status === "OK") {
-            return Location.parseDisplayName(data);
-        } else {
-            throw new Error("Failed to geocode");
-        }
-    });
+            .then(function(data) {
+                if (data.status === "OK") {
+                    return Location.parseDisplayName(data);
+                } else {
+                    throw new Error("Failed to geocode");
+                }
+            });
     },
 
     parseDisplayName: function(data) {
@@ -117,19 +117,19 @@ const Weather = {
             type: "GET",
             dataType: "json"
         }))
-    .then(function(data) {
-        return Location.getDisplayName(targetLocation).then(function(name) {
-            data.locationDisplayName = name;
-            return data;
-        });
-    })
-    .then(Weather.parse);
+            .then(function(data) {
+                return Location.getDisplayName(targetLocation).then(function(name) {
+                    data.locationDisplayName = name;
+                    return data;
+                });
+            })
+            .then(Weather.parse);
     },
 
     parse: function(data) {
         const deferred = Q.defer();
 
-    // Lets only keep what we need.
+        // Lets only keep what we need.
         const w2 = {
             city: data.locationDisplayName,
             current: {
@@ -159,7 +159,7 @@ const Weather = {
         if (code) {
             code = code[1];
         } else {
-      // We can't find the code
+            // We can't find the code
             code = null;
         }
         const weatherIconCode = weatherIconConversions[code];
@@ -174,10 +174,10 @@ const Weather = {
         Weather.renderDay(Weather.$el.now, wd.current);
         Weather.$el.city.html(wd.city).show();
 
-    // Show Weather & Hide Loader
+        // Show Weather & Hide Loader
         $("#weather-inner").removeClass("hidden").show();
 
-    // Show Forecast
+        // Show Forecast
         Weather.$el.forecast.each(function(i, el) {
             const $el = $(el);
             $el.css("-webkit-animation-delay",150 * i +"ms").addClass("animated fadeInUp");
@@ -221,7 +221,7 @@ const Clock = {
             hour = 12;
         }
         return {
-      // Digital
+            // Digital
             day: Clock.weekdays[date.getDay()],
             date: date.getDate(),
             month: Clock.months[date.getMonth()],
@@ -281,11 +281,11 @@ const Clock = {
 };
 
 function style() {
-  // Kick off the clock
+    // Kick off the clock
     Clock.start();
     const $main = $("#main");
 
-  // Text Color
+    // Text Color
     if ($main.is("[class*='-text']")) {
         $main[0].className = $main[0].className.replace(/\w*-text/g, "");
     }
