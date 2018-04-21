@@ -45,17 +45,6 @@ const weatherIconConversions = {
 const targetLocation = {lat: 37.778519, lng: -122.40564};
 const geocodingAPIKey = "AIzaSyC0LuOBNZphx2zE520aewdJ1LSe1xdC5yY";
 
-const Loader = {
-    loader: $("#loader"),
-    show: function() {
-        this.loader.siblings("div").hide();
-        this.loader.show();
-    },
-    hide: function() {
-        this.loader.hide();
-    }
-};
-
 const Location = {
     getDisplayName: function(location) {
         return Q.when($.ajax({
@@ -174,7 +163,7 @@ const Weather = {
         Weather.renderDay(Weather.$el.now, wd.current);
         Weather.$el.city.html(wd.city).show();
 
-        // Show Weather & Hide Loader
+        // Show Weather
         $("#weather-inner").removeClass("hidden").show();
 
         // Show Forecast
@@ -196,7 +185,6 @@ const Weather = {
     },
 
     load: function() {
-        Loader.show();
         return Weather.atLocation();
     }
 };
@@ -294,7 +282,6 @@ function style() {
 
 function main() {
     const loader = Weather.load().then(function(data) {
-        Loader.hide(0);
         Weather.render(data);
     });
 
