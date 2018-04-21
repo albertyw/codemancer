@@ -1,7 +1,3 @@
-#weather #error i {
-    font-size: 2em;
-}
-
 #weather span {
     display: block;
     font-family: 'Weather', sans-serif;
@@ -12,13 +8,6 @@
     height: 170px;
     margin: 0 0 7px 10px;
 }
-
-#weather #error span {
-    font-size: 0.8em;
-    margin-left: 0;
-    font-family: 'Helvetica Neue', 'Open-Reg', sans-serif;
-}
-
 .status {
     line-height: 1;
     padding: 0;

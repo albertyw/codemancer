@@ -272,27 +272,6 @@ b {
     }
 }
 
-#error {
-    font-size: 1.7em;
-    font-weight: bold;
-    padding-top: 20px;
-    text-align: center;
-    display: none;
-}
-
-#error input {
-    width: 70%;
-    margin: 15px auto;
-    border: 0;
-    outline: 0;
-    padding: 5px;
-    font-size: 0.7em;
-}
-
-#error button {
-    font-size: 0.5em;
-}
-
 .wunder a {
     font-size: 1em;
     font-weight: normal;
