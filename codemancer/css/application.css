@@ -272,12 +272,6 @@ b {
     }
 }
 
-#loader {
-    font-family: 'Weather', sans-serif;
-    -webkit-animation: spin 900ms linear infinite;
-    -webkit-transform-origin: 50% 100%;
-}
-
 #error {
     font-size: 1.7em;
     font-weight: bold;
