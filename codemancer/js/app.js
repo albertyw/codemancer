@@ -271,7 +271,7 @@ const Clock = {
 function style() {
     // Kick off the clock
     Clock.start();
-    const $main = $("#main");
+    const $main = $("main");
 
     // Text Color
     if ($main.is("[class*='-text']")) {
