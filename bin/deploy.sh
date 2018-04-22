@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 # Update repository
 cd /var/www/codemancer/ || exit 1
 git checkout master
