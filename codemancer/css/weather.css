@@ -48,7 +48,7 @@
 #weather .now b {
     font-size: 3em;
     font-weight: bold;
-    font-family: 'Helvetica Neue', 'Open-Bold', sans-serif;
+    font-family: 'Helvetica Neue', 'Open-Reg', sans-serif;
 }
 
 #weather .now p {
