@@ -7,7 +7,6 @@ var brightEvening = [255, 110, 30];
 var midEvening = [255, 155, 0];
 var lateEvening = [0, 0, 255];
 
-var colors = {};
 var colors = {
     "0":[0,0,0],
     "235":[0,0,0],
