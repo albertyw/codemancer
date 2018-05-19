@@ -24,6 +24,7 @@ var colors = {
 
 var colorsTimestamp = Object.keys(colors);
 var updateBackgroundColorPeriod = 5 * 60 * 1000;
+var updateBackgroundColorInterval = undefined;
 
 function generateColorsArray(){
     $.get(sunRiseSetAPI,
@@ -99,9 +100,12 @@ function updateBackgroundColor(){
     var current = currentTimestamp();
     var currentColor = getCurrentColor(current);
     document.body.style.backgroundColor = currentColor;
-    setTimeout(function() {
-        updateBackgroundColor();
-    }, updateBackgroundColorPeriod);
+    if (updateBackgroundColorInterval === undefined) {
+        updateBackgroundColorInterval = setInterval(function() {
+            updateBackgroundColor();
+        }, updateBackgroundColorPeriod);
+    }
 }
 
+updateBackgroundColor();
 $(generateColorsArray);
