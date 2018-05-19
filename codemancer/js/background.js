@@ -7,10 +7,22 @@ var midEvening = [255, 155, 0];
 var lateEvening = [0, 0, 255];
 
 var colors = {};
-colors[0] = fullNight;
-colors[24 * 60] = colors[0];
+var colors = {
+    "0":[0,0,0],
+    "235":[0,0,0],
+    "295":[0,0,255],
+    "355":[255,155,0],
+    "415":[255,110,30],
+    "475":[0,204,255],
+    "1096":[0,204,255],
+    "1156":[255,110,30],
+    "1216":[255,155,0],
+    "1276":[0,0,255],
+    "1336":[0,0,0],
+    "1440":[0,0,0]
+};
 
-var colorsTimestamp = [];
+var colorsTimestamp = Object.keys(colors);
 var updateBackgroundColorPeriod = 5 * 60 * 1000;
 
 function generateColorsArray(){
@@ -91,4 +103,5 @@ function updateBackgroundColor(){
         updateBackgroundColor();
     }, updateBackgroundColorPeriod);
 }
+
 $(generateColorsArray);
