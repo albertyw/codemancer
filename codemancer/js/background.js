@@ -1,4 +1,5 @@
 var sunRiseSetAPI = "https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0";
+var AppDate = Date;
 
 var fullNight = [0, 0, 0];
 var fullDay = [0, 204, 255];
