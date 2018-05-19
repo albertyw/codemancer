@@ -1,4 +1,5 @@
 var sunRiseSetAPI = "https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0";
+var AppDate = Date;
 
 var fullNight = [0, 0, 0];
 var fullDay = [0, 204, 255];
@@ -6,12 +7,24 @@ var brightEvening = [255, 110, 30];
 var midEvening = [255, 155, 0];
 var lateEvening = [0, 0, 255];
 
-var colors = {};
-colors[0] = fullNight;
-colors[24 * 60] = colors[0];
+var colors = {
+    "0":[0,0,0],
+    "235":[0,0,0],
+    "295":[0,0,255],
+    "355":[255,155,0],
+    "415":[255,110,30],
+    "475":[0,204,255],
+    "1096":[0,204,255],
+    "1156":[255,110,30],
+    "1216":[255,155,0],
+    "1276":[0,0,255],
+    "1336":[0,0,0],
+    "1440":[0,0,0]
+};
 
-var colorsTimestamp = [];
+var colorsTimestamp = Object.keys(colors);
 var updateBackgroundColorPeriod = 5 * 60 * 1000;
+var updateBackgroundColorInterval = undefined;
 
 function generateColorsArray(){
     $.get(sunRiseSetAPI,
@@ -87,8 +100,12 @@ function updateBackgroundColor(){
     var current = currentTimestamp();
     var currentColor = getCurrentColor(current);
     document.body.style.backgroundColor = currentColor;
-    setTimeout(function() {
-        updateBackgroundColor();
-    }, updateBackgroundColorPeriod);
+    if (updateBackgroundColorInterval === undefined) {
+        updateBackgroundColorInterval = setInterval(function() {
+            updateBackgroundColor();
+        }, updateBackgroundColorPeriod);
+    }
 }
+
+updateBackgroundColor();
 $(generateColorsArray);

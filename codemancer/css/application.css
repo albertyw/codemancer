@@ -13,7 +13,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 body {
     line-height: 1;
     font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', 'Open-Light', sans-serif;
-    background-color: #111;
+    background-color: #fff;
     margin: 0 auto;
     height: 100%;
 }
