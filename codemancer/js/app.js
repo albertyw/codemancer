@@ -273,6 +273,17 @@ function style() {
     Clock.start();
     const $main = $("main");
 
+    $(".weather").css("opacity", "0");
+    $.ajax({
+        url: "font/weather.ttf",
+        beforeSend: function(xhr) {
+            xhr.overrideMimeType("application/octet-stream");
+        },
+        success: function(data) {
+            $(".weather").css("opacity", "1");
+        }
+    });
+
     // Text Color
     if ($main.is("[class*='-text']")) {
         $main[0].className = $main[0].className.replace(/\w*-text/g, "");
