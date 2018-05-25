@@ -279,7 +279,7 @@ function style() {
         beforeSend: function(xhr) {
             xhr.overrideMimeType("application/octet-stream");
         },
-        success: function(data) {
+        success: function() {
             $(".weather").css("opacity", "1");
         }
     });
