@@ -7,11 +7,11 @@
   },
   "scripts": {
     "eslint": "eslint codemancer/js test",
-    "istanbul-instrument": "istanbul instrument -i ./codemancer/js -o ./instrumented",
-    "mocha": "mocha-phantomjs -k mocha-phantomjs-istanbul ./test/index.htm",
+    "mocha": "mocha-headless-chrome -f ./test/index.htm -c .nyc_output/coverage.json",
+    "nyc-instrument": "nyc instrument ./codemancer/js ./instrumented",
     "stylelint": "stylelint codemancer/css/*",
-    "test": "npm run stylelint && npm run eslint",
-    "test-bdd": "npm run istanbul-instrument && npm run mocha && istanbul report text lcov"
+    "test": "npm run stylelint && npm run eslint && npm run test-bdd",
+    "test-bdd": "npm run nyc-instrument && npm run mocha && nyc report -r text -r lcov"
   },
   "repository": {
     "type": "git",
@@ -32,13 +32,11 @@
     "underscore": "^1.9.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.0.0",
     "eslint": "^4.19.1",
-    "istanbul": "^0.4.5",
-    "jquery": "^3.2.1",
-    "mocha": "^3.2.0",
-    "mocha-phantomjs": "^4.1.0",
-    "mocha-phantomjs-istanbul": "0.0.2",
+    "mocha": "^5.1.1",
+    "mocha-headless-chrome": "^2.0.0",
+    "nyc": "^11.7.3",
     "stylelint": "^9.2.1",
     "stylelint-config-standard": "^18.2.0"
   }

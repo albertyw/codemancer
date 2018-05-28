@@ -27,6 +27,10 @@ module.exports = {
         "_": true,
         "Q": true,
         "Rollbar": true,
+        "it": true,
+        "describe": true,
+        "beforeEach": true,
+        "chai": true,
         "updateBackgroundColorPeriod": true,
         "updateBackgroundColor": true,
         "AppDate": true
