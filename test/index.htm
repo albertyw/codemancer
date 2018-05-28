@@ -1,0 +1,39 @@
+<html>
+<head>
+  <title>Codemancer</title>
+  <link href="../codemancer/css/application.css" rel="stylesheet">
+  <link href="../codemancer/css/animations.css" rel="stylesheet">
+  <link href="../codemancer/css/weather.css" rel="stylesheet">
+  <link href="../node_modules/mocha/mocha.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Load this early so the background doesn't flash -->
+<script type="text/javascript" src="../codemancer/js/jquery.min.js"></script>
+<script type="text/javascript" src="../instrumented/background.js"></script>
+
+<div id="mocha"></div>
+
+</body>
+
+<script type="text/javascript" src="../node_modules/chai/chai.js"></script>
+<script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
+
+<script type="text/javascript" src="../codemancer/js/underscore.min.js"></script>
+<script type="text/javascript" src="../codemancer/js/q.js"></script>
+<script type="text/javascript" src="../codemancer/js/moment-with-locales.min.js"></script>
+<script type="text/javascript" src="../codemancer/js/moment-timezone-with-data.min.js"></script>
+<script type="text/javascript" src="../instrumented/app.js"></script>
+<script type="text/javascript" src="../instrumented/refresh.js"></script>
+<script type="text/javascript" src="../instrumented/demo.js"></script>
+
+<script>
+  mocha.setup('bdd');
+</script>
+<script src="test.js"></script>
+<script>
+  mocha.checkLeaks();
+  mocha.globals([]);
+  mocha.run();
+</script>
+</html>
