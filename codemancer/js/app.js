@@ -45,6 +45,14 @@ const weatherIconConversions = {
 const targetLocation = {lat: 37.778519, lng: -122.40564};
 const geocodingAPIKey = "AIzaSyC0LuOBNZphx2zE520aewdJ1LSe1xdC5yY";
 
+function chainAccessor(data, properties) {
+    var value = data;
+    for(var x=0; x<properties.length; x++) {
+        value = value && value[properties[x]];
+    }
+    return value;
+}
+
 const Location = {
     getDisplayName: function(location) {
         return Q.when($.ajax({
@@ -119,15 +127,14 @@ const Weather = {
         const deferred = Q.defer();
 
         // Lets only keep what we need.
-        const w2 = {
-            city: data.locationDisplayName,
-            current: {
-                condition: data.hourly_forecast[0].wx,
-                conditionCode: Weather.condition(data.hourly_forecast[0].icon_url),
-                temp: Math.round(data.hourly_forecast[0].temp.english)
-            },
-            forecast: []
+        const w2 = {};
+        w2.city = data.locationDisplayName;
+        w2.current = {
+            condition: chainAccessor(data, ["hourly_forecast", 0, "wx"]),
+            conditionCode: Weather.condition(chainAccessor(data, ["hourly_forecast", 0, "icon_url"])),
+            temp: Math.round(chainAccessor(data, ["hourly_forecast", 0, "temp", "english"]))
         };
+        w2.forecast = [];
 
         for (let i = Weather.$el.forecast.length - 1; i >= 0; i--) {
             const df = data.hourly_forecast[(i+1)*3];
@@ -135,7 +142,7 @@ const Weather = {
                 hour: df.FCTTIME.civil,
                 condition: df.condition,
                 conditionCode: Weather.condition(df.icon_url),
-                temp: Math.round(df.temp.english),
+                temp: Math.round(chainAccessor(df, ["temp", "english"])),
             };
         }
         deferred.resolve(w2);
