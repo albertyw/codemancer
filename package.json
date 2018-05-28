@@ -6,9 +6,12 @@
     "test": "tests"
   },
   "scripts": {
-    "eslint": "eslint codemancer/js",
+    "eslint": "eslint codemancer/js test",
+    "istanbul-instrument": "istanbul instrument -i ./codemancer/js -o ./instrumented",
+    "mocha": "mocha-phantomjs -k mocha-phantomjs-istanbul ./test/index.htm",
     "stylelint": "stylelint codemancer/css/*",
-    "test": "npm run stylelint && npm run eslint"
+    "test": "npm run stylelint && npm run eslint",
+    "test-bdd": "npm run istanbul-instrument && npm run mocha && istanbul report text lcov"
   },
   "repository": {
     "type": "git",
@@ -29,7 +32,13 @@
     "underscore": "^1.9.0"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "eslint": "^4.19.1",
+    "istanbul": "^0.4.5",
+    "jquery": "^3.2.1",
+    "mocha": "^3.2.0",
+    "mocha-phantomjs": "^4.1.0",
+    "mocha-phantomjs-istanbul": "0.0.2",
     "stylelint": "^9.2.1",
     "stylelint-config-standard": "^18.2.0"
   }
