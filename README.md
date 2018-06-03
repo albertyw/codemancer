@@ -3,7 +3,8 @@
 
 [ ![Codeship Status for albertyw/codemancer](https://app.codeship.com/projects/fe81e4d0-eb7f-0134-a306-7680d7eb496c/status?branch=master)](https://app.codeship.com/projects/208058)
 [![Code Climate](https://codeclimate.com/github/albertyw/codemancer/badges/gpa.svg)](https://codeclimate.com/github/albertyw/codemancer)
-[![Dependency Status](https://gemnasium.com/badges/github.com/albertyw/codemancer.svg)](https://gemnasium.com/github.com/albertyw/codemancer)
+[![dependencies Status](https://david-dm.org/albertyw/codemancer/status.svg)](https://david-dm.org/albertyw/codemancer)
+[![devDependencies Status](https://david-dm.org/albertyw/codemancer/dev-status.svg)](https://david-dm.org/albertyw/codemancer?type=dev)
 
 Currently extension as a website.
 
