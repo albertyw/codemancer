@@ -15,8 +15,8 @@ sudo apt-get install -y nginx
 # Configure nginx
 sudo rm -rf /etc/nginx/sites-available
 sudo rm -rf /etc/nginx/sites-enabled/*
-sudo ln -s ~/codemancer/config/sites-available/app /etc/nginx/sites-enabled/codemancer-app
-sudo ln -s ~/codemancer/config/sites-available/headers /etc/nginx/sites-enabled/codemancer-headers
+sudo ln -s ~/codemancer/config/sites-available-public/app /etc/nginx/sites-enabled/codemancer-app
+sudo ln -s ~/codemancer/config/sites-available-public/headers /etc/nginx/sites-enabled/codemancer-headers
 sudo rm -r /var/www/html
 
 # Secure nginx
