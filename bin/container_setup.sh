@@ -23,4 +23,5 @@ apt install -y nodejs npm
 npm install
 
 # Write current version to temp file
+apt install -y git
 git rev-parse HEAD > codemancer/version
