@@ -1,16 +1,20 @@
 #!/bin/bash
-
-set -ex
+# This script will build and deploy a new docker image
 
 # Update repository
-cd /var/www/codemancer/ || exit 1
+cd codemancer || exit 1
 git checkout master
+git fetch -tp
 git pull
 
-npm install
+# Build and start container
+docker build -t codemancer:production .
+docker stop codemancer || echo
+docker container prune -f
+docker run --detach --restart always -p 127.0.0.1:5000:5000 --name codemancer codemancer:production
 
-# Restart services
-sudo service nginx restart
+# Cleanup docker
+docker image prune -f
 
-# Write current version to temp file
-git rev-parse HEAD > codemancer/version
+# Update nginx
+sudo service nginx reload
