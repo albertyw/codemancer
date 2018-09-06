@@ -5,7 +5,7 @@ EXPOSE 5002
 # Install updates and system packages
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y build-essential curl locales
+RUN apt-get install -y build-essential curl locales software-properties-common
 
 # Set locale
 ENV LANG en_US.UTF-8
