@@ -1,7 +1,7 @@
 ### Servers ###
 server {
     listen          5002;
-    server_name     www.codemancer.com;
+    server_name     _;
     access_log      /var/log/nginx/codemancer.access.log;
     error_log       /var/log/nginx/codemancer.error.log;
 
