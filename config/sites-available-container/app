@@ -1,0 +1,14 @@
+### Servers ###
+server {
+    listen          5002;
+    server_name     _;
+    access_log      /var/log/nginx/codemancer.access.log;
+    error_log       /var/log/nginx/codemancer.error.log;
+
+    location / {
+        alias           "/var/www/app/codemancer/";
+        try_files       $uri.html $uri $uri/ =404;
+        expires         1d;
+        add_header      Cache-Control "public";
+    }
+}
