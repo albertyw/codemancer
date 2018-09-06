@@ -16,7 +16,6 @@ rm -rf /etc/nginx/sites-available
 rm -rf /etc/nginx/sites-enabled/*
 ln -s ~/codemancer/config/sites-available-container/app /etc/nginx/sites-enabled/codemancer-app
 rm -r /var/www/html
-service nginx restart
 
 # Install node dependencies
 apt install -y nodejs npm
