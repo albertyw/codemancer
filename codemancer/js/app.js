@@ -306,9 +306,12 @@ function main() {
     loader.fail(function(reason) {
         Rollbar.error(reason);
     });
+    setInterval(main, weatherRefreshInterval);
 }
 
 // Start your engine....
 style();
-main();
-setInterval(main, weatherRefreshInterval);
+
+// Delay loading weather to make sure font is loaded and decrease
+// load on weather API
+setTimeout(main, 1000);
