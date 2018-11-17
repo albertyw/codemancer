@@ -1,8 +1,12 @@
 #!/bin/bash
 # This script will build and deploy a new docker image
 
+set -ex
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+cd "$DIR"/..
+
 # Update repository
-cd codemancer || exit 1
 git checkout master
 git fetch -tp
 git pull
@@ -11,10 +15,14 @@ git pull
 docker build -t codemancer:production .
 docker stop codemancer || echo
 docker container prune -f
-docker run --detach --restart always -p 127.0.0.1:5002:5002 --name codemancer codemancer:production
+docker run \
+    --detach \
+    --restart always \
+    --publish 127.0.0.1:5002:5002 \
+    --name codemancer codemancer:production
 
 # Cleanup docker
-docker image prune -f
+docker image prune -f --filter "until=336h"
 
 # Update nginx
 sudo service nginx reload
