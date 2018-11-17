@@ -1,4 +1,6 @@
-FROM debian:stable
+# Needed for container nginx
+FROM ubuntu:18.04
+
 LABEL maintainer="git@albertyw.com"
 EXPOSE 5002
 
