@@ -18,9 +18,10 @@ cp config/sites-available-container/app /etc/nginx/sites-enabled/codemancer-app
 rm -r /var/www/html
 
 # Install node dependencies
-apt install -y nodejs npm
+apt-get update
+apt-get install -y nodejs npm
 npm install
 
 # Write current version to temp file
-apt install -y git
+apt-get install -y git
 git rev-parse HEAD > codemancer/version
