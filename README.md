@@ -21,7 +21,7 @@ Codemancer is currently a stateless static website, served by nginx.
 Changes from Currently Extension
 --------------------------------
 
- - Converted into nginx-backed website
+ - Converted into nginx/docker website
  - Removed use of LocalStorage for configs
  - Removed Notifications based on S3 data
  - Removed geolocation.  It currently only works in San Francisco, but can be modified to use HTML5's
