@@ -6,6 +6,7 @@
     "test": "tests"
   },
   "scripts": {
+    "dist-min": "babel codemancer/js/jquery.min.js codemancer/js/background.js | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
     "eslint": "eslint codemancer/js test",
     "mocha": "mocha-headless-chrome -f ./test/index.htm -c .nyc_output/coverage.json",
     "nyc-instrument": "nyc instrument ./codemancer/js ./instrumented",
@@ -25,11 +26,14 @@
   "homepage": "https://github.com/albertyw/codemancer#readme",
   "private": true,
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "jquery": "^3.3.1",
     "moment": "^2.22.1",
     "moment-timezone": "^0.5.17",
     "node-static": "^0.7.11",
     "q": "^1.5.1",
+    "uglify-es": "^3.3.9",
     "underscore": "^1.9.0"
   },
   "devDependencies": {

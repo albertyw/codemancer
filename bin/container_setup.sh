@@ -12,6 +12,9 @@ apt-get update
 apt-get install -y nodejs npm
 npm install
 
+# Compile code
+npm run dist-min
+
 # Write current version to temp file
 apt-get install -y git
 git rev-parse HEAD > codemancer/version
