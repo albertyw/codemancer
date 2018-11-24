@@ -53,6 +53,10 @@ function chainAccessor(data, properties) {
     return value;
 }
 
+function unique(array) {
+    return Array.from(new Set(array));
+}
+
 const Location = {
     getDisplayName: function(location) {
         return Q.when($.ajax({
@@ -86,7 +90,7 @@ const Location = {
                 info.unshift(result[i].long_name);
             }
         }
-        const locData = _.uniq(info);
+        const locData = unique(info);
         if (locData.length === 3) {
             locData.pop(2);
         }
@@ -247,11 +251,13 @@ const Clock = {
 
         Clock.$el.digital.date.html(Clock.dateTemplate(parts));
 
-        _.each(["hour", "minute", "second"], function(unit){
+        var units = ["hour", "minute", "second"];
+        for (var i=0; i<units.length; i++) {
+            var unit = units[i];
             if( parts[unit] !== oldParts[unit] ){
                 Clock.$el.digital.time.find("." + unit).text(parts[unit]);
             }
-        });
+        }
 
         Clock._parts = parts;
     },
