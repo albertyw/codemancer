@@ -14,7 +14,7 @@ git pull
 # Build and start container
 docker build -t codemancer:production .
 docker stop codemancer || echo
-docker container prune -f
+docker container prune --force --filter "until=336h"
 docker run \
     --detach \
     --restart always \
@@ -22,7 +22,7 @@ docker run \
     --name codemancer codemancer:production
 
 # Cleanup docker
-docker image prune -f --filter "until=336h"
+docker image prune --force --filter "until=336h"
 
 # Update nginx
 sudo service nginx reload
