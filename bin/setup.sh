@@ -21,7 +21,7 @@ sudo rm -r /var/www/html
 
 # Secure nginx
 sudo mkdir -p /etc/nginx/ssl
-openssl dhparam -out /etc/nginx/ssl/dhparams.pem 2048
+sudo openssl dhparam -out /etc/nginx/ssl/dhparams.pem 2048
 # Copy server.crt and server.key to /etc/nginx/ssl
 sudo service nginx restart
 
