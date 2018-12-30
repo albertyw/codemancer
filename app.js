@@ -1,10 +1,14 @@
 const console = require("console");
 const Git = require("nodegit");
 const express = require("express");
+const morgan = require("morgan");
+
 const app = express();
 const port = 5002;
-let version = "";
 
+app.use(morgan("combined"));
+
+let version = "";
 function getAndRespondVersion(res) {
     Git.Repository.open(".").then( function( repository ) {
         return repository.getHeadCommit( );
