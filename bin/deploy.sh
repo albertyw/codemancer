@@ -19,6 +19,7 @@ docker run \
     --detach \
     --restart always \
     --publish 127.0.0.1:5002:5002 \
+    --mount type=bind,source="$(pwd)"/logs,target=/var/www/app/logs \
     --name codemancer codemancer:production
 
 # Cleanup docker
