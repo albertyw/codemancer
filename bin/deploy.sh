@@ -15,6 +15,7 @@ git pull
 docker build -t codemancer:production .
 docker stop codemancer || echo
 docker container prune --force --filter "until=336h"
+docker container rm codemancer
 docker run \
     --detach \
     --restart always \
