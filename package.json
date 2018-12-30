@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dist-min": "babel codemancer/js/jquery.min.js codemancer/js/background.js | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
-    "eslint": "eslint codemancer/js test",
+    "eslint": "eslint codemancer/js test app.js",
     "mocha": "mocha-headless-chrome -f ./test/index.htm -c .nyc_output/coverage.json",
     "nyc-instrument": "nyc instrument ./codemancer/js ./instrumented",
     "stylelint": "stylelint codemancer/css/*",
