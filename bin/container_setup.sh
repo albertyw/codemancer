@@ -9,7 +9,7 @@ sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && locale-g
 # Install node dependencies
 curl -sL https://deb.nodesource.com/setup_11.x | bash -
 apt-get update
-apt-get install -y nodejs npm libcurl4-openssl-dev
+apt-get install -y git nodejs npm
 npm install
 
 # Compile code
