@@ -1,5 +1,5 @@
+const child_process = require("child_process");
 const console = require("console");
-const Git = require("nodegit");
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
@@ -17,14 +17,10 @@ app.use(morgan("combined", {stream: accessLogStream }));
 
 let version = "";
 function getAndRespondVersion(res) {
-    Git.Repository.open(".").then( function( repository ) {
-        return repository.getHeadCommit( );
-    } ).then( function ( commit ) {
-        return commit.sha();
-    } ).then( function ( hash ) {
-        version = hash;
-        res.send(version);
-    } );
+    child_process.exec('git rev-parse HEAD', function(err, stdout) {
+        version = stdout;
+        res.dend(version);
+    });
 }
 
 app.get("/version", (req, res) => {
