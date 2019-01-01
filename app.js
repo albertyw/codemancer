@@ -20,7 +20,7 @@ let version = "";
 function getAndRespondVersion(res) {
     child_process.exec("git rev-parse HEAD", function(err, stdout) {
         version = stdout;
-        res.dend(version);
+        res.send(version);
     });
 }
 
