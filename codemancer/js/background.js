@@ -109,5 +109,22 @@ function updateBackgroundColor(){
     }
 }
 
+function runOnload(onloadFunc) {
+    if(window.attachEvent) {
+        window.attachEvent("onload", onloadFunc);
+    } else {
+        if(window.onload) {
+            const currOnload = window.onload;
+            const newOnload = function(evt) {
+                currOnload(evt);
+                onloadFunc(evt);
+            };
+            window.onload = newOnload;
+        } else {
+            window.onload = onloadFunc;
+        }
+    }
+}
+
 updateBackgroundColor();
-$(generateColorsArray);
+runOnload(generateColorsArray);
