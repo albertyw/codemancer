@@ -5,8 +5,9 @@ const morgan = require("morgan");
 const path = require("path");
 const rfs = require("rotating-file-stream");
 
+require("dotenv").config();
+const port = process.env.LISTEN_PORT;
 const app = express();
-const port = 5002;
 
 app.use(morgan("combined"));
 var accessLogStream = rfs("access.log", {
