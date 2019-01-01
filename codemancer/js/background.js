@@ -27,25 +27,27 @@ var updateBackgroundColorPeriod = 5 * 60 * 1000;
 var updateBackgroundColorInterval = undefined;
 
 function generateColorsArray(){
-    $.get(sunRiseSetAPI,
-        function(data) {
-            data = parseData(data);
-            var sunrise = dateToMinutes(data["sunrise"]);
-            var sunset = dateToMinutes(data["sunset"]);
-            colors[sunrise - 120] = fullNight;
-            colors[sunrise - 60] = lateEvening;
-            colors[sunrise] = midEvening;
-            colors[sunrise + 60] = brightEvening;
-            colors[sunrise + 120] = fullDay;
-            colors[sunset - 120] = fullDay;
-            colors[sunset - 60] = brightEvening;
-            colors[sunset] = midEvening;
-            colors[sunset + 60] = lateEvening;
-            colors[sunset + 120] = fullNight;
-            colorsTimestamp = Object.keys(colors);
-            updateBackgroundColor();
-        }
-    );
+    const req = new XMLHttpRequest();
+    req.open("GET", sunRiseSetAPI);
+    req.responseType = "json";
+    req.onload = function sunRiseSetReady() {
+        const data = parseData(req.response);
+        var sunrise = dateToMinutes(data["sunrise"]);
+        var sunset = dateToMinutes(data["sunset"]);
+        colors[sunrise - 120] = fullNight;
+        colors[sunrise - 60] = lateEvening;
+        colors[sunrise] = midEvening;
+        colors[sunrise + 60] = brightEvening;
+        colors[sunrise + 120] = fullDay;
+        colors[sunset - 120] = fullDay;
+        colors[sunset - 60] = brightEvening;
+        colors[sunset] = midEvening;
+        colors[sunset + 60] = lateEvening;
+        colors[sunset + 120] = fullNight;
+        colorsTimestamp = Object.keys(colors);
+        updateBackgroundColor();
+    }
+    req.send();
 }
 
 function parseData(data) {
