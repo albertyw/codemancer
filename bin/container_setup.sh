@@ -12,5 +12,8 @@ apt-get update
 apt-get install -y git nodejs npm
 npm install
 
+# Set up .env
+ln -s .env.production .env
+
 # Compile code
 npm run dist-min
