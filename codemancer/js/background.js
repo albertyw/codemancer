@@ -46,7 +46,7 @@ function generateColorsArray(){
         colors[sunset + 120] = fullNight;
         colorsTimestamp = Object.keys(colors);
         updateBackgroundColor();
-    }
+    };
     req.send();
 }
 
