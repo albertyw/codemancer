@@ -38,8 +38,9 @@ function initClient() {
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
         authorizeButton.onclick = handleAuthClick;
         signoutButton.onclick = handleSignoutClick;
-    }, function(error) {
-        appendPre(JSON.stringify(error, null, 2));
+    }, function() { //error) {
+        // Silence errors for now
+        // appendPre(JSON.stringify(error, null, 2));
     });
 }
 
