@@ -60,14 +60,14 @@ function updateSigninStatus(isSignedIn) {
 /**
  *  Sign in the user upon button click.
  */
-function handleAuthClick(event) {
+function handleAuthClick() {
     gapi.auth2.getAuthInstance().signIn();
 }
 
 /**
  *  Sign out the user upon button click.
  */
-function handleSignoutClick(event) {
+function handleSignoutClick() {
     gapi.auth2.getAuthInstance().signOut();
 }
 
@@ -101,16 +101,35 @@ function listUpcomingEvents() {
         appendPre("Upcoming events:");
 
         if (events.length > 0) {
-            for (i = 0; i < events.length; i++) {
+            for (var i = 0; i < events.length; i++) {
                 var event = events[i];
                 var when = event.start.dateTime;
                 if (!when) {
                     when = event.start.date;
                 }
-                appendPre(event.summary + " (" + when + ")")
+                appendPre(event.summary + " (" + when + ")");
             }
         } else {
             appendPre("No upcoming events found.");
         }
     });
 }
+
+function runOnload(onloadFunc) {
+    if(window.attachEvent) {
+        window.attachEvent("onload", onloadFunc);
+    } else {
+        if(window.onload) {
+            const currOnload = window.onload;
+            const newOnload = function(evt) {
+                currOnload(evt);
+                onloadFunc(evt);
+            };
+            window.onload = newOnload;
+        } else {
+            window.onload = onloadFunc;
+        }
+    }
+}
+
+runOnload(handleClientLoad);

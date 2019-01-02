@@ -36,6 +36,7 @@ module.exports = {
         "describe": true,
         "beforeEach": true,
         "chai": true,
+        "gapi": true,
         "updateBackgroundColorPeriod": true,
         "updateBackgroundColor": true,
         "AppDate": true
