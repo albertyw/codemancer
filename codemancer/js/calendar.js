@@ -11,6 +11,7 @@ var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
 var authorizeButton = document.getElementById("authorize_button");
 var signoutButton = document.getElementById("signout_button");
+var calendarContent = document.getElementById("calendar");
 
 /**
  *  On load, called to load the auth2 library and API client library.
@@ -78,9 +79,8 @@ function handleSignoutClick() {
  * @param {string} message Text to be placed in pre element.
  */
 function appendPre(message) {
-    var pre = document.getElementById("content");
     var textContent = document.createTextNode(message + "\n");
-    pre.appendChild(textContent);
+    calendarContent.appendChild(textContent);
 }
 
 /**
