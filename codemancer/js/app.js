@@ -210,7 +210,7 @@ const Weather = {
 
     renderDay: function(el, data) {
         el.attr("title", data.conditionSequence[0]);
-        el.find(".weather").html(data.conditionCodeSequence[0]);
+        el.find(".condition").html(data.conditionCodeSequence[0]);
         el.find(".min-temp").html(data.minTemp);
         el.find(".current-temp").html(data.currentTemp);
         el.find(".max-temp").html(data.maxTemp);
