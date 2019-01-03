@@ -108,7 +108,7 @@ const Weather = {
 
     urlBuilder: function(type, location) {
         const url = "https://api.wunderground.com/api/d1bfeac98cad347b/" +
-        type + "/lang:EN/q/" + location.lat + "," + location.lng + ".json";
+            type + "/lang:EN/q/" + location.lat + "," + location.lng + ".json";
         return url;
     },
 
@@ -170,7 +170,7 @@ const Weather = {
     },
 
     render: function(wd) {
-    // Set Current Information
+        // Set Current Information
         Weather.renderDay(Weather.$el.now, wd.current);
         Weather.$el.city.html(wd.city).show();
 
