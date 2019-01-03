@@ -102,7 +102,6 @@ const Weather = {
 
     $el: {
         now : $(".now"),
-        forecast : $("#weather li"),
         city : $("#city")
     },
 
@@ -155,22 +154,6 @@ const Weather = {
             }
         }
 
-        w2.current = {
-            condition: chainAccessor(data, ["hourly_forecast", 0, "wx"]),
-            conditionCode: Weather.condition(chainAccessor(data, ["hourly_forecast", 0, "icon_url"])),
-            temp: Math.round(chainAccessor(data, ["hourly_forecast", 0, "temp", "english"]))
-        };
-        w2.forecast = [];
-
-        for (let i = Weather.$el.forecast.length - 1; i >= 0; i--) {
-            const df = data.hourly_forecast[(i+1)*3];
-            w2.forecast[i] = {
-                hour: df.FCTTIME.civil,
-                condition: df.condition,
-                conditionCode: Weather.condition(df.icon_url),
-                temp: Math.round(chainAccessor(df, ["temp", "english"])),
-            };
-        }
         deferred.resolve(w2);
         return deferred.promise;
     },
@@ -198,14 +181,6 @@ const Weather = {
 
         // Show Weather
         $("#weather-inner").removeClass("hidden").show();
-
-        // Show Forecast
-        Weather.$el.forecast.each(function(i, el) {
-            const $el = $(el);
-            $el.css("-webkit-animation-delay",150 * i +"ms").addClass("animated fadeInUp");
-            const dayWeather = wd.forecast[i];
-            Weather.renderDay($el, dayWeather);
-        });
     },
 
     renderDay: function(el, data) {
@@ -214,9 +189,6 @@ const Weather = {
         el.find(".min-temp").html(data.minTemp);
         el.find(".current-temp").html(data.currentTemp);
         el.find(".max-temp").html(data.maxTemp);
-        if(data.hour) {
-            el.find(".hour").html(data.hour);
-        }
     },
 
     load: function() {
