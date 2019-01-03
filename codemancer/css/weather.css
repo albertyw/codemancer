@@ -57,53 +57,6 @@
     letter-spacing: 2px;
 }
 
-#weather ul {
-    margin-top: 75px;
-    float: right;
-}
-
-#weather li {
-    -webkit-transform: rotate3d(0, 0, 0, 0);
-    margin-left: 20px;
-    float: left;
-    width: 135px;
-    text-align: center;
-}
-
-#weather li .weather {
-    margin: 0 auto;
-    display: block;
-    width: 60px;
-    font-size: 5em;
-}
-
-#weather li .temp {
-    zoom: 1;
-    width: 90px;
-    margin: 0 auto;
-}
-
-#weather li .temp::before, #weather li .temp::after {
-    content: "";
-    display: table;
-}
-
-#weather li .temp::after {
-    clear: both;
-}
-
-#weather li div.temp {
-    display: block;
-    font-weight: bold;
-    font-size: 2em;
-}
-
-#weather li .hour {
-    font-size: 1.5em;
-    margin-top: 10px;
-    letter-spacing: 2px;
-}
-
 .main-return, .wunder {
     cursor: pointer;
     position: fixed;
