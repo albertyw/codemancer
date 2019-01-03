@@ -136,6 +136,8 @@ const Weather = {
         w2.currentTemp = Math.round(chainAccessor(data, ["hourly_forecast", 0, "temp", "english"]));
         w2.minTemp = w2.currentTemp;
         w2.maxTemp = w2.currentTemp;
+        w2.conditionSequence = [chainAccessor(data, ["hourly_forecast", 0, "wx"])];
+        w2.conditionCodeSequence = [Weather.condition(chainAccessor(data, ["hourly_forecast", 0, "icon_url"]))];
         for (let i = 0; i < 24; i++) {
             if (i >= data.hourly_forecast.length) {
                 break;
@@ -144,6 +146,13 @@ const Weather = {
             const temp = Math.round(chainAccessor(df, ["temp", "english"]));
             w2.minTemp = Math.min(w2.minTemp, temp);
             w2.maxTemp = Math.max(w2.maxTemp, temp);
+
+            const condition = df.condition;
+            const conditionCode = Weather.condition(df.icon_url);
+            if(w2.conditionSequence[w2.conditionSequence.length-1] != condition) {
+                w2.conditionSequence.push(condition);
+                w2.conditionCodeSequence.push(conditionCode);
+            }
         }
 
         w2.current = {
