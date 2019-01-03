@@ -102,7 +102,6 @@ const Weather = {
 
     $el: {
         now : $(".now"),
-        forecast : $("#weather li"),
         city : $("#city")
     },
 
@@ -133,22 +132,28 @@ const Weather = {
         // Lets only keep what we need.
         const w2 = {};
         w2.city = data.locationDisplayName;
-        w2.current = {
-            condition: chainAccessor(data, ["hourly_forecast", 0, "wx"]),
-            conditionCode: Weather.condition(chainAccessor(data, ["hourly_forecast", 0, "icon_url"])),
-            temp: Math.round(chainAccessor(data, ["hourly_forecast", 0, "temp", "english"]))
-        };
-        w2.forecast = [];
+        w2.currentTemp = Math.round(chainAccessor(data, ["hourly_forecast", 0, "temp", "english"]));
+        w2.minTemp = w2.currentTemp;
+        w2.maxTemp = w2.currentTemp;
+        w2.conditionSequence = [chainAccessor(data, ["hourly_forecast", 0, "wx"])];
+        w2.conditionCodeSequence = [Weather.condition(chainAccessor(data, ["hourly_forecast", 0, "icon_url"]))];
+        for (let i = 0; i < 24; i++) {
+            if (i >= data.hourly_forecast.length) {
+                break;
+            }
+            const df = data.hourly_forecast[i];
+            const temp = Math.round(chainAccessor(df, ["temp", "english"]));
+            w2.minTemp = Math.min(w2.minTemp, temp);
+            w2.maxTemp = Math.max(w2.maxTemp, temp);
 
-        for (let i = Weather.$el.forecast.length - 1; i >= 0; i--) {
-            const df = data.hourly_forecast[(i+1)*3];
-            w2.forecast[i] = {
-                hour: df.FCTTIME.civil,
-                condition: df.condition,
-                conditionCode: Weather.condition(df.icon_url),
-                temp: Math.round(chainAccessor(df, ["temp", "english"])),
-            };
+            const condition = df.condition;
+            const conditionCode = Weather.condition(df.icon_url);
+            if(w2.conditionSequence[w2.conditionSequence.length-1] != condition) {
+                w2.conditionSequence.push(condition);
+                w2.conditionCodeSequence.push(conditionCode);
+            }
         }
+
         deferred.resolve(w2);
         return deferred.promise;
     },
@@ -171,28 +176,19 @@ const Weather = {
 
     render: function(wd) {
         // Set Current Information
-        Weather.renderDay(Weather.$el.now, wd.current);
+        Weather.renderDay(Weather.$el.now, wd);
         Weather.$el.city.html(wd.city).show();
 
         // Show Weather
         $("#weather-inner").removeClass("hidden").show();
-
-        // Show Forecast
-        Weather.$el.forecast.each(function(i, el) {
-            const $el = $(el);
-            $el.css("-webkit-animation-delay",150 * i +"ms").addClass("animated fadeInUp");
-            const dayWeather = wd.forecast[i];
-            Weather.renderDay($el, dayWeather);
-        });
     },
 
     renderDay: function(el, data) {
-        el.attr("title", data.condition);
-        el.find(".weather").html(data.conditionCode);
-        el.find(".temp").html(data.temp);
-        if(data.hour) {
-            el.find(".hour").html(data.hour);
-        }
+        el.attr("title", data.conditionSequence[0]);
+        el.find(".condition").html(data.conditionCodeSequence[0]);
+        el.find(".min-temp").html(data.minTemp);
+        el.find(".current-temp").html(data.currentTemp);
+        el.find(".max-temp").html(data.maxTemp);
     },
 
     load: function() {
