@@ -133,6 +133,16 @@ const Weather = {
         // Lets only keep what we need.
         const w2 = {};
         w2.city = data.locationDisplayName;
+        w2.currentTemp = Math.round(chainAccessor(data, ["hourly_forecast", 0, "temp", "english"]));
+        w2.minTemp = w2.currentTemp;
+        w2.maxTemp = w2.currentTemp;
+        for (let i = 0; i < 24; i++) {
+            const df = data.hourly_forecast[i];
+            const temp = Math.round(chainAccessor(df, ["temp", "english"]));
+            w2.minTemp = Math.min(w2.minTemp, temp);
+            w2.maxTemp = Math.max(w2.maxTemp, temp);
+        }
+
         w2.current = {
             condition: chainAccessor(data, ["hourly_forecast", 0, "wx"]),
             conditionCode: Weather.condition(chainAccessor(data, ["hourly_forecast", 0, "icon_url"])),
