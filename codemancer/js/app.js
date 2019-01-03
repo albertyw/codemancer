@@ -193,7 +193,7 @@ const Weather = {
 
     render: function(wd) {
         // Set Current Information
-        Weather.renderDay(Weather.$el.now, wd.current);
+        Weather.renderDay(Weather.$el.now, wd);
         Weather.$el.city.html(wd.city).show();
 
         // Show Weather
@@ -209,9 +209,11 @@ const Weather = {
     },
 
     renderDay: function(el, data) {
-        el.attr("title", data.condition);
-        el.find(".weather").html(data.conditionCode);
-        el.find(".temp").html(data.temp);
+        el.attr("title", data.conditionSequence[0]);
+        el.find(".weather").html(data.conditionCodeSequence[0]);
+        el.find(".min-temp").html(data.minTemp);
+        el.find(".current-temp").html(data.currentTemp);
+        el.find(".max-temp").html(data.maxTemp);
         if(data.hour) {
             el.find(".hour").html(data.hour);
         }
