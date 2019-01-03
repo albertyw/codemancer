@@ -137,6 +137,9 @@ const Weather = {
         w2.minTemp = w2.currentTemp;
         w2.maxTemp = w2.currentTemp;
         for (let i = 0; i < 24; i++) {
+            if (i >= data.hourly_forecast.length) {
+                break;
+            }
             const df = data.hourly_forecast[i];
             const temp = Math.round(chainAccessor(df, ["temp", "english"]));
             w2.minTemp = Math.min(w2.minTemp, temp);
