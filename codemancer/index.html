@@ -8,6 +8,7 @@
     <meta name="theme-color" content="#00CCFF" />
     <link href="css/application.css" rel="stylesheet">
     <link href="css/animations.css" rel="stylesheet">
+    <link href="css/calendar.css" rel="stylesheet">
     <link href="css/weather.css" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
@@ -107,23 +108,26 @@
     <div id ="content" class="container">
       <div id="time" class="fadeInDown animated smooth"><span class="hour"></span><span class="minute"></span><span class="second"></span></div>
       <p id="date" class="title"></p>
-      <div id="weather">
-        <div id="weather-inner" class="hidden clearfix">
-          <div class="now animated bounceIn smooth">
-            <span class="condition"></span>
-            <span class="temp">
-              <p class="max-temp"></p>
-              <b class="current-temp"></b>
-              <p class="min-temp"></p>
-            </span>
+      <div id="weather-calendar">
+        <span id="weather">
+          <div id="weather-inner" class="hidden clearfix">
+            <div class="now animated bounceIn smooth">
+              <span class="condition"></span>
+              <span class="temp">
+                <p class="max-temp"></p>
+                <b class="current-temp"></b>
+                <p class="min-temp"></p>
+              </span>
+            </div>
           </div>
-        </div>
+        </span>
+        <span id="calendar">
+          <button id="authorize_button" style="display: none;">Authorize Google Calendar</button>
+          <button id="signout_button" style="display: none;">Sign Out Google Calendar</button>
+          <pre id="calendar-content"></pre>
+        </span>
       </div>
       <div id="city" class="title"></div>
-      <pre id="calendar">
-        <button id="authorize_button" style="display: none;">Authorize Google Calendar</button>
-        <button id="signout_button" style="display: none;">Sign Out Google Calendar</button>
-      </pre>
     </div>
     </main>
   </body>

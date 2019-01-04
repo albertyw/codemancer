@@ -11,7 +11,7 @@ var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
 var authorizeButton = document.getElementById("authorize_button");
 var signoutButton = document.getElementById("signout_button");
-var calendarContent = document.getElementById("calendar");
+var calendarContent = document.getElementById("calendar-content");
 
 /**
  *  On load, called to load the auth2 library and API client library.
@@ -38,9 +38,9 @@ function initClient() {
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
         authorizeButton.onclick = handleAuthClick;
         signoutButton.onclick = handleSignoutClick;
-    }, function() { //error) {
-        // Silence errors for now
-        // appendPre(JSON.stringify(error, null, 2));
+    }, function(error) {
+        appendPre("Could not connect to Google Calendar");
+        console.error(JSON.stringify(error, null, 2)); // eslint-disable-line
     });
 }
 
