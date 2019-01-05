@@ -5,15 +5,6 @@
     width: 780px;
 }
 
-#weather::before, #weather::after {
-    content: "";
-    display: table;
-}
-
-#weather::after {
-    clear: both;
-}
-
 #weather .now {
     float: left;
     width: 200px;
