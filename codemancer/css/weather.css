@@ -1,13 +1,11 @@
 #weather {
     position: relative;
     zoom: 1;
-    padding: 0 30px;
-    width: 780px;
+    width: 500px;
 }
 
 #weather .now {
     float: left;
-    width: 200px;
     text-align: center;
     margin-top: -15px;
     -ms-display: flexbox;
