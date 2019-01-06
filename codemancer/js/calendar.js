@@ -82,6 +82,8 @@ function handleSignoutClick() {
 function appendPre(message) {
     var textContent = document.createTextNode(message + "\n");
     calendarContent.appendChild(textContent);
+
+    calendarContent.classList.remove("hidden");
 }
 
 /**
