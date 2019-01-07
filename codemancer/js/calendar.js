@@ -86,36 +86,80 @@ function appendPre(message) {
     calendarContent.classList.remove("hidden");
 }
 
+
 /**
  * Print the summary and start datetime/date of the next ten events in
  * the authorized user"s calendar. If no events are found an
  * appropriate message is printed.
  */
 function listUpcomingEvents() {
-    gapi.client.calendar.events.list({
-        "calendarId": "primary",
-        "timeMin": (new Date()).toISOString(),
-        "showDeleted": false,
-        "singleEvents": true,
-        "maxResults": 10,
-        "orderBy": "startTime"
+    const events = [];
+    gapi.client.calendar.calendarlist.list({
     }).then(function(response) {
-        var events = response.result.items;
-        appendPre("Upcoming events:");
-
-        if (events.length > 0) {
-            for (var i = 0; i < events.length; i++) {
-                var event = events[i];
-                var when = event.start.dateTime;
-                if (!when) {
-                    when = event.start.date;
-                }
-                appendPre(event.summary + " (" + when + ")");
+        const calendars = response.result.items;
+        const calendarsWaiting = 0;
+        for(let i=0; i<calendars.length; i++) {
+            if(calendars[i].selected) {
+                continue;
             }
-        } else {
-            appendPre("No upcoming events found.");
+            calendarsWaiting++;
+            const calendarId = calendars[i].id;
+            gapi.client.calendar.events.list({
+                "calendarId": calendarId,
+                "timeMin": (new Date()).toISOString(),
+                "showDeleted": false,
+                "singleEvents": true,
+                "maxResults": 10,
+                "orderBy": "startTime"
+            }).then(function(response) {
+                const calendarEvents = response.result.items;
+                events.push(calendarEvents);
+                calendarsWaiting--;
+                if(calendarsWaiting <= 0) {
+                    displayEvents(events);
+                }
+            });
         }
     });
+}
+
+function getFirstEvents(eventArrays, eventCount) {
+    const events = [];
+    let minTime = 'asdf';
+    let minTimeCalendar = 0;
+    while(events.length < eventCount) {
+        for(let i=0; i<eventArrays.count; i++) {
+            const currentDate = eventArrays[i].start.dateTime;
+            if(currentDate < minTime) {
+                minTime = currentDate;
+                minTimeCalendar = i;
+            }
+        }
+        if(minTime === 'z') {
+            break;
+        }
+        events.push(eventArrays[minTimeCalendar].shift());
+        eventCount++;
+    }
+    return events;
+}
+
+function displayEvents(eventArrays) {
+    const events = getFirstEvents(eventArrays, 10);
+    appendPre("Upcoming events:");
+
+    if (events.length > 0) {
+        for (var i = 0; i < events.length; i++) {
+            var event = events[i];
+            var when = event.start.dateTime;
+            if (!when) {
+                when = event.start.date;
+            }
+            appendPre(event.summary + " (" + when + ")");
+        }
+    } else {
+        appendPre("No upcoming events found.");
+    }
 }
 
 function runOnload(onloadFunc) {
