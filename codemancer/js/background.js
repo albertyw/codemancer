@@ -1,5 +1,5 @@
 const sunRiseSetAPI = "https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0";
-const AppDate = Date;
+var AppDate = Date;
 
 const fullNight = [0, 0, 0];
 const fullDay = [0, 204, 255];
@@ -80,10 +80,12 @@ function currentTimestamp() {
 }
 
 function getCurrentColor(current) {
+    let before = 0;
+    let after = 0;
     for (let i=0; i<colorsTimestamp.length; i++) {
         if (colorsTimestamp[i] <= current && colorsTimestamp[i+1] > current) {
-            const before = colorsTimestamp[i];
-            const after = colorsTimestamp[i+1];
+            before = colorsTimestamp[i];
+            after = colorsTimestamp[i+1];
             break;
         }
     }
@@ -91,7 +93,7 @@ function getCurrentColor(current) {
     const colorBefore = colors[before];
     const colorAfter = colors[after];
     const currentColor = [0, 0, 0];
-    for (i=0; i<colorBefore.length; i++) {
+    for (let i=0; i<colorBefore.length; i++) {
         currentColor[i] = colorBefore[i] + (colorAfter[i] - colorBefore[i]) * percentage;
         currentColor[i] = Math.round(currentColor[i]);
     }

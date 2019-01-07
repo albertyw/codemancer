@@ -46,7 +46,7 @@ const targetLocation = {lat: 37.778519, lng: -122.40564};
 const geocodingAPIKey = "AIzaSyC0LuOBNZphx2zE520aewdJ1LSe1xdC5yY";
 
 function chainAccessor(data, properties) {
-    const value = data;
+    let value = data;
     for(let x=0; x<properties.length; x++) {
         value = value && value[properties[x]];
     }
