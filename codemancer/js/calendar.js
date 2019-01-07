@@ -123,9 +123,9 @@ function listUpcomingEvents() {
 
 function getFirstEvents(eventArrays, eventCount) {
     const events = [];
-    let minTime = 'z';
-    let minTimeCalendar = 0;
     while(events.length < eventCount) {
+        let minTime = "z";
+        let minTimeCalendar = 0;
         for(let i=0; i<eventArrays.length; i++) {
             if(eventArrays[i].length === 0) {
                 continue;
@@ -139,11 +139,10 @@ function getFirstEvents(eventArrays, eventCount) {
                 minTimeCalendar = i;
             }
         }
-        if(minTime === 'z') {
+        if(minTime === "z") {
             break;
         }
         const nextEvent = eventArrays[minTimeCalendar].shift();
-        minTime = 'z';
         events.push(nextEvent);
     }
     return events;
