@@ -86,23 +86,22 @@ function appendPre(message) {
     calendarContent.classList.remove("hidden");
 }
 
-
 /**
  * Print the summary and start datetime/date of the next ten events in
  * the authorized user"s calendar. If no events are found an
  * appropriate message is printed.
  */
 function listUpcomingEvents() {
-    const events = [];
-    gapi.client.calendar.calendarlist.list({
+    const eventArrays = [];
+    gapi.client.calendar.calendarList.list({
     }).then(function(response) {
         const calendars = response.result.items;
-        const calendarsWaiting = 0;
+        let calendarsFound = 0;
         for(let i=0; i<calendars.length; i++) {
-            if(calendars[i].selected) {
+            if(!calendars[i].selected) {
                 continue;
             }
-            calendarsWaiting++;
+            calendarsFound++;
             const calendarId = calendars[i].id;
             gapi.client.calendar.events.list({
                 "calendarId": calendarId,
@@ -113,10 +112,9 @@ function listUpcomingEvents() {
                 "orderBy": "startTime"
             }).then(function(response) {
                 const calendarEvents = response.result.items;
-                events.push(calendarEvents);
-                calendarsWaiting--;
-                if(calendarsWaiting <= 0) {
-                    displayEvents(events);
+                eventArrays.push(calendarEvents);
+                if(calendarsFound === eventArrays.length) {
+                    displayEvents(eventArrays);
                 }
             });
         }
@@ -125,21 +123,28 @@ function listUpcomingEvents() {
 
 function getFirstEvents(eventArrays, eventCount) {
     const events = [];
-    let minTime = 'asdf';
+    let minTime = 'z';
     let minTimeCalendar = 0;
     while(events.length < eventCount) {
-        for(let i=0; i<eventArrays.count; i++) {
-            const currentDate = eventArrays[i].start.dateTime;
-            if(currentDate < minTime) {
-                minTime = currentDate;
+        for(let i=0; i<eventArrays.length; i++) {
+            if(eventArrays[i].length === 0) {
+                continue;
+            }
+            let when = eventArrays[i][0].start.dateTime;
+            if (!when) {
+                when = eventArrays[i][0].start.date;
+            }
+            if(when < minTime) {
+                minTime = when;
                 minTimeCalendar = i;
             }
         }
         if(minTime === 'z') {
             break;
         }
-        events.push(eventArrays[minTimeCalendar].shift());
-        eventCount++;
+        const nextEvent = eventArrays[minTimeCalendar].shift();
+        minTime = 'z';
+        events.push(nextEvent);
     }
     return events;
 }
