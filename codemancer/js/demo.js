@@ -1,10 +1,10 @@
-var originalUpdateBackgroundColorPeriod = updateBackgroundColorPeriod;
-var demoOn = false;
+const originalUpdateBackgroundColorPeriod = updateBackgroundColorPeriod;
+let demoOn = false;
 
-var mockDate = function() {
-    var date = new Date();
-    var timestep = date.getSeconds() + date.getMinutes() * 60;
-    var hours = timestep % 24;
+const mockDate = function() {
+    const date = new Date();
+    const timestep = date.getSeconds() + date.getMinutes() * 60;
+    const hours = timestep % 24;
     date.setHours(hours);
     date.setMinutes(0);
     date.setSeconds(0);
