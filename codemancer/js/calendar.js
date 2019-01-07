@@ -1,17 +1,17 @@
 // Client ID and API key from the Developer Console
-var CLIENT_ID = "51833028115-pss6t7ckon9v6qu4bu87sqemktjhp745.apps.googleusercontent.com";
-var API_KEY = "AIzaSyBh1lCQdVjeVmeL5ewoEx7IgbG3Si3-rhM";
+const CLIENT_ID = "51833028115-pss6t7ckon9v6qu4bu87sqemktjhp745.apps.googleusercontent.com";
+const API_KEY = "AIzaSyBh1lCQdVjeVmeL5ewoEx7IgbG3Si3-rhM";
 
 // Array of API discovery doc URLs for APIs used by the quickstart
-var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-var SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 
-var authorizeButton = document.getElementById("authorize_button");
-var signoutButton = document.getElementById("signout_button");
-var calendarContent = document.getElementById("calendar-content");
+const authorizeButton = document.getElementById("authorize_button");
+const signoutButton = document.getElementById("signout_button");
+const calendarContent = document.getElementById("calendar-content");
 
 /**
  *  On load, called to load the auth2 library and API client library.
@@ -80,7 +80,7 @@ function handleSignoutClick() {
  * @param {string} message Text to be placed in pre element.
  */
 function appendPre(message) {
-    var textContent = document.createTextNode(message + "\n");
+    const textContent = document.createTextNode(message + "\n");
     calendarContent.appendChild(textContent);
 
     calendarContent.classList.remove("hidden");
@@ -153,9 +153,9 @@ function displayEvents(eventArrays) {
     appendPre("Upcoming events:");
 
     if (events.length > 0) {
-        for (var i = 0; i < events.length; i++) {
-            var event = events[i];
-            var when = event.start.dateTime;
+        for (let i = 0; i < events.length; i++) {
+            const event = events[i];
+            let when = event.start.dateTime;
             if (!when) {
                 when = event.start.date;
             }

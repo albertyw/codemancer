@@ -46,8 +46,8 @@ const targetLocation = {lat: 37.778519, lng: -122.40564};
 const geocodingAPIKey = "AIzaSyC0LuOBNZphx2zE520aewdJ1LSe1xdC5yY";
 
 function chainAccessor(data, properties) {
-    var value = data;
-    for(var x=0; x<properties.length; x++) {
+    const value = data;
+    for(let x=0; x<properties.length; x++) {
         value = value && value[properties[x]];
     }
     return value;
@@ -160,7 +160,7 @@ const Weather = {
 
     condition: function (url){
         const matcher = /\/(\w+).gif$/;
-        var code = matcher.exec(url);
+        let code = matcher.exec(url);
         if (code) {
             code = code[1];
         } else {
@@ -247,9 +247,9 @@ const Clock = {
 
         Clock.$el.digital.date.html(Clock.dateTemplate(parts));
 
-        var units = ["hour", "minute", "second"];
-        for (var i=0; i<units.length; i++) {
-            var unit = units[i];
+        const units = ["hour", "minute", "second"];
+        for (let i=0; i<units.length; i++) {
+            const unit = units[i];
             if( parts[unit] !== oldParts[unit] ){
                 Clock.$el.digital.time.find("." + unit).text(parts[unit]);
             }

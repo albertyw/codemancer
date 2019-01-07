@@ -1,13 +1,13 @@
-var sunRiseSetAPI = "https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0";
-var AppDate = Date;
+const sunRiseSetAPI = "https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0";
+const AppDate = Date;
 
-var fullNight = [0, 0, 0];
-var fullDay = [0, 204, 255];
-var brightEvening = [255, 110, 30];
-var midEvening = [255, 155, 0];
-var lateEvening = [0, 0, 255];
+const fullNight = [0, 0, 0];
+const fullDay = [0, 204, 255];
+const brightEvening = [255, 110, 30];
+const midEvening = [255, 155, 0];
+const lateEvening = [0, 0, 255];
 
-var colors = {
+const colors = {
     "0":[0,0,0],
     "235":[0,0,0],
     "295":[0,0,255],
@@ -22,9 +22,9 @@ var colors = {
     "1440":[0,0,0]
 };
 
-var colorsTimestamp = Object.keys(colors);
-var updateBackgroundColorPeriod = 5 * 60 * 1000;
-var updateBackgroundColorInterval = undefined;
+let colorsTimestamp = Object.keys(colors);
+const updateBackgroundColorPeriod = 5 * 60 * 1000;
+let updateBackgroundColorInterval = undefined;
 
 function generateColorsArray(){
     const req = new XMLHttpRequest();
@@ -32,8 +32,8 @@ function generateColorsArray(){
     req.responseType = "json";
     req.onload = function sunRiseSetReady() {
         const data = parseData(req.response);
-        var sunrise = dateToMinutes(data["sunrise"]);
-        var sunset = dateToMinutes(data["sunset"]);
+        const sunrise = dateToMinutes(data["sunrise"]);
+        const sunset = dateToMinutes(data["sunset"]);
         colors[sunrise - 120] = fullNight;
         colors[sunrise - 60] = lateEvening;
         colors[sunrise] = midEvening;
@@ -61,12 +61,12 @@ function parseData(data) {
 }
 
 function dateToMinutes(date) {
-    var timestamp = date.getHours() * 60 + date.getMinutes();
+    const timestamp = date.getHours() * 60 + date.getMinutes();
     return timestamp;
 }
 
 function componentToHex(c) {
-    var hex = c.toString(16);
+    const hex = c.toString(16);
     return hex.length === 1 ? "0" + hex : hex;
 }
 
@@ -75,22 +75,22 @@ function rgbToHex(r, g, b) {
 }
 
 function currentTimestamp() {
-    var currentDate = new AppDate();
+    const currentDate = new AppDate();
     return dateToMinutes(currentDate);
 }
 
 function getCurrentColor(current) {
-    for (var i=0; i<colorsTimestamp.length; i++) {
+    for (let i=0; i<colorsTimestamp.length; i++) {
         if (colorsTimestamp[i] <= current && colorsTimestamp[i+1] > current) {
-            var before = colorsTimestamp[i];
-            var after = colorsTimestamp[i+1];
+            const before = colorsTimestamp[i];
+            const after = colorsTimestamp[i+1];
             break;
         }
     }
-    var percentage = (current - before) / (after - before);
-    var colorBefore = colors[before];
-    var colorAfter = colors[after];
-    var currentColor = [0, 0, 0];
+    const percentage = (current - before) / (after - before);
+    const colorBefore = colors[before];
+    const colorAfter = colors[after];
+    const currentColor = [0, 0, 0];
     for (i=0; i<colorBefore.length; i++) {
         currentColor[i] = colorBefore[i] + (colorAfter[i] - colorBefore[i]) * percentage;
         currentColor[i] = Math.round(currentColor[i]);
@@ -99,8 +99,8 @@ function getCurrentColor(current) {
 }
 
 function updateBackgroundColor(){
-    var current = currentTimestamp();
-    var currentColor = getCurrentColor(current);
+    const current = currentTimestamp();
+    const currentColor = getCurrentColor(current);
     document.body.style.backgroundColor = currentColor;
     if (updateBackgroundColorInterval === undefined) {
         updateBackgroundColorInterval = setInterval(function() {

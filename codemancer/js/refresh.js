@@ -1,9 +1,9 @@
 // Reload the page once an hour
-var version = "";
+let version = "";
 (function refreshPage(){
-    var refreshTime = 1000 * 30;
-    var nonce = Math.floor(Math.random() * 1000 * 1000);
-    var url = "/version?nonce="+nonce;
+    const refreshTime = 1000 * 30;
+    const nonce = Math.floor(Math.random() * 1000 * 1000);
+    const url = "/version?nonce="+nonce;
     setTimeout(function(){
         $.get(
             url,
