@@ -106,9 +106,12 @@ function listUpcomingEvents() {
             }
             calendarsFound++;
             const calendarId = calendars[i].id;
+            const timeMin = new Date();
+            const timeMax = (new Date()).setTime(timeMin.getTime() + 24*60*60*1000);
             gapi.client.calendar.events.list({
                 "calendarId": calendarId,
-                "timeMin": (new Date()).toISOString(),
+                "timeMin": timeMin.toISOString(),
+                "timeMax": timeMax.toISOString(),
                 "showDeleted": false,
                 "singleEvents": true,
                 "maxResults": 10,
