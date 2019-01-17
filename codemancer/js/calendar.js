@@ -159,7 +159,8 @@ function displayEvents(eventArrays) {
             if (!when) {
                 when = event.start.date;
             }
-            appendPre(event.summary + " (" + when + ")");
+            const eventName = trimString(event.summary);
+            appendPre(eventName + " (" + when + ")");
         }
     } else {
         appendPre("No upcoming events found.");
@@ -181,6 +182,10 @@ function runOnload(onloadFunc) {
             window.onload = onloadFunc;
         }
     }
+}
+
+function trimString(s) {
+    return s.replace(/^\s+|\s+$/g, "");
 }
 
 runOnload(handleClientLoad);
