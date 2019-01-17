@@ -101,6 +101,9 @@ function listUpcomingEvents() {
             if(!calendars[i].selected) {
                 continue;
             }
+            if(calendars.id === "p#weather@group.v.calendar.google.com") {
+                continue;
+            }
             calendarsFound++;
             const calendarId = calendars[i].id;
             gapi.client.calendar.events.list({
