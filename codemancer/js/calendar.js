@@ -4,6 +4,7 @@ const API_KEY = "AIzaSyBh1lCQdVjeVmeL5ewoEx7IgbG3Si3-rhM";
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+const IGNORED_CALENDARS  = ["p#weather@group.v.calendar.google.com"];
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
@@ -101,7 +102,7 @@ function listUpcomingEvents() {
             if(!calendars[i].selected) {
                 continue;
             }
-            if(calendars[i].id === "p#weather@group.v.calendar.google.com") {
+            if(IGNORED_CALENDARS.includes(calendars[i].id)) {
                 continue;
             }
             calendarsFound++;
