@@ -44,6 +44,7 @@ const weatherIconConversions = {
 };
 const targetLocation = {lat: 37.778519, lng: -122.40564};
 const geocodingAPIKey = "AIzaSyC0LuOBNZphx2zE520aewdJ1LSe1xdC5yY";
+const weatherLookForwardHours = 24;
 
 function chainAccessor(data, properties) {
     let value = data;
@@ -137,7 +138,7 @@ const Weather = {
         w2.maxTemp = w2.currentTemp;
         w2.conditionSequence = [chainAccessor(data, ["hourly_forecast", 0, "wx"])];
         w2.conditionCodeSequence = [Weather.condition(chainAccessor(data, ["hourly_forecast", 0, "icon_url"]))];
-        for (let i = 0; i < 24; i++) {
+        for (let i = 0; i < weatherLookForwardHours; i++) {
             if (i >= data.hourly_forecast.length) {
                 break;
             }

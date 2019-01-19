@@ -13,6 +13,7 @@ const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
 const authorizeButton = document.getElementById("authorize_button");
 const signoutButton = document.getElementById("signout_button");
 const calendarContent = document.getElementById("calendar-content");
+const calendarLookForwardMS = 24*60*60*1000;
 
 /**
  *  On load, called to load the auth2 library and API client library.
@@ -109,7 +110,7 @@ function listUpcomingEvents() {
             const calendarId = calendars[i].id;
             const timeMin = new Date();
             const timeMax = new Date();
-            timeMax.setTime(timeMax.getTime() + 24*60*60*1000);
+            timeMax.setTime(timeMax.getTime() + calendarLookForwardMS);
             gapi.client.calendar.events.list({
                 "calendarId": calendarId,
                 "timeMin": timeMin.toISOString(),
