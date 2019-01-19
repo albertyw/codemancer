@@ -101,13 +101,13 @@ function listUpcomingEvents() {
             if(!calendars[i].selected) {
                 continue;
             }
-            if(calendars.id === "p#weather@group.v.calendar.google.com") {
+            if(calendars[i].id === "p#weather@group.v.calendar.google.com") {
                 continue;
             }
             calendarsFound++;
             const calendarId = calendars[i].id;
             const timeMin = new Date();
-            const timeMax = (new Date());
+            const timeMax = new Date();
             timeMax.setTime(timeMax.getTime() + 24*60*60*1000);
             gapi.client.calendar.events.list({
                 "calendarId": calendarId,
