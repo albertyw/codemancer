@@ -1,3 +1,6 @@
+const $ = require("jquery");
+const Q = require("q");
+
 var AppDate = Date;
 const weatherRefreshInterval = 20 * 60 * 1000;
 const weatherIconConversions = {

@@ -1,7 +1,3 @@
-require("./jquery.min");
-require("./q");
-require("./moment-with-locales.min");
-require("./moment-timezone-with-data.min");
 require("./google");
 require("./app");
 require("./refresh");
