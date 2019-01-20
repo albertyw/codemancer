@@ -34,7 +34,6 @@ module.exports = {
         "describe": true,
         "beforeEach": true,
         "chai": true,
-        "gapi": true,
-        "AppDate": true
+        "gapi": true
     }
 };

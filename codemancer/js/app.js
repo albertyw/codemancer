@@ -1,7 +1,6 @@
 const $ = require("jquery");
 const Q = require("q");
 
-var AppDate = Date;
 const weatherRefreshInterval = 20 * 60 * 1000;
 const weatherIconConversions = {
     "chanceflurries": "p",
@@ -212,7 +211,7 @@ const Clock = {
     months : ["January","February","March","April","May","June","July","August","September","October","November","December"],
 
     timeParts: function() {
-        const date = new AppDate();
+        const date = new window.AppDate();
         let hour = date.getHours();
 
         hour = hour % 12;

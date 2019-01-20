@@ -1,3 +1,5 @@
+window.AppDate = Date;
+
 require("./google");
 require("./app");
 require("./refresh");

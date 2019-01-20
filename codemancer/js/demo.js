@@ -14,13 +14,13 @@ const mockDate = function() {
 };
 
 function startDemo() {
-    AppDate = mockDate;
+    window.AppDate = mockDate;
     background.updateBackgroundColorPeriod = 500;
     background.updateBackgroundColor();
 }
 
 function stopDemo() {
-    AppDate = Date;
+    window.AppDate = Date;
     background.updateBackgroundColorPeriod = originalUpdateBackgroundColorPeriod;
 }
 
