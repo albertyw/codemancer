@@ -30,3 +30,7 @@ function toggleDemo() { // eslint-disable-line no-unused-vars
     }
     demoOn = !demoOn;
 }
+
+module.exports = {
+    toggleDemo: toggleDemo,
+};

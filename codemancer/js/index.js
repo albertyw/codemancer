@@ -1,5 +1,7 @@
 require("./google");
 require("./app");
 require("./refresh");
-require("./demo");
+const demo = require("./demo");
 require("./calendar");
+
+window.toggleDemo = demo.toggleDemo;
