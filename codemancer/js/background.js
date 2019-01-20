@@ -130,3 +130,8 @@ function runOnload(onloadFunc) {
 
 updateBackgroundColor();
 runOnload(generateColorsArray);
+
+module.exports = {
+    updateBackgroundColor: updateBackgroundColor,
+    updateBackgroundColorPeriod: updateBackgroundColorPeriod,
+};
