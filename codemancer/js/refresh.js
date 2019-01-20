@@ -1,3 +1,5 @@
+const $ = require("jquery");
+
 // Reload the page once an hour
 let version = "";
 (function refreshPage(){

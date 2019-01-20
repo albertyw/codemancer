@@ -1,5 +1,4 @@
 const sunRiseSetAPI = "https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0";
-var AppDate = Date;
 
 const fullNight = [0, 0, 0];
 const fullDay = [0, 204, 255];
@@ -54,7 +53,7 @@ function parseData(data) {
     data = data.results;
     Object.keys(data).forEach(function(key) {
         if (key !== "day_length") {
-            data[key] = new AppDate(data[key]);
+            data[key] = new window.AppDate(data[key]);
         }
     });
     return data;
@@ -75,7 +74,7 @@ function rgbToHex(r, g, b) {
 }
 
 function currentTimestamp() {
-    const currentDate = new AppDate();
+    const currentDate = new window.AppDate();
     return dateToMinutes(currentDate);
 }
 
@@ -130,3 +129,8 @@ function runOnload(onloadFunc) {
 
 updateBackgroundColor();
 runOnload(generateColorsArray);
+
+module.exports = {
+    updateBackgroundColor: updateBackgroundColor,
+    updateBackgroundColorPeriod: updateBackgroundColorPeriod,
+};

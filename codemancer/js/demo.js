@@ -1,4 +1,6 @@
-const originalUpdateBackgroundColorPeriod = updateBackgroundColorPeriod;
+const background = require("./background");
+
+const originalUpdateBackgroundColorPeriod = background.updateBackgroundColorPeriod;
 let demoOn = false;
 
 const mockDate = function() {
@@ -12,14 +14,14 @@ const mockDate = function() {
 };
 
 function startDemo() {
-    AppDate = mockDate;
-    updateBackgroundColorPeriod = 500;
-    updateBackgroundColor();
+    window.AppDate = mockDate;
+    background.updateBackgroundColorPeriod = 500;
+    background.updateBackgroundColor();
 }
 
 function stopDemo() {
-    AppDate = Date;
-    updateBackgroundColorPeriod = originalUpdateBackgroundColorPeriod;
+    window.AppDate = Date;
+    background.updateBackgroundColorPeriod = originalUpdateBackgroundColorPeriod;
 }
 
 function toggleDemo() { // eslint-disable-line no-unused-vars
@@ -30,3 +32,7 @@ function toggleDemo() { // eslint-disable-line no-unused-vars
     }
     demoOn = !demoOn;
 }
+
+module.exports = {
+    toggleDemo: toggleDemo,
+};

@@ -66,4 +66,5 @@ codemancer/version
 # Test files
 instrumented
 
+bundle.js
 codemancer.min.js

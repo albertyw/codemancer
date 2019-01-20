@@ -28,17 +28,12 @@ module.exports = {
         ]
     },
     "globals": {
-        "$": true,
         "_": true,
-        "Q": true,
         "Rollbar": true,
         "it": true,
         "describe": true,
         "beforeEach": true,
         "chai": true,
-        "gapi": true,
-        "updateBackgroundColorPeriod": true,
-        "updateBackgroundColor": true,
-        "AppDate": true
+        "gapi": true
     }
 };

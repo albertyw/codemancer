@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "scripts": {
-    "dist-min": "babel codemancer/js/background.js | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
+    "dist-min": "browserify codemancer/js/index.js | babel | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
     "eslint": "eslint codemancer/js test app.js",
     "mocha": "mocha-headless-chrome -f ./test/index.htm -c .nyc_output/coverage.json",
     "nyc-instrument": "nyc instrument ./codemancer/js ./instrumented",
@@ -28,6 +28,7 @@
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "browserify": "^16.2.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "jquery": "^3.3.1",
