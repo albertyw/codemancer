@@ -120,7 +120,7 @@ function listUpcomingEvents() {
                 "maxResults": 10,
                 "orderBy": "startTime"
             }).then(function(response) {
-                const calendarEvents = response.result.items;
+                const calendarEvents = response.result.items.filter(showCalEvent);
                 eventArrays.push(calendarEvents);
                 if(calendarsFound === eventArrays.length) {
                     displayEvents(eventArrays);
@@ -184,6 +184,12 @@ function formatTime(d) {
     const time = (d.getHours() % 12) + ":" + ("0"+d.getMinutes()).slice(-2);
     const dString = date + " " + time;
     return dString;
+}
+
+function showCalEvent(calEvent) {
+    const selfEvent = calEvent.self;
+    const acceptedEvent = calEvent.responseStatus === "accepted";
+    return selfEvent && acceptedEvent;
 }
 
 function runOnload(onloadFunc) {
