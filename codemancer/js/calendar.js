@@ -168,13 +168,22 @@ function displayEvents(eventArrays) {
 
     for (let i = 0; i < events.length; i++) {
         const event = events[i];
-        let when = event.start.dateTime;
-        if (!when) {
-            when = event.start.date;
+        let eventStart = event.start.dateTime;
+        if (!eventStart) {
+            eventStart = event.start.date;
         }
+        const when = new Date();
+        when.setTime(Date.parse(eventStart));
         const eventName = trimString(event.summary);
-        appendPre(eventName + " (" + when + ")");
+        appendPre(eventName + " (" + formatTime(when) + ")");
     }
+}
+
+function formatTime(d) {
+    const date = d.toDateString();
+    const time = (d.getHours() % 12) + ":" + ("0"+d.getMinutes()).slice(-2);
+    const dString = date + " " + time;
+    return dString;
 }
 
 function runOnload(onloadFunc) {
