@@ -161,18 +161,19 @@ function displayEvents(eventArrays) {
     const events = getFirstEvents(eventArrays, 10);
     appendPre("Upcoming events:");
 
-    if (events.length > 0) {
-        for (let i = 0; i < events.length; i++) {
-            const event = events[i];
-            let when = event.start.dateTime;
-            if (!when) {
-                when = event.start.date;
-            }
-            const eventName = trimString(event.summary);
-            appendPre(eventName + " (" + when + ")");
-        }
-    } else {
+    if (events.length === 0) {
         appendPre("No upcoming events found.");
+        return;
+    }
+
+    for (let i = 0; i < events.length; i++) {
+        const event = events[i];
+        let when = event.start.dateTime;
+        if (!when) {
+            when = event.start.date;
+        }
+        const eventName = trimString(event.summary);
+        appendPre(eventName + " (" + when + ")");
     }
 }
 
