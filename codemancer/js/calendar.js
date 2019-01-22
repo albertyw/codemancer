@@ -195,6 +195,11 @@ function showCal(calendar) {
 }
 
 function showCalEvent(calEvent) {
+    // Show event if organized by self
+    if (calEvent.organizer.self) {
+        return true;
+    }
+
     // Show event if accepted as an attendee
     for(let i=0; i<calEvent.attendees.length; i++) {
         const attendee = calEvent.attendees[i];
