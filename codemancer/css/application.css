@@ -154,7 +154,7 @@ a {
     fill: rgba(255, 255, 255, 0.3);
 }
 
-.light-text .wunder:hover path {
+.hover-highlight:hover path {
     fill: #fff;
 }
 
