@@ -100,14 +100,12 @@ function listUpcomingEvents() {
         const calendars = response.result.items;
         let calendarsFound = 0;
         for(let i=0; i<calendars.length; i++) {
-            if(!calendars[i].selected) {
-                continue;
-            }
-            if(IGNORED_CALENDARS.includes(calendars[i].id)) {
+            const calendar = calendars[i];
+            if(!showCal(calendar)) {
                 continue;
             }
             calendarsFound++;
-            const calendarId = calendars[i].id;
+            const calendarId = calendar.id;
             const timeMin = new Date();
             const timeMax = new Date();
             timeMax.setTime(timeMax.getTime() + calendarLookForwardMS);
@@ -184,6 +182,16 @@ function formatTime(d) {
     const time = (d.getHours() % 12) + ":" + ("0"+d.getMinutes()).slice(-2);
     const dString = date + " " + time;
     return dString;
+}
+
+function showCal(calendar) {
+    if(!calendar.selected) {
+        return False;
+    }
+    if(IGNORED_CALENDARS.includes(calendar.id)) {
+        return False;
+    }
+    return True;
 }
 
 function showCalEvent(calEvent) {
