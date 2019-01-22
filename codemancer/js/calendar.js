@@ -195,9 +195,17 @@ function showCal(calendar) {
 }
 
 function showCalEvent(calEvent) {
-    const selfEvent = calEvent.self;
-    const acceptedEvent = calEvent.responseStatus === "accepted";
-    return selfEvent && acceptedEvent;
+    // Show event if accepted as an attendee
+    for(let i=0; i<calEvent.attendees.length; i++) {
+        const attendee = calEvent.attendees[i];
+        if(!attendee.self) {
+            continue;
+        }
+        return attendee.responseStatus === "accepted";
+    }
+
+    // Show event by default
+    return true;
 }
 
 function runOnload(onloadFunc) {
