@@ -186,12 +186,12 @@ function formatTime(d) {
 
 function showCal(calendar) {
     if(!calendar.selected) {
-        return False;
+        return false;
     }
     if(IGNORED_CALENDARS.includes(calendar.id)) {
-        return False;
+        return false;
     }
-    return True;
+    return true;
 }
 
 function showCalEvent(calEvent) {
