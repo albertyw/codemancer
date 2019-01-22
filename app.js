@@ -50,7 +50,12 @@ app.get("/version", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-    res.render('index', {});
+    const templateVars = {
+        ROLLBAR_CLIENT_ACCESS: process.env.ROLLBAR_CLIENT_ACCESS,
+        SEGMENT_TOKEN: process.env.SEGMENT_TOKEN,
+        LOGFIT_TOKEN: process.env.LOGFIT_TOKEN,
+    };
+    res.render("index", templateVars);
 });
 app.use("/css", express.static(path.join("codemancer", "css")));
 app.use("/font", express.static(path.join("codemancer", "font")));
