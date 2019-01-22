@@ -49,6 +49,12 @@ app.get("/version", (req, res) => {
     getAndRespondVersion(res);
 });
 
-app.use(express.static("codemancer"));
+app.get("/", (req, res) => {
+    res.render('index', {});
+});
+app.use("/css", express.static(path.join("codemancer", "css")));
+app.use("/font", express.static(path.join("codemancer", "font")));
+app.use("/img", express.static(path.join("codemancer", "img")));
+app.use("/js", express.static(path.join("codemancer", "js")));
 
 app.listen(port, () => console.log("Listening on port " + port));
