@@ -196,7 +196,7 @@ function showCal(calendar) {
 
 function showCalEvent(calEvent) {
     // Show event if organized by self
-    if (calEvent.organizer.self) {
+    if (calEvent.organizer && calEvent.organizer.self) {
         return true;
     }
 
