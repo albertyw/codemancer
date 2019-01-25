@@ -201,12 +201,14 @@ function showCalEvent(calEvent) {
     }
 
     // Show event if accepted as an attendee
-    for(let i=0; i<calEvent.attendees.length; i++) {
-        const attendee = calEvent.attendees[i];
-        if(!attendee.self) {
-            continue;
+    if (calEvent.attendees) {
+        for(let i=0; i<calEvent.attendees.length; i++) {
+            const attendee = calEvent.attendees[i];
+            if(!attendee.self) {
+                continue;
+            }
+            return attendee.responseStatus === "accepted";
         }
-        return attendee.responseStatus === "accepted";
     }
 
     // Show event by default
