@@ -9,6 +9,7 @@ const IGNORED_CALENDARS  = ["p#weather@group.v.calendar.google.com"];
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
 const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+const DEFAULT_EVENT_SUMMARY = "Busy";
 
 const authorizeButton = document.getElementById("authorize_button");
 const signoutButton = document.getElementById("signout_button");
@@ -172,7 +173,7 @@ function displayEvents(eventArrays) {
         }
         const when = new Date();
         when.setTime(Date.parse(eventStart));
-        const eventName = trimString(event.summary || "");
+        const eventName = trimString(event.summary || DEFAULT_EVENT_SUMMARY);
         appendPre(eventName + " (" + formatTime(when) + ")");
     }
 }
