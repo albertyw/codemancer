@@ -172,7 +172,7 @@ function displayEvents(eventArrays) {
         }
         const when = new Date();
         when.setTime(Date.parse(eventStart));
-        const eventName = trimString(event.summary);
+        const eventName = trimString(event.summary || "");
         appendPre(eventName + " (" + formatTime(when) + ")");
     }
 }
