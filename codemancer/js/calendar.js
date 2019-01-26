@@ -180,7 +180,9 @@ function displayEvents(eventArrays) {
 
 function formatTime(d) {
     const date = d.toDateString();
-    const time = (d.getHours() % 12) + ":" + ("0"+d.getMinutes()).slice(-2);
+    const hour = (d.getHours() + 11) % 12 + 1;
+    const minutes = "0"+d.getMinutes().slice(-2);
+    const time = hour + ":" + minutes;
     const dString = date + " " + time;
     return dString;
 }
