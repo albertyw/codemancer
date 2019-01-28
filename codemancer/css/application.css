@@ -89,10 +89,6 @@ ol, ul {
         bottom: 5px;
         right: 60px;
     }
-
-    body .wunder svg {
-        height: 23px;
-    }
 }
 
 @font-face {
