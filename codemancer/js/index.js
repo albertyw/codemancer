@@ -1,7 +1,7 @@
 window.AppDate = Date;
 
 require("./google");
-require("./app");
+require("./clock");
 require("./weather");
 require("./refresh");
 const demo = require("./demo");
