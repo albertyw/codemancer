@@ -49,11 +49,36 @@ app.get("/version", (req, res) => {
     getAndRespondVersion(res);
 });
 
+const svg = {};
+let readFileCalls = 0;
+let readFileFinished = 0;
+function readSVGFile(svgFile, svgName) {
+    readFileCalls++;
+    const svgPath = path.join(__dirname, "codemancer", "img", svgFile);
+    fs.readFile(svgPath, (err, data) => {
+        if (err) {
+            data = "";
+        }
+        svg[svgName] = data;
+        console.log(svgName);
+        readFileFinished++;
+        if(readFileCalls === readFileFinished) {
+            listen();
+        }
+    });
+}
+readSVGFile("wunderground.svg", "wunderground");
+readSVGFile("sunrisesunset.svg", "sunrisesunset");
+readSVGFile("toggledemo.svg", "toggledemo");
+
 app.get("/", (req, res) => {
     const templateVars = {
         ROLLBAR_CLIENT_ACCESS: process.env.ROLLBAR_CLIENT_ACCESS,
         SEGMENT_TOKEN: process.env.SEGMENT_TOKEN,
         LOGFIT_TOKEN: process.env.LOGFIT_TOKEN,
+        WUNDERGROUND_SVG: svg.wunderground,
+        SUNRISESUNSET_SVG: svg.sunrisesunset,
+        TOGGLEDEMO_SVG: svg.toggledemo,
     };
     res.render("index", templateVars);
 });
@@ -62,4 +87,6 @@ app.use("/font", express.static(path.join("codemancer", "font")));
 app.use("/img", express.static(path.join("codemancer", "img")));
 app.use("/js", express.static(path.join("codemancer", "js")));
 
-app.listen(port, () => console.log("Listening on port " + port));
+function listen(){
+    app.listen(port, () => console.log("Listening on port " + port));
+}
