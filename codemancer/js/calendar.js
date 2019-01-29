@@ -181,7 +181,7 @@ function displayEvents(eventArrays) {
 function formatTime(d) {
     const date = d.toDateString();
     const hour = (d.getHours() + 11) % 12 + 1;
-    const minutes = "0"+d.getMinutes().slice(-2);
+    const minutes = ("0" + d.getMinutes().toString()).slice(-2);
     const period = d.getHours() < 12 ? "AM" : "PM";
     const time = hour + ":" + minutes + " " + period;
     const dString = date + " " + time;
