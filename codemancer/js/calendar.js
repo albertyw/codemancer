@@ -1,3 +1,5 @@
+const util = require("./util");
+
 // Client ID and API key from the Developer Console
 const CLIENT_ID = "51833028115-pss6t7ckon9v6qu4bu87sqemktjhp745.apps.googleusercontent.com";
 const API_KEY = "AIzaSyBh1lCQdVjeVmeL5ewoEx7IgbG3Si3-rhM";
@@ -219,25 +221,8 @@ function showCalEvent(calEvent) {
     return true;
 }
 
-function runOnload(onloadFunc) {
-    if(window.attachEvent) {
-        window.attachEvent("onload", onloadFunc);
-    } else {
-        if(window.onload) {
-            const currOnload = window.onload;
-            const newOnload = function(evt) {
-                currOnload(evt);
-                onloadFunc(evt);
-            };
-            window.onload = newOnload;
-        } else {
-            window.onload = onloadFunc;
-        }
-    }
-}
-
 function trimString(s) {
     return s.replace(/^\s+|\s+$/g, "");
 }
 
-runOnload(handleClientLoad);
+util.runOnload(handleClientLoad);
