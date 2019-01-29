@@ -60,7 +60,6 @@ function readSVGFile(svgFile, svgName) {
             data = "";
         }
         svg[svgName] = data;
-        console.log(svgName);
         readFileFinished++;
         if(readFileCalls === readFileFinished) {
             listen();
