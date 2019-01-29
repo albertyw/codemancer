@@ -9,9 +9,6 @@
 <body>
 
 <!-- Load this early so the background doesn't flash -->
-<script type="text/javascript" src="../codemancer/js/jquery.min.js"></script>
-<script type="text/javascript" src="../instrumented/background.js"></script>
-
 <div id="mocha"></div>
 
 </body>
@@ -19,10 +16,7 @@
 <script type="text/javascript" src="../node_modules/chai/chai.js"></script>
 <script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
 
-<script type="text/javascript" src="../codemancer/js/q.js"></script>
-<script type="text/javascript" src="../instrumented/app.js"></script>
-<script type="text/javascript" src="../instrumented/refresh.js"></script>
-<script type="text/javascript" src="../instrumented/demo.js"></script>
+<script type="text/javascript" src="../instrumented/bundle.js"></script>
 
 <script>
   mocha.setup('bdd');

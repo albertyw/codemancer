@@ -9,7 +9,7 @@
     "dist-min": "browserify codemancer/js/index.js | babel | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
     "eslint": "eslint codemancer/js test app.js",
     "mocha": "mocha-headless-chrome -f ./test/index.htm -c .nyc_output/coverage.json",
-    "nyc-instrument": "nyc instrument ./codemancer/js ./instrumented",
+    "nyc-instrument": "browserify -t browserify-istanbul ./codemancer/js/index.js -o ./instrumented/bundle.js",
     "stylelint": "stylelint codemancer/css/*",
     "test": "npm run stylelint && npm run eslint && npm run test-bdd",
     "test-bdd": "npm run nyc-instrument && npm run mocha && nyc report -r text -r lcov"
