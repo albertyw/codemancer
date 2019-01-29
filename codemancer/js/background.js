@@ -1,3 +1,5 @@
+const util = require("./util");
+
 const sunRiseSetAPI = "https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0";
 
 const fullNight = [0, 0, 0];
@@ -110,25 +112,8 @@ function updateBackgroundColor(){
     }
 }
 
-function runOnload(onloadFunc) {
-    if(window.attachEvent) {
-        window.attachEvent("onload", onloadFunc);
-    } else {
-        if(window.onload) {
-            const currOnload = window.onload;
-            const newOnload = function(evt) {
-                currOnload(evt);
-                onloadFunc(evt);
-            };
-            window.onload = newOnload;
-        } else {
-            window.onload = onloadFunc;
-        }
-    }
-}
-
 updateBackgroundColor();
-runOnload(generateColorsArray);
+util.runOnload(generateColorsArray);
 
 module.exports = {
     updateBackgroundColor: updateBackgroundColor,
