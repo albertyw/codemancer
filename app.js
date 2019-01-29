@@ -69,6 +69,8 @@ function readSVGFile(svgFile, svgName) {
 readSVGFile("wunderground.svg", "wunderground");
 readSVGFile("sunrisesunset.svg", "sunrisesunset");
 readSVGFile("toggledemo.svg", "toggledemo");
+readSVGFile("calendar-plus-o.svg", "calendarAuth");
+readSVGFile("calendar-minus-o.svg", "calendarSignout");
 
 app.get("/", (req, res) => {
     const templateVars = {
@@ -78,6 +80,8 @@ app.get("/", (req, res) => {
         WUNDERGROUND_SVG: svg.wunderground,
         SUNRISESUNSET_SVG: svg.sunrisesunset,
         TOGGLEDEMO_SVG: svg.toggledemo,
+        CALENDAR_AUTH_SVG: svg.calendarAuth,
+        CALENDAR_SIGNOUT_SVG: svg.calendarSignout,
     };
     res.render("index", templateVars);
 });

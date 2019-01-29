@@ -58,6 +58,12 @@
       <a href="javascript:toggleDemo()" class="hover-highlight">
         {{{ TOGGLEDEMO_SVG }}}
       </a>
+      <a id="authorize_button" href="javascript:handleAuthClick()" class="hover-highlight">
+        {{{ CALENDAR_AUTH_SVG }}}
+      </a>
+      <a id="signout_button" href="javascript:handleSignoutClick()" class="hover-highlight">
+        {{{ CALENDAR_SIGNOUT_SVG }}}
+      </a>
     </div>
     <div id ="content" class="container">
       <div id="time" class="fadeInDown animated smooth"><span class="hour"></span><span class="minute"></span><span class="second"></span></div>
@@ -76,8 +82,6 @@
           </div>
         </span>
         <span id="calendar">
-          <button id="authorize_button" style="display: none;">Authorize Google Calendar</button>
-          <button id="signout_button" style="display: none;">Sign Out Google Calendar</button>
           <pre id="calendar-content" class="hidden animated bounceIn smooth"></pre>
         </span>
       </div>
