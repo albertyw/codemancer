@@ -1,6 +1,5 @@
 window.AppDate = Date;
 
-require("./google");
 require("./clock");
 require("./weather");
 require("./refresh");
