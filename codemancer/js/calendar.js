@@ -54,10 +54,10 @@ function initClient() {
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
         authorizeButton.style.display = "none";
-        signoutButton.style.display = "block";
+        signoutButton.style.display = "inline";
         listUpcomingEvents();
     } else {
-        authorizeButton.style.display = "block";
+        authorizeButton.style.display = "inline";
         signoutButton.style.display = "none";
     }
 }
