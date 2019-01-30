@@ -77,6 +77,7 @@ readSVGFile("calendar-minus-o.svg", "calendarSignout");
 
 app.get("/", (req, res) => {
     const templateVars = {
+        ENVIRONMENT: process.env.ENVIRONMENT,
         ROLLBAR_CLIENT_ACCESS: process.env.ROLLBAR_CLIENT_ACCESS,
         SEGMENT_TOKEN: process.env.SEGMENT_TOKEN,
         LOGFIT_TOKEN: process.env.LOGFIT_TOKEN,
