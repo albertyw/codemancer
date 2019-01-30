@@ -5,11 +5,13 @@ const fs = require("fs");
 const morgan = require("morgan");
 const mustache = require("mustache");
 const path = require("path");
+const Rollbar = require("rollbar");
 const rfs = require("rotating-file-stream");
 
 require("dotenv").config();
 const port = process.env.LISTEN_PORT;
 const app = express();
+const rollbar = new Rollbar(process.env.ROLLBAR_CLIENT_ACCESS);
 
 // Set up logging
 app.use(morgan("combined"));
@@ -18,6 +20,7 @@ var accessLogStream = rfs("access.log", {
     path: path.join(__dirname, "logs", "app")
 });
 app.use(morgan("combined", {stream: accessLogStream }));
+app.use(rollbar.errorHandler());
 
 // Set up mustache
 // To set functioning of mustachejs view engine
