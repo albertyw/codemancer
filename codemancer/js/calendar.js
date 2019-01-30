@@ -1,5 +1,3 @@
-const gapi = require("googleapis");
-
 const util = require("./util");
 
 // Client ID and API key from the Developer Console

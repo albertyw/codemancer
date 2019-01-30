@@ -11,6 +11,7 @@ var rollbarConfig = {
 const Rollbar = rollbar.init(rollbarConfig);
 window.Rollbar = Rollbar;
 
+require("./google");
 require("./clock");
 require("./weather");
 require("./refresh");
