@@ -76,6 +76,8 @@ function handleAuthClick() {
  */
 function handleSignoutClick() {
     gapi.auth2.getAuthInstance().signOut();
+    calendarContent.removeChild(calendarContent.firstChild);
+    calendarContent.classList.add("hidden");
 }
 
 /**
