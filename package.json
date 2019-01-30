@@ -37,6 +37,7 @@
     "mustache": "^3.0.1",
     "q": "^1.5.1",
     "rollbar": "^2.5.2",
+    "rollbar-browser": "^1.9.5",
     "rotating-file-stream": "^1.4.0",
     "uglify-es": "^3.3.9"
   },
