@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "scripts": {
-    "dist-min": "browserify codemancer/js/index.js | babel | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
+    "dist-min": "browserify codemancer/js/index.js -t babelify | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
     "eslint": "eslint codemancer/js test app.js",
     "mocha": "mocha-headless-chrome -f ./test/index.htm -c .nyc_output/coverage.json",
     "nyc-instrument": "browserify -d -t browserify-istanbul ./codemancer/js/index.js -o ./instrumented/bundle.js",
@@ -26,7 +26,6 @@
   "homepage": "https://github.com/albertyw/codemancer#readme",
   "private": true,
   "dependencies": {
-    "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "browserify": "^16.2.3",
     "dotenv": "^6.2.0",
@@ -41,6 +40,7 @@
     "uglify-es": "^3.3.9"
   },
   "devDependencies": {
+    "babelify": "^10.0.0",
     "browserify-istanbul": "^3.0.1",
     "chai": "^4.2.0",
     "eslint": "^5.12.1",
