@@ -45,6 +45,7 @@
     "jquery": "^3.3.1",
     "mocha": "^5.1.1",
     "mocha-headless-chrome": "^2.0.1",
+    "mochify": "^6.0.4",
     "nyc": "^13.1.0",
     "q": "^1.5.1",
     "rollbar-browser": "^1.9.5",
