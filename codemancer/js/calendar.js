@@ -228,3 +228,7 @@ function trimString(s) {
 }
 
 util.runOnload(handleClientLoad);
+
+module.exports = {
+    trimString: trimString
+};
