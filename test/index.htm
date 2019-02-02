@@ -13,18 +13,5 @@
 
 </body>
 
-<script type="text/javascript" src="../node_modules/chai/chai.js"></script>
-<script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
-
-<script type="text/javascript" src="../instrumented/bundle.js"></script>
-
-<script>
-  mocha.setup('bdd');
-</script>
-<script src="test.js"></script>
-<script>
-  mocha.checkLeaks();
-  mocha.globals([]);
-  mocha.run();
-</script>
+<script src="test-bundle.js"></script>
 </html>

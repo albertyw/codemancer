@@ -10,9 +10,10 @@
     "eslint": "eslint codemancer/js test app.js",
     "mocha": "mocha-headless-chrome -f ./test/index.htm -c .nyc_output/coverage.json",
     "nyc-instrument": "browserify -d -t browserify-istanbul ./codemancer/js/index.js -o ./instrumented/bundle.js",
+    "nyc-instrument-test": "browserify -d -t browserify-istanbul ./test/test.js -o ./instrumented/test-bundle.js",
     "stylelint": "stylelint codemancer/css/*",
     "test": "npm run stylelint && npm run eslint && npm run test-bdd",
-    "test-bdd": "npm run nyc-instrument && npm run mocha && nyc report -r text -r lcov"
+    "test-bdd": "npm run nyc-instrument && npm run nyc-instrument-test && npm run mocha && nyc report -r text -r lcov"
   },
   "repository": {
     "type": "git",
