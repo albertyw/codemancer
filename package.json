@@ -8,11 +8,9 @@
   "scripts": {
     "dist-min": "browserify codemancer/js/index.js -t babelify | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
     "eslint": "eslint codemancer/js test app.js",
-    "mocha": "mocha-headless-chrome -f ./test/index.htm -c .nyc_output/coverage.json",
-    "nyc-instrument": "browserify -d -t browserify-istanbul ./codemancer/js/index.js -o ./instrumented/bundle.js",
+    "cover": "nyc --instrument false mochify --transform [ babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ]",
     "stylelint": "stylelint codemancer/css/*",
-    "test": "npm run stylelint && npm run eslint && npm run test-bdd",
-    "test-bdd": "npm run nyc-instrument && npm run mocha && nyc report -r text -r lcov"
+    "test": "npm run stylelint && npm run eslint && npm run cover"
   },
   "repository": {
     "type": "git",
@@ -35,15 +33,14 @@
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
+    "babel-plugin-istanbul": "^5.1.0",
     "babel-preset-env": "^1.7.0",
     "babelify": "^10.0.0",
     "browserify": "^16.2.3",
-    "browserify-istanbul": "^3.0.1",
     "chai": "^4.2.0",
     "eslint": "^5.12.1",
     "jquery": "^3.3.1",
-    "mocha": "^5.1.1",
-    "mocha-headless-chrome": "^2.0.1",
+    "mochify": "^6.0.4",
     "nyc": "^13.1.0",
     "q": "^1.5.1",
     "rollbar-browser": "^1.9.5",
