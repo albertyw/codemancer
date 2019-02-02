@@ -205,7 +205,7 @@ function main() {
     });
 
     loader.fail(function(reason) {
-        Rollbar.error(reason);
+        window.Rollbar.error(reason);
     });
     setInterval(main, weatherRefreshInterval);
 }

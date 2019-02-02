@@ -28,12 +28,9 @@ module.exports = {
         ]
     },
     "globals": {
-        "_": true,
-        "Rollbar": true,
         "it": true,
         "describe": true,
         "beforeEach": true,
-        "chai": true,
         "gapi": true
     }
 };
