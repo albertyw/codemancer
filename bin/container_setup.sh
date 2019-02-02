@@ -10,10 +10,11 @@ sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && locale-g
 curl -sL https://deb.nodesource.com/setup_11.x | bash -
 apt-get update
 apt-get install -y git nodejs npm
-npm install --only=prod
 
 # Set up .env
 ln -s .env.production .env
 
 # Compile code
+npm install
 npm run dist-min
+npm prune --production
