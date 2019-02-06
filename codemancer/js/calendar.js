@@ -203,11 +203,6 @@ function showCal(calendar) {
 }
 
 function showCalEvent(calEvent) {
-    // Show event if organized by self
-    if (calEvent.organizer && calEvent.organizer.self) {
-        return true;
-    }
-
     // Show event if accepted as an attendee
     if (calEvent.attendees) {
         for(let i=0; i<calEvent.attendees.length; i++) {
@@ -217,6 +212,11 @@ function showCalEvent(calEvent) {
             }
             return attendee.responseStatus === "accepted";
         }
+    }
+
+    // Show event if organized by self that have no attendees
+    if (calEvent.organizer && calEvent.organizer.self) {
+        return true;
     }
 
     // Show event by default
