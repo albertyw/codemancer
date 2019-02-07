@@ -6,7 +6,9 @@
     "test": "tests"
   },
   "scripts": {
-    "dist-min": "browserify codemancer/js/index.js -t babelify | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
+    "dist-min": "npm run minify-js && npm run minify-css",
+    "minify-js": "browserify codemancer/js/index.js -t babelify | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
+    "minify-css": "cleancss -o codemancer/css/codemancer.min.css -O2 codemancer/css/application.css codemancer/css/animations.css codemancer/css/calendar.css codemancer/css/weather.css",
     "eslint": "eslint codemancer/js test app.js",
     "cover": "nyc --instrument false mochify --transform [ babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ]",
     "stylelint": "stylelint codemancer/css/*",
@@ -38,6 +40,7 @@
     "babelify": "^10.0.0",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
+    "clean-css-cli": "^4.2.1",
     "eslint": "^5.12.1",
     "jquery": "^3.3.1",
     "mochify": "^6.0.4",
