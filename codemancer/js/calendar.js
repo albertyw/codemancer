@@ -193,6 +193,9 @@ function formatTime(d) {
 }
 
 function showCal(calendar) {
+    if(calendar.accessRole !== "owner") {
+        return false;
+    }
     if(!calendar.selected) {
         return false;
     }
