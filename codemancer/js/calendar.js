@@ -1,3 +1,5 @@
+const swal = require("sweetalert");
+
 const util = require("./util");
 
 // Client ID and API key from the Developer Console
@@ -76,7 +78,10 @@ function handleAuthClick() {
     gapi.auth2.getAuthInstance().signIn();
     if(authClicks >= 2) {
         // User has tried authing at least twice and may need debugging
-        console.log(AUTH_DEBUG_INFO);
+        swal({
+            text: AUTH_DEBUG_INFO,
+            icon: "warning",
+        });
     }
 }
 
