@@ -1,3 +1,5 @@
+const swal = require("sweetalert");
+
 const util = require("./util");
 
 // Client ID and API key from the Developer Console
@@ -17,6 +19,10 @@ const authorizeButton = document.getElementById("authorize_button");
 const signoutButton = document.getElementById("signout_button");
 const calendarContent = document.getElementById("calendar-content");
 const calendarLookForwardMS = 24*60*60*1000;
+
+let authClicks = 0;
+const AUTH_DEBUG_INFO = `If google authentication is not working, check that
+you are allowing cookies for google domains`;
 
 /**
  *  On load, called to load the auth2 library and API client library.
@@ -68,13 +74,22 @@ function updateSigninStatus(isSignedIn) {
  *  Sign in the user upon button click.
  */
 function handleAuthClick() {
+    authClicks += 1;
     gapi.auth2.getAuthInstance().signIn();
+    if(authClicks >= 2) {
+        // User has tried authing at least twice and may need debugging
+        swal({
+            text: AUTH_DEBUG_INFO,
+            icon: "warning",
+        });
+    }
 }
 
 /**
  *  Sign out the user upon button click.
  */
 function handleSignoutClick() {
+    authClicks -= 1;
     gapi.auth2.getAuthInstance().signOut();
     calendarContent.innerText = "";
     calendarContent.classList.add("hidden");
