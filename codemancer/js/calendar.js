@@ -177,8 +177,6 @@ function getFirstEvents(eventArrays, eventCount) {
 
 function displayEvents(eventArrays) {
     const events = getFirstEvents(eventArrays, 10);
-    appendPre("Upcoming events:");
-
     if (events.length === 0) {
         appendPre("No upcoming events found.");
         return;
