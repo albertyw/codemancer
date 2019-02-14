@@ -1,5 +1,7 @@
 const $ = require('jquery');
 
+const util = require('./util');
+
 const Clock = {
     $el : {
         digital : {
@@ -12,7 +14,7 @@ const Clock = {
     months : ['January','February','March','April','May','June','July','August','September','October','November','December'],
 
     timeParts: function() {
-        const date = new window.AppDate();
+        const date = util.getMockDate();
         let hour = date.getHours();
 
         hour = hour % 12;

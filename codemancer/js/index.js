@@ -1,5 +1,3 @@
-window.AppDate = Date;
-
 const rollbar = require('rollbar-browser');
 var rollbarConfig = {
     accessToken: window.ROLLBAR_ACCESS_TOKEN,
