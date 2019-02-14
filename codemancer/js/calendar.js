@@ -246,5 +246,6 @@ function trimString(s) {
 util.runOnload(handleClientLoad);
 
 module.exports = {
+    formatTime: formatTime,
     trimString: trimString
 };
