@@ -31,6 +31,9 @@ function toggleDemo() {
  **/
 function getMockDate() {
     const date = new Date();
+    if(!demoOn) {
+        return date;
+    }
     const timestep = date.getSeconds() + date.getMinutes() * 60;
     const hours = timestep % 24;
     date.setHours(hours);
