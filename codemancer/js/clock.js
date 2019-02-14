@@ -1,15 +1,15 @@
-const $ = require("jquery");
+const $ = require('jquery');
 
 const Clock = {
     $el : {
         digital : {
-            time : $("#time"),
-            date : $("#date")
+            time : $('#time'),
+            date : $('#date')
         }
     },
 
-    weekdays : ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-    months : ["January","February","March","April","May","June","July","August","September","October","November","December"],
+    weekdays : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+    months : ['January','February','March','April','May','June','July','August','September','October','November','December'],
 
     timeParts: function() {
         const date = new window.AppDate();
@@ -32,17 +32,17 @@ const Clock = {
 
     prependZero : function(num) {
         if(num < 10) {
-            return "0" + num;
+            return '0' + num;
         }
         return num;
     },
 
     dateTemplate: function(parts){
-        return parts.day + ", " + parts.month + " " + parts.date;
+        return parts.day + ', ' + parts.month + ' ' + parts.date;
     },
 
     transformTemplate: function(angle){
-        return "rotate(" + angle + ",50,50)";
+        return 'rotate(' + angle + ',50,50)';
     },
 
     refresh: function() {
@@ -51,11 +51,11 @@ const Clock = {
 
         Clock.$el.digital.date.html(Clock.dateTemplate(parts));
 
-        const units = ["hour", "minute", "second"];
+        const units = ['hour', 'minute', 'second'];
         for (let i=0; i<units.length; i++) {
             const unit = units[i];
             if( parts[unit] !== oldParts[unit] ){
-                Clock.$el.digital.time.find("." + unit).text(parts[unit]);
+                Clock.$el.digital.time.find('.' + unit).text(parts[unit]);
             }
         }
 
@@ -84,13 +84,13 @@ const Clock = {
 function style() {
     // Kick off the clock
     Clock.start();
-    const $main = $("main");
+    const $main = $('main');
 
     // Text Color
-    if ($main.is("[class*='-text']")) {
-        $main[0].className = $main[0].className.replace(/\w*-text/g, "");
+    if ($main.is('[class*=\'-text\']')) {
+        $main[0].className = $main[0].className.replace(/\w*-text/g, '');
     }
-    $main.addClass("light-text");
+    $main.addClass('light-text');
 }
 
 // Start your engine....

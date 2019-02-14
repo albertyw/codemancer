@@ -1,6 +1,6 @@
-const util = require("./util");
+const util = require('./util');
 
-const sunRiseSetAPI = "https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0";
+const sunRiseSetAPI = 'https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0';
 
 const fullNight = [0, 0, 0];
 const fullDay = [0, 204, 255];
@@ -9,18 +9,18 @@ const midEvening = [255, 155, 0];
 const lateEvening = [0, 0, 255];
 
 const colors = {
-    "0":[0,0,0],
-    "235":[0,0,0],
-    "295":[0,0,255],
-    "355":[255,155,0],
-    "415":[255,110,30],
-    "475":[0,204,255],
-    "1096":[0,204,255],
-    "1156":[255,110,30],
-    "1216":[255,155,0],
-    "1276":[0,0,255],
-    "1336":[0,0,0],
-    "1440":[0,0,0]
+    '0':[0,0,0],
+    '235':[0,0,0],
+    '295':[0,0,255],
+    '355':[255,155,0],
+    '415':[255,110,30],
+    '475':[0,204,255],
+    '1096':[0,204,255],
+    '1156':[255,110,30],
+    '1216':[255,155,0],
+    '1276':[0,0,255],
+    '1336':[0,0,0],
+    '1440':[0,0,0]
 };
 
 let colorsTimestamp = Object.keys(colors);
@@ -29,12 +29,12 @@ let updateBackgroundColorInterval = undefined;
 
 function generateColorsArray(){
     const req = new XMLHttpRequest();
-    req.open("GET", sunRiseSetAPI);
-    req.responseType = "json";
+    req.open('GET', sunRiseSetAPI);
+    req.responseType = 'json';
     req.onload = function sunRiseSetReady() {
         const data = parseData(req.response);
-        const sunrise = dateToMinutes(data["sunrise"]);
-        const sunset = dateToMinutes(data["sunset"]);
+        const sunrise = dateToMinutes(data['sunrise']);
+        const sunset = dateToMinutes(data['sunset']);
         colors[sunrise - 120] = fullNight;
         colors[sunrise - 60] = lateEvening;
         colors[sunrise] = midEvening;
@@ -54,7 +54,7 @@ function generateColorsArray(){
 function parseData(data) {
     data = data.results;
     Object.keys(data).forEach(function(key) {
-        if (key !== "day_length") {
+        if (key !== 'day_length') {
             data[key] = new window.AppDate(data[key]);
         }
     });
@@ -68,11 +68,11 @@ function dateToMinutes(date) {
 
 function componentToHex(c) {
     const hex = c.toString(16);
-    return hex.length === 1 ? "0" + hex : hex;
+    return hex.length === 1 ? '0' + hex : hex;
 }
 
 function rgbToHex(r, g, b) {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }
 
 function currentTimestamp() {

@@ -1,4 +1,4 @@
-const background = require("./background");
+const background = require('./background');
 
 const originalUpdateBackgroundColorPeriod = background.updateBackgroundColorPeriod;
 let demoOn = false;

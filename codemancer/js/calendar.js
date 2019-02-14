@@ -1,23 +1,23 @@
-const swal = require("sweetalert");
+const swal = require('sweetalert');
 
-const util = require("./util");
+const util = require('./util');
 
 // Client ID and API key from the Developer Console
-const CLIENT_ID = "51833028115-pss6t7ckon9v6qu4bu87sqemktjhp745.apps.googleusercontent.com";
-const API_KEY = "AIzaSyBh1lCQdVjeVmeL5ewoEx7IgbG3Si3-rhM";
+const CLIENT_ID = '51833028115-pss6t7ckon9v6qu4bu87sqemktjhp745.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyBh1lCQdVjeVmeL5ewoEx7IgbG3Si3-rhM';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
-const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
-const IGNORED_CALENDARS  = ["p#weather@group.v.calendar.google.com"];
+const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
+const IGNORED_CALENDARS  = ['p#weather@group.v.calendar.google.com'];
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-const SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
-const DEFAULT_EVENT_SUMMARY = "Busy";
+const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly';
+const DEFAULT_EVENT_SUMMARY = 'Busy';
 
-const authorizeButton = document.getElementById("authorize_button");
-const signoutButton = document.getElementById("signout_button");
-const calendarContent = document.getElementById("calendar-content");
+const authorizeButton = document.getElementById('authorize_button');
+const signoutButton = document.getElementById('signout_button');
+const calendarContent = document.getElementById('calendar-content');
 const calendarLookForwardMS = 24*60*60*1000;
 
 let authClicks = 0;
@@ -28,7 +28,7 @@ you are allowing cookies for google domains`;
  *  On load, called to load the auth2 library and API client library.
  */
 function handleClientLoad() {
-    gapi.load("client:auth2", initClient);
+    gapi.load('client:auth2', initClient);
 }
 
 /**
@@ -50,7 +50,7 @@ function initClient() {
         authorizeButton.onclick = handleAuthClick;
         signoutButton.onclick = handleSignoutClick;
     }, function(error) {
-        appendPre("Could not connect to Google Calendar");
+        appendPre('Could not connect to Google Calendar');
         console.error(JSON.stringify(error, null, 2)); // eslint-disable-line
     });
 }
@@ -61,12 +61,12 @@ function initClient() {
  */
 function updateSigninStatus(isSignedIn) {
     if (isSignedIn) {
-        authorizeButton.style.display = "none";
-        signoutButton.style.display = "inline";
+        authorizeButton.style.display = 'none';
+        signoutButton.style.display = 'inline';
         listUpcomingEvents();
     } else {
-        authorizeButton.style.display = "inline";
-        signoutButton.style.display = "none";
+        authorizeButton.style.display = 'inline';
+        signoutButton.style.display = 'none';
     }
 }
 
@@ -80,7 +80,7 @@ function handleAuthClick() {
         // User has tried authing at least twice and may need debugging
         swal({
             text: AUTH_DEBUG_INFO,
-            icon: "warning",
+            icon: 'warning',
         });
     }
 }
@@ -91,8 +91,8 @@ function handleAuthClick() {
 function handleSignoutClick() {
     authClicks -= 1;
     gapi.auth2.getAuthInstance().signOut();
-    calendarContent.innerText = "";
-    calendarContent.classList.add("hidden");
+    calendarContent.innerText = '';
+    calendarContent.classList.add('hidden');
 }
 
 /**
@@ -102,15 +102,15 @@ function handleSignoutClick() {
  * @param {string} message Text to be placed in pre element.
  */
 function appendPre(message) {
-    const textContent = document.createTextNode(message + "\n");
+    const textContent = document.createTextNode(message + '\n');
     calendarContent.appendChild(textContent);
 
-    calendarContent.classList.remove("hidden");
+    calendarContent.classList.remove('hidden');
 }
 
 /**
  * Print the summary and start datetime/date of the next ten events in
- * the authorized user"s calendar. If no events are found an
+ * the authorized user's calendar. If no events are found an
  * appropriate message is printed.
  */
 function listUpcomingEvents() {
@@ -130,13 +130,13 @@ function listUpcomingEvents() {
             const timeMax = new Date();
             timeMax.setTime(timeMax.getTime() + calendarLookForwardMS);
             gapi.client.calendar.events.list({
-                "calendarId": calendarId,
-                "timeMin": timeMin.toISOString(),
-                "timeMax": timeMax.toISOString(),
-                "showDeleted": false,
-                "singleEvents": true,
-                "maxResults": 10,
-                "orderBy": "startTime"
+                'calendarId': calendarId,
+                'timeMin': timeMin.toISOString(),
+                'timeMax': timeMax.toISOString(),
+                'showDeleted': false,
+                'singleEvents': true,
+                'maxResults': 10,
+                'orderBy': 'startTime'
             }).then(function(response) {
                 const calendarEvents = response.result.items.filter(showCalEvent);
                 eventArrays.push(calendarEvents);
@@ -151,7 +151,7 @@ function listUpcomingEvents() {
 function getFirstEvents(eventArrays, eventCount) {
     const events = [];
     while(events.length < eventCount) {
-        let minTime = "z";
+        let minTime = 'z';
         let minTimeCalendar = 0;
         for(let i=0; i<eventArrays.length; i++) {
             if(eventArrays[i].length === 0) {
@@ -166,7 +166,7 @@ function getFirstEvents(eventArrays, eventCount) {
                 minTimeCalendar = i;
             }
         }
-        if(minTime === "z") {
+        if(minTime === 'z') {
             break;
         }
         const nextEvent = eventArrays[minTimeCalendar].shift();
@@ -178,7 +178,7 @@ function getFirstEvents(eventArrays, eventCount) {
 function displayEvents(eventArrays) {
     const events = getFirstEvents(eventArrays, 10);
     if (events.length === 0) {
-        appendPre("No upcoming events found.");
+        appendPre('No upcoming events found.');
         return;
     }
 
@@ -191,22 +191,22 @@ function displayEvents(eventArrays) {
         const when = new Date();
         when.setTime(Date.parse(eventStart));
         const eventName = trimString(event.summary || DEFAULT_EVENT_SUMMARY);
-        appendPre(eventName + " (" + formatTime(when) + ")");
+        appendPre(eventName + ' (' + formatTime(when) + ')');
     }
 }
 
 function formatTime(d) {
     const date = d.toDateString();
     const hour = (d.getHours() + 11) % 12 + 1;
-    const minutes = ("0" + d.getMinutes().toString()).slice(-2);
-    const period = d.getHours() < 12 ? "AM" : "PM";
-    const time = hour + ":" + minutes + " " + period;
-    const dString = date + " " + time;
+    const minutes = ('0' + d.getMinutes().toString()).slice(-2);
+    const period = d.getHours() < 12 ? 'AM' : 'PM';
+    const time = hour + ':' + minutes + ' ' + period;
+    const dString = date + ' ' + time;
     return dString;
 }
 
 function showCal(calendar) {
-    if(calendar.accessRole !== "owner") {
+    if(calendar.accessRole !== 'owner') {
         return false;
     }
     if(!calendar.selected) {
@@ -226,7 +226,7 @@ function showCalEvent(calEvent) {
             if(!attendee.self) {
                 continue;
             }
-            return attendee.responseStatus === "accepted";
+            return attendee.responseStatus === 'accepted';
         }
     }
 
@@ -240,7 +240,7 @@ function showCalEvent(calEvent) {
 }
 
 function trimString(s) {
-    return s.replace(/^\s+|\s+$/g, "");
+    return s.replace(/^\s+|\s+$/g, '');
 }
 
 util.runOnload(handleClientLoad);

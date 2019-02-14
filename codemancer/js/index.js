@@ -1,6 +1,6 @@
 window.AppDate = Date;
 
-const rollbar = require("rollbar-browser");
+const rollbar = require('rollbar-browser');
 var rollbarConfig = {
     accessToken: window.ROLLBAR_ACCESS_TOKEN,
     captureUncaught: true,
@@ -11,11 +11,11 @@ var rollbarConfig = {
 const Rollbar = rollbar.init(rollbarConfig);
 window.Rollbar = Rollbar;
 
-require("./google");
-require("./clock");
-require("./weather");
-require("./refresh");
-const demo = require("./demo");
-require("./calendar");
+require('./google');
+require('./clock');
+require('./weather');
+require('./refresh');
+const demo = require('./demo');
+require('./calendar');
 
 window.toggleDemo = demo.toggleDemo;

@@ -3,7 +3,7 @@
  */
 function runOnload(onloadFunc) {
     if(window.attachEvent) {
-        window.attachEvent("onload", onloadFunc);
+        window.attachEvent('onload', onloadFunc);
     } else {
         if(window.onload) {
             const currOnload = window.onload;
