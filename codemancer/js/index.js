@@ -12,8 +12,9 @@ window.Rollbar = Rollbar;
 require('./google');
 require('./clock');
 require('./weather');
-require('./refresh');
+const pageRefresher = require('./refresh');
 const demo = require('./demo');
 require('./calendar');
 
+pageRefresher();
 window.toggleDemo = demo.toggleDemo;
