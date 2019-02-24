@@ -1,4 +1,4 @@
-const refreshTime = 60 * 60 * 1000;
+const refreshTime = parseInt(process.env.REFRESH_INTERVAL, 10);
 
 // Reload the page once an hour
 function pageRefresher(){
