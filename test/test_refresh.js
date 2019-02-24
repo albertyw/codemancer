@@ -1,6 +1,6 @@
-const expect = require('chai').expect; // eslint-disable-line no-unused-vars
+const expect = require('chai').expect;
 
-const pageRefresher = require('../codemancer/js/refresh'); // eslint-disable-line no-unused-vars
+const pageRefresher = require('../codemancer/js/refresh');
 
 describe('pageRefresher', () => {
     it('returns a refresh time', () => {
