@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dist-min": "npm run minify-js && npm run minify-css",
-    "minify-js": "browserify codemancer/js/index.js -t babelify | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
+    "minify-js": "node bin/browserify.js | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
     "minify-css": "cleancss -o codemancer/css/codemancer.min.css -O2 codemancer/css/application.css codemancer/css/animations.css codemancer/css/calendar.css codemancer/css/weather.css",
     "eslint": "eslint codemancer/js test app.js",
     "cover": "nyc --instrument false mochify --transform [ babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ]",
