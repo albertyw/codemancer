@@ -1,9 +1,9 @@
 const rollbar = require('rollbar-browser');
 var rollbarConfig = {
-    accessToken: window.ROLLBAR_ACCESS_TOKEN,
+    accessToken: process.env.ROLLBAR_CLIENT_ACCESS,
     captureUncaught: true,
     payload: {
-        environment: window.ENVIRONMENT,
+        environment: process.env.ENVIRONMENT,
     }
 };
 const Rollbar = rollbar.init(rollbarConfig);
