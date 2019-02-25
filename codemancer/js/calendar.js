@@ -3,8 +3,8 @@ const swal = require('sweetalert');
 const util = require('./util');
 
 // Client ID and API key from the Developer Console
-const CLIENT_ID = '51833028115-pss6t7ckon9v6qu4bu87sqemktjhp745.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyBh1lCQdVjeVmeL5ewoEx7IgbG3Si3-rhM';
+const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const API_KEY = process.env.GOOGLE_API_KEY;
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
