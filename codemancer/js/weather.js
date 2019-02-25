@@ -45,7 +45,7 @@ const weatherIconConversions = {
     'nt_mostlysunny': '2'
 };
 const targetLocation = {lat: 37.778519, lng: -122.40564};
-const geocodingAPIKey = 'AIzaSyC0LuOBNZphx2zE520aewdJ1LSe1xdC5yY';
+const geocodingAPIKey = process.env.GEOCODING_API_KEY;
 const weatherLookForwardHours = 24;
 
 function chainAccessor(data, properties) {
