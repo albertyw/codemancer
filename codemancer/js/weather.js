@@ -1,5 +1,6 @@
 const $ = require('jquery');
 const Q = require('q');
+const runOnLoad = require('./util');
 
 const weatherRefreshInterval = 20 * 60 * 1000;
 const weatherIconConversions = {
@@ -164,6 +165,4 @@ function main() {
     setInterval(main, weatherRefreshInterval);
 }
 
-// Delay loading weather to make sure font is loaded and decrease
-// load on weather API
-setTimeout(main, 1000);
+runOnLoad(main);
