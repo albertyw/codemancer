@@ -1,6 +1,5 @@
 const $ = require('jquery');
 const Q = require('q');
-const runOnLoad = require('./util');
 
 const weatherRefreshInterval = 20 * 60 * 1000;
 const weatherIconConversions = {
@@ -165,4 +164,4 @@ function main() {
     setInterval(main, weatherRefreshInterval);
 }
 
-runOnLoad(main);
+module.exports = main;

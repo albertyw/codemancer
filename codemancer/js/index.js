@@ -11,7 +11,11 @@ window.Rollbar = Rollbar;
 
 require('./google');
 require('./clock');
-require('./weather');
+
+const runOnLoad = require('./util').runOnLoad;
+const weather = require('./weather');
+runOnLoad(weather);
+
 const pageRefresher = require('./refresh');
 const demo = require('./demo');
 require('./calendar');
