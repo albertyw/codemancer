@@ -12,9 +12,9 @@ window.Rollbar = Rollbar;
 require('./google');
 require('./clock');
 
-const runOnLoad = require('./util').runOnLoad;
+const runOnload = require('./util').runOnload;
 const weather = require('./weather');
-runOnLoad(weather);
+runOnload(weather);
 
 const pageRefresher = require('./refresh');
 const demo = require('./demo');
