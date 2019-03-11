@@ -1,6 +1,8 @@
 const $ = require('jquery');
 const Q = require('q');
 
+const Location = require('./location');
+
 const weatherRefreshInterval = 20 * 60 * 1000;
 const weatherIconConversions = {
     'chanceflurries': 'p',
@@ -44,7 +46,6 @@ const weatherIconConversions = {
     'nt_partlycloudy': '2',
     'nt_mostlysunny': '2'
 };
-const targetLocation = {wfo: 'MTR', x: '88', y: '128'};
 const weatherLookForwardHours = 24;
 
 function chainAccessor(data, properties) {
@@ -70,12 +71,12 @@ const Weather = {
 
     atLocation: function () {
         return Q.when($.ajax({
-            url: Weather.urlBuilder(targetLocation),
+            url: Weather.urlBuilder(Location.targetLocation),
             type: 'GET',
             dataType: 'json'
         }))
             .then(function(data) {
-                return Location.getDisplayName(targetLocation).then(function(name) {
+                return Location.getDisplayName(Location.targetLocation).then(function(name) {
                     data.locationDisplayName = name;
                     return data;
                 });
@@ -166,6 +167,5 @@ function main() {
 
 module.exports = {
     load: main,
-    targetLocation: targetLocation,
     Weather: Weather,
 };
