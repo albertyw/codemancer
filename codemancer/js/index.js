@@ -13,8 +13,8 @@ require('./google');
 require('./clock');
 
 const runOnload = require('./util').runOnload;
-const weather = require('./weather');
-runOnload(weather);
+const loadWeather = require('./weather').load;
+runOnload(loadWeather);
 
 const demo = require('./demo');
 require('./calendar');

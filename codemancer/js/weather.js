@@ -44,7 +44,7 @@ const weatherIconConversions = {
     'nt_partlycloudy': '2',
     'nt_mostlysunny': '2'
 };
-const targetLocation = {lat: 37.778519, lng: -122.40564};
+const targetLocation = {wfo: 'MTR', x: '88', y: '128'};
 const weatherLookForwardHours = 24;
 
 function chainAccessor(data, properties) {
@@ -62,15 +62,15 @@ const Weather = {
         city : $('#city')
     },
 
-    urlBuilder: function(type, location) {
-        const url = 'https://api.wunderground.com/api/d1bfeac98cad347b/' +
-            type + '/lang:EN/q/' + location.lat + ',' + location.lng + '.json';
+    urlBuilder: function(location) {
+        const url = 'https://api.weather.gov/gridpoints/' + location.wfo + '/'
+            + location.x + ',' + location.y + '/forecast/hourly';
         return url;
     },
 
     atLocation: function () {
         return Q.when($.ajax({
-            url: Weather.urlBuilder('hourly/', targetLocation),
+            url: Weather.urlBuilder(targetLocation),
             type: 'GET',
             dataType: 'json'
         }))
@@ -164,4 +164,8 @@ function main() {
     setInterval(main, weatherRefreshInterval);
 }
 
-module.exports = main;
+module.exports = {
+    load: main,
+    targetLocation: targetLocation,
+    Weather: Weather,
+};
