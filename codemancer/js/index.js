@@ -16,9 +16,10 @@ const runOnload = require('./util').runOnload;
 const weather = require('./weather');
 runOnload(weather);
 
-const pageRefresher = require('./refresh');
 const demo = require('./demo');
 require('./calendar');
+require('./logfit');
 
+const pageRefresher = require('./refresh');
 pageRefresher();
 window.toggleDemo = demo.toggleDemo;
