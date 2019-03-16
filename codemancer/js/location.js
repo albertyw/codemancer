@@ -1,7 +1,10 @@
 const $ = require('jquery');
 const Q = require('q');
 
-const targetLocation = {lat: 37.778519, lng: -122.40564};
+const targetLocation = {
+    wfo: 'MTR', x: '88', y: '128',
+    lat: 37.778519, lng: -122.40564,
+};
 const geocodingAPIKey = process.env.GEOCODING_API_KEY;
 
 function unique(array) {
@@ -9,6 +12,8 @@ function unique(array) {
 }
 
 const Location = {
+    targetLocation: targetLocation,
+
     getDisplayName: function(location) {
         return Q.when($.ajax({
             url : 'https://maps.googleapis.com/maps/api/geocode/json',
@@ -49,7 +54,4 @@ const Location = {
     }
 };
 
-module.exports = {
-    Location: Location,
-    targetLocation: targetLocation,
-};
+module.exports = Location;
