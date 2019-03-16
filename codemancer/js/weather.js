@@ -5,46 +5,9 @@ const Location = require('./location');
 
 const weatherRefreshInterval = 20 * 60 * 1000;
 const weatherIconConversions = {
-    'chanceflurries': 'p',
-    'chancesnow': 'p',
-    '/ig/images/weather/flurries.gif': ']',
-    'chancesleet': '4',
-    'chancerain': '7',
-    'chancetstorms': 'x',
-    'tstorms': 'z',
-    'nt_tstorms': 'z',
-    'clear': 'v',
-    'sunny': 'v',
-    'cloudy': '`',
-    'flurries': ']',
-    'nt_flurries': ']',
-    'fog': 'g',
-    'hazy': 'g',
-    'nt_fog': 'g',
-    'nt_hazy': 'g',
-    'mostlycloudy': '1',
-    'partlysunny': '1',
-    'partlycloudy': '1',
-    'mostlysunny': '1',
-    'sleet': '3',
-    'nt_sleet': '3',
-    'rain': '6',
-    'nt_rain': '6',
-    'snow': 'o',
-    'nt_snow': 'o',
-    // Night Specific
-    'nt_chanceflurries': 'a',
-    'nt_chancerain': '8',
-    'nt_chancesleet': '5',
-    'nt_chancesnow': '[',
-    'nt_chancetstorms': 'c',
-    'nt_clear': '/',
-    'nt_sunny': '/',
-    'nt_cloudy': '2',
-    'nt_mostlycloudy': '2',
-    'nt_partlysunny': '2',
-    'nt_partlycloudy': '2',
-    'nt_mostlysunny': '2'
+    'Mostly Clear': '\uf00d',
+    'Sunny': '\uf00d',
+    'Mostly Sunny': '\uf00d',
 };
 const weatherLookForwardHours = 24;
 
@@ -90,44 +53,36 @@ const Weather = {
         // Lets only keep what we need.
         const w2 = {};
         w2.city = data.locationDisplayName;
-        w2.currentTemp = Math.round(chainAccessor(data, ['hourly_forecast', 0, 'temp', 'english']));
+        w2.currentTemp = Math.round(chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
         w2.minTemp = w2.currentTemp;
         w2.maxTemp = w2.currentTemp;
-        w2.conditionSequence = [chainAccessor(data, ['hourly_forecast', 0, 'wx'])];
-        w2.conditionCodeSequence = [Weather.condition(chainAccessor(data, ['hourly_forecast', 0, 'icon_url']))];
+        w2.conditionSequence = [chainAccessor(data, ['properties', 'periods', 0, 'shortForecast'])];
         for (let i = 0; i < weatherLookForwardHours; i++) {
-            if (i >= data.hourly_forecast.length) {
+            if (i >= data.properties.periods.length) {
                 break;
             }
-            const df = data.hourly_forecast[i];
-            const temp = Math.round(chainAccessor(df, ['temp', 'english']));
+            const period = data.properties.periods[i];
+            const temp = Math.round(chainAccessor(period, ['temperature']));
             w2.minTemp = Math.min(w2.minTemp, temp);
             w2.maxTemp = Math.max(w2.maxTemp, temp);
 
-            const condition = df.condition;
-            const conditionCode = Weather.condition(df.icon_url);
+            const condition = period.shortForecast;
             if(w2.conditionSequence[w2.conditionSequence.length-1] != condition) {
                 w2.conditionSequence.push(condition);
-                w2.conditionCodeSequence.push(conditionCode);
             }
+        }
+        for (let i=0; i < w2.conditionSequence.length; i++) {
+            w2.conditionSequence[i] = Weather.conditionIcon(w2.conditionSequence[i]);
         }
 
         deferred.resolve(w2);
         return deferred.promise;
     },
 
-    condition: function (url){
-        const matcher = /\/(\w+).gif$/;
-        let code = matcher.exec(url);
-        if (code) {
-            code = code[1];
-        } else {
-            // We can't find the code
-            code = null;
-        }
-        const weatherIconCode = weatherIconConversions[code];
+    conditionIcon: function (condition){
+        const weatherIconCode = weatherIconConversions[condition];
         if (weatherIconCode === undefined) {
-            return 'T';
+            return 'wi-refresh';
         }
         return weatherIconCode;
     },
@@ -142,8 +97,7 @@ const Weather = {
     },
 
     renderDay: function(el, data) {
-        el.attr('title', data.conditionSequence[0]);
-        el.find('.condition').html(data.conditionCodeSequence[0]);
+        el.find('.condition').html(data.conditionSequence[0]);
         el.find('.min-temp').html(data.minTemp);
         el.find('.current-temp').html(data.currentTemp);
         el.find('.max-temp').html(data.maxTemp);
