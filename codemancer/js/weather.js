@@ -29,6 +29,7 @@ const Weather = {
     },
 
     urlBuilder: function(location) {
+        // Documentation at https://www.weather.gov/documentation/services-web-api#/
         const url = 'https://api.weather.gov/gridpoints/' + location.wfo + '/'
             + location.x + ',' + location.y + '/forecast/hourly';
         return url;
