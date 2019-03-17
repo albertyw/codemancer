@@ -84,6 +84,7 @@ const Weather = {
     conditionIcon: function (condition){
         const weatherIconCode = weatherIconConversions[condition];
         if (weatherIconCode === undefined) {
+            Rollbar.error('cannot find image for "' + condition + '"');
             return '\uf04c';
         }
         return weatherIconCode;
