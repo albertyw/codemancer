@@ -16,5 +16,5 @@ ln -s .env.production .env
 
 # Compile code
 npm install
-npm run dist-min
+npm run minify
 npm prune --production

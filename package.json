@@ -6,7 +6,7 @@
     "test": "tests"
   },
   "scripts": {
-    "dist-min": "npm run minify-js && npm run minify-css",
+    "minify": "npm run minify-js && npm run minify-css",
     "minify-js": "node bin/browserify.js | uglifyjs --config-file=.uglify.min.json -o codemancer/js/codemancer.min.js",
     "minify-css": "cleancss -o codemancer/css/codemancer.min.css -O2 codemancer/css/application.css codemancer/css/animations.css codemancer/css/calendar.css codemancer/css/weather.css",
     "eslint": "eslint app.js bin codemancer/js test",
