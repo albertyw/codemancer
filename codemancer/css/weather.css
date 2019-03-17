@@ -20,13 +20,13 @@
 
 #weather .now .condition {
     font-family: 'Weather', sans-serif;
-    font-size: 11.5em;
+    font-size: 7em;
     height: 170px;
     margin: 0 0 7px 10px;
 }
 
 #weather .now .temp {
-    height: 170px;
+    height: 110px;
     margin: 0 0 7px 10px;
     display: flex;
     flex-direction: column;
