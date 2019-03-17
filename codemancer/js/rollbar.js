@@ -1,6 +1,9 @@
 const rollbar = require('rollbar-browser');
+const console = require('console');
 
-let Rollbar = undefined;
+let Rollbar = {
+    error: function(e) { console.error(e); }
+};
 
 function getRollbar() {
     if (!process.env.ROLLBAR_CLIENT_ACCESS) {
