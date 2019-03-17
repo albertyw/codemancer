@@ -1,13 +1,14 @@
 const rollbar = require('rollbar-browser');
 const console = require('console');
 
-let Rollbar = {
+const RollbarMock = {
     error: function(e) { console.error(e); }
 };
+let Rollbar = undefined;
 
 function getRollbar() {
     if (!process.env.ROLLBAR_CLIENT_ACCESS) {
-        return undefined;
+        Rollbar = RollbarMock;
     }
     if (Rollbar) {
         return Rollbar;
