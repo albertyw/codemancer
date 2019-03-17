@@ -69,7 +69,6 @@ function readSVGFile(svgFile, svgName) {
         }
     });
 }
-readSVGFile('wunderground.svg', 'wunderground');
 readSVGFile('sunrisesunset.svg', 'sunrisesunset');
 readSVGFile('toggledemo.svg', 'toggledemo');
 readSVGFile('calendar-plus-o.svg', 'calendarAuth');
@@ -79,7 +78,6 @@ app.get('/', (req, res) => {
     const templateVars = {
         SEGMENT_TOKEN: process.env.SEGMENT_TOKEN,
         LOGFIT_TOKEN: process.env.LOGFIT_TOKEN,
-        WUNDERGROUND_SVG: svg.wunderground,
         SUNRISESUNSET_SVG: svg.sunrisesunset,
         TOGGLEDEMO_SVG: svg.toggledemo,
         CALENDAR_AUTH_SVG: svg.calendarAuth,
