@@ -1,6 +1,7 @@
 const $ = require('jquery');
 const Q = require('q');
 
+const Rollbar = require('./rollbar');
 const Location = require('./location');
 
 const weatherRefreshInterval = 20 * 60 * 1000;
@@ -83,6 +84,7 @@ const Weather = {
     conditionIcon: function (condition){
         const weatherIconCode = weatherIconConversions[condition];
         if (weatherIconCode === undefined) {
+            Rollbar.error('cannot find image for "' + condition + '"');
             return '\uf04c';
         }
         return weatherIconCode;
@@ -115,7 +117,7 @@ function main() {
     });
 
     loader.fail(function(reason) {
-        window.Rollbar.error(reason);
+        Rollbar.error(reason);
     });
     setInterval(main, weatherRefreshInterval);
 }
