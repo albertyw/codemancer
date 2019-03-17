@@ -10,7 +10,7 @@ function getRollbar() {
         return Rollbar;
     }
 
-    var rollbarConfig = {
+    const rollbarConfig = {
         accessToken: process.env.ROLLBAR_CLIENT_ACCESS,
         captureUncaught: true,
         payload: {

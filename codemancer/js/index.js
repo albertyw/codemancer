@@ -1,4 +1,4 @@
-window.Rollbar = require('./rollbar');
+require('./rollbar');
 require('./google');
 require('./clock');
 

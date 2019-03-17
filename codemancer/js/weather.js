@@ -1,6 +1,7 @@
 const $ = require('jquery');
 const Q = require('q');
 
+const Rollbar = require('./rollbar');
 const Location = require('./location');
 
 const weatherRefreshInterval = 20 * 60 * 1000;
@@ -115,7 +116,7 @@ function main() {
     });
 
     loader.fail(function(reason) {
-        window.Rollbar.error(reason);
+        Rollbar.error(reason);
     });
     setInterval(main, weatherRefreshInterval);
 }
