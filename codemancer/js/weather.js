@@ -4,6 +4,7 @@ const Q = require('q');
 const Location = require('./location');
 
 const weatherRefreshInterval = 20 * 60 * 1000;
+// Icons are from https://erikflowers.github.io/weather-icons/
 const weatherIconConversions = {
     'Mostly Clear': '\uf00d',
     'Sunny': '\uf00d',
@@ -82,7 +83,7 @@ const Weather = {
     conditionIcon: function (condition){
         const weatherIconCode = weatherIconConversions[condition];
         if (weatherIconCode === undefined) {
-            return 'wi-refresh';
+            return '\uf04c';
         }
         return weatherIconCode;
     },
