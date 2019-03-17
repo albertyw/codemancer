@@ -11,7 +11,11 @@ const rfs = require('rotating-file-stream');
 
 require('dotenv').config();
 const app = express();
-const rollbar = new Rollbar(process.env.ROLLBAR_SERVER_ACCESS);
+const rollbar = new Rollbar({
+    accessToken: process.env.ROLLBAR_SERVER_ACCESS,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+});
 
 // Set up logging
 app.use(morgan('combined'));
