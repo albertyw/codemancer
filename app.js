@@ -1,4 +1,5 @@
 const child_process = require('child_process');
+const browserifyMiddleware = require('browserify-middleware');
 const console = require('console');
 const express = require('express');
 const fs = require('fs');
@@ -83,7 +84,19 @@ app.get('/', (req, res) => {
 app.use('/css', express.static(path.join('codemancer', 'css')));
 app.use('/font', express.static(path.join('codemancer', 'font')));
 app.use('/img', express.static(path.join('codemancer', 'img')));
-app.use('/js', express.static(path.join('codemancer', 'js')));
+if (process.env.ENVIRONMENT == 'development') {
+    const browserifyOptions = {
+        transform: ['envify']
+    };
+    const jsFile = path.join('codemancer', 'js', 'index.js');
+    const browserifyHandler = browserifyMiddleware(jsFile, browserifyOptions);
+    app.use('/js/codemancer.min.js', browserifyHandler);
+} else {
+    const jsFile = path.join('codemancer', 'js', 'codemancer.min.js');
+    app.get('/js/codemancer.min.js', (req, res) => {
+        res.sendFile(jsFile);
+    });
+}
 
 const port = process.env.LISTEN_PORT;
 app.listen(port, () => {
