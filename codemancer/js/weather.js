@@ -10,6 +10,7 @@ const weatherIconConversions = {
     'Mostly Clear': '\uf00d',
     'Sunny': '\uf00d',
     'Mostly Sunny': '\uf00d',
+    'Partly Cloudy': '\uf002',
 };
 const weatherLookForwardHours = 24;
 
