@@ -9,7 +9,6 @@ const Rollbar = require('rollbar');
 const rfs = require('rotating-file-stream');
 
 require('dotenv').config();
-const port = process.env.LISTEN_PORT;
 const app = express();
 const rollbar = new Rollbar(process.env.ROLLBAR_SERVER_ACCESS);
 
@@ -52,36 +51,32 @@ app.get('/version', (req, res) => {
     getAndRespondVersion(res);
 });
 
-const svg = {};
-let readFileCalls = 0;
-let readFileFinished = 0;
-function readSVGFile(svgFile, svgName) {
-    readFileCalls++;
-    const svgPath = path.join(__dirname, 'codemancer', 'img', svgFile);
-    fs.readFile(svgPath, (err, data) => {
-        if (err) {
-            data = '';
-        }
-        svg[svgName] = data;
-        readFileFinished++;
-        if(readFileCalls === readFileFinished) {
-            listen();
-        }
-    });
+app.locals.svg = {};
+function getSVGs() {
+    if (app.locals.svg.length > 0) return;
+    function readSVGFile(svgFile, svgName) {
+        const svgPath = path.join(__dirname, 'codemancer', 'img', svgFile);
+        fs.readFile(svgPath, (err, data) => {
+            if (err) {
+                data = '';
+            }
+            app.locals.svg[svgName] = data;
+        });
+    }
+    readSVGFile('sunrisesunset.svg', 'sunrisesunset');
+    readSVGFile('toggledemo.svg', 'toggledemo');
+    readSVGFile('calendar-plus-o.svg', 'calendarAuth');
+    readSVGFile('calendar-minus-o.svg', 'calendarSignout');
 }
-readSVGFile('sunrisesunset.svg', 'sunrisesunset');
-readSVGFile('toggledemo.svg', 'toggledemo');
-readSVGFile('calendar-plus-o.svg', 'calendarAuth');
-readSVGFile('calendar-minus-o.svg', 'calendarSignout');
 
 app.get('/', (req, res) => {
     const templateVars = {
         SEGMENT_TOKEN: process.env.SEGMENT_TOKEN,
         LOGFIT_TOKEN: process.env.LOGFIT_TOKEN,
-        SUNRISESUNSET_SVG: svg.sunrisesunset,
-        TOGGLEDEMO_SVG: svg.toggledemo,
-        CALENDAR_AUTH_SVG: svg.calendarAuth,
-        CALENDAR_SIGNOUT_SVG: svg.calendarSignout,
+        SUNRISESUNSET_SVG: app.locals.svg.sunrisesunset,
+        TOGGLEDEMO_SVG: app.locals.svg.toggledemo,
+        CALENDAR_AUTH_SVG: app.locals.svg.calendarAuth,
+        CALENDAR_SIGNOUT_SVG: app.locals.svg.calendarSignout,
     };
     res.render('index', templateVars);
 });
@@ -90,6 +85,8 @@ app.use('/font', express.static(path.join('codemancer', 'font')));
 app.use('/img', express.static(path.join('codemancer', 'img')));
 app.use('/js', express.static(path.join('codemancer', 'js')));
 
-function listen(){
-    app.listen(port, () => console.log('Listening on port ' + port));
-}
+const port = process.env.LISTEN_PORT;
+app.listen(port, () => {
+    console.log('Listening on port ' + port);
+    getSVGs();
+});
