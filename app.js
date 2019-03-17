@@ -92,7 +92,10 @@ if (process.env.ENVIRONMENT == 'development') {
     const browserifyHandler = browserifyMiddleware(jsFile, browserifyOptions);
     app.use('/js/codemancer.min.js', browserifyHandler);
 } else {
-    app.use('/js', express.static(path.join('codemancer', 'js')));
+    const jsFile = path.join('codemancer', 'js', 'codemancer.min.js');
+    app.get('/js/codemancer.min.js', (req, res) => {
+        res.sendFile(jsFile);
+    });
 }
 
 const port = process.env.LISTEN_PORT;
