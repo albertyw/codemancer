@@ -36,6 +36,7 @@ function handleClientLoad() {
  *  listeners.
  */
 function initClient() {
+    if (!API_KEY || !CLIENT_ID) return;
     gapi.client.init({
         apiKey: API_KEY,
         clientId: CLIENT_ID,
