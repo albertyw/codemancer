@@ -1,17 +1,17 @@
-const rollbar = require('rollbar-browser');
+const Rollbar = require('rollbar');
 const console = require('console');
 
-const RollbarMock = {
+const rollbarMock = {
     error: function(e) { console.error(e); }
 };
-let Rollbar = undefined;
+let rollbarClient = undefined;
 
 function getRollbar() {
     if (!process.env.ROLLBAR_CLIENT_ACCESS) {
-        Rollbar = RollbarMock;
+        rollbarClient = rollbarMock;
     }
-    if (Rollbar) {
-        return Rollbar;
+    if (rollbarClient) {
+        return rollbarClient;
     }
 
     const rollbarConfig = {
@@ -21,10 +21,10 @@ function getRollbar() {
             environment: process.env.ENVIRONMENT,
         }
     };
-    Rollbar = rollbar.init(rollbarConfig);
-    return Rollbar;
+    rollbarClient = Rollbar.init(rollbarConfig);
+    return rollbarClient;
 }
 
 getRollbar();
 
-module.exports = Rollbar;
+module.exports = rollbarClient;
