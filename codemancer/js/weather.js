@@ -6,12 +6,18 @@ const Location = require('./location');
 
 const weatherRefreshInterval = 20 * 60 * 1000;
 // Icons are from https://erikflowers.github.io/weather-icons/
+// Conditions are from https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
 const weatherIconConversions = {
-    'Mostly Clear': '\uf00d',
     'Sunny': '\uf00d',
     'Mostly Sunny': '\uf00d',
-    'Partly Cloudy': '\uf002',
+    'Partly Sunny': '\uf00d',
     'Mostly Cloudy': '\uf041',
+    'Cloudy': '\uf013',
+    'Clear': '\uf00d',
+    'Mostly Clear': '\uf00d',
+    'Partly Cloudy': '\uf002',
+    'Rain Showers': '\uf009',
+    'Rain': '\uf008',
 };
 const weatherLookForwardHours = 24;
 
