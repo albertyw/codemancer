@@ -1,7 +1,9 @@
 const expect = require('chai').expect;
+const Q = require('q');
 
 const weather = require('../codemancer/js/weather');
 const Location = require('../codemancer/js/location');
+const weatherFixture = require('./weather_fixture.json');
 
 describe('chainAccessor', () => {
     it('returns properties in an array', () => {
@@ -24,5 +26,17 @@ describe('Weather.urlBuilder', () => {
         expect(url).to.contain(Location.targetLocation.wfo);
         expect(url).to.contain(Location.targetLocation.x);
         expect(url).to.contain(Location.targetLocation.y);
+    });
+});
+
+describe('Weather.parse', () => {
+    it('returns data', () => {
+        return Q.fcall(() => { return weatherFixture; }).then(weather.Weather.parse).then((data) => {
+            // expect(data.city).to.not.be.empty;
+            expect(data.currentTemp).to.equal(54);
+            expect(data.minTemp).to.equal(52);
+            expect(data.maxTemp).to.equal(57);
+            expect(data.conditionSequence).to.not.be.empty;
+        });
     });
 });
