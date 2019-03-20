@@ -137,6 +137,7 @@ function main() {
 }
 
 module.exports = {
+    chainAccessor: chainAccessor,
     load: main,
     Weather: Weather,
 };
