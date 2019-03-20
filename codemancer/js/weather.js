@@ -22,7 +22,9 @@ const weatherIconConversions = {
     'Rain Showers Likely': '\uf009',
     'Chance Light Rain': '\uf009',
     'Rain': '\uf008',
+    'Chance Showers and Thunderstorms': '\uf00e',
     'Showers and Thunderstorms Likely': '\uf00e',
+    'Showers and Thunderstorms': '\uf00e',
 };
 const weatherLookForwardHours = 24;
 
