@@ -16,6 +16,7 @@ const weatherIconConversions = {
     'Clear': '\uf00d',
     'Mostly Clear': '\uf00d',
     'Partly Cloudy': '\uf002',
+    'Slight Chance Rain Showers': '\uf009',
     'Chance Rain Showers': '\uf009',
     'Rain Showers': '\uf009',
     'Rain Showers Likely': '\uf009',
