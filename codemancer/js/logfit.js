@@ -1,7 +1,7 @@
 if (process.env.LOGFIT_TOKEN) {
     const LogFit = require('logfit');
 
-    var LogFitConfig = {
+    const LogFitConfig = {
         source: process.env.LOGFIT_TOKEN,
     };
 

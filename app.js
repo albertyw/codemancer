@@ -19,7 +19,7 @@ const rollbar = new Rollbar({
 
 // Set up logging
 app.use(morgan('combined'));
-var accessLogStream = rfs('access.log', {
+const accessLogStream = rfs('access.log', {
     interval: '1d',
     path: path.join(__dirname, 'logs', 'app')
 });
@@ -33,7 +33,7 @@ app.engine('html', function (filePath, options, callback) {
         if(err) {
             return callback(err);
         }
-        var rendered = mustache.to_html(content.toString(),options);
+        const rendered = mustache.to_html(content.toString(),options);
         return callback(null, rendered);
     });
 });
