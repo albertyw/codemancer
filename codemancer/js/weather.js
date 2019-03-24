@@ -8,141 +8,141 @@ const weatherRefreshInterval = 20 * 60 * 1000;
 // Icons are from https://erikflowers.github.io/weather-icons/
 // Conditions are from https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
 const weatherIconConversions = {
-    'Sunny': '\uf00d',
-    'Mostly Sunny': '\uf00d',
-    'Partly Sunny': '\uf00d',
-    'Mostly Cloudy': '\uf041',
-    'Cloudy': '\uf013',
-    'Clear': '\uf00d',
-    'Mostly Clear': '\uf00d',
-    'Partly Cloudy': '\uf002',
-    'Slight Chance Rain Showers': '\uf009',
-    'Chance Rain Showers': '\uf009',
-    'Rain Showers': '\uf009',
-    'Rain Showers Likely': '\uf009',
-    'Chance Light Rain': '\uf009',
-    'Light Rain Likely': '\uf0009',
-    'Light Rain': '\uf009',
-    'Rain': '\uf008',
-    'Heavy Rain': '\uf04e',
-    'Chance Showers and Thunderstorms': '\uf00e',
-    'Showers and Thunderstorms Likely': '\uf00e',
-    'Showers and Thunderstorms': '\uf00e',
+  'Sunny': '\uf00d',
+  'Mostly Sunny': '\uf00d',
+  'Partly Sunny': '\uf00d',
+  'Mostly Cloudy': '\uf041',
+  'Cloudy': '\uf013',
+  'Clear': '\uf00d',
+  'Mostly Clear': '\uf00d',
+  'Partly Cloudy': '\uf002',
+  'Slight Chance Rain Showers': '\uf009',
+  'Chance Rain Showers': '\uf009',
+  'Rain Showers': '\uf009',
+  'Rain Showers Likely': '\uf009',
+  'Chance Light Rain': '\uf009',
+  'Light Rain Likely': '\uf0009',
+  'Light Rain': '\uf009',
+  'Rain': '\uf008',
+  'Heavy Rain': '\uf04e',
+  'Chance Showers and Thunderstorms': '\uf00e',
+  'Showers and Thunderstorms Likely': '\uf00e',
+  'Showers and Thunderstorms': '\uf00e',
 };
 const weatherLookForwardHours = 24;
 
 function chainAccessor(data, properties) {
-    let value = data;
-    for(let x=0; x<properties.length; x++) {
-        value = value && value[properties[x]];
-    }
-    return value;
+  let value = data;
+  for(let x=0; x<properties.length; x++) {
+    value = value && value[properties[x]];
+  }
+  return value;
 }
 
 const Weather = {
 
-    $el: {
-        now : $('.now'),
-        city : $('#city')
-    },
+  $el: {
+    now : $('.now'),
+    city : $('#city')
+  },
 
-    urlBuilder: function(location) {
-        // Documentation at https://www.weather.gov/documentation/services-web-api#/
-        const url = 'https://api.weather.gov/gridpoints/' + location.wfo + '/'
-            + location.x + ',' + location.y + '/forecast/hourly';
-        return url;
-    },
+  urlBuilder: function(location) {
+    // Documentation at https://www.weather.gov/documentation/services-web-api#/
+    const url = 'https://api.weather.gov/gridpoints/' + location.wfo + '/'
+      + location.x + ',' + location.y + '/forecast/hourly';
+    return url;
+  },
 
-    atLocation: function () {
-        return Q.when($.ajax({
-            url: Weather.urlBuilder(Location.targetLocation),
-            type: 'GET',
-            dataType: 'json'
-        }))
-            .then(function(data) {
-                return Location.getDisplayName(Location.targetLocation).then(function(name) {
-                    data.locationDisplayName = name;
-                    return data;
-                });
-            })
-            .then(Weather.parse);
-    },
+  atLocation: function () {
+    return Q.when($.ajax({
+      url: Weather.urlBuilder(Location.targetLocation),
+      type: 'GET',
+      dataType: 'json'
+    }))
+      .then(function(data) {
+        return Location.getDisplayName(Location.targetLocation).then(function(name) {
+          data.locationDisplayName = name;
+          return data;
+        });
+      })
+      .then(Weather.parse);
+  },
 
-    parse: function(data) {
-        const deferred = Q.defer();
+  parse: function(data) {
+    const deferred = Q.defer();
 
-        // Lets only keep what we need.
-        const w2 = {};
-        w2.city = data.locationDisplayName;
-        w2.currentTemp = Math.round(chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
-        w2.minTemp = w2.currentTemp;
-        w2.maxTemp = w2.currentTemp;
-        w2.conditionSequence = [chainAccessor(data, ['properties', 'periods', 0, 'shortForecast'])];
-        for (let i = 0; i < weatherLookForwardHours; i++) {
-            if (i >= data.properties.periods.length) {
-                break;
-            }
-            const period = data.properties.periods[i];
-            const temp = Math.round(chainAccessor(period, ['temperature']));
-            w2.minTemp = Math.min(w2.minTemp, temp);
-            w2.maxTemp = Math.max(w2.maxTemp, temp);
+    // Lets only keep what we need.
+    const w2 = {};
+    w2.city = data.locationDisplayName;
+    w2.currentTemp = Math.round(chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
+    w2.minTemp = w2.currentTemp;
+    w2.maxTemp = w2.currentTemp;
+    w2.conditionSequence = [chainAccessor(data, ['properties', 'periods', 0, 'shortForecast'])];
+    for (let i = 0; i < weatherLookForwardHours; i++) {
+      if (i >= data.properties.periods.length) {
+        break;
+      }
+      const period = data.properties.periods[i];
+      const temp = Math.round(chainAccessor(period, ['temperature']));
+      w2.minTemp = Math.min(w2.minTemp, temp);
+      w2.maxTemp = Math.max(w2.maxTemp, temp);
 
-            const condition = period.shortForecast;
-            if(w2.conditionSequence[w2.conditionSequence.length-1] != condition) {
-                w2.conditionSequence.push(condition);
-            }
-        }
-        for (let i=0; i < w2.conditionSequence.length; i++) {
-            w2.conditionSequence[i] = Weather.conditionIcon(w2.conditionSequence[i]);
-        }
-
-        deferred.resolve(w2);
-        return deferred.promise;
-    },
-
-    conditionIcon: function (condition){
-        const weatherIconCode = weatherIconConversions[condition];
-        if (weatherIconCode === undefined) {
-            Rollbar.error('cannot find image for "' + condition + '"');
-            return '\uf04c';
-        }
-        return weatherIconCode;
-    },
-
-    render: function(wd) {
-        // Set Current Information
-        Weather.renderDay(Weather.$el.now, wd);
-        Weather.$el.city.html(wd.city).show();
-
-        // Show Weather
-        $('#weather-inner').removeClass('hidden').show();
-    },
-
-    renderDay: function(el, data) {
-        el.find('.condition').html(data.conditionSequence[0]);
-        el.find('.min-temp').html(data.minTemp);
-        el.find('.current-temp').html(data.currentTemp);
-        el.find('.max-temp').html(data.maxTemp);
-    },
-
-    load: function() {
-        return Weather.atLocation();
+      const condition = period.shortForecast;
+      if(w2.conditionSequence[w2.conditionSequence.length-1] != condition) {
+        w2.conditionSequence.push(condition);
+      }
     }
+    for (let i=0; i < w2.conditionSequence.length; i++) {
+      w2.conditionSequence[i] = Weather.conditionIcon(w2.conditionSequence[i]);
+    }
+
+    deferred.resolve(w2);
+    return deferred.promise;
+  },
+
+  conditionIcon: function (condition){
+    const weatherIconCode = weatherIconConversions[condition];
+    if (weatherIconCode === undefined) {
+      Rollbar.error('cannot find image for "' + condition + '"');
+      return '\uf04c';
+    }
+    return weatherIconCode;
+  },
+
+  render: function(wd) {
+    // Set Current Information
+    Weather.renderDay(Weather.$el.now, wd);
+    Weather.$el.city.html(wd.city).show();
+
+    // Show Weather
+    $('#weather-inner').removeClass('hidden').show();
+  },
+
+  renderDay: function(el, data) {
+    el.find('.condition').html(data.conditionSequence[0]);
+    el.find('.min-temp').html(data.minTemp);
+    el.find('.current-temp').html(data.currentTemp);
+    el.find('.max-temp').html(data.maxTemp);
+  },
+
+  load: function() {
+    return Weather.atLocation();
+  }
 };
 
 function main() {
-    const loader = Weather.load().then(function(data) {
-        Weather.render(data);
-    });
+  const loader = Weather.load().then(function(data) {
+    Weather.render(data);
+  });
 
-    loader.fail(function(reason) {
-        Rollbar.error(reason);
-    });
-    setInterval(main, weatherRefreshInterval);
+  loader.fail(function(reason) {
+    Rollbar.error(reason);
+  });
+  setInterval(main, weatherRefreshInterval);
 }
 
 module.exports = {
-    chainAccessor: chainAccessor,
-    load: main,
-    Weather: Weather,
+  chainAccessor: chainAccessor,
+  load: main,
+  Weather: Weather,
 };
