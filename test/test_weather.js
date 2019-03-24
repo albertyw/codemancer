@@ -1,6 +1,8 @@
 const expect = require('chai').expect;
 const Q = require('q');
+const sinon = require('sinon');
 
+const Rollbar = require('../codemancer/js/rollbar');
 const weather = require('../codemancer/js/weather');
 const Location = require('../codemancer/js/location');
 const weatherFixture = require('./weather_fixture.json');
@@ -38,5 +40,18 @@ describe('Weather.parse', () => {
       expect(data.maxTemp).to.equal(57);
       expect(data.conditionSequence).to.not.be.empty;
     });
+  });
+});
+
+describe('Weather.conditionIcon', () => {
+  it('returns an icon code', () => {
+    const icon = weather.Weather.conditionIcon('Rain');
+    expect(icon).to.equal('\uf008');
+  });
+  it('returns a default icon code if condition is unknown', () => {
+    sinon.spy(Rollbar, 'error');
+    const icon = weather.Weather.conditionIcon('asdf');
+    expect(icon).to.equal('\uf04c');
+    expect(Rollbar.error.calledWithExactly('cannot find image for "asdf"')).to.be.true;
   });
 });
