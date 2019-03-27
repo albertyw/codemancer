@@ -9,7 +9,7 @@ const path = require('path');
 const Rollbar = require('rollbar');
 const rfs = require('rotating-file-stream');
 
-require('dotenv').config();
+require('dotenv').config({path: path.join(__dirname, '..', '.env')});
 const app = express();
 const rollbar = new Rollbar({
   accessToken: process.env.ROLLBAR_SERVER_ACCESS,
@@ -21,7 +21,7 @@ const rollbar = new Rollbar({
 app.use(morgan('combined'));
 const accessLogStream = rfs('access.log', {
   interval: '1d',
-  path: path.join(__dirname, 'logs', 'app')
+  path: path.join(__dirname, '..', 'logs', 'app')
 });
 app.use(morgan('combined', {stream: accessLogStream }));
 app.use(rollbar.errorHandler());
@@ -37,7 +37,7 @@ app.engine('html', function (filePath, options, callback) {
     return callback(null, rendered);
   });
 });
-app.set('views', path.join(__dirname, 'codemancer'));
+app.set('views', path.join(__dirname, '..', 'codemancer'));
 app.set('view engine','html');
 
 let version = '';
@@ -60,7 +60,7 @@ app.locals.svg = {};
 function getSVGs() {
   if (app.locals.svg.length > 0) return;
   function readSVGFile(svgFile, svgName) {
-    const svgPath = path.join(__dirname, 'codemancer', 'img', svgFile);
+    const svgPath = path.join(__dirname, '..', 'codemancer', 'img', svgFile);
     fs.readFile(svgPath, (err, data) => {
       if (err) {
         data = '';
@@ -85,18 +85,18 @@ app.get('/', (req, res) => {
   };
   res.render('index', templateVars);
 });
-app.use('/css', express.static(path.join('codemancer', 'css')));
-app.use('/font', express.static(path.join('codemancer', 'font')));
-app.use('/img', express.static(path.join('codemancer', 'img')));
+app.use('/css', express.static(path.join(__dirname, '..', 'codemancer', 'css')));
+app.use('/font', express.static(path.join(__dirname, '..', 'codemancer', 'font')));
+app.use('/img', express.static(path.join(__dirname, '..', 'codemancer', 'img')));
 if (process.env.ENVIRONMENT == 'development') {
   const browserifyOptions = {
     transform: ['envify']
   };
-  const jsFile = path.join('codemancer', 'js', 'index.js');
+  const jsFile = path.join(__dirname, '..', 'codemancer', 'js', 'index.js');
   const browserifyHandler = browserifyMiddleware(jsFile, browserifyOptions);
   app.use('/js/codemancer.min.js', browserifyHandler);
 } else {
-  const jsFile = path.join(__dirname, 'codemancer', 'js', 'codemancer.min.js');
+  const jsFile = path.join(__dirname, '..', 'codemancer', 'js', 'codemancer.min.js');
   app.get('/js/codemancer.min.js', (req, res) => {
     res.sendFile(jsFile);
   });
