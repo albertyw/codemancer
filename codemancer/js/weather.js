@@ -18,6 +18,7 @@ const weatherIconConversions = {
   'Partly Cloudy': '\uf002',
   'Slight Chance Rain Showers': '\uf009',
   'Chance Rain Showers': '\uf009',
+  'Isolated Rain Showers': '\uf009',
   'Rain Showers': '\uf009',
   'Rain Showers Likely': '\uf009',
   'Chance Light Rain': '\uf009',
