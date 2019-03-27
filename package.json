@@ -53,6 +53,7 @@
     "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.2.0",
     "sweetalert": "^2.1.2",
-    "uglify-es": "^3.3.9"
+    "uglify-es": "^3.3.9",
+    "uglifyify": "^5.0.1"
   }
 }
