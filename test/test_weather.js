@@ -48,6 +48,15 @@ describe('Weather.conditionIcon', () => {
     const icon = weather.Weather.conditionIcon('Rain');
     expect(icon).to.equal('\uf008');
   });
+  it('can strip descriptors', () => {
+    const icon = weather.Weather.conditionIcon('Slight Chance Rain');
+    expect(icon).to.equal('\uf008');
+  });
+  it('does not strip descriptors unless needed', () => {
+    const icon1 = weather.Weather.conditionIcon('Cloudy');
+    const icon2 = weather.Weather.conditionIcon('Mostly Cloudly');
+    expect(icon1).to.not.equal(icon2);
+  });
   it('returns a default icon code if condition is unknown', () => {
     sinon.spy(Rollbar, 'error');
     const icon = weather.Weather.conditionIcon('asdf');
