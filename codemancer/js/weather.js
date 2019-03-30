@@ -9,34 +9,17 @@ const weatherRefreshInterval = 20 * 60 * 1000;
 // Conditions are from https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
 const weatherIconConversions = {
   'Sunny': '\uf00d',
-  'Mostly Sunny': '\uf00d',
-  'Partly Sunny': '\uf00d',
   'Clear': '\uf00d',
-  'Mostly Clear': '\uf00d',
-
   'Cloudy': '\uf013',
-
   'Mostly Cloudy': '\uf041',
-
   'Partly Cloudy': '\uf002',
-
   'Rain Showers': '\uf009',
-  'Chance Rain Showers': '\uf009',
-  'Slight Chance Rain Showers': '\uf009',
-  'Rain Showers Likely': '\uf009',
-  'Isolated Rain Showers': '\uf009',
   'Light Rain': '\uf009',
-  'Chance Light Rain': '\uf009',
-  'Light Rain Likely': '\uf009',
-
   'Rain': '\uf008',
-
   'Heavy Rain': '\uf04e',
-
   'Showers And Thunderstorms': '\uf00e',
-  'Chance Showers And Thunderstorms': '\uf00e',
-  'Showers And Thunderstorms Likely': '\uf00e',
 };
+const descriptors = ['Mostly', 'Partly', 'Slight Chance', 'Chance', 'Likely', 'Isolated'];
 const weatherLookForwardHours = 24;
 
 function chainAccessor(data, properties) {
@@ -109,12 +92,20 @@ const Weather = {
   },
 
   conditionIcon: function (condition){
-    const weatherIconCode = weatherIconConversions[condition];
-    if (weatherIconCode === undefined) {
-      Rollbar.error('cannot find image for "' + condition + '"');
-      return '\uf04c';
+    let weatherIconCode = weatherIconConversions[condition];
+    if (weatherIconCode !== undefined) {
+      return weatherIconCode;
     }
-    return weatherIconCode;
+    for (let i=0; i<descriptors.length; i++) {
+      condition = condition.replace(descriptors[i], '');
+    }
+    condition = condition.replace(/^\s+|\s+$/g, '');
+    weatherIconCode = weatherIconConversions[condition];
+    if (weatherIconCode !== undefined) {
+      return weatherIconCode;
+    }
+    Rollbar.error('cannot find image for "' + condition + '"');
+    return '\uf04c';
   },
 
   render: function(wd) {
