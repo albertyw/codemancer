@@ -9,7 +9,7 @@
     "minify": "npm run minify-js && npm run minify-css",
     "minify-js": "node bin/browserify.js > codemancer/js/codemancer.min.js",
     "minify-css": "cleancss -o codemancer/css/codemancer.min.css -O2 codemancer/css/application.css codemancer/css/animations.css codemancer/css/calendar.css codemancer/css/weather.css",
-    "eslint": "eslint app.js bin codemancer/js test",
+    "eslint": "eslint server/app.js bin codemancer/js test",
     "cover": "nyc --require dotenv/config --instrument false mochify --transform envify --transform [ babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ]",
     "stylelint": "stylelint codemancer/css/*",
     "test": "npm run stylelint && npm run eslint && npm run cover"
