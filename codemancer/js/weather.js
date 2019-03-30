@@ -11,24 +11,31 @@ const weatherIconConversions = {
   'Sunny': '\uf00d',
   'Mostly Sunny': '\uf00d',
   'Partly Sunny': '\uf00d',
-  'Mostly Cloudy': '\uf041',
-  'Cloudy': '\uf013',
   'Clear': '\uf00d',
   'Mostly Clear': '\uf00d',
+
+  'Cloudy': '\uf013',
+
+  'Mostly Cloudy': '\uf041',
+
   'Partly Cloudy': '\uf002',
-  'Slight Chance Rain Showers': '\uf009',
-  'Chance Rain Showers': '\uf009',
-  'Isolated Rain Showers': '\uf009',
+
   'Rain Showers': '\uf009',
+  'Chance Rain Showers': '\uf009',
+  'Slight Chance Rain Showers': '\uf009',
   'Rain Showers Likely': '\uf009',
-  'Chance Light Rain': '\uf009',
-  'Light Rain Likely': '\uf0009',
+  'Isolated Rain Showers': '\uf009',
   'Light Rain': '\uf009',
+  'Chance Light Rain': '\uf009',
+  'Light Rain Likely': '\uf009',
+
   'Rain': '\uf008',
+
   'Heavy Rain': '\uf04e',
+
+  'Showers And Thunderstorms': '\uf00e',
   'Chance Showers And Thunderstorms': '\uf00e',
   'Showers And Thunderstorms Likely': '\uf00e',
-  'Showers And Thunderstorms': '\uf00e',
 };
 const weatherLookForwardHours = 24;
 
