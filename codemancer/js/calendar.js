@@ -186,23 +186,29 @@ function displayEvents(eventArrays) {
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
     let eventStart = event.start.dateTime;
+    let allDay = false;
     if (!eventStart) {
       eventStart = event.start.date;
+      eventStart += 'T00:00'; // Use local time rather than UTC
+      allDay = true;
     }
     const when = new Date();
     when.setTime(Date.parse(eventStart));
     const eventName = trimString(event.summary || DEFAULT_EVENT_SUMMARY);
-    appendPre(eventName + ' (' + formatTime(when) + ')');
+    appendPre(eventName + ' (' + formatTime(when, allDay) + ')');
   }
 }
 
-function formatTime(d) {
+function formatTime(d, allDay) {
   const date = d.toDateString();
-  const hour = (d.getHours() + 11) % 12 + 1;
-  const minutes = ('0' + d.getMinutes().toString()).slice(-2);
-  const period = d.getHours() < 12 ? 'AM' : 'PM';
-  const time = hour + ':' + minutes + ' ' + period;
-  const dString = date + ' ' + time;
+  let dString = date;
+  if (!allDay) {
+    const hour = (d.getHours() + 11) % 12 + 1;
+    const minutes = ('0' + d.getMinutes().toString()).slice(-2);
+    const period = d.getHours() < 12 ? 'AM' : 'PM';
+    const time = hour + ':' + minutes + ' ' + period;
+    dString += ' ' + time;
+  }
   return dString;
 }
 
