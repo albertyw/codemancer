@@ -1,6 +1,7 @@
 const expect = require('chai').expect;
 
 const Location = require('../codemancer/js/location');
+const locationData = require('./map_fixture.json');
 
 describe('Location.targetLocation', () => {
   it('returns data', () => {
@@ -9,5 +10,12 @@ describe('Location.targetLocation', () => {
     expect(Location.targetLocation.y).to.not.be.empty;
     expect(Location.targetLocation.lat).to.be.a('number');
     expect(Location.targetLocation.lng).to.be.a('number');
+  });
+});
+
+describe('Location.parseDisplayName', () => {
+  it('returns location', () => {
+    const name = Location.parseDisplayName(locationData);
+    expect(name).to.equal('San Francisco, CA');
   });
 });
