@@ -8,3 +8,23 @@ describe('toggleDemo', () => {
   demoStatus = util.toggleDemo();
   expect(demoStatus).to.be.false;
 });
+
+describe('getMockDate', () => {
+  it('returns a normal date when demo is off', () => {
+    const date = util.getMockDate();
+    const realDate = new Date();
+    const diff = realDate.getTime() - date.getTime();
+    expect(diff).to.be.greaterThan(-1);
+    expect(diff).to.be.lessThan(1000);
+  });
+  it('returns a mock date when demo is on', () => {
+    const demoStatus = util.toggleDemo();
+    expect(demoStatus).to.be.true;
+    const date = util.getMockDate();
+    expect(date.getHours()).to.be.greaterThan(-1);
+    expect(date.getHours()).to.be.lessThan(24);
+    expect(date.getMinutes()).to.equal(0);
+    expect(date.getSeconds()).to.equal(0);
+
+  });
+});
