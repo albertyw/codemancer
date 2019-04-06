@@ -1,6 +1,6 @@
-const expect = require('chai').expect; // eslint-disable-line no-unused-vars
+const expect = require('chai').expect;
 
-const util = require('../codemancer/js/util'); // eslint-disable-line no-unused-vars
+const util = require('../codemancer/js/util');
 
 describe('toggleDemo', () => {
   let demoStatus = util.toggleDemo();
