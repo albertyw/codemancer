@@ -56,8 +56,7 @@ const Weather = {
         data.locationDisplayName = name;
         return data;
       });
-    })
-    .then(Weather.parse);
+    }).then(Weather.parse);
   },
 
   parse: function(data) {
@@ -127,7 +126,7 @@ const Weather = {
 };
 
 function main() {
-  const loader = Weather.load().then(function(data) {
+  Weather.load().then(function(data) {
     Weather.render(data);
   }, function(error) {
     Rollbar.error(error);
