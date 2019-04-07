@@ -1,5 +1,4 @@
 const expect = require('chai').expect;
-const Q = require('q');
 const sinon = require('sinon');
 
 const Rollbar = require('../codemancer/js/rollbar');
@@ -33,13 +32,12 @@ describe('Weather.urlBuilder', () => {
 
 describe('Weather.parse', () => {
   it('returns data', () => {
-    return Q.fcall(() => { return weatherFixture; }).then(weather.Weather.parse).then((data) => {
-      // expect(data.city).to.not.be.empty;
-      expect(data.currentTemp).to.equal(54);
-      expect(data.minTemp).to.equal(52);
-      expect(data.maxTemp).to.equal(57);
-      expect(data.conditionSequence).to.not.be.empty;
-    });
+    const data = weather.Weather.parse(weatherFixture);
+    // expect(data.city).to.not.be.empty;
+    expect(data.currentTemp).to.equal(54);
+    expect(data.minTemp).to.equal(52);
+    expect(data.maxTemp).to.equal(57);
+    expect(data.conditionSequence).to.not.be.empty;
   });
 });
 
