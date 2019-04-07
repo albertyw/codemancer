@@ -1,5 +1,4 @@
 const $ = require('jquery');
-const Q = require('q');
 
 const Rollbar = require('./rollbar');
 const Location = require('./location');
@@ -45,23 +44,22 @@ const Weather = {
   },
 
   atLocation: function () {
-    return Q.when($.ajax({
-      url: Weather.urlBuilder(Location.targetLocation),
-      type: 'GET',
-      dataType: 'json'
-    }))
-      .then(function(data) {
-        return Location.getDisplayName(Location.targetLocation).then(function(name) {
-          data.locationDisplayName = name;
-          return data;
-        });
-      })
-      .then(Weather.parse);
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', Weather.urlBuilder(Location.targetLocation));
+      xhr.onload = () => resolve(xhr.responseText);
+      xhr.onerror = () => reject(xhr.statusText);
+      xhr.send();
+    }).then((data) => {
+      data = JSON.parse(data);
+      return Location.getDisplayName(Location.targetLocation).then(function(name) {
+        data.locationDisplayName = name;
+        return data;
+      });
+    }).then(Weather.parse);
   },
 
   parse: function(data) {
-    const deferred = Q.defer();
-
     // Lets only keep what we need.
     const w2 = {};
     w2.city = data.locationDisplayName;
@@ -86,9 +84,7 @@ const Weather = {
     for (let i=0; i < w2.conditionSequence.length; i++) {
       w2.conditionSequence[i] = Weather.conditionIcon(w2.conditionSequence[i]);
     }
-
-    deferred.resolve(w2);
-    return deferred.promise;
+    return w2;
   },
 
   conditionIcon: function (condition){
@@ -130,12 +126,10 @@ const Weather = {
 };
 
 function main() {
-  const loader = Weather.load().then(function(data) {
+  Weather.load().then(function(data) {
     Weather.render(data);
-  });
-
-  loader.fail(function(reason) {
-    Rollbar.error(reason);
+  }, function(error) {
+    Rollbar.error(error);
   });
   setInterval(main, weatherRefreshInterval);
 }
