@@ -45,18 +45,20 @@ const Weather = {
   },
 
   atLocation: function () {
-    return Q.when($.ajax({
-      url: Weather.urlBuilder(Location.targetLocation),
-      type: 'GET',
-      dataType: 'json'
-    }))
-      .then(function(data) {
-        return Location.getDisplayName(Location.targetLocation).then(function(name) {
-          data.locationDisplayName = name;
-          return data;
-        });
-      })
-      .then(Weather.parse);
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', Weather.urlBuilder(Location.targetLocation));
+      xhr.onload = () => resolve(xhr.responseText);
+      xhr.onerror = () => reject(xhr.statusText);
+      xhr.send();
+    }).then((data) => {
+      data = JSON.parse(data);
+      return Location.getDisplayName(Location.targetLocation).then(function(name) {
+        data.locationDisplayName = name;
+        return data;
+      });
+    })
+    .then(Weather.parse);
   },
 
   parse: function(data) {
@@ -132,10 +134,8 @@ const Weather = {
 function main() {
   const loader = Weather.load().then(function(data) {
     Weather.render(data);
-  });
-
-  loader.fail(function(reason) {
-    Rollbar.error(reason);
+  }, function(error) {
+    Rollbar.error(error);
   });
   setInterval(main, weatherRefreshInterval);
 }
