@@ -1,5 +1,4 @@
 const $ = require('jquery');
-const Q = require('q');
 
 const Rollbar = require('./rollbar');
 const Location = require('./location');
@@ -62,8 +61,6 @@ const Weather = {
   },
 
   parse: function(data) {
-    const deferred = Q.defer();
-
     // Lets only keep what we need.
     const w2 = {};
     w2.city = data.locationDisplayName;
@@ -88,9 +85,7 @@ const Weather = {
     for (let i=0; i < w2.conditionSequence.length; i++) {
       w2.conditionSequence[i] = Weather.conditionIcon(w2.conditionSequence[i]);
     }
-
-    deferred.resolve(w2);
-    return deferred.promise;
+    return w2;
   },
 
   conditionIcon: function (condition){
