@@ -1,4 +1,5 @@
 const Rollbar = require('./rollbar');
+const util = require('./util');
 
 const targetLocation = {
   wfo: 'MTR', x: '88', y: '128',
@@ -6,10 +7,6 @@ const targetLocation = {
 };
 const geocodingAPIKey = process.env.GEOCODING_API_KEY;
 const geocodingURL = 'https://maps.googleapis.com/maps/api/geocode/json';
-
-function unique(array) {
-  return Array.from(new Set(array));
-}
 
 const Location = {
   targetLocation: targetLocation,
@@ -51,7 +48,7 @@ const Location = {
         info.unshift(result[i].long_name);
       }
     }
-    const locData = unique(info);
+    const locData = util.unique(info);
     if (locData.length === 3) {
       locData.pop();
     }

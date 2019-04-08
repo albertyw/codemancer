@@ -61,10 +61,19 @@ function trimString(s) {
   return s.replace(/^\s+|\s+$/g, '');
 }
 
+/**
+ * Return a copy of the array with only unique items
+ **/
+function unique(array) {
+  return Array.from(new Set(array));
+}
+
+
 module.exports = {
   runOnload: runOnload,
   toggleDemo: toggleDemo,
   getMockDate: getMockDate,
   chainAccessor: chainAccessor,
   trimString: trimString,
+  unique: unique,
 };

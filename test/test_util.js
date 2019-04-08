@@ -49,3 +49,10 @@ describe('trimString', function() {
     expect(trimmedString).to.be.equal('asdf');
   });
 });
+
+describe('unique', function() {
+  it('should return a unique copy of the array', function() {
+    const test = [1,2,2,3,3,4];
+    expect(util.unique(test)).to.have.ordered.members([1,2,3,4]);
+  });
+});
