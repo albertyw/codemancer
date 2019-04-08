@@ -7,18 +7,19 @@ const util = require('./util');
 const weatherRefreshInterval = 20 * 60 * 1000;
 // Icons are from https://erikflowers.github.io/weather-icons/
 // Conditions are from https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
-const weatherIconConversions = {
-  'Sunny': '\uf00d',
-  'Clear': '\uf00d',
-  'Cloudy': '\uf013',
-  'Mostly Cloudy': '\uf041',
-  'Partly Cloudy': '\uf002',
-  'Rain Showers': '\uf009',
-  'Light Rain': '\uf009',
-  'Rain': '\uf008',
-  'Heavy Rain': '\uf04e',
-  'Showers And Thunderstorms': '\uf00e',
-};
+const weatherConditions = [
+  ['Sunny', '\uf00d'],
+  ['Clear', '\uf00d'],
+  ['Cloudy', '\uf013'],
+  ['Mostly Cloudy', '\uf041'],
+  ['Partly Cloudy', '\uf002'],
+  ['Rain Showers', '\uf009'],
+  ['Light Rain', '\uf009'],
+  ['Rain', '\uf008'],
+  ['Heavy Rain', '\uf04e'],
+  ['Showers And Thunderstorms', '\uf00e'],
+];
+const weatherIconConversions = new Map(weatherConditions);
 const descriptors = ['Mostly', 'Partly', 'Slight Chance', 'Chance', 'Likely', 'Isolated'];
 const weatherLookForwardHours = 24;
 
@@ -81,7 +82,7 @@ const Weather = {
   },
 
   conditionIcon: function (condition){
-    let weatherIconCode = weatherIconConversions[condition];
+    let weatherIconCode = weatherIconConversions.get(condition);
     if (weatherIconCode !== undefined) {
       return weatherIconCode;
     }
@@ -89,7 +90,7 @@ const Weather = {
       condition = condition.replace(descriptors[i], '');
     }
     condition = condition.replace(/^\s+|\s+$/g, '');
-    weatherIconCode = weatherIconConversions[condition];
+    weatherIconCode = weatherIconConversions.get(condition);
     if (weatherIconCode !== undefined) {
       return weatherIconCode;
     }
