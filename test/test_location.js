@@ -75,4 +75,10 @@ describe('Location.parseDisplayName', () => {
     const name = Location.parseDisplayName(locationData);
     expect(name).to.equal('San Francisco, CA');
   });
+  it('can return a location with length 2', () => {
+    const tempLocationData = locationData;
+    tempLocationData.results[0].address_components = locationData.results[0].address_components.slice(4);
+    const name = Location.parseDisplayName(locationData);
+    expect(name).to.equal('CA, United States');
+  });
 });
