@@ -23,6 +23,7 @@ describe('Weather.parse', () => {
     expect(data.currentTemp).to.equal(54);
     expect(data.minTemp).to.equal(52);
     expect(data.maxTemp).to.equal(57);
+    expect(data.worstCondition).to.equal('\uf00e');
     expect(data.conditionSequence).to.not.be.empty;
   });
 });
