@@ -13,6 +13,19 @@ describe('Location.targetLocation', () => {
   });
 });
 
+describe('Location.getDisplayName', () => {
+  it('it returns a location name', (done) => {
+    const promise = Location.getDisplayName(Location.targetLocation);
+    promise.then((data) => {
+      expect(data).to.equal('San Francisco, CA');
+      done();
+    }, (error) => {
+      expect.fail(error);
+      done();
+    });
+  });
+});
+
 describe('Location.parseDisplayName', () => {
   it('returns location', () => {
     const name = Location.parseDisplayName(locationData);
