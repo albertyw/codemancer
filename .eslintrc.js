@@ -28,9 +28,14 @@ module.exports = {
         ]
     },
     "globals": {
-        "it": true,
         "describe": true,
+        "context": true,
+        "it": true,
+        "specify": true,
+        "before": true,
+        "after": true,
         "beforeEach": true,
+        "afterEach": true,
         "gapi": true
     }
 };
