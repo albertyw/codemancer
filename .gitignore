@@ -66,6 +66,7 @@ codemancer/version
 # Test files
 instrumented
 
+codemancer/js/google.js
 bundle.js
 codemancer.min.js
 codemancer.min.css
