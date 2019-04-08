@@ -1,3 +1,5 @@
+const Rollbar = require('./rollbar');
+
 const targetLocation = {
   wfo: 'MTR', x: '88', y: '128',
   lat: 37.778519, lng: -122.40564,
@@ -28,9 +30,11 @@ const Location = {
       if (data.status === 'OK') {
         return Location.parseDisplayName(data);
       }
-      throw new Error('Failed to geocode');
+      Rollbar.error('Failed to geocode', data);
+      return '';
     }, (error) => {
-      throw new Error('Failed to geocode' + error);
+      Rollbar.error('Failed to geocode', error);
+      return '';
     });
   },
 
