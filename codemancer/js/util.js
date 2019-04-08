@@ -42,8 +42,17 @@ function getMockDate() {
   return date;
 }
 
+function chainAccessor(data, properties) {
+  let value = data;
+  for(let x=0; x<properties.length; x++) {
+    value = value && value[properties[x]];
+  }
+  return value;
+}
+
 module.exports = {
   runOnload: runOnload,
   toggleDemo: toggleDemo,
   getMockDate: getMockDate,
+  chainAccessor: chainAccessor,
 };

@@ -2,6 +2,20 @@ const expect = require('chai').expect;
 
 const util = require('../codemancer/js/util');
 
+describe('chainAccessor', () => {
+  it('returns properties in an array', () => {
+    const x = ['a', ['b', 'c']];
+    expect(util.chainAccessor(x, [0]), 'a');
+    expect(util.chainAccessor(x, [1]), ['b', 'c']);
+    expect(util.chainAccessor(x, [1, 0]), 'b');
+  });
+  it('returns properties in a map', () => {
+    const x = {a: {b: 1, c: 2}};
+    expect(util.chainAccessor(x, ['a']), {b: 1, c: 2});
+    expect(util.chainAccessor(x, ['a', 'b']), 1);
+  });
+});
+
 describe('toggleDemo', () => {
   let demoStatus = util.toggleDemo();
   expect(demoStatus).to.be.true;

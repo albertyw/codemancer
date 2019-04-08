@@ -2,6 +2,7 @@ const $ = require('jquery');
 
 const Rollbar = require('./rollbar');
 const Location = require('./location');
+const util = require('./util');
 
 const weatherRefreshInterval = 20 * 60 * 1000;
 // Icons are from https://erikflowers.github.io/weather-icons/
@@ -20,14 +21,6 @@ const weatherIconConversions = {
 };
 const descriptors = ['Mostly', 'Partly', 'Slight Chance', 'Chance', 'Likely', 'Isolated'];
 const weatherLookForwardHours = 24;
-
-function chainAccessor(data, properties) {
-  let value = data;
-  for(let x=0; x<properties.length; x++) {
-    value = value && value[properties[x]];
-  }
-  return value;
-}
 
 const Weather = {
 
@@ -63,16 +56,16 @@ const Weather = {
     // Lets only keep what we need.
     const w2 = {};
     w2.city = data.locationDisplayName;
-    w2.currentTemp = Math.round(chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
+    w2.currentTemp = Math.round(util.chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
     w2.minTemp = w2.currentTemp;
     w2.maxTemp = w2.currentTemp;
-    w2.conditionSequence = [chainAccessor(data, ['properties', 'periods', 0, 'shortForecast'])];
+    w2.conditionSequence = [util.chainAccessor(data, ['properties', 'periods', 0, 'shortForecast'])];
     for (let i = 0; i < weatherLookForwardHours; i++) {
       if (i >= data.properties.periods.length) {
         break;
       }
       const period = data.properties.periods[i];
-      const temp = Math.round(chainAccessor(period, ['temperature']));
+      const temp = Math.round(util.chainAccessor(period, ['temperature']));
       w2.minTemp = Math.min(w2.minTemp, temp);
       w2.maxTemp = Math.max(w2.maxTemp, temp);
 
@@ -135,7 +128,6 @@ function main() {
 }
 
 module.exports = {
-  chainAccessor: chainAccessor,
   load: main,
   Weather: Weather,
 };
