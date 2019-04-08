@@ -42,3 +42,10 @@ describe('getMockDate', () => {
 
   });
 });
+
+describe('trimString', function() {
+  it('should return a trimmed string', function() {
+    const trimmedString = util.trimString(' asdf  ');
+    expect(trimmedString).to.be.equal('asdf');
+  });
+});

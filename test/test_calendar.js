@@ -14,10 +14,3 @@ describe('formatTime', () => {
     expect(f).to.equal('Wed Mar 13 2019');
   });
 });
-
-describe('trimString', function() {
-  it('should return a trimmed string', function() {
-    const trimmedString = calendar.trimString(' asdf  ');
-    expect(trimmedString).to.be.equal('asdf');
-  });
-});

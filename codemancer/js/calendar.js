@@ -194,7 +194,7 @@ function displayEvents(eventArrays) {
     }
     const when = new Date();
     when.setTime(Date.parse(eventStart));
-    const eventName = trimString(event.summary || DEFAULT_EVENT_SUMMARY);
+    const eventName = util.trimString(event.summary || DEFAULT_EVENT_SUMMARY);
     appendPre(eventName + ' (' + formatTime(when, allDay) + ')');
   }
 }
@@ -246,13 +246,8 @@ function showCalEvent(calEvent) {
   return true;
 }
 
-function trimString(s) {
-  return s.replace(/^\s+|\s+$/g, '');
-}
-
 util.runOnload(handleClientLoad);
 
 module.exports = {
   formatTime: formatTime,
-  trimString: trimString
 };

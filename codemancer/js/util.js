@@ -42,6 +42,10 @@ function getMockDate() {
   return date;
 }
 
+/**
+ * Return the value after a chain of accessors;
+ * returns undefined instead of an exception if the chain is broken
+ **/
 function chainAccessor(data, properties) {
   let value = data;
   for(let x=0; x<properties.length; x++) {
@@ -50,9 +54,17 @@ function chainAccessor(data, properties) {
   return value;
 }
 
+/**
+ * Trim whitespace around a string
+ **/
+function trimString(s) {
+  return s.replace(/^\s+|\s+$/g, '');
+}
+
 module.exports = {
   runOnload: runOnload,
   toggleDemo: toggleDemo,
   getMockDate: getMockDate,
   chainAccessor: chainAccessor,
+  trimString: trimString,
 };
