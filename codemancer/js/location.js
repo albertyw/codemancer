@@ -53,7 +53,7 @@ const Location = {
     }
     const locData = unique(info);
     if (locData.length === 3) {
-      locData.pop(2);
+      locData.pop();
     }
     return locData.join(', ');
   }
