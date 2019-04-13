@@ -1,10 +1,11 @@
 const fs = require('fs');
+const path = require('path');
 
 const browserify = require('browserify');
 require('dotenv').config();
 
-const inputFile = 'codemancer/js/index.js';
-const outputFile = 'codemancer/js/codemancer.min.js';
+const inputFile = path.join(__dirname, '..', 'codemancer', 'js', 'index.js');
+const outputFile = path.join(__dirname, '..', 'codemancer', 'js', 'codemancer.min.js');
 
 browserify(inputFile, {debug: true})
   .transform('envify')
