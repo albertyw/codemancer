@@ -8,7 +8,7 @@
   "scripts": {
     "google": "curl -s https://apis.google.com/js/api.js > codemancer/js/google.js",
     "minify": "npm run minify-js && npm run minify-css",
-    "minify-js": "npm run google && node bin/browserify.js > codemancer/js/codemancer.min.js",
+    "minify-js": "npm run google && node bin/browserify.js",
     "minify-css": "cleancss -o codemancer/css/codemancer.min.css -O2 codemancer/css/application.css codemancer/css/animations.css codemancer/css/calendar.css codemancer/css/weather.css",
     "eslint": "eslint server/app.js bin codemancer/js test",
     "cover": "npm run google && nyc --require dotenv/config --instrument false mochify -R dot --transform envify --transform [ babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ]",
