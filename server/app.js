@@ -1,4 +1,3 @@
-const child_process = require('child_process');
 const browserifyMiddleware = require('browserify-middleware');
 const console = require('console');
 const express = require('express');
@@ -10,6 +9,8 @@ const Rollbar = require('rollbar');
 const rfs = require('rotating-file-stream');
 
 require('dotenv').config({path: path.join(__dirname, '..', '.env')});
+const util = require('./util');
+
 const app = express();
 const rollbar = new Rollbar({
   accessToken: process.env.ROLLBAR_SERVER_ACCESS,
@@ -40,22 +41,6 @@ app.engine('html', function (filePath, options, callback) {
 app.set('views', path.join(__dirname, '..', 'codemancer'));
 app.set('view engine','html');
 
-let version = '';
-function getAndRespondVersion(res) {
-  child_process.exec('git rev-parse HEAD', function(err, stdout) {
-    version = stdout;
-    res.send(version);
-  });
-}
-
-app.get('/version', (req, res) => {
-  if(version !== '') {
-    res.send(version);
-    return;
-  }
-  getAndRespondVersion(res);
-});
-
 app.locals.svg = {};
 function getSVGs() {
   if (app.locals.svg.length > 0) return;
@@ -82,6 +67,7 @@ app.get('/', (req, res) => {
     TOGGLEDEMO_SVG: app.locals.svg.toggledemo,
     CALENDAR_AUTH_SVG: app.locals.svg.calendarAuth,
     CALENDAR_SIGNOUT_SVG: app.locals.svg.calendarSignout,
+    JAVASCRIPT: util.getJSFileName(),
   };
   res.render('index', templateVars);
 });
@@ -94,12 +80,9 @@ if (process.env.ENVIRONMENT == 'development') {
   };
   const jsFile = path.join(__dirname, '..', 'codemancer', 'js', 'index.js');
   const browserifyHandler = browserifyMiddleware(jsFile, browserifyOptions);
-  app.use('/js/codemancer.min.js', browserifyHandler);
+  app.use('/js/' + util.getJSFileName(), browserifyHandler);
 } else {
-  const jsFile = path.join(__dirname, '..', 'codemancer', 'js', 'codemancer.min.js');
-  app.get('/js/codemancer.min.js', (req, res) => {
-    res.sendFile(jsFile);
-  });
+  app.use('/js', express.static(path.join(__dirname, '..', 'codemancer', 'js')));
 }
 
 const port = process.env.LISTEN_PORT;

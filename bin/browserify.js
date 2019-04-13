@@ -3,9 +3,10 @@ const path = require('path');
 
 const browserify = require('browserify');
 require('dotenv').config();
+const util = require('../server/util');
 
 const inputFile = path.join(__dirname, '..', 'codemancer', 'js', 'index.js');
-const outputFile = path.join(__dirname, '..', 'codemancer', 'js', 'codemancer.min.js');
+const outputFile = path.join(__dirname, '..', 'codemancer', 'js', util.getJSFileName());
 
 browserify(inputFile, {debug: true})
   .transform('envify')
