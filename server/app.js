@@ -1,4 +1,3 @@
-const child_process = require('child_process');
 const browserifyMiddleware = require('browserify-middleware');
 const console = require('console');
 const express = require('express');
@@ -41,22 +40,6 @@ app.engine('html', function (filePath, options, callback) {
 });
 app.set('views', path.join(__dirname, '..', 'codemancer'));
 app.set('view engine','html');
-
-let version = '';
-function getAndRespondVersion(res) {
-  child_process.exec('git rev-parse HEAD', function(err, stdout) {
-    version = stdout;
-    res.send(version);
-  });
-}
-
-app.get('/version', (req, res) => {
-  if(version !== '') {
-    res.send(version);
-    return;
-  }
-  getAndRespondVersion(res);
-});
 
 app.locals.svg = {};
 function getSVGs() {
