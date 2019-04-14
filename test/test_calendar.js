@@ -16,6 +16,33 @@ describe('formatTime', () => {
   });
 });
 
+describe('showCal', () => {
+  it('should not show calendar if not owner', () => {
+    c = calFixture;
+    c.accessRole = 'viewer';
+    expect(calendar.showCal(c)).to.be.false;
+  });
+
+  it('should not show calendar if not selected', () => {
+    c = calFixture;
+    c.selected = false;
+    expect(calendar.showCal(c)).to.be.false;
+  });
+
+  it('should not show ignored calendars', () => {
+    c = calFixture;
+    c.id = 'p#weather@group.v.calendar.google.com';
+    expect(calendar.showCal(c)).to.be.false;
+  });
+
+  it('should show calendars by default', () => {
+    c.accessRole = 'owner';
+    c.selected = true;
+    c.id = 'abcd@google.om';
+    expect(calendar.showCal(calFixture)).to.be.true;
+  });
+});
+
 describe('showCalEvent', () => {
   it('should show event if self has accepted invite', () => {
     const calEvent = calFixture['items'][0];

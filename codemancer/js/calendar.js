@@ -250,5 +250,6 @@ util.runOnload(handleClientLoad);
 
 module.exports = {
   formatTime: formatTime,
+  showCal: showCal,
   showCalEvent: showCalEvent,
 };
