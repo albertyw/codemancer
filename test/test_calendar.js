@@ -18,24 +18,25 @@ describe('formatTime', () => {
 
 describe('showCal', () => {
   it('should not show calendar if not owner', () => {
-    c = calFixture;
+    const c = calFixture;
     c.accessRole = 'viewer';
     expect(calendar.showCal(c)).to.be.false;
   });
 
   it('should not show calendar if not selected', () => {
-    c = calFixture;
+    const c = calFixture;
     c.selected = false;
     expect(calendar.showCal(c)).to.be.false;
   });
 
   it('should not show ignored calendars', () => {
-    c = calFixture;
+    const c = calFixture;
     c.id = 'p#weather@group.v.calendar.google.com';
     expect(calendar.showCal(c)).to.be.false;
   });
 
   it('should show calendars by default', () => {
+    const c = calFixture;
     c.accessRole = 'owner';
     c.selected = true;
     c.id = 'abcd@google.om';
