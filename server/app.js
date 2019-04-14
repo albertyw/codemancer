@@ -41,23 +41,7 @@ app.engine('html', function (filePath, options, callback) {
 app.set('views', path.join(__dirname, '..', 'codemancer'));
 app.set('view engine','html');
 
-app.locals.svg = {};
-function getSVGs() {
-  if (app.locals.svg.length > 0) return;
-  function readSVGFile(svgFile, svgName) {
-    const svgPath = path.join(__dirname, '..', 'codemancer', 'img', svgFile);
-    fs.readFile(svgPath, (err, data) => {
-      if (err) {
-        data = '';
-      }
-      app.locals.svg[svgName] = data;
-    });
-  }
-  readSVGFile('sunrisesunset.svg', 'sunrisesunset');
-  readSVGFile('toggledemo.svg', 'toggledemo');
-  readSVGFile('calendar-plus-o.svg', 'calendarAuth');
-  readSVGFile('calendar-minus-o.svg', 'calendarSignout');
-}
+app.locals.svg = util.getSVGs();
 
 app.get('/', (req, res) => {
   const templateVars = {
@@ -88,5 +72,4 @@ if (process.env.ENVIRONMENT == 'development') {
 const port = process.env.LISTEN_PORT;
 app.listen(port, () => {
   console.log('Listening on port ' + port);
-  getSVGs();
 });
