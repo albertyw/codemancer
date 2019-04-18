@@ -18,9 +18,10 @@ const weatherConditions = [
   ['Rain', '\uf008'],
   ['Heavy Rain', '\uf04e'],
   ['Showers And Thunderstorms', '\uf00e'],
+  ['Fog', '\uf014'],
 ];
 const weatherIconConversions = new Map(weatherConditions);
-const descriptors = ['Mostly', 'Partly', 'Slight Chance', 'Chance', 'Likely', 'Isolated'];
+const descriptors = ['Mostly', 'Partly', 'Slight Chance', 'Chance', 'Likely', 'Isolated', 'Patchy'];
 const weatherLookForwardHours = 24;
 
 const Weather = {
