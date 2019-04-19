@@ -48,6 +48,11 @@ describe('Weather.conditionIcon', () => {
     const icon2 = weather.Weather.conditionIcon('Mostly Cloudly');
     expect(icon1).to.not.equal(icon2);
   });
+  it('works with a variety of conditions', () => {
+    let icon = weather.Weather.conditionIcon('Occasional Very Light Rain');
+    expect(icon).to.not.equal('');
+    expect(Rollbar.callCount).to.equal(undefined);
+  });
   it('returns a default icon code if condition is unknown', () => {
     const icon = weather.Weather.conditionIcon('asdf');
     expect(icon).to.equal('\uf04c');
