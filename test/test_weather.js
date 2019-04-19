@@ -29,6 +29,12 @@ describe('Weather.parse', () => {
 });
 
 describe('Weather.conditionIcon', () => {
+  beforeEach(() => {
+    sinon.spy(Rollbar, 'error');
+  });
+  afterEach(() => {
+    Rollbar.error.restore();
+  });
   it('returns an icon code', () => {
     const icon = weather.Weather.conditionIcon('Rain');
     expect(icon).to.equal('\uf008');
@@ -43,7 +49,6 @@ describe('Weather.conditionIcon', () => {
     expect(icon1).to.not.equal(icon2);
   });
   it('returns a default icon code if condition is unknown', () => {
-    sinon.spy(Rollbar, 'error');
     const icon = weather.Weather.conditionIcon('asdf');
     expect(icon).to.equal('\uf04c');
     expect(Rollbar.error.calledWithExactly('cannot find image for "asdf"')).to.be.true;
