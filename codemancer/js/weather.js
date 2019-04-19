@@ -11,14 +11,14 @@ const weatherConditions = [
   ['Sunny', '\uf00d'],
   ['Clear', '\uf00d'],
   ['Cloudy', '\uf013'],
-  ['Mostly Cloudy', '\uf041'],
   ['Partly Cloudy', '\uf002'],
+  ['Mostly Cloudy', '\uf041'],
+  ['Fog', '\uf014'],
   ['Rain Showers', '\uf009'],
   ['Light Rain', '\uf009'],
   ['Rain', '\uf008'],
   ['Heavy Rain', '\uf04e'],
   ['Showers And Thunderstorms', '\uf00e'],
-  ['Fog', '\uf014'],
 ];
 const weatherIconConversions = new Map(weatherConditions);
 const descriptors = ['Mostly', 'Partly', 'Slight Chance', 'Chance', 'Likely', 'Isolated', 'Patchy'];
