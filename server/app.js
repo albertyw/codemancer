@@ -5,18 +5,13 @@ const fs = require('fs');
 const morgan = require('morgan');
 const mustache = require('mustache');
 const path = require('path');
-const Rollbar = require('rollbar');
 const rfs = require('rotating-file-stream');
 
 require('dotenv').config({path: path.join(__dirname, '..', '.env')});
+const Rollbar = require('../codemancer/js/rollbar');
 const util = require('./util');
 
 const app = express();
-const rollbar = new Rollbar({
-  accessToken: process.env.ROLLBAR_SERVER_ACCESS,
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-});
 
 // Set up logging
 app.use(morgan('combined'));
@@ -25,7 +20,7 @@ const accessLogStream = rfs('access.log', {
   path: path.join(__dirname, '..', 'logs', 'app')
 });
 app.use(morgan('combined', {stream: accessLogStream }));
-app.use(rollbar.errorHandler());
+app.use(Rollbar.errorHandler());
 
 // Set up mustache
 // To set functioning of mustachejs view engine
