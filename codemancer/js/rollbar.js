@@ -1,17 +1,17 @@
 const Rollbar = require('rollbar');
 const console = require('console');
 
+const rollbarClientAccess = process.env.ROLLBAR_CLIENT_ACCESS;
+const rollbarServerAccess = process.env.ROLLBAR_SERVER_ACCESS;
 const rollbarMock = {
   error: function(e) { console.error(e); }
 };
+let rollbarAccess = undefined;
 let rollbarClient = undefined;
 
-function getRollbar() {
-  if (!process.env.ROLLBAR_CLIENT_ACCESS) {
-    rollbarClient = rollbarMock;
-  }
-  if (rollbarClient) {
-    return rollbarClient;
+function getRollbar(rollbarAccess) {
+  if (!rollbarAccess) {
+    return rollbarMock;
   }
 
   const rollbarConfig = {
@@ -21,10 +21,22 @@ function getRollbar() {
       environment: process.env.ENVIRONMENT,
     }
   };
-  rollbarClient = Rollbar.init(rollbarConfig);
-  return rollbarClient;
+  return Rollbar.init(rollbarConfig);
 }
 
-getRollbar();
+function getRollbarAccess() {
+  if (typeof window === 'undefined') {
+    rollbarAccess = rollbarServerAccess;
+  } else {
+    rollbarAccess = rollbarClientAccess;
+  }
+  return rollbarAccess;
+}
+
+function setupRollbar() {
+  const access = getRollbarAccess();
+  rollbarClient = getRollbar(access);
+}
+setupRollbar();
 
 module.exports = rollbarClient;
