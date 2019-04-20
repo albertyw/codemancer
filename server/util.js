@@ -14,19 +14,26 @@ function getJSFileName() {
 function getSVGs() {
   const svgs = {};
   function readSVGFile(svgFile, svgName) {
-    const svgPath = path.join(__dirname, '..', 'codemancer', 'img', svgFile);
-    fs.readFile(svgPath, (err, data) => {
-      if (err) {
-        data = '';
-      }
-      svgs[svgName] = data;
-    });
+    return (resolve, reject) => {
+      const svgPath = path.join(__dirname, '..', 'codemancer', 'img', svgFile);
+      fs.readFile(svgPath, (err, data) => {
+        if (err) {
+          return reject(err);
+        }
+        svgs[svgName] = data.toString();
+        return resolve(data.toString());
+      });
+    };
   }
-  readSVGFile('sunrisesunset.svg', 'sunrisesunset');
-  readSVGFile('toggledemo.svg', 'toggledemo');
-  readSVGFile('calendar-plus-o.svg', 'calendarAuth');
-  readSVGFile('calendar-minus-o.svg', 'calendarSignout');
-  return svgs;
+  const readers = [
+    new Promise(readSVGFile('sunrisesunset.svg', 'sunrisesunset')),
+    new Promise(readSVGFile('toggledemo.svg', 'toggledemo')),
+    new Promise(readSVGFile('calendar-plus-o.svg', 'calendarAuth')),
+    new Promise(readSVGFile('calendar-minus-o.svg', 'calendarSignout')),
+  ];
+  return Promise.all(readers).then(() => {
+    return svgs;
+  });
 }
 
 module.exports = {
