@@ -2,6 +2,7 @@ const child_process = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
+const Rollbar = require('../codemancer/js/rollbar');
 const util = require('../codemancer/js/util');
 
 function getJSFileName() {
@@ -32,6 +33,9 @@ function getSVGs() {
     new Promise(readSVGFile('calendar-minus-o.svg', 'calendarSignout')),
   ];
   return Promise.all(readers).then(() => {
+    return svgs;
+  }).catch(error => {
+    Rollbar.error(error);
     return svgs;
   });
 }
