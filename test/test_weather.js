@@ -28,6 +28,16 @@ describe('Weather.parse', () => {
   });
 });
 
+describe('Weather.worstConditions', () => {
+  it('returns the worst condition', () => {
+    const conditions = ['\uf013', '\uf00e', '\uf00d'];
+    expect(weather.Weather.worstCondition(conditions)).to.equal('\uf00e');
+  });
+  it('returns undefined if there are no conditions', () => {
+    expect(weather.Weather.worstCondition([])).to.equal(undefined);
+  });
+});
+
 describe('Weather.conditionIcon', () => {
   beforeEach(() => {
     sinon.spy(Rollbar, 'error');

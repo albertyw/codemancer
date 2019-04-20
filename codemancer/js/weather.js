@@ -79,13 +79,18 @@ const Weather = {
     for (let i=0; i < w2.conditionSequence.length; i++) {
       w2.conditionSequence[i] = Weather.conditionIcon(w2.conditionSequence[i]);
     }
-    w2.worstCondition = w2.conditionSequence[0];
+    w2.worstCondition = Weather.worstCondition(w2.conditionSequence);
+    return w2;
+  },
+
+  worstCondition: function (conditionSequence) {
+    let worstCondition = conditionSequence[0];
     for (let i=0; i < weatherConditions.length; i++) {
-      if(w2.conditionSequence.includes(weatherConditions[i][1])) {
-        w2.worstCondition = weatherConditions[i][1];
+      if(conditionSequence.includes(weatherConditions[i][1])) {
+        worstCondition = weatherConditions[i][1];
       }
     }
-    return w2;
+    return worstCondition;
   },
 
   conditionIcon: function (condition){
