@@ -4,7 +4,12 @@ const console = require('console');
 const rollbarClientAccess = process.env.ROLLBAR_CLIENT_ACCESS;
 const rollbarServerAccess = process.env.ROLLBAR_SERVER_ACCESS;
 const rollbarMock = {
-  error: function(e) { console.error(e); }
+  error: function(e) { console.error(e); },
+  errorHandler: function() {
+    return (err) => {
+      console.log(err);
+    };
+  },
 };
 let rollbarAccess = undefined;
 let rollbarClient = undefined;
