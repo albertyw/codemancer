@@ -11,7 +11,7 @@
     "minify-js": "npm run google && node bin/browserify.js",
     "minify-css": "cleancss -o codemancer/css/codemancer.min.css -O2 codemancer/css/application.css codemancer/css/animations.css codemancer/css/calendar.css codemancer/css/weather.css",
     "eslint": "eslint server bin codemancer/js test",
-    "cover": "npm run google && nyc --require dotenv/config --instrument false mochify -R dot --transform envify --transform [ babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ]",
+    "cover": "npm run google && nyc --require dotenv/config --instrument false mochify -R dot --transform envify --transform [ babelify --plugins [ babel-plugin-istanbul ] ]",
     "stylelint": "stylelint codemancer/css/*",
     "test": "npm run stylelint && npm run eslint && npm run cover"
   },
