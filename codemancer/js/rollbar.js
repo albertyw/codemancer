@@ -6,8 +6,9 @@ const rollbarServerAccess = process.env.ROLLBAR_SERVER_ACCESS;
 const rollbarMock = {
   error: function(e) { console.error(e); },
   errorHandler: function() {
-    return (err) => {
-      console.log(err);
+    return (err, req, res, next) => {
+      this.error(err);
+      return next(err, req, res);
     };
   },
 };
