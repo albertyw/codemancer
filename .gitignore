@@ -67,6 +67,5 @@ codemancer/version
 instrumented
 
 codemancer/js/google.js
-bundle.js
 codemancer.min.js
 codemancer.min.css
