@@ -23,6 +23,12 @@ describe('formatTime', () => {
     const f = calendar.formatTime(d, true);
     expect(f).to.equal('Today');
   });
+  it('should return tomorrow for a later time', () => {
+    const d = new Date(2019, 2, 13, 22, 5);
+    this.clock.tick(d.getTime() - 24 * 60 * 60 * 1000);
+    const f = calendar.formatTime(d, true);
+    expect(f).to.equal('Today');
+  });
 });
 
 describe('showCal', () => {
