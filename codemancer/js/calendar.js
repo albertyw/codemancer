@@ -194,8 +194,9 @@ function displayEvents(eventArrays) {
     }
     const when = new Date();
     when.setTime(Date.parse(eventStart));
-    const eventName = util.trimString(event.summary || DEFAULT_EVENT_SUMMARY);
-    appendPre(eventName + ' (' + formatTime(when, allDay) + ')');
+    let eventName = util.trimString(event.summary || DEFAULT_EVENT_SUMMARY);
+    eventName = formatTime(when, allDay) + ' - ' + eventName;
+    appendPre(eventName);
   }
 }
 
