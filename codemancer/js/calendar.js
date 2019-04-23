@@ -201,13 +201,19 @@ function displayEvents(eventArrays) {
 }
 
 function formatTime(d, allDay) {
-  let dString = d.toDateString();
+  const today = new Date();
+  let dString = '';
   if (!allDay) {
     const hour = (d.getHours() + 11) % 12 + 1;
     const minutes = ('0' + d.getMinutes().toString()).slice(-2);
     const period = d.getHours() < 12 ? 'AM' : 'PM';
     const time = hour + ':' + minutes + ' ' + period;
-    dString += ' ' + time;
+    dString = time;
+  }
+  if (d.toDateString() != today.toDateString()) {
+    dString = '(Tomorrow) ' + dString;
+  } else if (allDay) {
+    dString = 'Today';
   }
   return dString;
 }

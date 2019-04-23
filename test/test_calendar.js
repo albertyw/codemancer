@@ -1,18 +1,27 @@
 const expect = require('chai').expect;
+const sinon = require('sinon');
 
 const calendar = require('../codemancer/js/calendar');
 const calFixture = require('./calendar_fixture.json');
 
 describe('formatTime', () => {
-  it('should return a formatted time', () => {
+  beforeEach(() => {
+    this.clock = sinon.useFakeTimers();
+  });
+  afterEach(() => {
+    this.clock.restore();
+  });
+  it('should return a formatted time for today', () => {
     const d = new Date(2019, 2, 13, 22, 5);
+    this.clock.tick(d.getTime());
     const f = calendar.formatTime(d, false);
-    expect(f).to.equal('Wed Mar 13 2019 10:05 PM');
+    expect(f).to.equal('10:05 PM');
   });
   it('should return only the date when the time is allDay', () => {
     const d = new Date(2019, 2, 13, 22, 5);
+    this.clock.tick(d.getTime());
     const f = calendar.formatTime(d, true);
-    expect(f).to.equal('Wed Mar 13 2019');
+    expect(f).to.equal('Today');
   });
 });
 
