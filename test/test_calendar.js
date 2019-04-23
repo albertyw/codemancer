@@ -17,6 +17,12 @@ describe('formatTime', () => {
     const f = calendar.formatTime(d, false);
     expect(f).to.equal('10:05 PM');
   });
+  it('should return tomorrow and a time for a timed event tomorrow', () => {
+    const d = new Date(2019, 2, 13, 22, 5);
+    this.clock.tick(d.getTime() - 24 * 60 * 60 * 1000);
+    const f = calendar.formatTime(d, false);
+    expect(f).to.equal('Tomorrow - 10:05 PM');
+  });
   it('should return only the date when the time is allDay', () => {
     const d = new Date(2019, 2, 13, 22, 5);
     this.clock.tick(d.getTime());
@@ -27,7 +33,7 @@ describe('formatTime', () => {
     const d = new Date(2019, 2, 13, 22, 5);
     this.clock.tick(d.getTime() - 24 * 60 * 60 * 1000);
     const f = calendar.formatTime(d, true);
-    expect(f).to.equal('Today');
+    expect(f).to.equal('Tomorrow');
   });
 });
 
