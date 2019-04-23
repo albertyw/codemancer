@@ -201,8 +201,7 @@ function displayEvents(eventArrays) {
 }
 
 function formatTime(d, allDay) {
-  const date = d.toDateString();
-  let dString = date;
+  let dString = d.toDateString();
   if (!allDay) {
     const hour = (d.getHours() + 11) % 12 + 1;
     const minutes = ('0' + d.getMinutes().toString()).slice(-2);
