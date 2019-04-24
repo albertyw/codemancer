@@ -183,8 +183,10 @@ function displayEvents(eventArrays) {
     return;
   }
 
+  let today = true;
   for (let i = 0; i < events.length; i++) {
     const event = events[i];
+
     let eventStart = event.start.dateTime;
     let allDay = false;
     if (!eventStart) {
@@ -194,6 +196,15 @@ function displayEvents(eventArrays) {
     }
     const when = new Date();
     when.setTime(Date.parse(eventStart));
+
+    if (!isToday(when) && today) {
+      today = false;
+      if (i !== 0) {
+        appendPre('');
+      }
+      appendPre('Tomorrow');
+    }
+
     let eventName = util.trimString(event.summary || DEFAULT_EVENT_SUMMARY);
     eventName = formatTime(when, allDay) + ' - ' + eventName;
     appendPre(eventName);
@@ -208,22 +219,12 @@ function isToday(d) {
 
 function formatTime(d, allDay) {
   let dString = '';
-  const today = isToday(d);
   if (!allDay) {
     const hour = (d.getHours() + 11) % 12 + 1;
     const minutes = ('0' + d.getMinutes().toString()).slice(-2);
     const period = d.getHours() < 12 ? 'AM' : 'PM';
     const time = hour + ':' + minutes + ' ' + period;
     dString = time;
-    if (!today) {
-      dString = 'Tomorrow - ' + dString;
-    }
-  } else {
-    if (today) {
-      dString = 'Today';
-    } else {
-      dString = 'Tomorrow';
-    }
   }
   return dString;
 }
