@@ -185,19 +185,10 @@ function displayEvents(eventArrays) {
 
   let today = true;
   for (let i = 0; i < events.length; i++) {
-    const event = events[i];
+    const calEvent = events[i];
+    parseEvent(calEvent);
 
-    let eventStart = event.start.dateTime;
-    let allDay = false;
-    if (!eventStart) {
-      eventStart = event.start.date;
-      eventStart += 'T00:00'; // Use local time rather than UTC
-      allDay = true;
-    }
-    const when = new Date();
-    when.setTime(Date.parse(eventStart));
-
-    if (!isToday(when) && today) {
+    if (!isToday(calEvent.when) && today) {
       today = false;
       if (i !== 0) {
         appendPre('');
@@ -206,7 +197,7 @@ function displayEvents(eventArrays) {
     }
 
     let eventName = util.trimString(event.summary || DEFAULT_EVENT_SUMMARY);
-    eventName = formatTime(when, allDay) + ' - ' + eventName;
+    eventName = formatTime(calEvent.when, calEvent.allDay) + ' - ' + eventName;
     appendPre(eventName);
   }
 }
@@ -261,6 +252,20 @@ function showCalEvent(calEvent) {
 
   // Show event by default
   return true;
+}
+
+// Given a calendar event, add "when" and "allDay" properties
+function parseEvent(calEvent) {
+  let eventStart = event.start.dateTime;
+  calEvent.allDay = false;
+  if (!eventStart) {
+    eventStart = event.start.date;
+    eventStart += 'T00:00'; // Use local time rather than UTC
+    calEvent.allDay = true;
+  }
+  calEvent.when = new Date();
+  calEvent.when.setTime(Date.parse(eventStart));
+  return calEvent;
 }
 
 util.runOnload(handleClientLoad);
