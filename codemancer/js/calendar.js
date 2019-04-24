@@ -256,7 +256,7 @@ function showCalEvent(calEvent) {
 
 // Given a calendar event, add "when" and "allDay" properties
 function parseEvent(calEvent) {
-  let eventStart = event.start.dateTime;
+  let eventStart = calEvent.start.dateTime;
   calEvent.allDay = false;
   if (!eventStart) {
     eventStart = event.start.date;
