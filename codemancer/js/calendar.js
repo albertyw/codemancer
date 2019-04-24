@@ -196,7 +196,7 @@ function displayEvents(eventArrays) {
       appendPre('Tomorrow');
     }
 
-    let eventName = util.trimString(event.summary || DEFAULT_EVENT_SUMMARY);
+    let eventName = util.trimString(calEvent.summary || DEFAULT_EVENT_SUMMARY);
     eventName = formatTime(calEvent) + ' - ' + eventName;
     appendPre(eventName);
   }
@@ -259,7 +259,7 @@ function parseEvent(calEvent) {
   let eventStart = calEvent.start.dateTime;
   calEvent.allDay = false;
   if (!eventStart) {
-    eventStart = event.start.date;
+    eventStart = calEvent.start.date;
     eventStart += 'T00:00'; // Use local time rather than UTC
     calEvent.allDay = true;
   }
