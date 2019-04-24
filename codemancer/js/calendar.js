@@ -197,7 +197,7 @@ function displayEvents(eventArrays) {
     }
 
     let eventName = util.trimString(event.summary || DEFAULT_EVENT_SUMMARY);
-    eventName = formatTime(calEvent.when, calEvent.allDay) + ' - ' + eventName;
+    eventName = formatTime(calEvent) + ' - ' + eventName;
     appendPre(eventName);
   }
 }
@@ -208,12 +208,12 @@ function isToday(d) {
   return today;
 }
 
-function formatTime(d, allDay) {
+function formatTime(calEvent) {
   let dString = '';
-  if (!allDay) {
-    const hour = (d.getHours() + 11) % 12 + 1;
-    const minutes = ('0' + d.getMinutes().toString()).slice(-2);
-    const period = d.getHours() < 12 ? 'AM' : 'PM';
+  if (!calEvent.allDay) {
+    const hour = (calEvent.when.getHours() + 11) % 12 + 1;
+    const minutes = ('0' + calEvent.when.getMinutes().toString()).slice(-2);
+    const period = calEvent.when.getHours() < 12 ? 'AM' : 'PM';
     const time = hour + ':' + minutes + ' ' + period;
     dString = time;
   }

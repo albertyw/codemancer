@@ -35,13 +35,15 @@ describe('formatTime', () => {
   it('should return a formatted time for today', () => {
     const d = new Date(2019, 2, 13, 22, 5);
     this.clock.tick(d.getTime());
-    const f = calendar.formatTime(d, false);
+    const calEvent = {when: d, allDay: false};
+    const f = calendar.formatTime(calEvent);
     expect(f).to.equal('10:05 PM');
   });
   it('should return no time if the time is allDay', () => {
     const d = new Date(2019, 2, 13, 22, 5);
     this.clock.tick(d.getTime());
-    const f = calendar.formatTime(d, true);
+    const calEvent = {when: d, allDay: true};
+    const f = calendar.formatTime(calEvent);
     expect(f).to.equal('');
   });
 });
