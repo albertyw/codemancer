@@ -200,10 +200,15 @@ function displayEvents(eventArrays) {
   }
 }
 
-function formatTime(d, allDay) {
+function isToday(d) {
   const currentDate = new Date();
-  let dString = '';
   const today = d.toDateString() === currentDate.toDateString();
+  return today;
+}
+
+function formatTime(d, allDay) {
+  let dString = '';
+  const today = isToday(d);
   if (!allDay) {
     const hour = (d.getHours() + 11) % 12 + 1;
     const minutes = ('0' + d.getMinutes().toString()).slice(-2);
@@ -260,6 +265,7 @@ function showCalEvent(calEvent) {
 util.runOnload(handleClientLoad);
 
 module.exports = {
+  isToday: isToday,
   formatTime: formatTime,
   showCal: showCal,
   showCalEvent: showCalEvent,

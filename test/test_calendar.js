@@ -4,6 +4,27 @@ const sinon = require('sinon');
 const calendar = require('../codemancer/js/calendar');
 const calFixture = require('./calendar_fixture.json');
 
+describe('isToday', () => {
+  beforeEach(() => {
+    this.clock = sinon.useFakeTimers();
+  });
+  afterEach(() => {
+    this.clock.restore();
+  });
+  it('should return true for today', () => {
+    const d = new Date();
+    this.clock.tick(d.getTime());
+    const today = calendar.isToday(d);
+    expect(today).to.be.true;
+  });
+  it('should return false for tomorrow', () => {
+    const d = new Date(2019, 2, 13, 22, 5);
+    this.clock.tick(d.getTime() - 24 * 60 * 60 * 1000);
+    const today = calendar.isToday(d);
+    expect(today).to.be.false;
+  });
+});
+
 describe('formatTime', () => {
   beforeEach(() => {
     this.clock = sinon.useFakeTimers();
