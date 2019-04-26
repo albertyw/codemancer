@@ -48,7 +48,7 @@
     "eslint": "^5.16.0",
     "jquery": "^3.4.0",
     "mochify": "^6.2.0",
-    "nyc": "^13.3.0",
+    "nyc": "^14.1.0",
     "sinon": "^7.3.2",
     "stylelint": "^10.0.1",
     "stylelint-config-standard": "^18.3.0",
