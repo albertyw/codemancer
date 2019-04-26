@@ -18,6 +18,7 @@ const DEFAULT_EVENT_SUMMARY = 'Busy';
 const authorizeButton = document.getElementById('authorize_button');
 const signoutButton = document.getElementById('signout_button');
 const calendarContent = document.getElementById('calendar-content');
+const calendarAgenda = document.getElementById('calendar-agenda');
 const calendarLookForwardMS = 24*60*60*1000;
 
 let authClicks = 0;
@@ -107,6 +108,16 @@ function appendPre(message) {
   calendarContent.appendChild(textContent);
 
   calendarContent.classList.remove('hidden');
+}
+
+/**
+ * Append data to the calendar table
+ */
+function appendCalendar(calEvent) {
+  eventName = formatTime(calEvent) + ' - ' + eventName;
+  const row = '<tr><td>' + formatTime(calEvent) + '</td><td>' + eventName + '</td></tr>';
+  calendarAgenda.appendChild(row);
+  calendarAgenda.classList.remove('hidden');
 }
 
 /**
