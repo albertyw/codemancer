@@ -113,7 +113,9 @@ function appendPre(message) {
 /**
  * Append data to the calendar table
  */
-function appendCalendar(calEvent) {
+function appendAgenda(calEvent) {
+    let eventName = util.trimString(calEvent.summary || DEFAULT_EVENT_SUMMARY);
+    eventName = formatTime(calEvent) + ' - ' + eventName;
   eventName = formatTime(calEvent) + ' - ' + eventName;
   const row = '<tr><td>' + formatTime(calEvent) + '</td><td>' + eventName + '</td></tr>';
   calendarAgenda.appendChild(row);
@@ -207,9 +209,7 @@ function displayEvents(eventArrays) {
       appendPre('Tomorrow');
     }
 
-    let eventName = util.trimString(calEvent.summary || DEFAULT_EVENT_SUMMARY);
-    eventName = formatTime(calEvent) + ' - ' + eventName;
-    appendPre(eventName);
+    appendAgenda(calEvent);
   }
 }
 
