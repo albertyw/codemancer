@@ -18,6 +18,7 @@ const DEFAULT_EVENT_SUMMARY = 'Busy';
 const authorizeButton = document.getElementById('authorize_button');
 const signoutButton = document.getElementById('signout_button');
 const calendarContent = document.getElementById('calendar-content');
+const calendarAgenda = document.getElementById('calendar-agenda');
 const calendarLookForwardMS = 24*60*60*1000;
 
 let authClicks = 0;
@@ -110,6 +111,16 @@ function appendPre(message) {
 }
 
 /**
+ * Append data to the calendar table
+ */
+function appendAgenda(calEvent) {
+  let eventName = util.trimString(calEvent.summary || DEFAULT_EVENT_SUMMARY);
+  const row = '<tr><td class="agenda-time">' + formatTime(calEvent) + '</td><td class="agenda-name">' + eventName + '</td></tr>';
+  calendarAgenda.innerHTML += row;
+  calendarAgenda.classList.remove('hidden');
+}
+
+/**
  * Print the summary and start datetime/date of the next ten events in
  * the authorized user's calendar. If no events are found an
  * appropriate message is printed.
@@ -196,9 +207,7 @@ function displayEvents(eventArrays) {
       appendPre('Tomorrow');
     }
 
-    let eventName = util.trimString(calEvent.summary || DEFAULT_EVENT_SUMMARY);
-    eventName = formatTime(calEvent) + ' - ' + eventName;
-    appendPre(eventName);
+    appendAgenda(calEvent);
   }
 }
 

@@ -14,7 +14,11 @@
     padding: 0 30px;
 }
 
-#calendar-content, #calendar-agenda {
+#calendar-content,#calendar-agenda {
     font-size: 1.8em;
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+}
+
+#calendar-agenda .agenda-time {
+    padding-right: 20px;
 }
