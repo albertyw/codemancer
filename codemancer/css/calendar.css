@@ -18,6 +18,7 @@
     font-size: 1.8em;
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
 }
-#calendar-agenda td {
-    padding: 0px 20px;
+
+#calendar-agenda .agenda-time {
+    padding-right: 20px;
 }

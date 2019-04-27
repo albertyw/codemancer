@@ -115,7 +115,7 @@ function appendPre(message) {
  */
 function appendAgenda(calEvent) {
   let eventName = util.trimString(calEvent.summary || DEFAULT_EVENT_SUMMARY);
-  const row = '<tr><td>' + formatTime(calEvent) + '</td><td>' + eventName + '</td></tr>';
+  const row = '<tr><td class="agenda-time">' + formatTime(calEvent) + '</td><td class="agenda-name">' + eventName + '</td></tr>';
   calendarAgenda.innerHTML += row;
   calendarAgenda.classList.remove('hidden');
 }
