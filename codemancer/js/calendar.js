@@ -114,11 +114,9 @@ function appendPre(message) {
  * Append data to the calendar table
  */
 function appendAgenda(calEvent) {
-    let eventName = util.trimString(calEvent.summary || DEFAULT_EVENT_SUMMARY);
-    eventName = formatTime(calEvent) + ' - ' + eventName;
-  eventName = formatTime(calEvent) + ' - ' + eventName;
+  let eventName = util.trimString(calEvent.summary || DEFAULT_EVENT_SUMMARY);
   const row = '<tr><td>' + formatTime(calEvent) + '</td><td>' + eventName + '</td></tr>';
-  calendarAgenda.appendChild(row);
+  calendarAgenda.innerHTML += row;
   calendarAgenda.classList.remove('hidden');
 }
 
