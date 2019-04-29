@@ -1,11 +1,12 @@
 #weather-calendar {
     -ms-display: flexbox;
     display: flex;
+    flex-direction: row;
 }
 
 #weather-calendar > span {
     -ms-flex: 1;
-    flex: 1;
+    flex: auto;
     height: 100%;
 }
 
