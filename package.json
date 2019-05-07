@@ -13,7 +13,8 @@
     "eslint": "eslint server bin codemancer/js test",
     "cover": "npm run google && nyc --require dotenv/config --instrument false mochify -R dot --transform envify --transform [ babelify --plugins [ babel-plugin-istanbul ] ]",
     "stylelint": "stylelint codemancer/css/*",
-    "test": "npm run stylelint && npm run eslint && npm run cover"
+    "shellcheck": "git ls-files | grep -F .sh | xargs shellcheck",
+    "test": "npm run stylelint && npm run shellcheck && npm run eslint && npm run cover"
   },
   "repository": {
     "type": "git",
