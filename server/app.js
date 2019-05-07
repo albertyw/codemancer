@@ -43,6 +43,7 @@ function loadTemplateVars() {
     app.locals.templateVars = {
       SEGMENT_TOKEN: process.env.SEGMENT_TOKEN,
       LOGFIT_TOKEN: process.env.LOGFIT_TOKEN,
+      GITHUB_SVG: svgs.github,
       SUNRISESUNSET_SVG: svgs.sunrisesunset,
       TOGGLEDEMO_SVG: svgs.toggledemo,
       CALENDAR_AUTH_SVG: svgs.calendarAuth,
