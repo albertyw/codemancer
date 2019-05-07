@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -exuo pipefail
+IFS=$'\n\t'
+
 # Setup server
 sudo hostnamectl set-hostname "codemancer.com"
 

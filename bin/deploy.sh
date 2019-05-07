@@ -1,7 +1,8 @@
 #!/bin/bash
 # This script will build and deploy a new docker image
 
-set -ex
+set -exuo pipefail
+IFS=$'\n\t'
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 cd "$DIR"/..
