@@ -1,10 +1,13 @@
 #!/bin/bash
 
+set -exuo pipefail
+IFS=$'\n\t'
+
 # Setup server
 sudo hostnamectl set-hostname "codemancer.com"
 
 # Clone repository
-cd ~
+cd ~ || exit 1
 git clone git@github.com:albertyw/codemancer
 
 # Install nginx
@@ -30,4 +33,4 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo apt update
 sudo apt install -y docker-ce
-sudo usermod -aG docker ${USER}
+sudo usermod -aG docker "${USER}"
