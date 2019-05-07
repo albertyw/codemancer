@@ -27,10 +27,11 @@ function getSVGs() {
     };
   }
   const readers = [
-    new Promise(readSVGFile('sunrisesunset.svg', 'sunrisesunset')),
-    new Promise(readSVGFile('toggledemo.svg', 'toggledemo')),
     new Promise(readSVGFile('calendar-plus-o.svg', 'calendarAuth')),
     new Promise(readSVGFile('calendar-minus-o.svg', 'calendarSignout')),
+    new Promise(readSVGFile('github.svg', 'github')),
+    new Promise(readSVGFile('sunrisesunset.svg', 'sunrisesunset')),
+    new Promise(readSVGFile('toggledemo.svg', 'toggledemo')),
   ];
   return Promise.all(readers).then(() => {
     return svgs;
