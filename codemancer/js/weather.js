@@ -63,6 +63,9 @@ const Weather = {
     // Lets only keep what we need.
     const w2 = {};
     w2.city = data.locationDisplayName;
+    if (!util.chainAccessor(data, ['properties', 'periods'])) {
+      throw new Error('No weather forecast periods available');
+    }
     w2.currentTemp = Math.round(util.chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
     w2.minTemp = w2.currentTemp;
     w2.maxTemp = w2.currentTemp;
