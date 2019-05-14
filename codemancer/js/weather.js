@@ -39,18 +39,18 @@ const Weather = {
   },
 
   atLocation: function () {
-    return new Promise((resolve, reject) => {
+    const getWeather = new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open('GET', Weather.urlBuilder(Location.targetLocation));
       xhr.onload = () => resolve(xhr.responseText);
       xhr.onerror = () => reject([new Error('Cannot get weather'), xhr.statusText]);
       xhr.send();
-    }).then((data) => {
-      data = JSON.parse(data);
-      return Location.getDisplayName(Location.targetLocation).then(function(name) {
-        data.locationDisplayName = name;
-        return data;
-      });
+    });
+    const getDisplayName = Location.getDisplayName(Location.targetLocation);
+    return Promise.all([getWeather, getDisplayName]).then((values) => {
+      const data = JSON.parse(values[0]);
+      data.locationDisplayName = values[1];
+      return data;
     }).then(Weather.parse).catch((e) => {
       const message = e[0];
       const data = e[1];
