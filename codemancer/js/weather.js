@@ -43,7 +43,7 @@ const Weather = {
       const xhr = new XMLHttpRequest();
       xhr.open('GET', Weather.urlBuilder(Location.targetLocation));
       xhr.onload = () => resolve(xhr.responseText);
-      xhr.onerror = () => reject(xhr.statusText);
+      xhr.onerror = () => reject([new Error('Cannot get weather'), xhr.statusText]);
       xhr.send();
     }).then((data) => {
       data = JSON.parse(data);
@@ -51,11 +51,10 @@ const Weather = {
         data.locationDisplayName = name;
         return data;
       });
-    }, (error) => {
-      Rollbar.error('Cannot get weather: ' + error);
-      throw error;
-    }).then(Weather.parse).catch((error) => {
-      Rollbar.error(error);
+    }).then(Weather.parse).catch((e) => {
+      const message = e[0];
+      const data = e[1];
+      Rollbar.error(message, data);
     });
   },
 
@@ -64,7 +63,7 @@ const Weather = {
     const w2 = {};
     w2.city = data.locationDisplayName;
     if (!util.chainAccessor(data, ['properties', 'periods'])) {
-      throw new Error('No weather forecast periods available');
+      throw [new Error('No weather forecast periods available'), data];
     }
     w2.currentTemp = Math.round(util.chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
     w2.minTemp = w2.currentTemp;
