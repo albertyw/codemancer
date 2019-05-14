@@ -51,7 +51,12 @@ const Weather = {
         data.locationDisplayName = name;
         return data;
       });
-    }).then(Weather.parse);
+    }, (error) => {
+      Rollbar.error('Cannot get weather: ' + error);
+      throw error;
+    }).then(Weather.parse).catch((error) => {
+      Rollbar.error(error);
+    });
   },
 
   parse: function(data) {
