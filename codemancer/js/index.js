@@ -1,6 +1,7 @@
 require('./rollbar');
 require('./google');
-require('./clock');
+const clock = require('./clock');
+runOnload(clock.start);
 
 const runOnload = require('./util').runOnload;
 const loadWeather = require('./weather').load;

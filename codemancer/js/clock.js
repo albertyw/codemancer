@@ -95,5 +95,7 @@ function style() {
   $main.addClass('light-text');
 }
 
-// Start your engine....
-style();
+module.exports = {
+  Clock: Clock,
+  start: style
+};
