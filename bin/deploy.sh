@@ -16,9 +16,9 @@ git pull
 docker build -t codemancer:production .
 docker network inspect "codemancer" &>/dev/null ||
     docker network create --driver bridge "codemancer"
-docker stop codemancer || echo
+docker stop codemancer || true
 docker container prune --force --filter "until=336h"
-docker container rm codemancer
+docker container rm codemancer || true
 docker run \
     --detach \
     --restart always \
