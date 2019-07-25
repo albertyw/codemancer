@@ -21,6 +21,7 @@ const weatherConditions = [
   ['Rain', '\uf008'],
   ['Heavy Rain', '\uf04e'],
   ['Showers And Thunderstorms', '\uf00e'],
+  ['T-storms', '\uf01e'],
 ];
 const weatherIconConversions = new Map(weatherConditions);
 const descriptors = ['Mostly', 'Partly', 'Slight Chance', 'Chance', 'Likely', 'Isolated', 'Patchy', 'Occasional', 'Very'];
