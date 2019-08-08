@@ -79,7 +79,10 @@ const Weather = {
       const period = data.properties.periods[i];
       const temp = Math.round(util.chainAccessor(period, ['temperature']));
       w2.minTemp = Math.min(w2.minTemp, temp);
-      w2.maxTemp = Math.max(w2.maxTemp, temp);
+      if (temp < 140) {
+        // the API sometimes breaks and returns 140 as a temperature
+        w2.maxTemp = Math.max(w2.maxTemp, temp);
+      }
 
       const condition = period.shortForecast;
       if(w2.conditionSequence[w2.conditionSequence.length-1] != condition) {
