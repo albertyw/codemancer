@@ -35,7 +35,8 @@
     "morgan": "^1.9.1",
     "mustache": "^3.0.1",
     "rollbar": "^2.8.1",
-    "rotating-file-stream": "^1.4.2"
+    "rotating-file-stream": "^1.4.2",
+    "varsnap": "^0.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
