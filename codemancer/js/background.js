@@ -1,4 +1,5 @@
 const util = require('./util');
+const varsnap = require('./varsnap');
 
 const sunRiseSetAPI = 'https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0';
 
@@ -27,7 +28,7 @@ let colorsTimestamp = Object.keys(colors);
 const updateBackgroundColorPeriod = 5 * 60 * 1000;
 let updateBackgroundColorInterval = undefined;
 
-function generateColorsArray(){
+const generateColorsArray = varsnap(function generateColorsArray(){
   const req = new XMLHttpRequest();
   req.open('GET', sunRiseSetAPI);
   req.responseType = 'json';
@@ -49,7 +50,7 @@ function generateColorsArray(){
     updateBackgroundColor();
   };
   req.send();
-}
+});
 
 function parseData(data) {
   data = data.results;
