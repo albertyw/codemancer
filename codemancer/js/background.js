@@ -52,7 +52,7 @@ const generateColorsArray = varsnap(function generateColorsArray(){
   req.send();
 });
 
-function parseData(data) {
+const parseData = varsnap(function parseData(data) {
   data = data.results;
   Object.keys(data).forEach(function(key) {
     if (key !== 'day_length') {
@@ -60,28 +60,28 @@ function parseData(data) {
     }
   });
   return data;
-}
+});
 
-function dateToMinutes(date) {
+const dateToMinutes = varsnap(function dateToMinutes(date) {
   const timestamp = date.getHours() * 60 + date.getMinutes();
   return timestamp;
-}
+});
 
-function componentToHex(c) {
+const componentToHex = varsnap(function componentToHex(c) {
   const hex = c.toString(16);
   return hex.length === 1 ? '0' + hex : hex;
-}
+});
 
-function rgbToHex(r, g, b) {
+const rgbToHex = varsnap(function rgbToHex(r, g, b) {
   return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
+});
 
 function currentTimestamp() {
   const currentDate = util.getMockDate();
   return dateToMinutes(currentDate);
 }
 
-function getCurrentColor(current) {
+const getCurrentColor = varsnap(function getCurrentColor(current) {
   let before = 0;
   let after = 0;
   for (let i=0; i<colorsTimestamp.length; i++) {
@@ -100,7 +100,7 @@ function getCurrentColor(current) {
     currentColor[i] = Math.round(currentColor[i]);
   }
   return rgbToHex(currentColor[0], currentColor[1], currentColor[2]);
-}
+});
 
 function updateBackgroundColor(){
   const current = currentTimestamp();
