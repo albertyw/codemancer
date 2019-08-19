@@ -29,7 +29,7 @@
   "private": true,
   "dependencies": {
     "browserify-middleware": "^8.1.1",
-    "dotenv": "^8.0.0",
+    "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "logfit": "^0.8.0",
     "morgan": "^1.9.1",
@@ -47,7 +47,7 @@
     "chai": "^4.2.0",
     "clean-css-cli": "^4.3.0",
     "envify": "^4.1.0",
-    "eslint": "^6.1.0",
+    "eslint": "^6.2.0",
     "jquery": "^3.4.1",
     "mochify": "^6.4.1",
     "nyc": "^14.1.1",
