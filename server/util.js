@@ -4,6 +4,7 @@ const path = require('path');
 
 const Rollbar = require('../codemancer/js/rollbar');
 const util = require('../codemancer/js/util');
+const varsnap = require('../codemancer/js/varsnap');
 
 function getJSFileName() {
   const head = child_process.execSync('git rev-parse HEAD');
@@ -12,7 +13,7 @@ function getJSFileName() {
   return outputFileName;
 }
 
-function getSVGs() {
+const getSVGs = varsnap(function getSVGs() {
   const svgs = {};
   function readSVGFile(svgFile, svgName) {
     return (resolve, reject) => {
@@ -39,7 +40,7 @@ function getSVGs() {
     Rollbar.error(error);
     return svgs;
   });
-}
+});
 
 module.exports = {
   getJSFileName: getJSFileName,
