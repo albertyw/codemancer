@@ -11,6 +11,6 @@ const outputFile = path.join(__dirname, '..', 'codemancer', 'js', util.getJSFile
 browserify(inputFile, {debug: true})
   .transform('envify')
   .transform('babelify',  {presets: ['@babel/preset-env']})
-  .transform('uglifyify', {compress: true, global: true})
+  .transform('uglifyify', {compress: true, 'keep_fnames': true, global: true})
   .bundle()
   .pipe(fs.createWriteStream(outputFile));
