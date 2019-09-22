@@ -1,3 +1,5 @@
+const varsnap = require('./varsnap');
+
 /**
  *  When called, runOnload will call the onloadFunc when the window is loaded
  */
@@ -46,27 +48,27 @@ function getMockDate() {
  * Return the value after a chain of accessors;
  * returns undefined instead of an exception if the chain is broken
  **/
-function chainAccessor(data, properties) {
+const chainAccessor = varsnap(function chainAccessor(data, properties) {
   let value = data;
   for(let x=0; x<properties.length; x++) {
     value = value && value[properties[x]];
   }
   return value;
-}
+});
 
 /**
  * Trim whitespace around a string
  **/
-function trimString(s) {
+const trimString = varsnap(function trimString(s) {
   return s.replace(/^\s+|\s+$/g, '');
-}
+});
 
 /**
  * Return a copy of the array with only unique items
  **/
-function unique(array) {
+const unique = varsnap(function unique(array) {
   return Array.from(new Set(array));
-}
+});
 
 
 module.exports = {
