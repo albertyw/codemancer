@@ -3,6 +3,7 @@ const $ = require('jquery');
 const Rollbar = require('./rollbar');
 const Location = require('./location');
 const util = require('./util');
+const varsnap = require('./varsnap');
 
 const weatherRefreshInterval = 20 * 60 * 1000;
 // Icons are from https://erikflowers.github.io/weather-icons/
@@ -34,12 +35,12 @@ const Weather = {
     city : $('#city')
   },
 
-  urlBuilder: function(location) {
+  urlBuilder: varsnap(function urlBuilder(location) {
     // Documentation at https://www.weather.gov/documentation/services-web-api#/
     const url = 'https://api.weather.gov/gridpoints/' + location.wfo + '/'
       + location.x + ',' + location.y + '/forecast/hourly';
     return url;
-  },
+  }),
 
   atLocation: function () {
     const getWeather = new Promise((resolve, reject) => {
@@ -61,7 +62,7 @@ const Weather = {
     });
   },
 
-  parse: function(data) {
+  parse: varsnap(function parse(data) {
     // Lets only keep what we need.
     const w2 = {};
     w2.city = data.locationDisplayName;
@@ -94,9 +95,9 @@ const Weather = {
     }
     w2.worstCondition = Weather.worstCondition(w2.conditionSequence);
     return w2;
-  },
+  }),
 
-  worstCondition: function (conditionSequence) {
+  worstCondition: varsnap(function worstCondition(conditionSequence) {
     let worstCondition = conditionSequence[0];
     for (let i=0; i < weatherConditions.length; i++) {
       if(conditionSequence.includes(weatherConditions[i][1])) {
@@ -104,9 +105,9 @@ const Weather = {
       }
     }
     return worstCondition;
-  },
+  }),
 
-  conditionIcon: function (condition){
+  conditionIcon: varsnap(function conditionIcon(condition){
     let weatherIconCode = weatherIconConversions.get(condition);
     if (weatherIconCode !== undefined) {
       return weatherIconCode;
@@ -121,7 +122,7 @@ const Weather = {
     }
     Rollbar.error('cannot find image for "' + condition + '"');
     return '\uf04c';
-  },
+  }),
 
   render: function(wd) {
     // Set Current Information
