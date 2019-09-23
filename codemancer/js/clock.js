@@ -1,6 +1,7 @@
 const $ = require('jquery');
 
 const util = require('./util');
+const varsnap = require('./varsnap');
 
 const Clock = {
   $el : {
@@ -32,20 +33,20 @@ const Clock = {
     };
   },
 
-  prependZero : function(num) {
+  prependZero : varsnap(function preprendZero(num) {
     if(num < 10) {
       return '0' + num;
     }
     return '' + num;
-  },
+  }),
 
-  dateTemplate: function(parts){
+  dateTemplate: varsnap(function dateTemplate(parts){
     return parts.day + ', ' + parts.month + ' ' + parts.date;
-  },
+  }),
 
-  transformTemplate: function(angle){
+  transformTemplate: varsnap(function transformTemplate(angle){
     return 'rotate(' + angle + ',50,50)';
-  },
+  }),
 
   refresh: function() {
     const parts = Clock.timeParts();

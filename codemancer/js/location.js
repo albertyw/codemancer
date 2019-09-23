@@ -1,5 +1,6 @@
 const Rollbar = require('./rollbar');
 const util = require('./util');
+const varsnap = require('./varsnap');
 
 const targetLocation = {
   wfo: 'MTR', x: '88', y: '128',
@@ -11,7 +12,7 @@ const geocodingURL = 'https://maps.googleapis.com/maps/api/geocode/json';
 const Location = {
   targetLocation: targetLocation,
 
-  getDisplayName: function(location) {
+  getDisplayName: function (location) {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       let url = geocodingURL;
@@ -35,7 +36,7 @@ const Location = {
     });
   },
 
-  parseDisplayName: function(data) {
+  parseDisplayName: varsnap(function parseDisplayName(data) {
     const result=data.results[0].address_components;
     const info=[];
     for(let i=0;i<result.length;++i) {
@@ -53,7 +54,7 @@ const Location = {
       locData.pop();
     }
     return locData.join(', ');
-  }
+  })
 };
 
 module.exports = Location;
