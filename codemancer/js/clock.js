@@ -1,7 +1,6 @@
 const $ = require('jquery');
 
 const util = require('./util');
-const varsnap = require('./varsnap');
 
 const Clock = {
   $el : {
