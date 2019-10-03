@@ -44,10 +44,6 @@ const Clock = {
     return parts.day + ', ' + parts.month + ' ' + parts.date;
   },
 
-  transformTemplate: varsnap(function transformTemplate(angle){
-    return 'rotate(' + angle + ',50,50)';
-  }),
-
   refresh: function() {
     const parts = Clock.timeParts();
     const oldParts = Clock._parts || {};
