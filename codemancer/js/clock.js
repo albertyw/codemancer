@@ -33,16 +33,16 @@ const Clock = {
     };
   },
 
-  prependZero : varsnap(function prependZero(num) {
+  prependZero : function prependZero(num) {
     if(num < 10) {
       return '0' + num;
     }
     return '' + num;
-  }),
+  },
 
-  dateTemplate: varsnap(function dateTemplate(parts){
+  dateTemplate: function dateTemplate(parts){
     return parts.day + ', ' + parts.month + ' ' + parts.date;
-  }),
+  },
 
   transformTemplate: varsnap(function transformTemplate(angle){
     return 'rotate(' + angle + ',50,50)';
