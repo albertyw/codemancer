@@ -33,7 +33,7 @@ const Clock = {
     };
   },
 
-  prependZero : varsnap(function preprendZero(num) {
+  prependZero : varsnap(function prependZero(num) {
     if(num < 10) {
       return '0' + num;
     }
