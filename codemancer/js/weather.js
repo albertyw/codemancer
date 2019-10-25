@@ -16,6 +16,7 @@ const weatherConditions = [
   ['Mostly Cloudy', '\uf041'],
   ['Areas Of Fog', '\uf014'],
   ['Fog', '\uf014'],
+  ['Smoke', '\uf062'],
   ['Drizzle', '\uf009'],
   ['Rain Showers', '\uf009'],
   ['Light Rain', '\uf009'],
