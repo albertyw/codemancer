@@ -26,7 +26,17 @@ const weatherConditions = [
   ['T-storms', '\uf01e'],
 ];
 const weatherIconConversions = new Map(weatherConditions);
-const descriptors = ['Mostly', 'Partly', 'Slight Chance', 'Chance', 'Likely', 'Isolated', 'Patchy', 'Occasional', 'Very'];
+const descriptors = [
+  'Mostly',
+  'Partly',
+  'Slight Chance',
+  'Chance',
+  'Likely',
+  'Isolated',
+  'Patchy',
+  'Occasional',
+  'Very',
+];
 const weatherLookForwardHours = 24;
 
 const Weather = {
