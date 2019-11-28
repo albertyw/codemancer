@@ -1,3 +1,4 @@
+const $ = require('jquery');
 const swal = require('sweetalert');
 
 const util = require('./util');
@@ -277,7 +278,7 @@ function parseEvent(calEvent) {
   return calEvent;
 }
 
-util.runOnload(handleClientLoad);
+$(handleClientLoad);
 
 module.exports = {
   isToday: isToday,

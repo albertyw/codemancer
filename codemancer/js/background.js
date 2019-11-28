@@ -1,3 +1,5 @@
+const $ = require('jquery');
+
 const util = require('./util');
 const varsnap = require('./varsnap');
 
@@ -114,7 +116,7 @@ function updateBackgroundColor(){
 }
 
 updateBackgroundColor();
-util.runOnload(generateColorsArray);
+$(generateColorsArray);
 
 module.exports = {
   updateBackgroundColor: updateBackgroundColor,

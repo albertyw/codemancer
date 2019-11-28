@@ -1,25 +1,5 @@
 const varsnap = require('./varsnap');
 
-/**
- *  When called, runOnload will call the onloadFunc when the window is loaded
- */
-function runOnload(onloadFunc) {
-  if(window.attachEvent) {
-    window.attachEvent('onload', onloadFunc);
-  } else {
-    if(window.onload) {
-      const currOnload = window.onload;
-      const newOnload = function(evt) {
-        currOnload(evt);
-        onloadFunc(evt);
-      };
-      window.onload = newOnload;
-    } else {
-      window.onload = onloadFunc;
-    }
-  }
-}
-
 let demoOn = false;
 
 function toggleDemo() {
@@ -72,7 +52,6 @@ const unique = varsnap(function unique(array) {
 
 
 module.exports = {
-  runOnload: runOnload,
   toggleDemo: toggleDemo,
   getMockDate: getMockDate,
   chainAccessor: chainAccessor,

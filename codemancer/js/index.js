@@ -1,11 +1,12 @@
+const $ = require('jquery');
+
 require('./rollbar');
 require('./google');
-const runOnload = require('./util').runOnload;
 const clock = require('./clock');
-runOnload(clock.start);
+$(clock.start);
 
 const loadWeather = require('./weather').load;
-runOnload(loadWeather);
+$(loadWeather);
 
 const demo = require('./demo');
 require('./calendar');
