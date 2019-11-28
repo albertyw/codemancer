@@ -30,6 +30,7 @@ you are allowing cookies for google domains`;
  *  On load, called to load the auth2 library and API client library.
  */
 function handleClientLoad() {
+  require('./google');
   gapi.load('client:auth2', initClient);
 }
 
