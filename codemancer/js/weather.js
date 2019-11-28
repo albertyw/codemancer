@@ -33,6 +33,7 @@ const descriptors = [
   'Chance',
   'Likely',
   'Isolated',
+  'Scattered',
   'Periods Of',
   'Patchy',
   'Occasional',
