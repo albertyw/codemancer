@@ -1,11 +1,5 @@
-const $ = require('jquery');
-
 const varsnap = require('./varsnap');
 
-/**
- *  When called, runOnload will call the onloadFunc when the window is loaded
- */
-const runOnload = $;
 let demoOn = false;
 
 function toggleDemo() {
@@ -58,7 +52,6 @@ const unique = varsnap(function unique(array) {
 
 
 module.exports = {
-  runOnload: runOnload,
   toggleDemo: toggleDemo,
   getMockDate: getMockDate,
   chainAccessor: chainAccessor,
