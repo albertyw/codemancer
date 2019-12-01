@@ -176,7 +176,7 @@ function main() {
   Weather.load().then(function(data) {
     Weather.render(data);
   }, function(error) {
-    Rollbar.error(error);
+    Rollbar.error(error[0], error[1]);
   });
   setInterval(main, weatherRefreshInterval);
 }
