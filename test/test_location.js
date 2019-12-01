@@ -22,6 +22,7 @@ describe('Location.getDisplayName', () => {
     this.xhr.onCreate = (xhr) => {
       this.requests.push(xhr);
     };
+    localStorage.clear();
     sinon.spy(Rollbar, 'error');
   });
   afterEach(() => {
