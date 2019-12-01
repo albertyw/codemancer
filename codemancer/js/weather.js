@@ -70,7 +70,6 @@ const Weather = {
         }
         return reject(error, xhr.statusText);
       };
-      reject([new Error('Cannot get weather'), xhr.statusText]);
       xhr.send();
     });
     const getDisplayName = Location.getDisplayName(Location.targetLocation);
