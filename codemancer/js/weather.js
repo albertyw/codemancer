@@ -2,6 +2,7 @@ const $ = require('jquery');
 
 const Rollbar = require('./rollbar');
 const Location = require('./location');
+const Storage = require('./storage');
 const util = require('./util');
 const varsnap = require('./varsnap');
 
@@ -60,28 +61,42 @@ const Weather = {
       const xhr = new XMLHttpRequest();
       xhr.open('GET', Weather.urlBuilder(Location.targetLocation));
       xhr.onload = () => resolve(xhr.responseText);
-      xhr.onerror = () => reject([new Error('Cannot get weather'), xhr.statusText]);
+      xhr.onerror = () => {
+        const error = 'Cannot get weather';
+        const weatherData = Storage.getWeatherData();
+        if (weatherData !== null) {
+          Rollbar.error(error, xhr.statusText);
+          return resolve(weatherData);
+        }
+        return reject(error, xhr.statusText);
+      };
+      reject([new Error('Cannot get weather'), xhr.statusText]);
       xhr.send();
     });
     const getDisplayName = Location.getDisplayName(Location.targetLocation);
-    return Promise.all([getWeather, getDisplayName]).then((values) => {
-      const data = JSON.parse(values[0]);
-      data.locationDisplayName = values[1];
-      return data;
-    }).then(Weather.parse).catch((e) => {
-      const message = e[0];
-      const data = e[1];
-      Rollbar.error(message, data);
-    });
+    return Promise.all([getWeather, getDisplayName]).
+      then((values) => {
+        const data = JSON.parse(values[0]);
+        data.locationDisplayName = values[1];
+        return data;
+      }).
+      then(Weather.validate).
+      then(Weather.parse);
   },
+
+  validate: varsnap(function validate(data) {
+    if (!util.chainAccessor(data, ['properties', 'periods'])) {
+      Rollbar.error('No weather forecast periods available', data);
+      return Storage.getWeatherData();
+    }
+    Storage.setWeatherData(data);
+    return data;
+  }),
 
   parse: varsnap(function parse(data) {
     // Lets only keep what we need.
     const w2 = {};
     w2.city = data.locationDisplayName;
-    if (!util.chainAccessor(data, ['properties', 'periods'])) {
-      throw [new Error('No weather forecast periods available'), data];
-    }
     w2.currentTemp = Math.round(util.chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
     w2.minTemp = w2.currentTemp;
     w2.maxTemp = w2.currentTemp;
