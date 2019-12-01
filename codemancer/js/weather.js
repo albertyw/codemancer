@@ -81,12 +81,7 @@ const Weather = {
         return data;
       }).
       then(Weather.validate).
-      then(Weather.parse).
-      catch((e) => {
-        const message = e[0];
-        const data = e[1];
-        Rollbar.error(message, data);
-      });
+      then(Weather.parse);
   },
 
   validate: varsnap(function validate(data) {
