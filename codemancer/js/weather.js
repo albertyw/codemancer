@@ -80,6 +80,7 @@ const Weather = {
         data.locationDisplayName = values[1];
         return data;
       }).
+      then(Weather.validate).
       then(Weather.parse).
       catch((e) => {
         const message = e[0];
@@ -88,13 +89,19 @@ const Weather = {
       });
   },
 
+  validate: varsnap(function validate(data) {
+    if (!util.chainAccessor(data, ['properties', 'periods'])) {
+      Rollbar.error('No weather forecast periods available', data);
+      return Storage.getWeatherData();
+    }
+    Storage.setWeatherData(data);
+    return data;
+  }),
+
   parse: varsnap(function parse(data) {
     // Lets only keep what we need.
     const w2 = {};
     w2.city = data.locationDisplayName;
-    if (!util.chainAccessor(data, ['properties', 'periods'])) {
-      throw [new Error('No weather forecast periods available'), data];
-    }
     w2.currentTemp = Math.round(util.chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
     w2.minTemp = w2.currentTemp;
     w2.maxTemp = w2.currentTemp;
@@ -120,7 +127,6 @@ const Weather = {
       w2.conditionSequence[i] = Weather.conditionIcon(w2.conditionSequence[i]);
     }
     w2.worstCondition = Weather.worstCondition(w2.conditionSequence);
-    Storage.setWeatherData(data);
     return w2;
   }),
 
