@@ -74,15 +74,18 @@ const Weather = {
       xhr.send();
     });
     const getDisplayName = Location.getDisplayName(Location.targetLocation);
-    return Promise.all([getWeather, getDisplayName]).then((values) => {
-      const data = JSON.parse(values[0]);
-      data.locationDisplayName = values[1];
-      return data;
-    }).then(Weather.parse).catch((e) => {
-      const message = e[0];
-      const data = e[1];
-      Rollbar.error(message, data);
-    });
+    return Promise.all([getWeather, getDisplayName]).
+      then((values) => {
+        const data = JSON.parse(values[0]);
+        data.locationDisplayName = values[1];
+        return data;
+      }).
+      then(Weather.parse).
+      catch((e) => {
+        const message = e[0];
+        const data = e[1];
+        Rollbar.error(message, data);
+      });
   },
 
   parse: varsnap(function parse(data) {
