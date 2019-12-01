@@ -2,6 +2,7 @@ const $ = require('jquery');
 
 const Rollbar = require('./rollbar');
 const Location = require('./location');
+const Storage = require('./storage');
 const util = require('./util');
 const varsnap = require('./varsnap');
 
@@ -60,7 +61,16 @@ const Weather = {
       const xhr = new XMLHttpRequest();
       xhr.open('GET', Weather.urlBuilder(Location.targetLocation));
       xhr.onload = () => resolve(xhr.responseText);
-      xhr.onerror = () => reject([new Error('Cannot get weather'), xhr.statusText]);
+      xhr.onerror = () => {
+        const error = 'Cannot get weather';
+        const weatherData = Storage.getWeatherData();
+        if (weatherData !== null) {
+          Rollbar.error(error, xhr.statusText);
+          return resolve(weatherData);
+        }
+        return reject(error, xhr.statusText);
+      };
+      reject([new Error('Cannot get weather'), xhr.statusText]);
       xhr.send();
     });
     const getDisplayName = Location.getDisplayName(Location.targetLocation);
@@ -107,6 +117,7 @@ const Weather = {
       w2.conditionSequence[i] = Weather.conditionIcon(w2.conditionSequence[i]);
     }
     w2.worstCondition = Weather.worstCondition(w2.conditionSequence);
+    Storage.setWeatherData(data);
     return w2;
   }),
 
