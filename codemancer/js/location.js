@@ -1,4 +1,5 @@
 const Rollbar = require('./rollbar');
+const Storage = require('./storage');
 const util = require('./util');
 const varsnap = require('./varsnap');
 
@@ -14,6 +15,10 @@ const Location = {
 
   getDisplayName: function (location) {
     return new Promise((resolve, reject) => {
+      const cachedData = Storage.getLocationData();
+      if (cachedData !== null) {
+        return resolve(cachedData);
+      }
       const xhr = new XMLHttpRequest();
       let url = geocodingURL;
       url += '?latlng=' + encodeURIComponent(location.lat + ',' + location.lng);
@@ -23,9 +28,10 @@ const Location = {
       xhr.onload = () => resolve(xhr.responseText);
       xhr.onerror = () => reject(xhr.statusText);
       xhr.send();
-    }).then((data) => {
-      data = JSON.parse(data);
+    }).then((dataString) => {
+      const data = JSON.parse(dataString);
       if (data.status === 'OK') {
+        Storage.setLocationData(dataString);
         return Location.parseDisplayName(data);
       }
       Rollbar.error('Failed to geocode', data);
