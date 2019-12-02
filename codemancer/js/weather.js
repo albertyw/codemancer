@@ -170,13 +170,13 @@ const Weather = {
         return data;
       }).
       then(Weather.validate).
-      then(Weather.parse);
+      then(Weather.parse).
+      then(data => { Weather.render(data); });
   },
 };
 
 function main() {
   Weather.load().
-    then(data => { Weather.render(data); }).
     catch(error => { Rollbar.error(error[0], error[1]); });
   setInterval(main, weatherRefreshInterval);
 }
