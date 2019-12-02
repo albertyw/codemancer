@@ -57,7 +57,7 @@ const Weather = {
     return url;
   }),
 
-  atLocation: function () {
+  getWeather: function () {
     const getWeather = new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.open('GET', Weather.urlBuilder(Location.targetLocation));
@@ -73,15 +73,7 @@ const Weather = {
       };
       xhr.send();
     });
-    const getDisplayName = Location.getDisplayName(Location.targetLocation);
-    return Promise.all([getWeather, getDisplayName]).
-      then((values) => {
-        const data = JSON.parse(values[0]);
-        data.locationDisplayName = values[1];
-        return data;
-      }).
-      then(Weather.validate).
-      then(Weather.parse);
+    return getWeather;
   },
 
   validate: varsnap(function validate(data) {
@@ -169,8 +161,17 @@ const Weather = {
   },
 
   load: function() {
-    return Weather.atLocation();
-  }
+    const getWeather = Weather.getWeather();
+    const getDisplayName = Location.getDisplayName(Location.targetLocation);
+    return Promise.all([getWeather, getDisplayName]).
+      then((values) => {
+        const data = JSON.parse(values[0]);
+        data.locationDisplayName = values[1];
+        return data;
+      }).
+      then(Weather.validate).
+      then(Weather.parse);
+  },
 };
 
 function main() {
