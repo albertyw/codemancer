@@ -8,7 +8,8 @@ const varsnap = require('./varsnap');
 
 const weatherRefreshInterval = 20 * 60 * 1000;
 // Icons are from https://erikflowers.github.io/weather-icons/
-// Conditions are from https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
+// Conditions and Descriptors are from observed responses and from
+// https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
 const weatherConditions = [
   ['Sunny', '\uf00d'],
   ['Clear', '\uf00d'],
