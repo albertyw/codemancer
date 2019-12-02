@@ -69,7 +69,7 @@ const Weather = {
           Rollbar.error(error, xhr.statusText);
           return resolve(weatherData);
         }
-        return reject(error, xhr.statusText);
+        return reject([error, xhr.statusText]);
       };
       xhr.send();
     });
