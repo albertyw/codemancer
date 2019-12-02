@@ -174,11 +174,9 @@ const Weather = {
 };
 
 function main() {
-  Weather.load().then(function(data) {
-    Weather.render(data);
-  }, function(error) {
-    Rollbar.error(error[0], error[1]);
-  });
+  Weather.load().
+    then(data => { Weather.render(data); }).
+    catch(error => { Rollbar.error(error[0], error[1]); });
   setInterval(main, weatherRefreshInterval);
 }
 
