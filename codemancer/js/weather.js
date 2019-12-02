@@ -171,7 +171,7 @@ const Weather = {
       }).
       then(Weather.validate).
       then(Weather.parse).
-      then(data => { Weather.render(data); });
+      then(Weather.render);
   },
 };
 
