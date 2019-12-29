@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # This script will build and deploy a new docker image
 
 set -exuo pipefail
@@ -7,17 +8,24 @@ IFS=$'\n\t'
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 cd "$DIR"/..
 
-# Update repository
-git checkout master
-git fetch -tp
-git pull
+source .env
+
+if [ "$ENV" = "production" ]; then
+    # Update repository
+    git checkout master
+    git fetch -tp
+    git pull
+fi
 
 # Build and start container
-docker build -t codemancer:production .
+docker pull "$(grep FROM Dockerfile | awk '{print $2}')"
+docker build -t "codemancer:$ENV" .
 docker network inspect "codemancer" &>/dev/null ||
     docker network create --driver bridge "codemancer"
 docker stop codemancer || true
-docker container prune --force --filter "until=336h"
+docker container prune --force --filter "until=168h"
+docker image prune --force --filter "until=168h"
+docker volume prune --force
 docker container rm codemancer || true
 docker run \
     --detach \
@@ -25,10 +33,12 @@ docker run \
     --publish 127.0.0.1:5002:5002 \
     --network="codemancer" \
     --mount type=bind,source="$(pwd)"/logs,target=/var/www/app/logs \
-    --name codemancer codemancer:production
+    --name codemancer "codemancer:$ENV"
 
-# Cleanup docker
-docker image prune --force --filter "until=336h"
+if [ "$ENV" = "production" ]; then
+    # Cleanup docker
+    docker image prune --force --filter "until=168h"
 
-# Update nginx
-sudo service nginx reload
+    # Update nginx
+    sudo service nginx reload
+fi

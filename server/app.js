@@ -60,7 +60,7 @@ app.get('/', (req, res) => {
 app.use('/css', express.static(path.join(__dirname, '..', 'codemancer', 'css')));
 app.use('/font', express.static(path.join(__dirname, '..', 'codemancer', 'font')));
 app.use('/img', express.static(path.join(__dirname, '..', 'codemancer', 'img')));
-if (process.env.ENVIRONMENT == 'development') {
+if (process.env.ENV == 'development') {
   const browserifyOptions = {
     transform: ['envify']
   };
