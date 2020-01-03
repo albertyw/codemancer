@@ -16,7 +16,7 @@ const app = express();
 // Set up logging
 app.use(morgan('combined'));
 const accessLogStream = rfs.createStream('access.log', {
-  interval: '1d',
+  interval: '1w',
   path: path.join(__dirname, '..', 'logs', 'app')
 });
 app.use(morgan('combined', {stream: accessLogStream }));
