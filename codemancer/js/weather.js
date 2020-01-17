@@ -78,10 +78,13 @@ const Weather = {
 
   validate: varsnap(function validate(data) {
     if (!util.chainAccessor(data, ['properties', 'periods'])) {
-      Rollbar.error('No weather forecast periods available', data);
-      return Storage.getWeatherData();
+      data = Storage.getWeatherData();
+      if(data === null) {
+        Rollbar.error('No weather forecast periods available', data);
+      }
+    } else {
+      Storage.setWeatherData(data);
     }
-    Storage.setWeatherData(data);
     return data;
   }),
 
