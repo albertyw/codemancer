@@ -64,4 +64,48 @@ server {
         expires           7d;
         add_header        Cache-Control "public";
     }
+
+    location /css {
+        include           sites-enabled/codemancer-headers;
+        alias             /home/albertyw/codemancer/codemancer/css/;
+        expires           7d;
+        add_header       'Access-Control-Allow-Origin'   'https://www.codemancer.com';
+        add_header       'Access-Control-Allow-Methods'  'GET, HEAD, OPTIONS';
+        add_header       'Access-Control-Allow-Headers'  'range';
+        add_header       'Access-Control-Expose-Headers' 'content-length';
+        add_header       'Access-Control-Max-Age'        '604800';
+    }
+
+    location /font {
+        include           sites-enabled/codemancer-headers;
+        alias             /home/albertyw/codemancer/codemancer/font/;
+        expires           7d;
+        add_header       'Access-Control-Allow-Origin'   'https://www.codemancer.com';
+        add_header       'Access-Control-Allow-Methods'  'GET, HEAD, OPTIONS';
+        add_header       'Access-Control-Allow-Headers'  'range';
+        add_header       'Access-Control-Expose-Headers' 'content-length';
+        add_header       'Access-Control-Max-Age'        '604800';
+    }
+
+    location /img {
+        include           sites-enabled/codemancer-headers;
+        alias             /home/albertyw/codemancer/codemancer/img/;
+        expires           7d;
+        add_header       'Access-Control-Allow-Origin'   'https://www.codemancer.com';
+        add_header       'Access-Control-Allow-Methods'  'GET, HEAD, OPTIONS';
+        add_header       'Access-Control-Allow-Headers'  'range';
+        add_header       'Access-Control-Expose-Headers' 'content-length';
+        add_header       'Access-Control-Max-Age'        '604800';
+    }
+
+    location /js {
+        include           sites-enabled/codemancer-headers;
+        alias             /home/albertyw/codemancer/codemancer/js/;
+        expires           7d;
+        add_header       'Access-Control-Allow-Origin'   'https://www.codemancer.com';
+        add_header       'Access-Control-Allow-Methods'  'GET, HEAD, OPTIONS';
+        add_header       'Access-Control-Allow-Headers'  'range';
+        add_header       'Access-Control-Expose-Headers' 'content-length';
+        add_header       'Access-Control-Max-Age'        '604800';
+    }
 }
