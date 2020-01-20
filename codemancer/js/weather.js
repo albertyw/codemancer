@@ -2,7 +2,6 @@ const $ = require('jquery');
 
 const Rollbar = require('./rollbar');
 const Location = require('./location');
-const Storage = require('./storage');
 const util = require('./util');
 const varsnap = require('./varsnap');
 
@@ -63,12 +62,6 @@ const Weather = {
       const url = Weather.urlBuilder(Location.targetLocation);
       function onError(statusText) {
         const error = 'Cannot get weather';
-        const weatherDataString = Storage.getWeatherData();
-        if (weatherDataString !== null) {
-          const weatherData = JSON.parse(weatherDataString);
-          Rollbar.error(error, statusText);
-          return resolve(weatherData);
-        }
         return reject([error, statusText]);
       }
       util.request(url, resolve, onError, weatherExpiration);
@@ -78,15 +71,7 @@ const Weather = {
 
   validate: varsnap(function validate(data) {
     if (!util.chainAccessor(data, ['properties', 'periods'])) {
-      const weatherDataString = Storage.getWeatherData();
-      if(weatherDataString === null) {
-        Rollbar.error('No weather forecast periods available', data);
-      } else {
-        data = JSON.parse(weatherDataString);
-      }
-    } else {
-      const dataString = JSON.stringify(data);
-      Storage.setWeatherData(dataString);
+      Rollbar.error('No weather forecast periods available', data);
     }
     return data;
   }),

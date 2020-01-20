@@ -1,17 +1,6 @@
 const localStorage = window.localStorage;
 
-const weatherKey = 'weather';
-const weatherExpiration = 3 * 60 * 60 * 1000; // 3 hours
-
 const Storage = {
-  setWeatherData: function setWeatherData(data) {
-    return Storage.setExpirableData(weatherKey, data);
-  },
-
-  getWeatherData: function getWeatherData() {
-    return Storage.getExpirableData(weatherKey, weatherExpiration);
-  },
-
   setExpirableData: function setExpirableData(key, value) {
     localStorage.setItem(key, value);
     const expireKey = Storage.expireKey(key);
