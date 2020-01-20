@@ -48,7 +48,7 @@ const generateColorsArray = varsnap(function generateColorsArray(){
     colors[sunset + 120] = fullNight;
     colorsTimestamp = Object.keys(colors);
     updateBackgroundColor();
-  };
+  }
   util.request(sunRiseSetAPI, sunRiseSetReady, undefined, sunRiseSetExpiration);
 });
 

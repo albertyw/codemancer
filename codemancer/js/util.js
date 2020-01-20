@@ -62,18 +62,18 @@ const request = function request(url, onLoad, onError, cacheExpirationDuration) 
     Storage.setExpirableData(url, xhr.responseText);
     const response = JSON.parse(xhr.responseText);
     return onLoad(response);
-  }
+  };
   xhr.onerror = () => {
     const responseText = Storage.getExpirableData(url, cacheExpirationDuration);
     if (responseText === null) {
       return onError(xhr.statusText);
     }
-    rollbarClient.error('Error when making request', url, xhr.statusText);
+    Rollbar.error('Error when making request', url, xhr.statusText);
     const response = JSON.parse(responseText);
     return onLoad(response);
-  }
+  };
   xhr.send();
-}
+};
 
 module.exports = {
   toggleDemo: toggleDemo,

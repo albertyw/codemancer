@@ -70,7 +70,7 @@ const Weather = {
           return resolve(weatherData);
         }
         return reject([error, statusText]);
-      };
+      }
       util.request(url, resolve, onError, weatherExpiration);
     });
     return getWeather;
