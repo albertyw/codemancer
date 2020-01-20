@@ -19,15 +19,11 @@ const Location = {
       if (cachedData !== null) {
         return resolve(cachedData);
       }
-      const xhr = new XMLHttpRequest();
       let url = geocodingURL;
       url += '?latlng=' + encodeURIComponent(location.lat + ',' + location.lng);
       url += '&sensor=false';
       url += '&key=' + encodeURIComponent(geocodingAPIKey);
-      xhr.open('GET', url);
-      xhr.onload = () => resolve(xhr.responseText);
-      xhr.onerror = () => reject(xhr.statusText);
-      xhr.send();
+      util.request(url, resolve, reject);
     }).then((dataString) => {
       const data = JSON.parse(dataString);
       if (data.status === 'OK') {
