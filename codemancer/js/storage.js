@@ -1,19 +1,9 @@
 const localStorage = window.localStorage;
 
-const locationKey = 'location';
-const locationExpiration = 24 * 60 * 60 * 1000; // 1 day
 const weatherKey = 'weather';
 const weatherExpiration = 3 * 60 * 60 * 1000; // 3 hours
 
 const Storage = {
-  setLocationData: function setLocationData(data) {
-    return Storage.setExpirableData(locationKey, data);
-  },
-
-  getLocationData: function getLocationData() {
-    return Storage.getExpirableData(locationKey, locationExpiration);
-  },
-
   setWeatherData: function setWeatherData(data) {
     return Storage.setExpirableData(weatherKey, data);
   },
