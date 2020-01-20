@@ -4,8 +4,11 @@ const locationKey = 'location';
 const locationExpiration = 24 * 60 * 60 * 1000; // 1 day
 const weatherKey = 'weather';
 const weatherExpiration = 3 * 60 * 60 * 1000; // 3 hours
+const defaultExpiration = weatherExpiration;
 
 const Storage = {
+  defaultExpiration: defaultExpiration,
+
   setLocationData: function setLocationData(data) {
     return Storage.setExpirableData(locationKey, data);
   },

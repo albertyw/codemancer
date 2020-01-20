@@ -1,3 +1,4 @@
+const Storage = require('./storage');
 const varsnap = require('./varsnap');
 
 let demoOn = false;
@@ -51,13 +52,22 @@ const unique = varsnap(function unique(array) {
 });
 
 /**
- * Wrapper around XMLHttpRequest
+ * Wrapper around XMLHttpRequest that caches responses
  **/
 const request = function request(url, onLoad, onError) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url);
-  xhr.onload = () => onLoad(xhr.responseText);
-  xhr.onerror = () => onError(xhr.statusText);
+  xhr.onload = () => {
+    Storage.setExpirableData(url, xhr.responseText);
+    onLoad(xhr.responseText);
+  }
+  xhr.onerror = () => {
+    const responseText = Storage.getExpirableData(url, Storage.defaultExpiration);
+    if (responseText === null) {
+      return onError(xhr.statusText);
+    }
+    return onLoad(responseText);
+  }
   xhr.send();
 }
 
