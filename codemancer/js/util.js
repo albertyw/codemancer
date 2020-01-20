@@ -1,3 +1,4 @@
+const Rollbar = require('./rollbar');
 const Storage = require('./storage');
 const varsnap = require('./varsnap');
 
@@ -67,6 +68,7 @@ const request = function request(url, onLoad, onError) {
     if (responseText === null) {
       return onError(xhr.statusText);
     }
+    rollbarClient.error('Error when making request', url, xhr.statusText);
     const response = JSON.parse(responseText);
     return onLoad(response);
   }
