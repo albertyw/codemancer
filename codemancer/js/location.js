@@ -1,5 +1,4 @@
 const Rollbar = require('./rollbar');
-const Storage = require('./storage');
 const util = require('./util');
 const varsnap = require('./varsnap');
 
@@ -9,29 +8,20 @@ const targetLocation = {
 };
 const geocodingAPIKey = process.env.GEOCODING_API_KEY;
 const geocodingURL = 'https://maps.googleapis.com/maps/api/geocode/json';
+const locationExpiration = 24 * 60 * 60 * 1000;
 
 const Location = {
   targetLocation: targetLocation,
 
   getDisplayName: function (location) {
     return new Promise((resolve, reject) => {
-      const cachedData = Storage.getLocationData();
-      if (cachedData !== null) {
-        return resolve(cachedData);
-      }
-      const xhr = new XMLHttpRequest();
       let url = geocodingURL;
       url += '?latlng=' + encodeURIComponent(location.lat + ',' + location.lng);
       url += '&sensor=false';
       url += '&key=' + encodeURIComponent(geocodingAPIKey);
-      xhr.open('GET', url);
-      xhr.onload = () => resolve(xhr.responseText);
-      xhr.onerror = () => reject(xhr.statusText);
-      xhr.send();
-    }).then((dataString) => {
-      const data = JSON.parse(dataString);
+      util.request(url, resolve, reject, locationExpiration);
+    }).then((data) => {
       if (data.status === 'OK') {
-        Storage.setLocationData(dataString);
         return Location.parseDisplayName(data);
       }
       Rollbar.error('Failed to geocode', data);

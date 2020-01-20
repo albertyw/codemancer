@@ -2,10 +2,10 @@ const $ = require('jquery');
 
 const Rollbar = require('./rollbar');
 const Location = require('./location');
-const Storage = require('./storage');
 const util = require('./util');
 const varsnap = require('./varsnap');
 
+const weatherExpiration = 3 * 60 * 60 * 1000;
 const weatherRefreshInterval = 20 * 60 * 1000;
 // Icons are from https://erikflowers.github.io/weather-icons/
 // Conditions and Descriptors are from observed responses and from
@@ -59,35 +59,19 @@ const Weather = {
 
   getWeather: function () {
     const getWeather = new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', Weather.urlBuilder(Location.targetLocation));
-      xhr.onload = () => resolve(xhr.responseText);
-      xhr.onerror = () => {
+      const url = Weather.urlBuilder(Location.targetLocation);
+      function onError(statusText) {
         const error = 'Cannot get weather';
-        const weatherDataString = Storage.getWeatherData();
-        if (weatherDataString !== null) {
-          const weatherData = JSON.parse(weatherDataString);
-          Rollbar.error(error, xhr.statusText);
-          return resolve(weatherData);
-        }
-        return reject([error, xhr.statusText]);
-      };
-      xhr.send();
+        return reject([error, statusText]);
+      }
+      util.request(url, resolve, onError, weatherExpiration);
     });
     return getWeather;
   },
 
   validate: varsnap(function validate(data) {
     if (!util.chainAccessor(data, ['properties', 'periods'])) {
-      const weatherDataString = Storage.getWeatherData();
-      if(weatherDataString === null) {
-        Rollbar.error('No weather forecast periods available', data);
-      } else {
-        data = JSON.parse(weatherDataString);
-      }
-    } else {
-      const dataString = JSON.stringify(data);
-      Storage.setWeatherData(dataString);
+      Rollbar.error('No weather forecast periods available', data);
     }
     return data;
   }),
@@ -172,7 +156,7 @@ const Weather = {
     const getDisplayName = Location.getDisplayName(Location.targetLocation);
     return Promise.all([getWeather, getDisplayName]).
       then((values) => {
-        const data = JSON.parse(values[0]);
+        const data = values[0];
         data.locationDisplayName = values[1];
         return data;
       }).

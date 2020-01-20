@@ -1,3 +1,5 @@
+const Rollbar = require('./rollbar');
+const Storage = require('./storage');
 const varsnap = require('./varsnap');
 
 let demoOn = false;
@@ -50,6 +52,34 @@ const unique = varsnap(function unique(array) {
   return Array.from(new Set(array));
 });
 
+/**
+ * Wrapper around XMLHttpRequest that caches responses
+ **/
+const request = function request(url, onLoad, onError, cacheExpirationDuration) {
+  const responseText = Storage.getExpirableData(url, cacheExpirationDuration/2, false);
+  if(responseText !== null) {
+    const response = JSON.parse(responseText);
+    return onLoad(response);
+  }
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.onload = () => {
+    Storage.setExpirableData(url, xhr.responseText);
+    const response = JSON.parse(xhr.responseText);
+    return onLoad(response);
+  };
+  xhr.onerror = () => {
+    const responseText = Storage.getExpirableData(url, cacheExpirationDuration, true);
+    if (responseText === null) {
+      return onError(xhr.statusText);
+    }
+    Rollbar.error('Error when making request', url, xhr.statusText);
+    const response = JSON.parse(responseText);
+    return onLoad(response);
+  };
+  xhr.send();
+};
 
 module.exports = {
   toggleDemo: toggleDemo,
@@ -57,4 +87,5 @@ module.exports = {
   chainAccessor: chainAccessor,
   trimString: trimString,
   unique: unique,
+  request: request,
 };
