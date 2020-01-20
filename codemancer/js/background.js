@@ -31,8 +31,8 @@ const updateBackgroundColorPeriod = 5 * 60 * 1000;
 let updateBackgroundColorInterval = undefined;
 
 const generateColorsArray = varsnap(function generateColorsArray(){
-  function sunRiseSetReady(dataString) {
-    const data = parseData(dataString);
+  function sunRiseSetReady(xhrData) {
+    const data = parseData(xhrData);
     const sunrise = dateToMinutes(data['sunrise']);
     const sunset = dateToMinutes(data['sunset']);
     colors[sunrise - 120] = fullNight;
@@ -51,8 +51,7 @@ const generateColorsArray = varsnap(function generateColorsArray(){
   util.request(sunRiseSetAPI, sunRiseSetReady);
 });
 
-const parseData = varsnap(function parseData(dataString) {
-  let data = JSON.parse(dataString);
+const parseData = varsnap(function parseData(data) {
   data = data.results;
   Object.keys(data).forEach(function(key) {
     if (key !== 'day_length') {

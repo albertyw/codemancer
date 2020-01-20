@@ -170,7 +170,7 @@ const Weather = {
     const getDisplayName = Location.getDisplayName(Location.targetLocation);
     return Promise.all([getWeather, getDisplayName]).
       then((values) => {
-        const data = JSON.parse(values[0]);
+        const data = values[0];
         data.locationDisplayName = values[1];
         return data;
       }).

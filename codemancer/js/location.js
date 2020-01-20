@@ -15,8 +15,9 @@ const Location = {
 
   getDisplayName: function (location) {
     return new Promise((resolve, reject) => {
-      const cachedData = Storage.getLocationData();
-      if (cachedData !== null) {
+      const cachedDataString = Storage.getLocationData();
+      if (cachedDataString !== null) {
+        const cachedData = JSON.parse(cachedDataString);
         return resolve(cachedData);
       }
       let url = geocodingURL;
@@ -24,9 +25,9 @@ const Location = {
       url += '&sensor=false';
       url += '&key=' + encodeURIComponent(geocodingAPIKey);
       util.request(url, resolve, reject);
-    }).then((dataString) => {
-      const data = JSON.parse(dataString);
+    }).then((data) => {
       if (data.status === 'OK') {
+        const dataString = JSON.stringify(data);
         Storage.setLocationData(dataString);
         return Location.parseDisplayName(data);
       }

@@ -59,14 +59,16 @@ const request = function request(url, onLoad, onError) {
   xhr.open('GET', url);
   xhr.onload = () => {
     Storage.setExpirableData(url, xhr.responseText);
-    onLoad(xhr.responseText);
+    const response = JSON.parse(xhr.responseText);
+    return onLoad(response);
   }
   xhr.onerror = () => {
     const responseText = Storage.getExpirableData(url, Storage.defaultExpiration);
     if (responseText === null) {
       return onError(xhr.statusText);
     }
-    return onLoad(responseText);
+    const response = JSON.parse(responseText);
+    return onLoad(response);
   }
   xhr.send();
 }
