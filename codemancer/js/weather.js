@@ -59,20 +59,18 @@ const Weather = {
 
   getWeather: function () {
     const getWeather = new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', Weather.urlBuilder(Location.targetLocation));
-      xhr.onload = () => resolve(xhr.responseText);
-      xhr.onerror = () => {
+      const url = Weather.urlBuilder(Location.targetLocation);
+      function onError(statusText) {
         const error = 'Cannot get weather';
         const weatherDataString = Storage.getWeatherData();
         if (weatherDataString !== null) {
           const weatherData = JSON.parse(weatherDataString);
-          Rollbar.error(error, xhr.statusText);
+          Rollbar.error(error, statusText);
           return resolve(weatherData);
         }
-        return reject([error, xhr.statusText]);
+        return reject([error, statusText]);
       };
-      xhr.send();
+      util.request(url, resolve, onError);
     });
     return getWeather;
   },
