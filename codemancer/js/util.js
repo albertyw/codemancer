@@ -64,7 +64,7 @@ const request = function request(url, onLoad, onError, cacheExpirationDuration) 
     return onLoad(response);
   };
   xhr.onerror = () => {
-    const responseText = Storage.getExpirableData(url, cacheExpirationDuration);
+    const responseText = Storage.getExpirableData(url, cacheExpirationDuration, true);
     if (responseText === null) {
       return onError(xhr.statusText);
     }
