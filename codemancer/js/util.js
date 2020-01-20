@@ -56,6 +56,12 @@ const unique = varsnap(function unique(array) {
  * Wrapper around XMLHttpRequest that caches responses
  **/
 const request = function request(url, onLoad, onError, cacheExpirationDuration) {
+  const responseText = Storage.getExpirableData(url, cacheExpirationDuration/2, false);
+  if(responseText !== null) {
+    const response = JSON.parse(responseText);
+    return onLoad(response);
+  }
+
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url);
   xhr.onload = () => {
