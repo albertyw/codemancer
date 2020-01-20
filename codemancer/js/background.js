@@ -4,6 +4,7 @@ const util = require('./util');
 const varsnap = require('./varsnap');
 
 const sunRiseSetAPI = 'https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0';
+const sunRiseSetExpiration = 24 * 60 * 60 * 1000;
 
 const fullNight = [0, 0, 0];
 const fullDay = [0, 204, 255];
@@ -48,7 +49,7 @@ const generateColorsArray = varsnap(function generateColorsArray(){
     colorsTimestamp = Object.keys(colors);
     updateBackgroundColor();
   };
-  util.request(sunRiseSetAPI, sunRiseSetReady);
+  util.request(sunRiseSetAPI, sunRiseSetReady, undefined, sunRiseSetExpiration);
 });
 
 const parseData = varsnap(function parseData(data) {

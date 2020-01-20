@@ -6,6 +6,7 @@ const Storage = require('./storage');
 const util = require('./util');
 const varsnap = require('./varsnap');
 
+const weatherExpiration = 3 * 60 * 60 * 1000;
 const weatherRefreshInterval = 20 * 60 * 1000;
 // Icons are from https://erikflowers.github.io/weather-icons/
 // Conditions and Descriptors are from observed responses and from
@@ -70,7 +71,7 @@ const Weather = {
         }
         return reject([error, statusText]);
       };
-      util.request(url, resolve, onError);
+      util.request(url, resolve, onError, weatherExpiration);
     });
     return getWeather;
   },

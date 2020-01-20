@@ -9,6 +9,7 @@ const targetLocation = {
 };
 const geocodingAPIKey = process.env.GEOCODING_API_KEY;
 const geocodingURL = 'https://maps.googleapis.com/maps/api/geocode/json';
+const locationExpiration = 24 * 60 * 60 * 1000;
 
 const Location = {
   targetLocation: targetLocation,
@@ -24,7 +25,7 @@ const Location = {
       url += '?latlng=' + encodeURIComponent(location.lat + ',' + location.lng);
       url += '&sensor=false';
       url += '&key=' + encodeURIComponent(geocodingAPIKey);
-      util.request(url, resolve, reject);
+      util.request(url, resolve, reject, locationExpiration);
     }).then((data) => {
       if (data.status === 'OK') {
         const dataString = JSON.stringify(data);
