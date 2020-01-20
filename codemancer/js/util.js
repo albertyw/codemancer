@@ -50,6 +50,16 @@ const unique = varsnap(function unique(array) {
   return Array.from(new Set(array));
 });
 
+/**
+ * Wrapper around XMLHttpRequest
+ **/
+const request = function request(url, onLoad, onError) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.onload = () => onLoad(xhr.responseText);
+  xhr.onerror = () => onError(xhr.statusText);
+  xhr.send();
+}
 
 module.exports = {
   toggleDemo: toggleDemo,
@@ -57,4 +67,5 @@ module.exports = {
   chainAccessor: chainAccessor,
   trimString: trimString,
   unique: unique,
+  request: request,
 };
