@@ -1,4 +1,13 @@
-const localStorage = window.localStorage;
+let localStorage = undefined;
+if(typeof window === 'undefined') {
+  localStorage = {
+    setItem: function setItem() {},
+    getItem: function getItem() { return null; },
+    removeItem: function removeItem() {},
+  };
+} else {
+  localStorage = window.localStorage;
+}
 
 const Storage = {
   setExpirableData: function setExpirableData(key, value) {
