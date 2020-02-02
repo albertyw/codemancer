@@ -168,7 +168,7 @@ const Weather = {
 
 function main() {
   Weather.load().
-    catch(error => { Rollbar.error(error[0], error[1]); });
+    catch(error => { Rollbar.error(error); });
   setInterval(main, weatherRefreshInterval);
 }
 
