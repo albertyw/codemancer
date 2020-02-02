@@ -1,3 +1,5 @@
+const $ = require('jquery');
+
 const Rollbar = require('./rollbar');
 const util = require('./util');
 const varsnap = require('./varsnap');
@@ -12,6 +14,7 @@ const locationExpiration = 24 * 60 * 60 * 1000;
 
 const Location = {
   targetLocation: targetLocation,
+  cityElement: $('#city'),
 
   getDisplayName: function (location) {
     return new Promise((resolve, reject) => {
@@ -50,7 +53,16 @@ const Location = {
       locData.pop();
     }
     return locData.join(', ');
-  })
+  }),
+
+  renderLocation: function (cityName) {
+    Location.cityElement.html(cityName).show();
+  },
+
+  showLocation: function() {
+    Location.getDisplayName(Location.targetLocation).
+      then(Location.renderLocation);
+  },
 };
 
 module.exports = {
