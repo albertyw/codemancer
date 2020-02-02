@@ -1,7 +1,7 @@
 const $ = require('jquery');
 
 const Rollbar = require('./rollbar');
-const Location = require('./location');
+const Location = require('./location').Location;
 const util = require('./util');
 const varsnap = require('./varsnap');
 
