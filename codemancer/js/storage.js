@@ -21,9 +21,12 @@ const Storage = {
     const expireKey = Storage.expireKey(key);
     const timestampString = localStorage.getItem(expireKey);
     const timestamp = parseInt(timestampString, 10);
-    if (timestamp + expirationDuration < Date.now() && removeExpired) {
-      localStorage.removeItem(key);
-      localStorage.removeItem(expireKey);
+    if (timestamp + expirationDuration < Date.now()) {
+      if (removeExpired) {
+        localStorage.removeItem(key);
+        localStorage.removeItem(expireKey);
+      }
+      return null;
     }
     const data = localStorage.getItem(key);
     return data;
