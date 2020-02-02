@@ -16,12 +16,17 @@ const Location = {
   targetLocation: targetLocation,
   cityElement: $('#city'),
 
+  urlBuilder: varsnap(function urlBuilder(location) {
+    let url = geocodingURL;
+    url += '?latlng=' + encodeURIComponent(location.lat + ',' + location.lng);
+    url += '&sensor=false';
+    url += '&key=' + encodeURIComponent(geocodingAPIKey);
+    return url;
+  }),
+
   getDisplayName: function (location) {
     return new Promise((resolve, reject) => {
-      let url = geocodingURL;
-      url += '?latlng=' + encodeURIComponent(location.lat + ',' + location.lng);
-      url += '&sensor=false';
-      url += '&key=' + encodeURIComponent(geocodingAPIKey);
+      const url = Location.urlBuilder(location);
       util.request(url, resolve, reject, locationExpiration);
     }).then((data) => {
       if (data.status === 'OK') {
