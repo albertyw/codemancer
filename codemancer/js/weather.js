@@ -1,7 +1,7 @@
 const $ = require('jquery');
 
 const Rollbar = require('./rollbar');
-const Location = require('./location');
+const Location = require('./location').Location;
 const util = require('./util');
 const varsnap = require('./varsnap');
 
@@ -79,7 +79,6 @@ const Weather = {
   parse: varsnap(function parse(data) {
     // Lets only keep what we need.
     const w2 = {};
-    w2.city = data.locationDisplayName;
     w2.currentTemp = Math.round(util.chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
     w2.minTemp = w2.currentTemp;
     w2.maxTemp = w2.currentTemp;
@@ -138,7 +137,6 @@ const Weather = {
   render: function(wd) {
     // Set Current Information
     Weather.renderDay(Weather.$el.now, wd);
-    Weather.$el.city.html(wd.city).show();
 
     // Show Weather
     $('#weather-inner').removeClass('hidden').show();
@@ -153,13 +151,7 @@ const Weather = {
 
   load: function() {
     const getWeather = Weather.getWeather();
-    const getDisplayName = Location.getDisplayName(Location.targetLocation);
-    return Promise.all([getWeather, getDisplayName]).
-      then((values) => {
-        const data = values[0];
-        data.locationDisplayName = values[1];
-        return data;
-      }).
+    return getWeather.
       then(Weather.validate).
       then(Weather.parse).
       then(Weather.render);
@@ -168,7 +160,7 @@ const Weather = {
 
 function main() {
   Weather.load().
-    catch(error => { Rollbar.error(error[0], error[1]); });
+    catch(error => { Rollbar.error(error); });
   setInterval(main, weatherRefreshInterval);
 }
 
