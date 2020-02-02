@@ -3,7 +3,7 @@ const sinon = require('sinon');
 
 const Rollbar = require('../codemancer/js/rollbar');
 const weather = require('../codemancer/js/weather');
-const Location = require('../codemancer/js/location');
+const Location = require('../codemancer/js/location').Location;
 const weatherFixture = require('./weather_fixture.json');
 
 describe('Weather.urlBuilder', () => {

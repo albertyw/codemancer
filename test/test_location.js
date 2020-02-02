@@ -1,7 +1,7 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
 
-const Location = require('../codemancer/js/location');
+const Location = require('../codemancer/js/location').Location;
 const Rollbar = require('../codemancer/js/rollbar');
 const locationData = require('./map_fixture.json');
 
