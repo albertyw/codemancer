@@ -65,6 +65,11 @@ const Location = {
   },
 };
 
+function load() {
+  Location.showLocation();
+}
+
 module.exports = {
   Location: Location,
+  load: load,
 };
