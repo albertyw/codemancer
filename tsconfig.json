@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "outDir": "./server/built",
+        "allowJs": true,
+        "target": "es6"
+    },
+    "include": [
+        "./server/*.js"
+    ]
+}
