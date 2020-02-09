@@ -1,15 +1,15 @@
-const browserifyMiddleware = require('browserify-middleware');
-const console = require('console');
-const express = require('express');
-const fs = require('fs');
-const morgan = require('morgan');
-const mustache = require('mustache');
-const path = require('path');
-const rfs = require('rotating-file-stream');
+import browserifyMiddleware = require('browserify-middleware');
+import console = require('console');
+import express = require('express');
+import fs = require('fs');
+import morgan = require('morgan');
+import mustache = require('mustache');
+import path = require('path');
+import rfs = require('rotating-file-stream');
 
 require('dotenv').config({path: path.join(__dirname, '..', '.env')});
-const Rollbar = require('../codemancer/js/rollbar');
-const util = require('./util');
+import Rollbar = require('../codemancer/js/rollbar');
+import util = require('./util');
 
 const app = express();
 
