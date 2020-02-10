@@ -1,6 +1,6 @@
 const varsnap = require('varsnap');
 
 require('../codemancer/js/background');
-require('../server/util');
+// require('../server/util');
 
 varsnap.TestCase();

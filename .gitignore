@@ -60,6 +60,9 @@ typings/
 # Chrome extension ignores
 *.crx
 
+# Typescript output
+built
+
 # Project files
 codemancer/version
 

@@ -1,15 +1,17 @@
-const browserifyMiddleware = require('browserify-middleware');
-const console = require('console');
-const express = require('express');
-const fs = require('fs');
-const morgan = require('morgan');
-const mustache = require('mustache');
-const path = require('path');
-const rfs = require('rotating-file-stream');
+import appRootPath = require('app-root-path');
+import browserifyMiddleware = require('browserify-middleware');
+import console = require('console');
+import express = require('express');
+import fs = require('fs');
+import morgan = require('morgan');
+import mustache = require('mustache');
+import path = require('path');
+import rfs = require('rotating-file-stream');
 
-require('dotenv').config({path: path.join(__dirname, '..', '.env')});
-const Rollbar = require('../codemancer/js/rollbar');
-const util = require('./util');
+const appRoot = appRootPath.toString();
+require('dotenv').config({path: path.join(appRoot, '.env')});
+import Rollbar = require('../codemancer/js/rollbar');
+import util = require('./util');
 
 const app = express();
 
@@ -17,7 +19,7 @@ const app = express();
 app.use(morgan('combined'));
 const accessLogStream = rfs.createStream('access.log', {
   interval: '7d',
-  path: path.join(__dirname, '..', 'logs', 'app')
+  path: path.join(appRoot, 'logs', 'app')
 });
 app.use(morgan('combined', {stream: accessLogStream }));
 app.use(Rollbar.errorHandler());
@@ -27,13 +29,13 @@ app.use(Rollbar.errorHandler());
 app.engine('html', function (filePath, options, callback) {
   fs.readFile(filePath, function (err, content) {
     if(err) {
-      return callback(err);
+      return callback(err, "");
     }
     const rendered = mustache.render(content.toString(), options);
     return callback(null, rendered);
   });
 });
-app.set('views', path.join(__dirname, '..', 'codemancer'));
+app.set('views', path.join(appRoot, 'codemancer'));
 app.set('view engine','html');
 
 
@@ -57,18 +59,18 @@ loadTemplateVars();
 app.get('/', (req, res) => {
   res.render('index', app.locals.templateVars);
 });
-app.use('/css', express.static(path.join(__dirname, '..', 'codemancer', 'css')));
-app.use('/font', express.static(path.join(__dirname, '..', 'codemancer', 'font')));
-app.use('/img', express.static(path.join(__dirname, '..', 'codemancer', 'img')));
+app.use('/css', express.static(path.join(appRoot, 'codemancer', 'css')));
+app.use('/font', express.static(path.join(appRoot, 'codemancer', 'font')));
+app.use('/img', express.static(path.join(appRoot, 'codemancer', 'img')));
 if (process.env.ENV == 'development') {
   const browserifyOptions = {
     transform: ['envify']
   };
-  const jsFile = path.join(__dirname, '..', 'codemancer', 'js', 'index.js');
+  const jsFile = path.join(appRoot, 'codemancer', 'js', 'index.js');
   const browserifyHandler = browserifyMiddleware(jsFile, browserifyOptions);
   app.use('/js/' + util.getJSFileName(), browserifyHandler);
 } else {
-  app.use('/js', express.static(path.join(__dirname, '..', 'codemancer', 'js')));
+  app.use('/js', express.static(path.join(appRoot, 'codemancer', 'js')));
 }
 
 const port = process.env.LISTEN_PORT;

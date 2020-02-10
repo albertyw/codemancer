@@ -1,3 +1,5 @@
-codemancer
+# TODO - separate out build and run dependencies
+# codemancer
+
 logs
 node_modules
