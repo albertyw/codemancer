@@ -1,10 +1,10 @@
 {
     "compilerOptions": {
-        "outDir": "./server/built",
+        "outDir": "./built",
         "allowJs": true,
-        "target": "es6"
+        "target": "es5"
     },
     "include": [
-        "./server/*.js"
+        "./server/*"
     ]
 }

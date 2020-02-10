@@ -27,7 +27,7 @@ app.use(Rollbar.errorHandler());
 app.engine('html', function (filePath, options, callback) {
   fs.readFile(filePath, function (err, content) {
     if(err) {
-      return callback(err);
+      return callback(err, "");
     }
     const rendered = mustache.render(content.toString(), options);
     return callback(null, rendered);
