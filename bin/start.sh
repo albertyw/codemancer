@@ -9,4 +9,4 @@ cd "$BASE_DIR" || exit 1
 
 npm run minify
 npm prune --production
-node server/app.js
+node built/server/app.js

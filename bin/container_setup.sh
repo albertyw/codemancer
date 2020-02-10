@@ -8,3 +8,4 @@ cd "$DIR/.." || exit 1
 
 # Compile code
 npm install
+node_modules/.bin/tsc
