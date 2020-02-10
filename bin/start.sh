@@ -8,5 +8,6 @@ BASE_DIR="$DIR"/..
 cd "$BASE_DIR" || exit 1
 
 npm run minify
+node_modules/.bin/tsc
 npm prune --production
 node built/server/app.js
