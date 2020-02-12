@@ -65,6 +65,9 @@ const request = function request(url, onLoad, onError, cacheExpirationDuration) 
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url);
   xhr.onload = () => {
+    if (Math.round(xhr.status / 100) != 2) {
+      return xhr.onerror();
+    }
     Storage.setExpirableData(url, xhr.responseText);
     const response = JSON.parse(xhr.responseText);
     return onLoad(response);
