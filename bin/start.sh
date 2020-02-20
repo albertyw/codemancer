@@ -9,5 +9,6 @@ cd "$BASE_DIR" || exit 1
 
 npm run minify
 node_modules/.bin/tsc
-npm prune --production
+# Need to make sure dev dependencies are available in case the container gets relaunched
+# npm prune --production
 node built/server/app.js
