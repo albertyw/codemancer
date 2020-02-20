@@ -8,3 +8,5 @@ cd "$DIR/.." || exit 1
 
 # Compile code
 npm install
+npm run minify
+node_modules/.bin/tsc
