@@ -59,7 +59,7 @@
     "nyc": "^15.0.0",
     "sinon": "^9.0.1",
     "stylelint": "^13.2.1",
-    "stylelint-config-standard": "^19.0.0",
+    "stylelint-config-standard": "^20.0.0",
     "sweetalert": "^2.1.2",
     "uglify-es": "^3.3.9",
     "uglifyify": "^5.0.2"
