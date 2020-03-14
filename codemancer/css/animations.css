@@ -11,7 +11,7 @@
     animation-duration: 1s;
 }
 
-@-webkit-keyframes fadeInUp {
+@-webkit-keyframes fadeinup {
     0% {
         opacity: 0;
         -webkit-transform: translateY(20px);
@@ -23,7 +23,7 @@
     }
 }
 
-@-moz-keyframes fadeInUp {
+@-moz-keyframes fadeinup {
     0% {
         opacity: 0;
         -moz-transform: translateY(20px);
@@ -35,7 +35,7 @@
     }
 }
 
-@-ms-keyframes fadeInUp {
+@-ms-keyframes fadeinup {
     0% {
         opacity: 0;
         -ms-transform: translateY(20px);
@@ -47,7 +47,7 @@
     }
 }
 
-@-o-keyframes fadeInUp {
+@-o-keyframes fadeinup {
     0% {
         opacity: 0;
         -o-transform: translateY(20px);
@@ -59,7 +59,7 @@
     }
 }
 
-@keyframes fadeInUp {
+@keyframes fadeinup {
     0% {
         opacity: 0;
         transform: translateY(20px);
@@ -71,15 +71,15 @@
     }
 }
 
-.fadeInUp {
-    -webkit-animation-name: fadeInUp;
-    -moz-animation-name: fadeInUp;
-    -ms-animation-name: fadeInUp;
-    -o-animation-name: fadeInUp;
-    animation-name: fadeInUp;
+.fadeinup {
+    -webkit-animation-name: fadeinup;
+    -moz-animation-name: fadeinup;
+    -ms-animation-name: fadeinup;
+    -o-animation-name: fadeinup;
+    animation-name: fadeinup;
 }
 
-@-webkit-keyframes fadeInDown {
+@-webkit-keyframes fadeindown {
     0% {
         opacity: 0;
         -webkit-transform: translateY(-20px);
@@ -91,7 +91,7 @@
     }
 }
 
-@-moz-keyframes fadeInDown {
+@-moz-keyframes fadeindown {
     0% {
         opacity: 0;
         -moz-transform: translateY(-20px);
@@ -103,7 +103,7 @@
     }
 }
 
-@-ms-keyframes fadeInDown {
+@-ms-keyframes fadeindown {
     0% {
         opacity: 0;
         -ms-transform: translateY(-20px);
@@ -115,7 +115,7 @@
     }
 }
 
-@-o-keyframes fadeInDown {
+@-o-keyframes fadeindown {
     0% {
         opacity: 0;
         -ms-transform: translateY(-20px);
@@ -127,7 +127,7 @@
     }
 }
 
-@keyframes fadeInDown {
+@keyframes fadeindown {
     0% {
         opacity: 0;
         transform: translateY(-20px);
@@ -139,15 +139,15 @@
     }
 }
 
-.fadeInDown {
-    -webkit-animation-name: fadeInDown;
-    -moz-animation-name: fadeInDown;
-    -ms-animation-name: fadeInDown;
-    -o-animation-name: fadeInDown;
-    animation-name: fadeInDown;
+.fadeindown {
+    -webkit-animation-name: fadeindown;
+    -moz-animation-name: fadeindown;
+    -ms-animation-name: fadeindown;
+    -o-animation-name: fadeindown;
+    animation-name: fadeindown;
 }
 
-@-webkit-keyframes bounceIn {
+@-webkit-keyframes bouncein {
     0% {
         opacity: 0;
         -webkit-transform: scale(0.3);
@@ -167,7 +167,7 @@
     }
 }
 
-@-moz-keyframes bounceIn {
+@-moz-keyframes bouncein {
     0% {
         opacity: 0;
         -moz-transform: scale(0.3);
@@ -187,7 +187,7 @@
     }
 }
 
-@-ms-keyframes bounceIn {
+@-ms-keyframes bouncein {
     0% {
         opacity: 0;
         -ms-transform: scale(0.3);
@@ -207,7 +207,7 @@
     }
 }
 
-@-o-keyframes bounceIn {
+@-o-keyframes bouncein {
     0% {
         opacity: 0;
         -o-transform: scale(0.3);
@@ -227,7 +227,7 @@
     }
 }
 
-@keyframes bounceIn {
+@keyframes bouncein {
     0% {
         opacity: 0;
         transform: scale(0.3);
@@ -247,10 +247,10 @@
     }
 }
 
-.bounceIn {
-    -webkit-animation-name: bounceIn;
-    -moz-animation-name: bounceIn;
-    -ms-animation-name: bounceIn;
-    -o-animation-name: bounceIn;
-    animation-name: bounceIn;
+.bouncein {
+    -webkit-animation-name: bouncein;
+    -moz-animation-name: bouncein;
+    -ms-animation-name: bouncein;
+    -o-animation-name: bouncein;
+    animation-name: bouncein;
 }
