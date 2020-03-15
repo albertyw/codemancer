@@ -84,6 +84,12 @@ const request = function request(url, onLoad, onError, cacheExpirationDuration) 
   xhr.send();
 };
 
+const customError = function customError(message, metadata) {
+  const error = new Error(message);
+  error.metadata = metadata;
+  return error;
+};
+
 module.exports = {
   toggleDemo: toggleDemo,
   getMockDate: getMockDate,
@@ -91,4 +97,5 @@ module.exports = {
   trimString: trimString,
   unique: unique,
   request: request,
+  customError: customError,
 };

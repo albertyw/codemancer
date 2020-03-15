@@ -61,7 +61,7 @@ const Weather = {
     const getWeather = new Promise((resolve, reject) => {
       const url = Weather.urlBuilder(Location.targetLocation);
       function onError(statusText) {
-        const error = new Error('Cannot get weather:' + statusText);
+        const error = util.customError('Cannot get weather', statusText);
         return reject(error);
       }
       util.request(url, resolve, onError, weatherExpiration);
@@ -71,7 +71,7 @@ const Weather = {
 
   validate: varsnap(function validate(data) {
     if (!util.chainAccessor(data, ['properties', 'periods'])) {
-      Rollbar.error('No weather forecast periods available', data);
+      throw util.customError('No weather forecast periods available', data);
     }
     return data;
   }),
