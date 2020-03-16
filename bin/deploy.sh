@@ -33,7 +33,6 @@ docker run \
     --publish 127.0.0.1:5002:5002 \
     --network="codemancer" \
     --mount type=bind,source="$(pwd)"/logs,target=/var/www/app/logs \
-    --mount type=bind,source="$(pwd)"/codemancer,target=/var/www/app/codemancer \
     --name codemancer "codemancer:$ENV"
 
 if [ "$ENV" = "production" ]; then
