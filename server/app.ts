@@ -50,6 +50,7 @@ function loadTemplateVars() {
       TOGGLEDEMO_SVG: svgs.toggledemo,
       CALENDAR_AUTH_SVG: svgs.calendarAuth,
       CALENDAR_SIGNOUT_SVG: svgs.calendarSignout,
+      CSS: util.getCSSFileName(),
       JAVASCRIPT: util.getJSFileName(),
     };
   });

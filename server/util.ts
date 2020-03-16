@@ -15,6 +15,12 @@ function getVersion() {
   return version;
 }
 
+export function getCSSFileName() {
+  const version = getVersion();
+  const outputFileName = 'codemancer.' + version + '.min.css';
+  return outputFileName;
+}
+
 export function getJSFileName() {
   const version = getVersion();
   const outputFileName = 'codemancer.' + version + '.min.js';
