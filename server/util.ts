@@ -9,9 +9,20 @@ import varsnap = require('../codemancer/js/varsnap');
 
 const appRoot = appRootPath.toString();
 
-export function getJSFileName() {
+function getVersion() {
   const head = child_process.execSync('git rev-parse HEAD');
   const version = util.trimString(head.toString());
+  return version;
+}
+
+export function getCSSFileName() {
+  const version = getVersion();
+  const outputFileName = 'codemancer.' + version + '.min.css';
+  return outputFileName;
+}
+
+export function getJSFileName() {
+  const version = getVersion();
   const outputFileName = 'codemancer.' + version + '.min.js';
   return outputFileName;
 }
