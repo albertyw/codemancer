@@ -66,7 +66,7 @@ const Clock = {
     }
 
     function tick() {
-      const delayTime = 500;
+      const delayTime = 1000;
 
       Clock.refresh();
 
