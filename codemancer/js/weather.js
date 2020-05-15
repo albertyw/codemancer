@@ -7,7 +7,7 @@ const varsnap = require('./varsnap');
 
 const weatherExpiration = 3 * 60 * 60 * 1000;
 const weatherRefreshInterval = 20 * 60 * 1000;
-const defaultWeatherData = {};
+const defaultWeatherData = {'properties': {'periods': [{'shortForecast': 'Error'}]}};
 // Icons are from https://erikflowers.github.io/weather-icons/
 // Conditions and Descriptors are from observed responses and from
 // https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
@@ -90,7 +90,7 @@ const Weather = {
       if (!periodLength || i >= periodLength) {
         break;
       }
-      const period = util.chainAccessor(data, ['properties', 'periods', i]);
+      const period = data.properties.periods[i];
       const temp = Math.round(util.chainAccessor(period, ['temperature']));
       w2.minTemp = Math.min(w2.minTemp, temp);
       if (temp < 140) {
@@ -121,9 +121,6 @@ const Weather = {
   }),
 
   conditionIcon: varsnap(function conditionIcon(condition){
-    if (condition === undefined) {
-      condition = 'Error';
-    }
     let weatherIconCode = weatherIconConversions.get(condition);
     if (weatherIconCode !== undefined) {
       return weatherIconCode;
