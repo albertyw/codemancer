@@ -7,6 +7,7 @@ const varsnap = require('./varsnap');
 
 const weatherExpiration = 3 * 60 * 60 * 1000;
 const weatherRefreshInterval = 20 * 60 * 1000;
+const defaultWeatherData = {};
 // Icons are from https://erikflowers.github.io/weather-icons/
 // Conditions and Descriptors are from observed responses and from
 // https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
@@ -26,6 +27,7 @@ const weatherConditions = [
   ['Heavy Rain', '\uf04e'],
   ['Showers And Thunderstorms', '\uf00e'],
   ['T-storms', '\uf01e'],
+  ['Error', '\uf04c'],
 ];
 const weatherIconConversions = new Map(weatherConditions);
 const descriptors = [
@@ -71,7 +73,7 @@ const Weather = {
 
   validate: varsnap(function validate(data) {
     if (!util.chainAccessor(data, ['properties', 'periods'])) {
-      throw util.customError('No weather forecast periods available', data);
+      return defaultWeatherData;
     }
     return data;
   }),
@@ -84,10 +86,11 @@ const Weather = {
     w2.maxTemp = w2.currentTemp;
     w2.conditionSequence = [util.chainAccessor(data, ['properties', 'periods', 0, 'shortForecast'])];
     for (let i = 0; i < weatherLookForwardHours; i++) {
-      if (i >= data.properties.periods.length) {
+      const periodLength = util.chainAccessor(data, ['properties', 'periods', 'length']);
+      if (!periodLength || i >= periodLength) {
         break;
       }
-      const period = data.properties.periods[i];
+      const period = util.chainAccessor(data, ['properties', 'periods', i]);
       const temp = Math.round(util.chainAccessor(period, ['temperature']));
       w2.minTemp = Math.min(w2.minTemp, temp);
       if (temp < 140) {
@@ -118,6 +121,9 @@ const Weather = {
   }),
 
   conditionIcon: varsnap(function conditionIcon(condition){
+    if (condition === undefined) {
+      condition = 'Error';
+    }
     let weatherIconCode = weatherIconConversions.get(condition);
     if (weatherIconCode !== undefined) {
       return weatherIconCode;
