@@ -150,8 +150,7 @@ const Weather = {
   },
 
   load: function() {
-    const getWeather = Weather.getWeather();
-    return getWeather.
+    return Weather.getWeather().
       then(Weather.validate).
       then(Weather.parse).
       then(Weather.render);
