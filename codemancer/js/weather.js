@@ -16,6 +16,7 @@ const weatherConditions = [
   ['Clear', '\uf00d'],
   ['Cloudy', '\uf013'],
   ['Partly Cloudy', '\uf002'],
+  ['Clouds', '\uf013'],
   ['Mostly Cloudy', '\uf041'],
   ['Areas Of Fog', '\uf014'],
   ['Fog', '\uf014'],
@@ -31,17 +32,18 @@ const weatherConditions = [
 ];
 const weatherIconConversions = new Map(weatherConditions);
 const descriptors = [
+  'Very',
   'Mostly',
   'Partly',
-  'Slight Chance',
-  'Chance',
+  'Increasing',
+  'Occasional',
+  'Patchy',
   'Likely',
-  'Isolated',
   'Scattered',
   'Periods Of',
-  'Patchy',
-  'Occasional',
-  'Very',
+  'Isolated',
+  'Chance',
+  'Slight Chance',
 ];
 const weatherLookForwardHours = 24;
 
