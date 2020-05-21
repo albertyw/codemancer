@@ -45,6 +45,7 @@ const descriptors = [
   'Likely',
   'Gradual',
   'Scattered',
+  'Areas',
   'Periods Of',
   'Isolated',
   'Late',
