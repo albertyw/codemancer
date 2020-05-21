@@ -46,6 +46,7 @@ const descriptors = [
   'Scattered',
   'Periods Of',
   'Isolated',
+  'Late',
   'Chance',
   'Slight Chance',
 ];
