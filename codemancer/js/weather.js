@@ -38,6 +38,7 @@ const descriptors = [
   'Increasing',
   'Occasional',
   'Patchy',
+  'Decreasing',
   'Likely',
   'Scattered',
   'Periods Of',
