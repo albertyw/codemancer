@@ -42,6 +42,7 @@ const descriptors = [
   'Patchy',
   'Decreasing',
   'Likely',
+  'Gradual',
   'Scattered',
   'Periods Of',
   'Isolated',
