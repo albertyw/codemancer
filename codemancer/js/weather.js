@@ -34,6 +34,7 @@ const weatherConditions = [
 const weatherIconConversions = new Map(weatherConditions);
 const descriptors = [
   'Very',
+  'Dense',
   'Mostly',
   'Partly',
   'Increasing',
