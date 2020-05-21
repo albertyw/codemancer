@@ -14,6 +14,7 @@ const defaultWeatherData = {'properties': {'periods': [{'shortForecast': 'Error'
 const weatherConditions = [
   ['Sunny', '\uf00d'],
   ['Clear', '\uf00d'],
+  ['Clearing', '\uf00d'],
   ['Cloudy', '\uf013'],
   ['Partly Cloudy', '\uf002'],
   ['Clouds', '\uf013'],
