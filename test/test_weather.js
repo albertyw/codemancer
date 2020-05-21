@@ -5,6 +5,7 @@ const Rollbar = require('../codemancer/js/rollbar');
 const weather = require('../codemancer/js/weather');
 const Location = require('../codemancer/js/location').Location;
 const weatherFixture = require('./weather_fixture.json');
+const weatherSummary = require('./weather_summary.json');
 
 describe('Weather.urlBuilder', () => {
   it('returns a url', () => {
@@ -67,5 +68,16 @@ describe('Weather.conditionIcon', () => {
     const icon = weather.Weather.conditionIcon('asdf');
     expect(icon).to.equal('\uf04c');
     expect(Rollbar.error.calledWithExactly('cannot find image for "asdf"')).to.be.true;
+  });
+  it('works with all published conditions', () => {
+    // data from https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
+    for (const condition of weatherSummary) {
+      const icon = weather.Weather.conditionIcon(condition);
+      if (condition === 'none') {
+        expect(icon).to.equal('\uf04c', condition);
+      } else {
+        expect(icon).to.not.equal('\uf04c', condition);
+      }
+    }
   });
 });
