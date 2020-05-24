@@ -5,7 +5,7 @@ const util = require('./util');
 const varsnap = require('./varsnap');
 
 const targetLocation = {
-  wfo: 'MTR', x: '88', y: '128',
+  wfo: 'MTR', x: '88', y: '126',
   lat: 37.778519, lng: -122.40564,
 };
 const geocodingAPIKey = process.env.GEOCODING_API_KEY;
