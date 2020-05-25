@@ -5,6 +5,7 @@ const util = require('./util');
 const varsnap = require('./varsnap');
 
 const targetLocation = {
+  // Generated from https://www.weather.gov/documentation/services-web-api#/default/get_points__point_
   wfo: 'MTR', x: '88', y: '126',
   lat: 37.778519, lng: -122.40564,
 };
