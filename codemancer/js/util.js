@@ -1,6 +1,5 @@
 const Rollbar = require('./rollbar');
 const Storage = require('./storage');
-const varsnap = require('./varsnap');
 
 let demoOn = false;
 
@@ -30,27 +29,27 @@ function getMockDate() {
  * Return the value after a chain of accessors;
  * returns undefined instead of an exception if the chain is broken
  **/
-const chainAccessor = varsnap(function chainAccessor(data, properties) {
+const chainAccessor = function chainAccessor(data, properties) {
   let value = data;
   for(let x=0; x<properties.length; x++) {
     value = value && value[properties[x]];
   }
   return value;
-});
+};
 
 /**
  * Trim whitespace around a string
  **/
-const trimString = varsnap(function trimString(s) {
+const trimString = function trimString(s) {
   return s.replace(/^\s+|\s+$/g, '');
-});
+};
 
 /**
  * Return a copy of the array with only unique items
  **/
-const unique = varsnap(function unique(array) {
+const unique = function unique(array) {
   return Array.from(new Set(array));
-});
+};
 
 /**
  * Wrapper around XMLHttpRequest that caches responses
