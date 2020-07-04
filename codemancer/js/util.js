@@ -81,7 +81,7 @@ const request = function request(url, onLoad, onError, cacheExpirationDuration) 
     if (responseText === null) {
       return onError(xhr.statusText);
     }
-    Rollbar.error('Error when making request', url, xhr.statusText);
+    Rollbar.error('Error when making request', url, xhr.status, xhr.readyState, xhr.responseText);
     const response = JSON.parse(responseText);
     return onLoad(response);
   };
