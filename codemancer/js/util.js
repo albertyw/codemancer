@@ -67,8 +67,13 @@ const request = function request(url, onLoad, onError, cacheExpirationDuration) 
     if (Math.round(xhr.status / 100) != 2) {
       return xhr.onerror();
     }
+    let response = {};
+    try {
+      response = JSON.parse(xhr.responseText);
+    } catch(err) {
+      return xhr.onerror();
+    }
     Storage.setExpirableData(url, xhr.responseText);
-    const response = JSON.parse(xhr.responseText);
     return onLoad(response);
   };
   xhr.onerror = () => {
