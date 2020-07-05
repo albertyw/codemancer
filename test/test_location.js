@@ -61,8 +61,9 @@ describe('Location.getDisplayName', () => {
     this.requests[0].error();
     promise.then((data) => {
       expect(data).to.equal('');
-      expect(Rollbar.error.calledOnce).to.be.true;
-      expect(Rollbar.error.getCall(0).args[0]).to.equal('Failed to geocode');
+      expect(Rollbar.error.calledTwice).to.be.true;
+      expect(Rollbar.error.getCall(0).args[0]).to.equal('Unrecoverable error when making request');
+      expect(Rollbar.error.getCall(1).args[0]).to.equal('Failed to geocode');
       done();
     }, (error) => {
       expect.fail(error);
