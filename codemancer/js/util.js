@@ -79,9 +79,9 @@ const request = function request(url, onLoad, onError, cacheExpirationDuration) 
   xhr.onerror = () => {
     const responseText = Storage.getExpirableData(url, cacheExpirationDuration, true);
     if (responseText === null) {
+      Rollbar.error('Unrecoverable error when making request', url, xhr.status, xhr.readyState, xhr.responseText);
       return onError(xhr.statusText);
     }
-    Rollbar.error('Error when making request', url, xhr.status, xhr.readyState, xhr.responseText);
     const response = JSON.parse(responseText);
     return onLoad(response);
   };
