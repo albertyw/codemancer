@@ -1,3 +1,4 @@
+const axios = require('axios');
 const Rollbar = require('./rollbar');
 const Storage = require('./storage');
 
@@ -88,7 +89,35 @@ const request = function request(url, onLoad, onError, cacheExpirationDuration) 
   xhr.send();
 };
 
-const customError = function customError(message, metadata) {
+/**
+ * AJAX request Promise that caches responses
+ **/
+const requestPromise = function request(url, cacheExpirationDuration) {
+  const responseText = Storage.getExpirableData(url, cacheExpirationDuration/2, false);
+  if(responseText !== null) {
+    const response = JSON.parse(responseText);
+    return new Promise((resolve) => {
+      resolve(response);
+    });
+  }
+
+  const request = axios.get(url).then((response) => {
+    Storage.setExpirableData(url, JSON.stringify(response.data));
+    return response.data;
+  }).catch((error) => {
+    const responseText = Storage.getExpirableData(url, cacheExpirationDuration, true);
+    if (responseText === null) {
+      const e = new CustomError('Unrecoverable error when making request', error.response);
+      Rollbar.error(e);
+      throw e;
+    }
+    const response = JSON.parse(responseText);
+    return response;
+  });
+  return request;
+};
+
+const CustomError = function CustomError(message, metadata) {
   const error = new Error(message);
   error.metadata = metadata;
   return error;
@@ -101,5 +130,6 @@ module.exports = {
   trimString: trimString,
   unique: unique,
   request: request,
-  customError: customError,
+  requestPromise: requestPromise,
+  CustomError: CustomError,
 };
