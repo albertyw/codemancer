@@ -1,3 +1,4 @@
+const axios = require('axios');
 const Rollbar = require('./rollbar');
 const Storage = require('./storage');
 
@@ -52,43 +53,32 @@ const unique = function unique(array) {
 };
 
 /**
- * Wrapper around XMLHttpRequest that caches responses
+ * AJAX request Promise that caches responses
  **/
-const request = function request(url, onLoad, onError, cacheExpirationDuration) {
+const requestPromise = function request(url, cacheExpirationDuration) {
   const responseText = Storage.getExpirableData(url, cacheExpirationDuration/2, false);
   if(responseText !== null) {
     const response = JSON.parse(responseText);
-    return onLoad(response);
+    return Promise.resolve(response);
   }
 
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', url);
-  xhr.onload = () => {
-    if (Math.round(xhr.status / 100) != 2) {
-      return xhr.onerror();
-    }
-    let response = {};
-    try {
-      response = JSON.parse(xhr.responseText);
-    } catch(err) {
-      return xhr.onerror();
-    }
-    Storage.setExpirableData(url, xhr.responseText);
-    return onLoad(response);
-  };
-  xhr.onerror = () => {
+  const request = axios.get(url).then((response) => {
+    Storage.setExpirableData(url, JSON.stringify(response.data));
+    return response.data;
+  }).catch((error) => {
     const responseText = Storage.getExpirableData(url, cacheExpirationDuration, true);
     if (responseText === null) {
-      Rollbar.error('Unrecoverable error when making request', url, xhr.status, xhr.readyState, xhr.responseText);
-      return onError(xhr.statusText);
+      const e = new CustomError('Unrecoverable error when making request', error.response);
+      Rollbar.error(e);
+      throw e;
     }
     const response = JSON.parse(responseText);
-    return onLoad(response);
-  };
-  xhr.send();
+    return response;
+  });
+  return request;
 };
 
-const customError = function customError(message, metadata) {
+const CustomError = function CustomError(message, metadata) {
   const error = new Error(message);
   error.metadata = metadata;
   return error;
@@ -100,6 +90,6 @@ module.exports = {
   chainAccessor: chainAccessor,
   trimString: trimString,
   unique: unique,
-  request: request,
-  customError: customError,
+  requestPromise: requestPromise,
+  CustomError: CustomError,
 };

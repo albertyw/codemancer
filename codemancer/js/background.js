@@ -32,24 +32,25 @@ const updateBackgroundColorPeriod = 5 * 60 * 1000;
 let updateBackgroundColorInterval = undefined;
 
 const generateColorsArray = varsnap(function generateColorsArray(){
-  function sunRiseSetReady(xhrData) {
-    const data = parseData(xhrData);
-    const sunrise = dateToMinutes(data['sunrise']);
-    const sunset = dateToMinutes(data['sunset']);
-    colors[sunrise - 120] = fullNight;
-    colors[sunrise - 60] = lateEvening;
-    colors[sunrise] = midEvening;
-    colors[sunrise + 60] = brightEvening;
-    colors[sunrise + 120] = fullDay;
-    colors[sunset - 120] = fullDay;
-    colors[sunset - 60] = brightEvening;
-    colors[sunset] = midEvening;
-    colors[sunset + 60] = lateEvening;
-    colors[sunset + 120] = fullNight;
-    colorsTimestamp = Object.keys(colors);
-    updateBackgroundColor();
-  }
-  util.request(sunRiseSetAPI, sunRiseSetReady, undefined, sunRiseSetExpiration);
+  util.requestPromise(sunRiseSetAPI, sunRiseSetExpiration)
+    .then((xhrData) => {
+      const data = parseData(xhrData);
+      const sunrise = dateToMinutes(data['sunrise']);
+      const sunset = dateToMinutes(data['sunset']);
+      colors[sunrise - 120] = fullNight;
+      colors[sunrise - 60] = lateEvening;
+      colors[sunrise] = midEvening;
+      colors[sunrise + 60] = brightEvening;
+      colors[sunrise + 120] = fullDay;
+      colors[sunset - 120] = fullDay;
+      colors[sunset - 60] = brightEvening;
+      colors[sunset] = midEvening;
+      colors[sunset + 60] = lateEvening;
+      colors[sunset + 120] = fullNight;
+      colorsTimestamp = Object.keys(colors);
+      updateBackgroundColor();
+    })
+    .catch(() => {});
 });
 
 const parseData = varsnap(function parseData(data) {

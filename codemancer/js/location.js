@@ -26,19 +26,22 @@ const Location = {
   }),
 
   getDisplayName: function (location) {
-    return new Promise((resolve, reject) => {
-      const url = Location.urlBuilder(location);
-      util.request(url, resolve, reject, locationExpiration);
-    }).then((data) => {
-      if (data.status === 'OK') {
-        return Location.parseDisplayName(data);
-      }
-      Rollbar.error('Failed to geocode', data);
-      return '';
-    }, (error) => {
-      Rollbar.error('Failed to geocode', error);
-      return '';
-    });
+    const url = Location.urlBuilder(location);
+    return util.requestPromise(url, locationExpiration)
+      .then((data) => {
+        if (data.status === 'OK') {
+          return Location.parseDisplayName(data);
+        }
+        Rollbar.error('Failed to geocode', data);
+        return '';
+      }, (error) => {
+        Rollbar.error('Failed to geocode', error);
+        return '';
+      })
+      .catch((error) => {
+        Rollbar.error('Failed to geocode', error);
+        return '';
+      });
   },
 
   parseDisplayName: varsnap(function parseDisplayName(data) {
