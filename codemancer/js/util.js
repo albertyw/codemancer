@@ -53,43 +53,6 @@ const unique = function unique(array) {
 };
 
 /**
- * Wrapper around XMLHttpRequest that caches responses
- **/
-const request = function request(url, onLoad, onError, cacheExpirationDuration) {
-  const responseText = Storage.getExpirableData(url, cacheExpirationDuration/2, false);
-  if(responseText !== null) {
-    const response = JSON.parse(responseText);
-    return onLoad(response);
-  }
-
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', url);
-  xhr.onload = () => {
-    if (Math.round(xhr.status / 100) != 2) {
-      return xhr.onerror();
-    }
-    let response = {};
-    try {
-      response = JSON.parse(xhr.responseText);
-    } catch(err) {
-      return xhr.onerror();
-    }
-    Storage.setExpirableData(url, xhr.responseText);
-    return onLoad(response);
-  };
-  xhr.onerror = () => {
-    const responseText = Storage.getExpirableData(url, cacheExpirationDuration, true);
-    if (responseText === null) {
-      Rollbar.error('Unrecoverable error when making request', url, xhr.status, xhr.readyState, xhr.responseText);
-      return onError(xhr.statusText);
-    }
-    const response = JSON.parse(responseText);
-    return onLoad(response);
-  };
-  xhr.send();
-};
-
-/**
  * AJAX request Promise that caches responses
  **/
 const requestPromise = function request(url, cacheExpirationDuration) {
@@ -129,7 +92,6 @@ module.exports = {
   chainAccessor: chainAccessor,
   trimString: trimString,
   unique: unique,
-  request: request,
   requestPromise: requestPromise,
   CustomError: CustomError,
 };
