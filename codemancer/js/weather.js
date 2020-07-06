@@ -110,14 +110,8 @@ const Weather = {
   }),
 
   getWeather: function () {
-    const getWeather = new Promise((resolve, reject) => {
-      const url = Weather.urlBuilder(Location.targetLocation);
-      function onError(statusText) {
-        const error = util.customError('Cannot get weather', statusText);
-        return reject(error);
-      }
-      util.request(url, resolve, onError, weatherExpiration);
-    });
+    const url = Weather.urlBuilder(Location.targetLocation);
+    const getWeather = util.requestPromise(url, weatherExpiration);
     return getWeather;
   },
 
