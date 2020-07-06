@@ -59,9 +59,7 @@ const requestPromise = function request(url, cacheExpirationDuration) {
   const responseText = Storage.getExpirableData(url, cacheExpirationDuration/2, false);
   if(responseText !== null) {
     const response = JSON.parse(responseText);
-    return new Promise((resolve) => {
-      resolve(response);
-    });
+    return Promise.resolve(response);
   }
 
   const request = axios.get(url).then((response) => {
