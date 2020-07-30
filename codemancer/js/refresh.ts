@@ -1,4 +1,4 @@
-const util = require('./util');
+import util = require('./util');
 
 const refreshTime = parseInt(process.env.REFRESH_INTERVAL, 10);
 

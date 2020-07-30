@@ -1,20 +1,20 @@
-const $ = require('jquery');
+import $ = require('jquery');
 
 require('./rollbar');
 require('./google');
-const clock = require('./clock');
+import clock = require('./clock');
 $(clock.start);
 
-const loadWeather = require('./weather').load;
-const loadLocation = require('./location').load;
-$(loadWeather);
-$(loadLocation);
+import weather = require('./weather');
+import location = require('./location');
+$(weather.load);
+$(location.load);
 
-const demo = require('./demo');
+import demo = require('./demo');
 demo.bindDemo();
 
 require('./calendar');
 require('./logfit');
 
-const pageRefresher = require('./refresh');
+import pageRefresher = require('./refresh');
 pageRefresher();

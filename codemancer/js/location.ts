@@ -1,8 +1,8 @@
-const $ = require('jquery');
+import $ = require('jquery');
 
-const Rollbar = require('./rollbar');
-const util = require('./util');
-const varsnap = require('./varsnap');
+import Rollbar = require('./rollbar');
+import util = require('./util');
+import varsnap = require('./varsnap');
 
 const targetLocation = {
   // Generated from https://www.weather.gov/documentation/services-web-api#/default/get_points__point_

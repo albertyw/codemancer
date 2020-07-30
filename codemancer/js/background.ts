@@ -1,7 +1,7 @@
-const $ = require('jquery');
+import $ = require('jquery');
 
-const util = require('./util');
-const varsnap = require('./varsnap');
+import util = require('./util');
+import varsnap = require('./varsnap');
 
 const sunRiseSetAPI = 'https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0';
 const sunRiseSetExpiration = 24 * 60 * 60 * 1000;

@@ -1,6 +1,6 @@
-const $ = require('jquery');
+import $ = require('jquery');
 
-const util = require('./util');
+import util = require('./util');
 
 const Clock = {
   $el : {

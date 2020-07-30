@@ -1,6 +1,6 @@
-const axios = require('axios');
-const Rollbar = require('./rollbar');
-const Storage = require('./storage');
+import axios = require('axios');
+import Rollbar = require('./rollbar');
+import Storage = require('./storage');
 
 let demoOn = false;
 

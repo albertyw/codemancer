@@ -1,7 +1,7 @@
-const $ = require('jquery');
+import $ = require('jquery');
 
-const background = require('./background');
-const util = require('./util');
+import background = require('./background');
+import util = require('./util');
 
 const originalUpdateBackgroundColorPeriod = background.updateBackgroundColorPeriod;
 

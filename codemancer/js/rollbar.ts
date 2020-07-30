@@ -1,5 +1,5 @@
-const Rollbar = require('rollbar');
-const console = require('console');
+import Rollbar = require('rollbar');
+import console = require('console');
 
 const rollbarClientAccess = process.env.ROLLBAR_CLIENT_ACCESS;
 const rollbarServerAccess = process.env.ROLLBAR_SERVER_ACCESS;

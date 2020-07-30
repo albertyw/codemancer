@@ -1,5 +1,6 @@
-const process = require('process');
-const varsnap = require('varsnap');
+import process = require('process');
+import varsnap = require('varsnap');
+
 varsnap.updateConfig({
   varsnap: process.env.VARSNAP,
   env: process.env.ENV,

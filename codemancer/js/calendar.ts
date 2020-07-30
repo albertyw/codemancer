@@ -1,7 +1,7 @@
-const $ = require('jquery');
-const swal = require('sweetalert2');
+import $ = require('jquery');
+import swal = require('sweetalert2');
 
-const util = require('./util');
+import util = require('./util');
 
 // Client ID and API key from the Developer Console
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID;

@@ -1,9 +1,9 @@
-const $ = require('jquery');
+import $ = require('jquery');
 
-const Rollbar = require('./rollbar');
-const Location = require('./location').Location;
-const util = require('./util');
-const varsnap = require('./varsnap');
+import Rollbar = require('./rollbar');
+import Location = require('./location').Location;
+import util = require('./util');
+import varsnap = require('./varsnap');
 
 const weatherExpiration = 3 * 60 * 60 * 1000;
 const weatherRefreshInterval = 20 * 60 * 1000;
