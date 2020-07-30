@@ -11,9 +11,10 @@ $(loadWeather);
 $(loadLocation);
 
 const demo = require('./demo');
+demo.bindDemo();
+
 require('./calendar');
 require('./logfit');
 
 const pageRefresher = require('./refresh');
 pageRefresher();
-window.toggleDemo = demo.toggleDemo;

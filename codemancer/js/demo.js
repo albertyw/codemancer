@@ -1,3 +1,5 @@
+const $ = require('jquery');
+
 const background = require('./background');
 const util = require('./util');
 
@@ -21,6 +23,10 @@ function toggleDemo() { // eslint-disable-line no-unused-vars
   }
 }
 
+function bindDemo() {
+  $('#toggleDemo').click(toggleDemo);
+}
+
 module.exports = {
-  toggleDemo: toggleDemo,
+  bindDemo: bindDemo,
 };
