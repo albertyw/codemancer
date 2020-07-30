@@ -45,4 +45,4 @@ function setupRollbar() {
 }
 setupRollbar();
 
-module.exports = rollbarClient;
+export = rollbarClient;

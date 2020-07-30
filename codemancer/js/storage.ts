@@ -1,9 +1,12 @@
-let localStorage = undefined;
+// let localStorage = undefined;
 if(typeof window === 'undefined') {
   localStorage = {
     setItem: function setItem() {},
     getItem: function getItem() { return null; },
     removeItem: function removeItem() {},
+    length: 0,
+    clear: function clear() {},
+    key: function key() {return null},
   };
 } else {
   localStorage = window.localStorage;
@@ -36,5 +39,4 @@ const Storage = {
     return key + 'Time';
   },
 };
-
-module.exports = Storage;
+export = Storage;
