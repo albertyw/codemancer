@@ -10,6 +10,7 @@
     },
     "include": [
         "./bin/*",
+        "codemancer/js/*",
         "./server/*"
     ]
 }
