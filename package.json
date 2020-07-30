@@ -63,7 +63,7 @@
     "sinon": "^9.0.2",
     "stylelint": "^13.6.1",
     "stylelint-config-standard": "^20.0.0",
-    "sweetalert": "^2.1.2",
+    "sweetalert2": "^9.17.1",
     "uglify-es": "^3.3.9",
     "uglifyify": "^5.0.2"
   }

@@ -1,5 +1,5 @@
 const $ = require('jquery');
-const swal = require('sweetalert');
+const swal = require('sweetalert2');
 
 const util = require('./util');
 
