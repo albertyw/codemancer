@@ -82,7 +82,7 @@ function handleAuthClick() {
   gapi.auth2.getAuthInstance().signIn();
   if(authClicks >= 2) {
     // User has tried authing at least twice and may need debugging
-    swal({
+    swal.fire({
       text: AUTH_DEBUG_INFO,
       icon: 'warning',
     });
