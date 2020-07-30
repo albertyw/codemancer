@@ -13,7 +13,7 @@ const geocodingAPIKey = process.env.GEOCODING_API_KEY;
 const geocodingURL = 'https://maps.googleapis.com/maps/api/geocode/json';
 const locationExpiration = 24 * 60 * 60 * 1000;
 
-const Location = {
+export const Location = {
   targetLocation: targetLocation,
   cityElement: $('#city'),
 
@@ -74,11 +74,6 @@ const Location = {
   },
 };
 
-function load() {
+export function load() {
   Location.showLocation();
 }
-
-module.exports = {
-  Location: Location,
-  load: load,
-};

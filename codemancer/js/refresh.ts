@@ -3,7 +3,7 @@ import util = require('./util');
 const refreshTime = parseInt(process.env.REFRESH_INTERVAL, 10);
 
 // Reload the page once an hour
-function pageRefresher(){
+export = function pageRefresher(){
   setInterval(() => {
     util.requestPromise(location.href, 0)
       .then(() => {
@@ -14,5 +14,3 @@ function pageRefresher(){
   }, refreshTime);
   return refreshTime;
 }
-
-module.exports = pageRefresher;

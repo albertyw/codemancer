@@ -3,11 +3,11 @@ import $ = require('jquery');
 require('./rollbar');
 require('./google');
 import clock = require('./clock');
-$(clock.start);
+$(clock.style);
 
 import weather = require('./weather');
 import location = require('./location');
-$(weather.load);
+$(weather.main);
 $(location.load);
 
 import demo = require('./demo');

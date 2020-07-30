@@ -1,7 +1,7 @@
 import $ = require('jquery');
 
 import Rollbar = require('./rollbar');
-import Location = require('./location').Location;
+import {Location} from './location';
 import util = require('./util');
 import varsnap = require('./varsnap');
 
@@ -95,7 +95,7 @@ const descriptors = [
 ];
 const weatherLookForwardHours = 24;
 
-const Weather = {
+export const Weather = {
 
   $el: {
     now : $('.now'),
@@ -204,13 +204,8 @@ const Weather = {
   },
 };
 
-function main() {
+export function main() {
   Weather.load().
     catch(error => { Rollbar.error(error); });
   setInterval(main, weatherRefreshInterval);
 }
-
-module.exports = {
-  load: main,
-  Weather: Weather,
-};

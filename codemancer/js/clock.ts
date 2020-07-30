@@ -2,7 +2,17 @@ import $ = require('jquery');
 
 import util = require('./util');
 
-const Clock = {
+export const Clock = {
+  _parts : {
+    day: '',
+    date: undefined,
+    month: '',
+    hour: '00',
+    minute: '00',
+    second: '00',
+  },
+  _running : undefined,
+
   $el : {
     digital : {
       time : $('#time'),
@@ -45,7 +55,7 @@ const Clock = {
 
   refresh: function() {
     const parts = Clock.timeParts();
-    const oldParts = Clock._parts || {};
+    const oldParts = Clock._parts;
 
     Clock.$el.digital.date.html(Clock.dateTemplate(parts));
 
@@ -79,7 +89,7 @@ const Clock = {
   }
 };
 
-function style() {
+export function style() {
   // Kick off the clock
   Clock.start();
   const $main = $('main');
@@ -90,8 +100,3 @@ function style() {
   }
   $main.addClass('light-text');
 }
-
-module.exports = {
-  Clock: Clock,
-  start: style
-};

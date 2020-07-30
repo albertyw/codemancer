@@ -1,5 +1,5 @@
 import $ = require('jquery');
-import swal = require('sweetalert2');
+import swal from 'sweetalert2';
 
 import util = require('./util');
 
