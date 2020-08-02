@@ -1,7 +1,7 @@
-const $ = require('jquery');
+import $ = require('jquery');
 
-const util = require('./util');
-const varsnap = require('./varsnap');
+import util = require('./util');
+import varsnap = require('./varsnap');
 
 const sunRiseSetAPI = 'https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0';
 const sunRiseSetExpiration = 24 * 60 * 60 * 1000;
@@ -28,8 +28,14 @@ const colors = {
 };
 
 let colorsTimestamp = Object.keys(colors);
-const updateBackgroundColorPeriod = 5 * 60 * 1000;
+let updateBackgroundColorPeriod = 5 * 60 * 1000;
 let updateBackgroundColorInterval = undefined;
+
+export function changeUpdateBackgroundColorPeriod(period) {
+  const original = updateBackgroundColorPeriod;
+  updateBackgroundColorPeriod = period;
+  return original;
+}
 
 const generateColorsArray = varsnap(function generateColorsArray(){
   util.requestPromise(sunRiseSetAPI, sunRiseSetExpiration)
@@ -87,8 +93,8 @@ const getCurrentColor = varsnap(function getCurrentColor(current) {
   let after = 0;
   for (let i=0; i<colorsTimestamp.length; i++) {
     if (colorsTimestamp[i] <= current && colorsTimestamp[i+1] > current) {
-      before = colorsTimestamp[i];
-      after = colorsTimestamp[i+1];
+      before = parseInt(colorsTimestamp[i], 10);
+      after = parseInt(colorsTimestamp[i+1], 10);
       break;
     }
   }
@@ -103,7 +109,7 @@ const getCurrentColor = varsnap(function getCurrentColor(current) {
   return rgbToHex(currentColor[0], currentColor[1], currentColor[2]);
 });
 
-function updateBackgroundColor(){
+export function updateBackgroundColor(){
   const current = currentTimestamp();
   const currentColor = getCurrentColor(current);
   document.body.style.backgroundColor = currentColor;
@@ -116,8 +122,3 @@ function updateBackgroundColor(){
 
 updateBackgroundColor();
 $(generateColorsArray);
-
-module.exports = {
-  updateBackgroundColor: updateBackgroundColor,
-  updateBackgroundColorPeriod: updateBackgroundColorPeriod,
-};

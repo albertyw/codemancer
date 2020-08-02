@@ -65,9 +65,10 @@ app.use('/font', express.static(path.join(appRoot, 'codemancer', 'font')));
 app.use('/img', express.static(path.join(appRoot, 'codemancer', 'img')));
 if (process.env.ENV == 'development') {
   const browserifyOptions = {
-    transform: ['envify']
+    plugin: ['tsify', 'tinyify'],
+    transform: ['envify'],
   };
-  const jsFile = path.join(appRoot, 'codemancer', 'js', 'index.js');
+  const jsFile = path.join(appRoot, 'codemancer', 'js', 'index.ts');
   const browserifyHandler = browserifyMiddleware(jsFile, browserifyOptions);
   app.use('/js/' + util.getJSFileName(), browserifyHandler);
 } else {

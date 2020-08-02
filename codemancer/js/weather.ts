@@ -1,9 +1,9 @@
-const $ = require('jquery');
+import $ = require('jquery');
 
-const Rollbar = require('./rollbar');
-const Location = require('./location').Location;
-const util = require('./util');
-const varsnap = require('./varsnap');
+import Rollbar = require('./rollbar');
+import {Location} from './location';
+import util = require('./util');
+import varsnap = require('./varsnap');
 
 const weatherExpiration = 3 * 60 * 60 * 1000;
 const weatherRefreshInterval = 20 * 60 * 1000;
@@ -64,7 +64,10 @@ const weatherConditions = [
   ['Error', '\uf04c'],
   ['none', '\uf04c'],
 ];
-const weatherIconConversions = new Map(weatherConditions);
+const weatherIconConversions = weatherConditions.reduce((map, obj) => {
+  map[obj[0]] = obj[1];
+  return map;
+}, {});
 const descriptors = [
   'Volcanic',
   'Severe',
@@ -95,7 +98,7 @@ const descriptors = [
 ];
 const weatherLookForwardHours = 24;
 
-const Weather = {
+export const Weather = {
 
   $el: {
     now : $('.now'),
@@ -124,7 +127,13 @@ const Weather = {
 
   parse: varsnap(function parse(data) {
     // Lets only keep what we need.
-    const w2 = {};
+    const w2 = {
+      currentTemp: 0,
+      minTemp: 0,
+      maxTemp: 0,
+      conditionSequence: [],
+      worstCondition: '',
+    };
     w2.currentTemp = Math.round(util.chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
     w2.minTemp = w2.currentTemp;
     w2.maxTemp = w2.currentTemp;
@@ -165,7 +174,7 @@ const Weather = {
   }),
 
   conditionIcon: varsnap(function conditionIcon(condition){
-    let weatherIconCode = weatherIconConversions.get(condition);
+    let weatherIconCode = weatherIconConversions[condition];
     if (weatherIconCode !== undefined) {
       return weatherIconCode;
     }
@@ -173,7 +182,7 @@ const Weather = {
       condition = condition.replace(descriptors[i], '');
     }
     condition = condition.replace(/^\s+|\s+$/g, '');
-    weatherIconCode = weatherIconConversions.get(condition);
+    weatherIconCode = weatherIconConversions[condition];
     if (weatherIconCode !== undefined) {
       return weatherIconCode;
     }
@@ -204,13 +213,8 @@ const Weather = {
   },
 };
 
-function main() {
+export function main() {
   Weather.load().
     catch(error => { Rollbar.error(error); });
   setInterval(main, weatherRefreshInterval);
 }
-
-module.exports = {
-  load: main,
-  Weather: Weather,
-};

@@ -64,7 +64,8 @@
     "stylelint": "^13.6.1",
     "stylelint-config-standard": "^20.0.0",
     "sweetalert2": "^9.17.1",
-    "uglify-es": "^3.3.9",
-    "uglifyify": "^5.0.2"
+    "tinyify": "^2.5.2",
+    "tsify": "^5.0.0",
+    "uglify-es": "^3.3.9"
   }
 }
