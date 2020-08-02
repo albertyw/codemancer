@@ -9,7 +9,8 @@ import path = require('path');
 import rfs = require('rotating-file-stream');
 
 const appRoot = appRootPath.toString();
-require('dotenv').config({path: path.join(appRoot, '.env')});
+import dotenv = require('dotenv');
+dotenv.config({path: path.join(appRoot, '.env')});
 import Rollbar = require('../codemancer/js/rollbar');
 import util = require('./util');
 
@@ -29,7 +30,7 @@ app.use(Rollbar.errorHandler());
 app.engine('html', function (filePath, options, callback) {
   fs.readFile(filePath, function (err, content) {
     if(err) {
-      return callback(err, "");
+      return callback(err, '');
     }
     const rendered = mustache.render(content.toString(), options);
     return callback(null, rendered);
