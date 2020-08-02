@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const Location = require('../codemancer/js/location').Location;
 const Rollbar = require('../codemancer/js/rollbar');
 const util = require('../codemancer/js/util');
-const locationData = JSON.stringify(require('./map_fixture.json'));
+import locationData = JSON.parse('{"plus_code":{"compound_code":"QHHV+CP SoMa, San Francisco, CA, USA","global_code":"849VQHHV+CP"},"results":[{"address_components":[{"long_name":"991","short_name":"991","types":["street_number"]},{"long_name":"Folsom Street","short_name":"Folsom St","types":["route"]},{"long_name":"SoMa","short_name":"SoMa","types":["neighborhood","political"]},{"long_name":"San Francisco","short_name":"SF","types":["locality","political"]},{"long_name":"San Francisco County","short_name":"San Francisco County","types":["administrative_area_level_2","political"]},{"long_name":"California","short_name":"CA","types":["administrative_area_level_1","political"]},{"long_name":"United States","short_name":"US","types":["country","political"]},{"long_name":"94107","short_name":"94107","types":["postal_code"]},{"long_name":"1020","short_name":"1020","types":["postal_code_suffix"]}],"formatted_address":"991 Folsom St, San Francisco, CA 94107, USA","geometry":{"location":{"lat":37.7785325,"lng":-122.405463},"location_type":"ROOFTOP","viewport":{"northeast":{"lat":37.77988148029149,"lng":-122.4041140197085},"southwest":{"lat":37.77718351970849,"lng":-122.4068119802915}}},"place_id":"ChIJk-BzoYGAhYARzxzSX__2Tc8","plus_code":{"compound_code":"QHHV+CR SoMa, San Francisco, CA, United States","global_code":"849VQHHV+CR"},"types":["street_address"]}],"status":"OK"}');
 
 describe('Location.targetLocation', function() {
   it('returns data', function() {
