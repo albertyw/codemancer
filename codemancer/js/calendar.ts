@@ -213,13 +213,13 @@ function displayEvents(eventArrays) {
   }
 }
 
-function isToday(d) {
+export function isToday(d) {
   const currentDate = new Date();
   const today = d.toDateString() === currentDate.toDateString();
   return today;
 }
 
-function formatTime(calEvent) {
+export function formatTime(calEvent) {
   let dString = '';
   if (!calEvent.allDay) {
     const hour = (calEvent.when.getHours() + 11) % 12 + 1;
@@ -231,7 +231,7 @@ function formatTime(calEvent) {
   return dString;
 }
 
-function showCal(calendar) {
+export function showCal(calendar) {
   if(calendar.accessRole !== 'owner') {
     return false;
   }
@@ -244,7 +244,7 @@ function showCal(calendar) {
   return true;
 }
 
-function showCalEvent(calEvent) {
+export function showCalEvent(calEvent) {
   // Show event if accepted as an attendee
   if (calEvent.attendees) {
     for(let i=0; i<calEvent.attendees.length; i++) {
@@ -280,10 +280,3 @@ function parseEvent(calEvent) {
 }
 
 $(handleClientLoad);
-
-module.exports = {
-  isToday: isToday,
-  formatTime: formatTime,
-  showCal: showCal,
-  showCalEvent: showCalEvent,
-};
