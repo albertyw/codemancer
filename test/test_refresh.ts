@@ -1,6 +1,6 @@
-const expect = require('chai').expect;
+import {expect} from 'chai';
 
-const pageRefresher = require('../codemancer/js/refresh');
+import pageRefresher = require('../codemancer/js/refresh');
 
 describe('pageRefresher', () => {
   it('returns a refresh time', () => {

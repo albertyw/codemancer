@@ -1,5 +1,5 @@
-const expect = require('chai').expect;
-const varsnap = require('varsnap');
+import {expect} from 'chai';
+import varsnap = require('varsnap');
 
 require('../codemancer/js/background');
 // require('../server/util');

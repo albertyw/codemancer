@@ -1,15 +1,16 @@
 {
     "compilerOptions": {
+        "declaration": true,
+        "module": "commonjs",
         "outDir": "./built",
         "allowJs": true,
-        "target": "es5",
-        "types": [
-            "node"
-        ]
+        "target": "es6"
     },
     "include": [
         "./bin/*",
         "codemancer/js/*",
-        "./server/*"
-    ]
+        "./server/*",
+        "./test/*"
+    ],
+    "exclude": ["built"]
 }

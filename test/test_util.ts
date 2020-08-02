@@ -1,18 +1,18 @@
-const expect = require('chai').expect;
+import {expect} from 'chai';
 
-const util = require('../codemancer/js/util');
+import util = require('../codemancer/js/util');
 
 describe('chainAccessor', () => {
   it('returns properties in an array', () => {
     const x = ['a', ['b', 'c']];
-    expect(util.chainAccessor(x, [0]), 'a');
-    expect(util.chainAccessor(x, [1]), ['b', 'c']);
-    expect(util.chainAccessor(x, [1, 0]), 'b');
+    expect(util.chainAccessor(x, [0])).to.equal('a');
+    expect(util.chainAccessor(x, [1])).to.deep.equal(['b', 'c']);
+    expect(util.chainAccessor(x, [1, 0])).to.equal('b');
   });
   it('returns properties in a map', () => {
     const x = {a: {b: 1, c: 2}};
-    expect(util.chainAccessor(x, ['a']), {b: 1, c: 2});
-    expect(util.chainAccessor(x, ['a', 'b']), 1);
+    expect(util.chainAccessor(x, ['a'])).to.deep.equal({b: 1, c: 2});
+    expect(util.chainAccessor(x, ['a', 'b'])).to.equal(1);
   });
 });
 
