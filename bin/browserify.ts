@@ -2,9 +2,10 @@ import fs = require('fs');
 import path = require('path');
 
 import browserify = require('browserify');
-require('dotenv').config();
+import dotenv = require('dotenv');
 import util = require('../server/util');
 
+dotenv.config();
 const inputFile = path.join(__dirname, '..', 'codemancer', 'js', 'index.ts');
 const outputFile = path.join(__dirname, '..', 'codemancer', 'js', util.getJSFileName());
 

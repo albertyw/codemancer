@@ -1,12 +1,18 @@
 let localStorage = undefined;
 if(typeof window === 'undefined') {
   localStorage = {
-    setItem: function setItem() {},
+    setItem: function setItem() {
+      // mock
+    },
     getItem: function getItem() { return null; },
-    removeItem: function removeItem() {},
+    removeItem: function removeItem() {
+      //mock
+    },
     length: 0,
-    clear: function clear() {},
-    key: function key() {return null},
+    clear: function clear() {
+      //mock
+    },
+    key: function key() {return null; },
   };
 } else {
   localStorage = window.localStorage;

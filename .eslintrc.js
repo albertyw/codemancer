@@ -1,14 +1,19 @@
 module.exports = {
+  "root": true,
   "env": {
     "browser": true,
     "es6": true,
     "node": true
   },
-  "extends": "eslint:recommended",
-  "parserOptions": {
-    "ecmaVersion": 2017,
-    "sourceType": "module"
-  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+  ],
   "rules": {
     "indent": [
       "error",
@@ -28,14 +33,14 @@ module.exports = {
     ]
   },
   "globals": {
+    "it": true,
     "describe": true,
     "context": true,
-    "it": true,
-    "specify": true,
-    "before": true,
     "after": true,
-    "beforeEach": true,
     "afterEach": true,
+    "before": true,
+    "beforeEach": true,
+    "specify": true,
     "gapi": true
   }
 };

@@ -56,7 +56,9 @@ const generateColorsArray = varsnap(function generateColorsArray(){
       colorsTimestamp = Object.keys(colors);
       updateBackgroundColor();
     })
-    .catch(() => {});
+    .catch((error) => {
+      console.error(error);
+    });
 });
 
 const parseData = varsnap(function parseData(data) {
