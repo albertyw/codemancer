@@ -1,4 +1,4 @@
-import {expect} from require('chai');
+import {expect} from 'chai';
 import sinon = require('sinon');
 
 import calendar = require('../codemancer/js/calendar');

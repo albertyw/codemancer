@@ -1,4 +1,4 @@
-import {expect} from require('chai');
+import {expect} from 'chai';
 import varsnap = require('varsnap');
 
 require('../codemancer/js/background');

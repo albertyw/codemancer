@@ -1,4 +1,4 @@
-import {expect} from require('chai');
+import {expect} from 'chai';
 
 import clock = require('../codemancer/js/clock');
 
