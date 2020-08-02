@@ -1,4 +1,4 @@
-// let localStorage = undefined;
+let localStorage = undefined;
 if(typeof window === 'undefined') {
   localStorage = {
     setItem: function setItem() {},
