@@ -1,6 +1,6 @@
-const expect = require('chai').expect;
+import {expect} from require('chai');
 
-const clock = require('../codemancer/js/clock');
+import clock = require('../codemancer/js/clock');
 
 describe('Clock.weekdays', () => {
   it('has weekdays', () => {

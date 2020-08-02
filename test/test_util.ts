@@ -1,6 +1,6 @@
-const expect = require('chai').expect;
+import {expect} from require('chai');
 
-const util = require('../codemancer/js/util');
+import util = require('../codemancer/js/util');
 
 describe('chainAccessor', () => {
   it('returns properties in an array', () => {

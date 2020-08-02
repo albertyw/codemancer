@@ -1,7 +1,7 @@
-const expect = require('chai').expect;
-const sinon = require('sinon');
+import {expect} from require('chai');
+import sinon = require('sinon');
 
-const calendar = require('../codemancer/js/calendar');
+import calendar = require('../codemancer/js/calendar');
 const calFixture = JSON.parse('{"kind":"calendar#events","summary":"Test","updated":"2019-04-11T05:39:28.525Z","timeZone":"America/Los_Angeles","accessRole":"owner","defaultReminders":[],"items":[{"kind":"calendar#event","id":"abcd","status":"confirmed","htmlLink":"https://www.google.com/calendar/event?eid=abcd","created":"2019-03-29T19:48:29.000Z","updated":"2019-04-11T05:39:28.525Z","summary":"Summary","location":"Location","creator":{"email":"Creator.Email","displayName":"Creator.DisplayName","self":true},"organizer":{"email":"Organizer.Email","displayName":"Organizer.DisplayName","self":true},"start":{"dateTime":"2019-04-14T12:00:00-07:00"},"end":{"dateTime":"2019-04-14T15:00:00-07:00"},"iCalUID":"id@google.com","sequence":2,"extendedProperties":{"private":{"everyoneDeclinedDismissed":"-1","eventAttendeeList":"[]"}},"reminders":{"useDefault":true}}]}');
 
 describe('isToday', () => {
@@ -93,13 +93,13 @@ describe('showCalEvent', () => {
     const calEvent = calFixture['items'][0];
     delete calEvent.attendees;
     calEvent.organizer.self = true;
-    let show = calendar.showCalEvent(calEvent);
+    const show = calendar.showCalEvent(calEvent);
     expect(show).to.be.true;
   });
   it('should show event by default', () => {
     const calEvent = calFixture['items'][0];
     delete calEvent.organizer;
-    let show = calendar.showCalEvent(calEvent);
+    const show = calendar.showCalEvent(calEvent);
     expect(show).to.be.true;
   });
 });
