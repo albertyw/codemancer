@@ -31,7 +31,7 @@ let colorsTimestamp = Object.keys(colors);
 let updateBackgroundColorPeriod = 5 * 60 * 1000;
 let updateBackgroundColorInterval = undefined;
 
-export function changeUpdateBackgroundColorPeriod(period) {
+export function changeUpdateBackgroundColorPeriod(period: number): number {
   const original = updateBackgroundColorPeriod;
   updateBackgroundColorPeriod = period;
   return original;
@@ -111,7 +111,7 @@ const getCurrentColor = varsnap(function getCurrentColor(current) {
   return rgbToHex(currentColor[0], currentColor[1], currentColor[2]);
 });
 
-export function updateBackgroundColor(){
+export function updateBackgroundColor(): void {
   const current = currentTimestamp();
   const currentColor = getCurrentColor(current);
   document.body.style.backgroundColor = currentColor;

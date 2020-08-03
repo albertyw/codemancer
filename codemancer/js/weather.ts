@@ -112,7 +112,7 @@ export const Weather = {
     return url;
   }),
 
-  getWeather: function () {
+  getWeather: function (): Promise<Record<string, unknown>> {
     const url = Weather.urlBuilder(Location.targetLocation);
     const getWeather = util.requestPromise(url, weatherExpiration);
     return getWeather;
@@ -190,7 +190,7 @@ export const Weather = {
     return '\uf04c';
   }),
 
-  render: function(wd) {
+  render: function(wd: Record<string, unknown>): void {
     // Set Current Information
     Weather.renderDay(Weather.$el.now, wd);
 
@@ -198,14 +198,14 @@ export const Weather = {
     $('#weather-inner').removeClass('hidden').show();
   },
 
-  renderDay: function(el, data) {
+  renderDay: function(el: $.JQuery, data: Record<string, unknown>): void {
     el.find('.condition').html(data.worstCondition);
     el.find('.min-temp').html(data.minTemp);
     el.find('.current-temp').html(data.currentTemp);
     el.find('.max-temp').html(data.maxTemp);
   },
 
-  load: function() {
+  load: function(): Promise<void> {
     return Weather.getWeather().
       then(Weather.validate).
       then(Weather.parse).
@@ -213,7 +213,7 @@ export const Weather = {
   },
 };
 
-export function main() {
+export function main(): void {
   Weather.load().
     catch(error => { Rollbar.error(error); });
   setInterval(main, weatherRefreshInterval);
