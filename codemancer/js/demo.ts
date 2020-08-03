@@ -22,6 +22,6 @@ function toggleDemo() { // eslint-disable-line no-unused-vars
   }
 }
 
-export function bindDemo() {
+export function bindDemo(): void {
   $('#toggle_demo').click(toggleDemo);
 }

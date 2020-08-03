@@ -4,7 +4,7 @@ import Storage = require('./storage');
 
 let demoOn = false;
 
-export function toggleDemo() {
+export function toggleDemo(): boolean {
   demoOn = !demoOn;
   return demoOn;
 }
@@ -13,7 +13,7 @@ export function toggleDemo() {
  * This returns the current Date object or else returns a mocked date
  * for demo purposes
  **/
-export function getMockDate() {
+export function getMockDate(): Date {
   const date = new Date();
   if(!demoOn) {
     return date;
@@ -30,7 +30,7 @@ export function getMockDate() {
  * Return the value after a chain of accessors;
  * returns undefined instead of an exception if the chain is broken
  **/
-export const chainAccessor = function chainAccessor(data, properties) {
+export const chainAccessor = function chainAccessor(data: Record<string, any>, properties: Array<any>): any {
   let value = data;
   for(let x=0; x<properties.length; x++) {
     value = value && value[properties[x]];
@@ -41,21 +41,21 @@ export const chainAccessor = function chainAccessor(data, properties) {
 /**
  * Trim whitespace around a string
  **/
-export const trimString = function trimString(s) {
+export const trimString = function trimString(s: string): string {
   return s.replace(/^\s+|\s+$/g, '');
 };
 
 /**
  * Return a copy of the array with only unique items
  **/
-export const unique = function unique(array) {
+export const unique = function unique(array: Array<any>): Array<any> {
   return Array.from(new Set(array));
 };
 
 /**
  * AJAX request Promise that caches responses
  **/
-export const requestPromise = function request(url, cacheExpirationDuration) {
+export const requestPromise = function request(url: string, cacheExpirationDuration: number): Promise<any> {
   const responseText = Storage.getExpirableData(url, cacheExpirationDuration/2, false);
   if(responseText !== null) {
     const response = JSON.parse(responseText);
@@ -81,11 +81,11 @@ export const requestPromise = function request(url, cacheExpirationDuration) {
 export class CustomError extends Error {
   public metadata = '';
 
-  constructor(message) {
+  constructor(message: string) {
     super(message);
   }
 
-  static create(message, metadata) {
+  static create(message: string, metadata: any): CustomError {
     const error = new CustomError(message);
     error.metadata = metadata;
     return error;

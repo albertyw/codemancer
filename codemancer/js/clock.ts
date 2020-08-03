@@ -23,7 +23,7 @@ export const Clock = {
   weekdays : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
   months : ['January','February','March','April','May','June','July','August','September','October','November','December'],
 
-  timeParts: function() {
+  timeParts: function(): any {
     const date = util.getMockDate();
     let hour = date.getHours();
 
@@ -42,18 +42,18 @@ export const Clock = {
     };
   },
 
-  prependZero : function prependZero(num) {
+  prependZero : function prependZero(num: number): string {
     if(num < 10) {
       return '0' + num;
     }
     return '' + num;
   },
 
-  dateTemplate: function dateTemplate(parts){
+  dateTemplate: function dateTemplate(parts: any): string{
     return parts.day + ', ' + parts.month + ' ' + parts.date;
   },
 
-  refresh: function() {
+  refresh: function(): void {
     const parts = Clock.timeParts();
     const oldParts = Clock._parts;
 
@@ -70,7 +70,7 @@ export const Clock = {
     Clock._parts = parts;
   },
 
-  start: function() {
+  start: function(): void {
     if (Clock._running) {
       clearInterval(Clock._running);
     }
@@ -89,7 +89,7 @@ export const Clock = {
   }
 };
 
-export function style() {
+export function style(): void {
   // Kick off the clock
   Clock.start();
   const $main = $('main');

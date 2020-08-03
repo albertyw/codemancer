@@ -17,7 +17,7 @@ export const Location = {
   targetLocation: targetLocation,
   cityElement: $('#city'),
 
-  urlBuilder: varsnap(function urlBuilder(location) {
+  urlBuilder: varsnap(function urlBuilder(location: any): string {
     let url = geocodingURL;
     url += '?latlng=' + encodeURIComponent(location.lat + ',' + location.lng);
     url += '&sensor=false';
@@ -25,7 +25,7 @@ export const Location = {
     return url;
   }),
 
-  getDisplayName: function (location) {
+  getDisplayName: function (location: any): Promise<string> {
     const url = Location.urlBuilder(location);
     return util.requestPromise(url, locationExpiration)
       .then((data) => {
@@ -44,7 +44,7 @@ export const Location = {
       });
   },
 
-  parseDisplayName: varsnap(function parseDisplayName(data) {
+  parseDisplayName: varsnap(function parseDisplayName(data: any): string {
     const result=data.results[0].address_components;
     const info=[];
     for(let i=0;i<result.length;++i) {
@@ -64,16 +64,16 @@ export const Location = {
     return locData.join(', ');
   }),
 
-  renderLocation: function (cityName) {
+  renderLocation: function (cityName: string): void {
     Location.cityElement.html(cityName).show();
   },
 
-  showLocation: function() {
+  showLocation: function(): void {
     Location.getDisplayName(Location.targetLocation).
       then(Location.renderLocation);
   },
 };
 
-export function load() {
+export function load(): void {
   Location.showLocation();
 }

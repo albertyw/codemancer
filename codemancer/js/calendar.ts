@@ -213,13 +213,13 @@ function displayEvents(eventArrays) {
   }
 }
 
-export function isToday(d) {
+export function isToday(d: Date): boolean {
   const currentDate = new Date();
   const today = d.toDateString() === currentDate.toDateString();
   return today;
 }
 
-export function formatTime(calEvent) {
+export function formatTime(calEvent: any): string {
   let dString = '';
   if (!calEvent.allDay) {
     const hour = (calEvent.when.getHours() + 11) % 12 + 1;
@@ -231,7 +231,7 @@ export function formatTime(calEvent) {
   return dString;
 }
 
-export function showCal(calendar) {
+export function showCal(calendar: any): boolean {
   if(calendar.accessRole !== 'owner') {
     return false;
   }
@@ -244,7 +244,7 @@ export function showCal(calendar) {
   return true;
 }
 
-export function showCalEvent(calEvent) {
+export function showCalEvent(calEvent: any): boolean {
   // Show event if accepted as an attendee
   if (calEvent.attendees) {
     for(let i=0; i<calEvent.attendees.length; i++) {
