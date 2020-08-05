@@ -198,7 +198,7 @@ export const Weather = {
     $('#weather-inner').removeClass('hidden').show();
   },
 
-  renderDay: function(el: $.JQuery, data: Record<string, unknown>): void {
+  renderDay: function(el, data: Record<string, unknown>): void {
     el.find('.condition').html(data.worstCondition);
     el.find('.min-temp').html(data.minTemp);
     el.find('.current-temp').html(data.currentTemp);
