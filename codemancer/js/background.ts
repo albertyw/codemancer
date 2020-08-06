@@ -29,7 +29,7 @@ const colors = {
 
 let colorsTimestamp = Object.keys(colors);
 let updateBackgroundColorPeriod = 5 * 60 * 1000;
-let updateBackgroundColorInterval = undefined;
+let updateBackgroundColorInterval: number|undefined = undefined;
 
 export function changeUpdateBackgroundColorPeriod(period: number): number {
   const original = updateBackgroundColorPeriod;
@@ -43,16 +43,16 @@ const generateColorsArray = varsnap(function generateColorsArray(){
       const data = parseData(xhrData);
       const sunrise = dateToMinutes(data['sunrise']);
       const sunset = dateToMinutes(data['sunset']);
-      colors[sunrise - 120] = fullNight;
-      colors[sunrise - 60] = lateEvening;
-      colors[sunrise] = midEvening;
-      colors[sunrise + 60] = brightEvening;
-      colors[sunrise + 120] = fullDay;
-      colors[sunset - 120] = fullDay;
-      colors[sunset - 60] = brightEvening;
-      colors[sunset] = midEvening;
-      colors[sunset + 60] = lateEvening;
-      colors[sunset + 120] = fullNight;
+      colors[(sunrise - 120).toString()] = fullNight;
+      colors[(sunrise - 60).toString()] = lateEvening;
+      colors[sunrise.toString()] = midEvening;
+      colors[(sunrise + 60).toString()] = brightEvening;
+      colors[(sunrise + 120).toString()] = fullDay;
+      colors[(sunset - 120).toString()] = fullDay;
+      colors[(sunset - 60).toString()] = brightEvening;
+      colors[sunset.toString()] = midEvening;
+      colors[(sunset + 60).toString()] = lateEvening;
+      colors[(sunset + 120).toString()] = fullNight;
       colorsTimestamp = Object.keys(colors);
       updateBackgroundColor();
     })
