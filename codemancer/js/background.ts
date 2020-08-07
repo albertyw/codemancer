@@ -116,7 +116,7 @@ export function updateBackgroundColor(): void {
   const currentColor = getCurrentColor(current);
   document.body.style.backgroundColor = currentColor;
   if (updateBackgroundColorInterval === undefined) {
-    updateBackgroundColorInterval = setInterval(function() {
+    updateBackgroundColorInterval = window.setInterval(function() {
       updateBackgroundColor();
     }, updateBackgroundColorPeriod);
   }
