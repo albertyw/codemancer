@@ -14,4 +14,4 @@ npm run minify
 # npm prune --production
 
 # Run app
-ts-node server/app.ts
+node_modules/.bin/ts-node server/app.ts
