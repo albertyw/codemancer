@@ -71,7 +71,6 @@
     "jquery": "^3.5.1",
     "mocha": "^8.1.0",
     "mochify": "^6.6.0",
-    "moxios": "^0.4.0",
     "nyc": "^15.1.0",
     "sinon": "^9.0.2",
     "source-map-support": "^0.5.19",
