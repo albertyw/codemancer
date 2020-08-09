@@ -80,7 +80,6 @@
     "sweetalert2": "^9.17.1",
     "tinyify": "^2.5.2",
     "ts-mocha": "^7.0.0",
-    "tsify": "^5.0.0",
-    "uglify-js": "^3.10.0"
+    "tsify": "^5.0.0"
   }
 }
