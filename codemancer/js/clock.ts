@@ -7,9 +7,9 @@ export const Clock = {
     day: '',
     date: undefined,
     month: '',
-    hour: '00',
-    minute: '00',
-    second: '00',
+    hour: '',
+    minute: '',
+    second: '',
   },
   _running : undefined,
 
