@@ -18,3 +18,6 @@ require('./logfit');
 
 import pageRefresher = require('./refresh');
 pageRefresher();
+
+import air = require('./air');
+$(air.main);

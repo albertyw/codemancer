@@ -43,6 +43,11 @@
     font-size: 2em;
 }
 
+#air-message {
+    font-size: 2em;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 08);
+}
+
 .main-return, .wunder {
     cursor: pointer;
     position: fixed;
