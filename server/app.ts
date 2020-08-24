@@ -11,8 +11,12 @@ import rfs = require('rotating-file-stream');
 const appRoot = appRootPath.toString();
 import dotenv = require('dotenv');
 dotenv.config({path: path.join(appRoot, '.env')});
+import frontendUtil = require('../codemancer/js/util');
 import Rollbar = require('../codemancer/js/rollbar');
 import util = require('./util');
+
+const airnowURL = 'https://www.airnowapi.org/aq/forecast/latlong/';
+const airnowExpiration = 60 * 60 * 1000;
 
 const app = express();
 
@@ -60,6 +64,16 @@ loadTemplateVars();
 
 app.get('/', (req, res) => {
   res.render('index', app.locals.templateVars);
+});
+app.get('/airnow/', (req, res) => {
+  // Proxy for Airnow because their API doesn't support CORS
+  const url = new URL(airnowURL);
+  for (const [key, value] of Object.entries(req.query)) {
+    url.searchParams.append(key, <string>value);
+  }
+  frontendUtil.requestPromise(url.href, airnowExpiration).then(function(data) {
+    res.json(data);
+  });
 });
 app.use('/css', express.static(path.join(appRoot, 'codemancer', 'css')));
 app.use('/font', express.static(path.join(appRoot, 'codemancer', 'font')));
