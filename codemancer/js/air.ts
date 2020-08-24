@@ -1,3 +1,4 @@
+import $ = require('jquery');
 import process = require('process');
 
 import {Location} from './location';
@@ -9,6 +10,8 @@ const airnowProxyURL = '/airnow/';
 const airnowProxyExpiration = 10 * 60 * 1000;
 
 export const Air = {
+  dom: $('#air-message'),
+
   urlBuilder: varsnap(function urlBuilder(location) {
     let url = airnowProxyURL;
     url += '?latitude=' + encodeURIComponent(location.lat);
@@ -24,8 +27,9 @@ export const Air = {
   },
 
   showAirQuality: function showAirQuality(): void {
-    Air.getAirQuality().then(function(data) {
-      console.log(data);
+    Air.getAirQuality().then(function(data: any) {
+      const message = 'Air Quality: ' + data[0].Category.Name;
+      Air.dom.text(message);
     });
   }
 
