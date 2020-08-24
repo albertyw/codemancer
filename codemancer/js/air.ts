@@ -28,8 +28,10 @@ export const Air = {
 
   showAirQuality: function showAirQuality(): void {
     Air.getAirQuality().then(function(data: any) {
-      const message = 'Air Quality: ' + data[0].Category.Name;
-      Air.dom.text(message);
+      if (data[0].Category.Number !== 1) {
+        const message = 'Air Quality: ' + data[0].Category.Name;
+        Air.dom.text(message);
+      }
     });
   }
 
