@@ -11,7 +11,8 @@ const targetLocation = {
 };
 const geocodingAPIKey = process.env.GEOCODING_API_KEY;
 const geocodingURL = 'https://maps.googleapis.com/maps/api/geocode/json';
-const locationExpiration = 24 * 60 * 60 * 1000;
+const cacheDuration = 24 * 60 * 60 * 1000;
+const backupDuration = 7 * 24 * 60 * 60 * 1000;
 
 export const Location = {
   targetLocation: targetLocation,
@@ -27,7 +28,7 @@ export const Location = {
 
   getDisplayName: function (location: any): Promise<string> {
     const url = Location.urlBuilder(location);
-    return util.requestPromise(url, locationExpiration)
+    return util.requestPromise(url, cacheDuration, backupDuration)
       .then((data) => {
         if (data.status === 'OK') {
           return Location.parseDisplayName(data);

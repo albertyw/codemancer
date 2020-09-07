@@ -55,8 +55,8 @@ export const unique = function unique(array: Array<any>): Array<any> {
 /**
  * AJAX request Promise that caches responses
  **/
-export const requestPromise = function request(url: string, cacheExpirationDuration: number): Promise<any> {
-  const responseText = Storage.getExpirableData(url, cacheExpirationDuration/2, false);
+export const requestPromise = function request(url: string, cacheDuration: number, backupDuration: number): Promise<any> {
+  const responseText = Storage.getExpirableData(url, cacheDuration, false);
   if(responseText !== null) {
     const response = JSON.parse(responseText);
     return Promise.resolve(response);
@@ -66,7 +66,7 @@ export const requestPromise = function request(url: string, cacheExpirationDurat
     Storage.setExpirableData(url, JSON.stringify(response.data));
     return response.data;
   }).catch((error) => {
-    const responseText = Storage.getExpirableData(url, cacheExpirationDuration, true);
+    const responseText = Storage.getExpirableData(url, backupDuration, true);
     if (responseText === null) {
       const e = CustomError.create('Unrecoverable error when making request', error.response);
       Rollbar.error(e);
