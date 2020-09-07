@@ -7,7 +7,8 @@ import varsnap = require('./varsnap');
 
 const AIRNOW_API_KEY = process.env.AIRNOW_API_KEY;
 const airnowProxyURL = '/airnow/';
-const airnowProxyExpiration = 10 * 60 * 1000;
+const cacheDuration = 20 * 60 * 1000;
+const backupDuration = 3 * 60 * 60 * 1000;
 
 export const Air = {
   dom: $('#air-message'),
@@ -23,7 +24,7 @@ export const Air = {
 
   getAirQuality: function getAirQuality(): Promise<Record<string, unknown>> {
     const url = Air.urlBuilder(Location.targetLocation);
-    return util.requestPromise(url, airnowProxyExpiration);
+    return util.requestPromise(url, cacheDuration, backupDuration);
   },
 
   showAirQuality: function showAirQuality(): void {

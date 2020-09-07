@@ -16,7 +16,8 @@ import Rollbar = require('../codemancer/js/rollbar');
 import util = require('./util');
 
 const airnowURL = 'https://www.airnowapi.org/aq/forecast/latlong/';
-const airnowExpiration = 60 * 60 * 1000;
+const airnowCacheDuration = 60 * 60 * 1000;
+const airnowBackupDuration = 3 * 60 * 60 * 1000;
 
 const app = express();
 
@@ -71,7 +72,7 @@ app.get('/airnow/', (req, res) => {
   for (const [key, value] of Object.entries(req.query)) {
     url.searchParams.append(key, <string>value);
   }
-  frontendUtil.requestPromise(url.href, airnowExpiration).then(function(data) {
+  frontendUtil.requestPromise(url.href, airnowCacheDuration, airnowBackupDuration).then(function(data) {
     res.json(data);
   });
 });
