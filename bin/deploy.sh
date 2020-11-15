@@ -6,33 +6,42 @@ set -exuo pipefail
 IFS=$'\n\t'
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
-cd "$DIR"/..
+cd "$DIR"/.. || exit 1
 
+CONTAINER="codemancer"
+PORT="5002"
+NETWORK="codemancer_net"
+DEPLOY_BRANCH="${1:-}"
+BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+set +x  # Do not print contents of .env
 source .env
+set -x
 
-if [ "$ENV" = "production" ]; then
+if [ -n "$DEPLOY_BRANCH" ]; then
     # Update repository
-    git checkout master
+    git checkout "$DEPLOY_BRANCH"
     git fetch -tp
     git pull
 fi
 
-# Build and start container
+# Build container and network
 docker pull "$(grep FROM Dockerfile | awk '{print $2}')"
-docker build -t "codemancer:$ENV" .
-docker network inspect "codemancer" &>/dev/null ||
-    docker network create --driver bridge "codemancer"
-docker stop codemancer || true
-docker container rm codemancer || true
+docker build -t "$CONTAINER:$BRANCH" .
+docker network inspect "$NETWORK" &>/dev/null ||
+    docker network create --driver bridge "$NETWORK"
+
+# Start container
+docker stop "$CONTAINER" || true
+docker container rm "$CONTAINER" || true
 docker run \
     --detach \
-    --restart always \
-    --publish 127.0.0.1:5002:5002 \
-    --network="codemancer" \
+    --restart=always \
+    --publish="127.0.0.1:$PORT:$PORT" \
+    --network="$NETWORK" \
     --mount type=bind,source="$(pwd)"/logs,target=/var/www/app/logs \
-    --name codemancer "codemancer:$ENV"
+    --name="$CONTAINER" "$CONTAINER:$BRANCH"
 
-if [ "$ENV" = "production" ]; then
+if [ "$ENV" = "production" ] && [ "$BRANCH" = "master" ]; then
     # Cleanup docker
     docker system prune --force --filter "until=168h"
     docker volume prune --force
