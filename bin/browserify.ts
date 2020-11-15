@@ -12,7 +12,6 @@ const outputFile = path.join(__dirname, '..', 'codemancer', 'js', util.getJSFile
 browserify(inputFile, {debug: true})
   .plugin('tsify', {target: 'es6'})
   .plugin('tinyify')
-  .transform('envify')
   .transform('babelify',  {presets: ['@babel/preset-env'], extensions: ['.ts']})
   .bundle()
   .pipe(fs.createWriteStream(outputFile));
