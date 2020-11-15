@@ -23,9 +23,6 @@ docker build -t "codemancer:$ENV" .
 docker network inspect "codemancer" &>/dev/null ||
     docker network create --driver bridge "codemancer"
 docker stop codemancer || true
-docker container prune --force --filter "until=168h"
-docker image prune --force --filter "until=168h"
-docker volume prune --force
 docker container rm codemancer || true
 docker run \
     --detach \
@@ -37,7 +34,8 @@ docker run \
 
 if [ "$ENV" = "production" ]; then
     # Cleanup docker
-    docker image prune --force --filter "until=168h"
+    docker system prune --force --filter "until=168h"
+    docker volume prune --force
 
     # Update nginx
     sudo service nginx reload
