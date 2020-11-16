@@ -29,7 +29,7 @@ export const Air = {
 
   showAirQuality: function showAirQuality(): void {
     Air.getAirQuality().then(function(data: any) {
-      if (data[0].Category.Number !== 1) {
+      if (data[0].Category.Number > 2) {
         const message = 'Air Quality: ' + data[0].Category.Name;
         Air.dom.text(message);
       }
