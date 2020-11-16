@@ -69,6 +69,12 @@ app.get('/', (req, res) => {
 app.get('/airnow/', (req, res) => {
   // Proxy for Airnow because their API doesn't support CORS
   const url = new URL(airnowURL);
+  if (
+    typeof req.query.latitude !== 'string' ||
+    typeof req.query.longitude !== 'string'
+  ) {
+    return res.json({'error': 'latitude is not a string'});
+  }
   url.searchParams.append('latitude', req.query.latitude);
   url.searchParams.append('longitude', req.query.longitude);
   url.searchParams.append('API_KEY', process.env.AIRNOW_API_KEY);
