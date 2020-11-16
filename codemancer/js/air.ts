@@ -1,5 +1,4 @@
 import $ = require('jquery');
-import process = require('process');
 
 import {Location} from './location';
 import util = require('./util');
