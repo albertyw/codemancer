@@ -17,8 +17,6 @@ export const Air = {
     let url = airnowProxyURL;
     url += '?latitude=' + encodeURIComponent(location.lat);
     url += '&longitude=' + encodeURIComponent(location.lng);
-    url += '&API_KEY=' + encodeURIComponent(AIRNOW_API_KEY);
-    url += '&format=application/json';
     return url;
   }),
 

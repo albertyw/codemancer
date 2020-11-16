@@ -72,6 +72,8 @@ app.get('/airnow/', (req, res) => {
   for (const [key, value] of Object.entries(req.query)) {
     url.searchParams.append(key, <string>value);
   }
+  url.searchParams.append('API_KEY', process.env.AIRNOW_API_KEY);
+  url.searchParams.append('format', 'application/json');
   frontendUtil.requestPromise(url.href, airnowCacheDuration, airnowBackupDuration).then(function(data) {
     res.json(data);
   });
