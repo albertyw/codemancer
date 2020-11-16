@@ -6,6 +6,7 @@
     "test": "tests"
   },
   "scripts": {
+    "run": "bin/start.sh",
     "postinstall": "npm run google && npm run install-hadolint",
     "google": "curl -s https://apis.google.com/js/api.js > codemancer/js/google.js",
     "minify": "npm run minify-js && npm run minify-css",
