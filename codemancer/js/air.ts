@@ -5,7 +5,6 @@ import {Location} from './location';
 import util = require('./util');
 import varsnap = require('./varsnap');
 
-const AIRNOW_API_KEY = process.env.AIRNOW_API_KEY;
 const airnowProxyURL = '/airnow/';
 const cacheDuration = 20 * 60 * 1000;
 const backupDuration = 3 * 60 * 60 * 1000;
