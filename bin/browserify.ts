@@ -3,6 +3,7 @@ import path = require('path');
 
 import browserify = require('browserify');
 import dotenv = require('dotenv');
+import minifyStream = require('minify-stream');
 import util = require('../server/util');
 
 dotenv.config();
@@ -11,7 +12,16 @@ const outputFile = path.join(__dirname, '..', 'codemancer', 'js', util.getJSFile
 
 browserify(inputFile, {debug: true})
   .plugin('tsify', {target: 'es6'})
-  .plugin('tinyify')
+  .transform('unassertify', {global: true})
+  .transform('envify', {global: true})
+  .transform('uglifyify', {
+    global: true,
+    toplevel: true,
+    mangle: false
+  })
+  .plugin('common-shakeify')
+  .plugin('browser-pack-flat/plugin')
   .transform('babelify',  {presets: ['@babel/preset-env'], extensions: ['.ts']})
   .bundle()
+  .pipe(minifyStream({sourceMap: true}))
   .pipe(fs.createWriteStream(outputFile));
