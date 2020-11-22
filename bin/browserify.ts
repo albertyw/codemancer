@@ -14,14 +14,12 @@ browserify(inputFile, {debug: true})
   .plugin('tsify', {target: 'es6'})
   .transform('unassertify', {global: true})
   .transform('envify', {global: true})
-  .transform('uglifyify', {
-    global: true,
-    toplevel: true,
-    mangle: false
-  })
   .plugin('common-shakeify')
   .plugin('browser-pack-flat/plugin')
   .transform('babelify',  {presets: ['@babel/preset-env'], extensions: ['.ts']})
   .bundle()
-  .pipe(minifyStream({sourceMap: true}))
+  .pipe(minifyStream({
+    mangle: false,
+    toplevel: true,
+  }))
   .pipe(fs.createWriteStream(outputFile));
