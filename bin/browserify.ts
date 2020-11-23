@@ -21,5 +21,7 @@ browserify(inputFile, {debug: true})
   .pipe(minifyStream({
     mangle: false,
     toplevel: true,
+    keep_fnames: true,
+    keep_classnames: true,
   }))
   .pipe(fs.createWriteStream(outputFile));
