@@ -72,10 +72,10 @@ const parseData = varsnap(function parseData(data) {
   return data;
 });
 
-const dateToMinutes = varsnap(function dateToMinutes(date) {
+const dateToMinutes = function dateToMinutes(date) {
   const timestamp = date.getHours() * 60 + date.getMinutes();
   return timestamp;
-});
+};
 
 const componentToHex = varsnap(function componentToHex(c) {
   const hex = c.toString(16);
@@ -91,7 +91,7 @@ function currentTimestamp() {
   return dateToMinutes(currentDate);
 }
 
-const getCurrentColor = varsnap(function getCurrentColor(current) {
+const getCurrentColor = function getCurrentColor(current) {
   let before = 0;
   let after = 0;
   for (let i=0; i<colorsTimestamp.length; i++) {
@@ -110,7 +110,7 @@ const getCurrentColor = varsnap(function getCurrentColor(current) {
     currentColor[i] = Math.round(currentColor[i]);
   }
   return rgbToHex(currentColor[0], currentColor[1], currentColor[2]);
-});
+};
 
 export function updateBackgroundColor(): void {
   const current = currentTimestamp();
