@@ -16,7 +16,7 @@ export const Air = {
     url += '?latitude=' + encodeURIComponent(location.lat);
     url += '&longitude=' + encodeURIComponent(location.lng);
     return url;
-  }),
+  }, 'Air.urlBuilder'),
 
   getAirQuality: function getAirQuality(): Promise<Record<string, unknown>> {
     const url = Air.urlBuilder(Location.targetLocation);

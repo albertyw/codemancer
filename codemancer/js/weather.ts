@@ -110,7 +110,7 @@ export const Weather = {
     const url = 'https://api.weather.gov/gridpoints/' + location.wfo + '/'
       + location.x + ',' + location.y + '/forecast/hourly';
     return url;
-  }),
+  }, 'Weather.urlBuilder'),
 
   getWeather: function (): Promise<Record<string, unknown>> {
     const url = Weather.urlBuilder(Location.targetLocation);

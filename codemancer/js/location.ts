@@ -24,7 +24,7 @@ export const Location = {
     url += '&sensor=false';
     url += '&key=' + encodeURIComponent(geocodingAPIKey);
     return url;
-  }),
+  }, 'Location.urlBuilder'),
 
   getDisplayName: function (location: any): Promise<string> {
     const url = Location.urlBuilder(location);
