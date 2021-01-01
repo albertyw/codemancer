@@ -1,4 +1,3 @@
-import process = require('process');
 import varsnap = require('varsnap');
 
 varsnap.updateConfig({
