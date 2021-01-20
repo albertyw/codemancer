@@ -80,7 +80,7 @@
     "source-map-support": "^0.5.19",
     "stylelint": "^13.9.0",
     "stylelint-config-standard": "^20.0.0",
-    "sweetalert2": "^9.17.2",
+    "sweetalert2": "^10.13.0",
     "ts-mocha": "^8.0.0",
     "tsify": "^5.0.2",
     "uglifyify": "^5.0.2",
