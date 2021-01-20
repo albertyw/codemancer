@@ -81,7 +81,7 @@
     "stylelint": "^13.9.0",
     "stylelint-config-standard": "^20.0.0",
     "sweetalert2": "^9.17.2",
-    "ts-mocha": "^7.0.0",
+    "ts-mocha": "^8.0.0",
     "tsify": "^5.0.2",
     "uglifyify": "^5.0.2",
     "unassertify": "^2.1.1"
