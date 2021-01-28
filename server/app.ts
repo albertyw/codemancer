@@ -56,8 +56,6 @@ function loadTemplateVars() {
       TOGGLEDEMO_SVG: svgs.toggledemo,
       CALENDAR_AUTH_SVG: svgs.calendarAuth,
       CALENDAR_SIGNOUT_SVG: svgs.calendarSignout,
-      CSS: util.getCSSFileName(),
-      JAVASCRIPT: util.getJSFileName(),
     };
   });
 }
@@ -93,7 +91,7 @@ if (process.env.ENV == 'development') {
   };
   const jsFile = path.join(appRoot, 'codemancer', 'js', 'index.ts');
   const browserifyHandler = browserifyMiddleware(jsFile, browserifyOptions);
-  app.use('/js/' + util.getJSFileName(), browserifyHandler);
+  app.use('/js/codemancer.min.js', browserifyHandler);
 } else {
   app.use('/js', express.static(path.join(appRoot, 'codemancer', 'js')));
 }

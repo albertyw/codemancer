@@ -9,24 +9,6 @@ import varsnap = require('../codemancer/js/varsnap');
 
 const appRoot = appRootPath.toString();
 
-function getVersion() {
-  const head = child_process.execSync('git rev-parse HEAD');
-  const version = util.trimString(head.toString());
-  return version;
-}
-
-export function getCSSFileName(): string {
-  const version = getVersion();
-  const outputFileName = 'codemancer.' + version + '.min.css';
-  return outputFileName;
-}
-
-export function getJSFileName(): string {
-  const version = getVersion();
-  const outputFileName = 'codemancer.' + version + '.min.js';
-  return outputFileName;
-}
-
 export const getSVGs = varsnap(function getSVGs() {
   const svgs = {};
   function readSVGFile(svgFile, svgName) {

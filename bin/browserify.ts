@@ -8,7 +8,7 @@ import util = require('../server/util');
 
 dotenv.config();
 const inputFile = path.join(__dirname, '..', 'codemancer', 'js', 'index.ts');
-const outputFile = path.join(__dirname, '..', 'codemancer', 'js', util.getJSFileName());
+const outputFile = path.join(__dirname, '..', 'codemancer', 'js', 'codemancer.min.js');
 
 browserify(inputFile, {debug: true})
   .plugin('tsify', {target: 'es6'})
