@@ -19,12 +19,11 @@ sudo apt-get install -y nginx
 sudo rm -rf /etc/nginx/sites-available
 sudo rm -rf /etc/nginx/sites-enabled/*
 sudo ln -s ~/codemancer/config/nginx/app /etc/nginx/sites-enabled/codemancer-app
-sudo ln -s ~/codemancer/config/nginx/headers /etc/nginx/sites-enabled/codemancer-headers
 sudo rm -r /var/www/html
 
 # Secure nginx
 sudo mkdir -p /etc/nginx/ssl
-sudo openssl dhparam -out /etc/nginx/ssl/dhparams.pem 2048
+curl https://ssl-config.mozilla.org/ffdhe2048.txt | sudo tee /etc/nginx/ssl/dhparams.pem > /dev/null
 # Copy server.crt and server.key to /etc/nginx/ssl
 sudo service nginx restart
 
