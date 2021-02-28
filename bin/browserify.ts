@@ -4,7 +4,6 @@ import path = require('path');
 import browserify = require('browserify');
 import dotenv = require('dotenv');
 import minifyStream = require('minify-stream');
-import util = require('../server/util');
 
 dotenv.config();
 const inputFile = path.join(__dirname, '..', 'codemancer', 'js', 'index.ts');

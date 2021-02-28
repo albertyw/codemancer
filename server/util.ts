@@ -1,10 +1,8 @@
 import appRootPath = require('app-root-path');
-import child_process = require('child_process');
 import fs = require('fs');
 import path = require('path');
 
 import Rollbar = require('../codemancer/js/rollbar');
-import util = require('../codemancer/js/util');
 import varsnap = require('../codemancer/js/varsnap');
 
 const appRoot = appRootPath.toString();
