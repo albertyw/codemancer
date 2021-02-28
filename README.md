@@ -1,7 +1,7 @@
 [Codemancer](https://www.codemancer.com/)
 =========================================
 
-[ ![Codeship Status for albertyw/codemancer](https://app.codeship.com/projects/fe81e4d0-eb7f-0134-a306-7680d7eb496c/status?branch=master)](https://app.codeship.com/projects/208058)
+[![Build Status](https://drone.albertyw.com/api/badges/albertyw/codemancer/status.svg)](https://drone.albertyw.com/albertyw/codemancer)
 [![Code Climate](https://codeclimate.com/github/albertyw/codemancer/badges/gpa.svg)](https://codeclimate.com/github/albertyw/codemancer)
 [![dependencies Status](https://david-dm.org/albertyw/codemancer/status.svg)](https://david-dm.org/albertyw/codemancer)
 [![devDependencies Status](https://david-dm.org/albertyw/codemancer/dev-status.svg)](https://david-dm.org/albertyw/codemancer?type=dev)
