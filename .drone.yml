@@ -13,7 +13,8 @@ steps:
     commands:
       - ln -fs .env.development .env
       - npm install
-      - npm test
+      - npm run google
+      - npm run test-node
 
   - name: Test Bash
     image: koalaman/shellcheck-alpine:stable
