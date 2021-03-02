@@ -5,8 +5,8 @@ import {Location} from './location';
 import util = require('./util');
 import varsnap = require('./varsnap');
 
-const weatherCacheDuration = 20 * 60 * 1000;
-const weatherBackupDuration = 3 * 60 * 60 * 1000;
+const weatherCacheDuration = 60 * 1000;
+const weatherBackupDuration = 0;
 const defaultWeatherData = {'properties': {'periods': [{'shortForecast': 'Error'}]}};
 // Icons are from https://erikflowers.github.io/weather-icons/
 // Conditions and Descriptors are from observed responses and from
@@ -107,10 +107,10 @@ export const Weather = {
 
   urlBuilder: varsnap(function urlBuilder(location) {
     // Documentation at https://www.weather.gov/documentation/services-web-api#/
-    const url = 'https://api.weather.gov/gridpoints/' + location.wfo + '/'
-      + location.x + ',' + location.y + '/forecast/hourly';
+    // TODO: send params to backend
+    const url = '/weather';
     return url;
-  }, 'Weather.urlBuilder'),
+  }, 'Weather.urlBuilderFrontend'),
 
   getWeather: function (): Promise<Record<string, unknown>> {
     const url = Weather.urlBuilder(Location.targetLocation);
