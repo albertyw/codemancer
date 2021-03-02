@@ -16,7 +16,6 @@ const backupDuration = 7 * 24 * 60 * 60 * 1000;
 
 export const Location = {
   targetLocation: targetLocation,
-  cityElement: $('#city'),
 
   urlBuilder: varsnap(function urlBuilder(location: any): string {
     let url = geocodingURL;
@@ -66,7 +65,8 @@ export const Location = {
   }),
 
   renderLocation: function (cityName: string): void {
-    Location.cityElement.html(cityName).show();
+    const cityElement = $('#city');
+    cityElement.html(cityName).show();
   },
 
   showLocation: function(): void {
