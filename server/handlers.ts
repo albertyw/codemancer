@@ -6,12 +6,16 @@ import path = require('path');
 const appRoot = appRootPath.toString();
 import dotenv = require('dotenv');
 dotenv.config({path: path.join(appRoot, '.env')});
+import {Location} from '../codemancer/js/location';
 import frontendUtil = require('../codemancer/js/util');
 import util = require('./util');
+import varsnap = require('../codemancer/js/varsnap');
 
 const airnowURL = 'https://www.airnowapi.org/aq/forecast/latlong/';
 const airnowCacheDuration = 60 * 60 * 1000;
 const airnowBackupDuration = 3 * 60 * 60 * 1000;
+const weatherCacheDuration = 20 * 60 * 1000;
+const weatherBackupDuration = 3 * 60 * 60 * 1000;
 
 export function loadTemplateVars(app: express.Express) {
   app.locals.templateVars = {};
@@ -53,6 +57,21 @@ function handlerAirnow(req: express.Request, res: express.Response) {
   });
 }
 
+function weatherHandler(req: express.Request, res: express.Response) {
+  // Proxy for weather API
+  // TODO: accept params for weather
+  const urlBuilder = varsnap(function urlBuilder(location) {
+    // Documentation at https://www.weather.gov/documentation/services-web-api#/
+    const url = 'https://api.weather.gov/gridpoints/' + location.wfo + '/'
+      + location.x + ',' + location.y + '/forecast/hourly';
+    return url;
+  }, 'Weather.urlBuilder');
+  const url = new URL(urlBuilder(Location.targetLocation));
+  frontendUtil.requestPromise(url.href, weatherCacheDuration, weatherBackupDuration).then(function(data) {
+    res.json(data);
+  });
+}
+
 function jsHandler() {
   if (process.env.ENV == 'development') {
     const browserifyOptions = {
@@ -71,6 +90,7 @@ function jsHandler() {
 export function loadHandlers(app: express.Express) {
   app.get('/', generateHandlerIndex(app));
   app.get('/airnow/', handlerAirnow);
+  app.get('/weather/', weatherHandler);
   app.use('/css', express.static(path.join(appRoot, 'codemancer', 'css')));
   app.use('/font', express.static(path.join(appRoot, 'codemancer', 'font')));
   app.use('/img', express.static(path.join(appRoot, 'codemancer', 'img')));
