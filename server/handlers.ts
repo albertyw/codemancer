@@ -15,7 +15,7 @@ const airnowURL = 'https://www.airnowapi.org/aq/forecast/latlong/';
 const airnowCacheDuration = 60 * 60 * 1000;
 const airnowBackupDuration = 3 * 60 * 60 * 1000;
 const weatherCacheDuration = 20 * 60 * 1000;
-const weatherBackupDuration = 3 * 60 * 60 * 1000;
+const weatherBackupDuration = 1 * 60 * 60 * 1000;
 
 export function loadTemplateVars(app: express.Express) {
   app.locals.templateVars = {};
