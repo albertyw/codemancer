@@ -74,6 +74,7 @@ const descriptors = [
   'Heavy',
   'Very',
   'Dense',
+  'Widespread',
   'Mostly',
   'Ice',
   'Wintry',
