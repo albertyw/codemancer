@@ -109,6 +109,8 @@ export const Weather = {
   urlBuilder: varsnap(function urlBuilder(location) {
     // Documentation at https://www.weather.gov/documentation/services-web-api#/
     // TODO: send params to backend
+    location;
+
     const url = '/weather';
     return url;
   }, 'Weather.urlBuilderFrontend'),
