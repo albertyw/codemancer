@@ -62,7 +62,12 @@ steps:
     image: curlimages/curl:7.75.0
     commands:
       - |-
-        curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$${CLOUDFLARE_ZONE_ID}/purge_cache" -H "X-Auth-Email: aywang31@gmail.com" -H "X-Auth-Key: $${CLOUDFLARE_AUTH_KEY}" -H "Content-Type: application/json" --data '{"purge_everything":true}'
+        curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$${CLOUDFLARE_ZONE_ID}/purge_cache" -H "Authorization: Bearer $${CLOUDFLARE_API_KEY}" -H "Content-Type: application/json" --data '{"purge_everything":true}'
     when:
       branch:
         - master
+    environment:
+      CLOUDFLARE_ZONE_ID:
+        from_secret: CLOUDFLARE_ZONE_ID
+      CLOUDFLARE_API_KEY:
+        from_secret: CLOUDFLARE_API_KEY
