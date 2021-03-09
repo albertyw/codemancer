@@ -35,7 +35,7 @@ server {
         include           snippets/headers.conf;
         proxy_pass        http://127.0.0.1:5002;
         proxy_buffering   off;
-        add_header        'Cache-Control' 'public';
+        add_header        Cache-Control 'public, no-cache';
         expires           7d;
     }
 }
