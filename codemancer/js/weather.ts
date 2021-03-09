@@ -5,8 +5,7 @@ import {Location} from './location';
 import util = require('./util');
 import varsnap = require('./varsnap');
 
-const weatherCacheDuration = 60 * 1000;
-const weatherBackupDuration = 0;
+const weatherRefreshInterval = 20 * 60 * 1000;
 const defaultWeatherData = {'properties': {'periods': [{'shortForecast': 'Error'}]}};
 // Icons are from https://erikflowers.github.io/weather-icons/
 // Conditions and Descriptors are from observed responses and from
@@ -117,7 +116,7 @@ export const Weather = {
 
   getWeather: function (): Promise<Record<string, unknown>> {
     const url = Weather.urlBuilder(Location.targetLocation);
-    const getWeather = util.requestPromise(url, weatherCacheDuration, weatherBackupDuration);
+    const getWeather = util.requestPromise(url, 0, 0);
     return getWeather;
   },
 
@@ -219,5 +218,5 @@ export const Weather = {
 export function main(): void {
   Weather.load().
     catch(error => { Rollbar.error(error); });
-  setInterval(main, weatherCacheDuration);
+  setInterval(main, weatherRefreshInterval);
 }
