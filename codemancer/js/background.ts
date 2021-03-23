@@ -38,7 +38,7 @@ export function changeUpdateBackgroundColorPeriod(period: number): number {
   return original;
 }
 
-const generateColorsArray = varsnap(function generateColorsArray(){
+const generateColorsArray = function generateColorsArray(){
   util.requestPromise(sunRiseSetAPI, cacheDuration, backupDuration)
     .then((xhrData) => {
       const data = parseData(xhrData);
@@ -60,7 +60,7 @@ const generateColorsArray = varsnap(function generateColorsArray(){
     .catch((error) => {
       console.error(error);
     });
-});
+};
 
 const parseData = varsnap(function parseData(data) {
   data = data.results;
