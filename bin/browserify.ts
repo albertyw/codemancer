@@ -12,7 +12,7 @@ const outputFile = path.join(__dirname, '..', 'codemancer', 'js', 'codemancer.mi
 browserify(inputFile, {debug: true})
   .plugin('tsify', {target: 'es6'})
   .transform('unassertify', {global: true})
-  .transform('envify', {global: true})
+  .transform('loose-envify', {global: true})
   .plugin('common-shakeify')
   .plugin('browser-pack-flat/plugin')
   .transform('babelify',  {presets: ['@babel/preset-env'], extensions: ['.ts']})

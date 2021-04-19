@@ -76,7 +76,7 @@ function jsHandler() {
   if (process.env.ENV == 'development') {
     const browserifyOptions = {
       plugin: ['tsify'],
-      transform: ['envify'],
+      transform: ['loose-envify'],
     };
     const jsFile = path.join(appRoot, 'codemancer', 'js', 'index.ts');
     const browserifyHandler = browserifyMiddleware(jsFile, browserifyOptions);
