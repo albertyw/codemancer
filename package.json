@@ -66,7 +66,7 @@
     "babel-plugin-istanbul": "^6.0.0",
     "babelify": "^10.0.0",
     "browser-pack-flat": "^3.4.2",
-    "browserify": "=16.5.1",
+    "browserify": "^17.0.0",
     "chai": "^4.2.0",
     "clean-css-cli": "^5.2.1",
     "common-shakeify": "^0.6.2",
