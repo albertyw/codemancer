@@ -47,5 +47,6 @@ if [ "$ENV" = "production" ] && [ "$BRANCH" = "master" ]; then
     docker volume prune --force
 
     # Update nginx
+    sudo cp ~/codemancer/config/nginx/app /etc/nginx/sites-enabled/codemancer-app
     sudo service nginx reload
 fi
