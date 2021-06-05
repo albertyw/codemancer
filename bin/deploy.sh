@@ -48,5 +48,5 @@ if [ "$ENV" = "production" ] && [ "$BRANCH" = "master" ]; then
 
     # Update nginx
     sudo cp ~/codemancer/config/nginx/app /etc/nginx/sites-enabled/codemancer-app
-    sudo service nginx reload
+    docker container restart nginx
 fi
