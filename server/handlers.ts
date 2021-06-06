@@ -96,4 +96,5 @@ export function loadHandlers(app: express.Express) {
   app.use('/img', express.static(path.join(appRoot, 'codemancer', 'img')));
   app.use('/js/codemancer.min.js', jsHandler());
   app.use('/privacy.txt', express.static(path.join(appRoot, 'codemancer', 'privacy.txt')));
+  app.use('/tos.txt', express.static(path.join(appRoot, 'codemancer', 'tos.txt')));
 }
