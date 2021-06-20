@@ -25,4 +25,4 @@ sudo rm -r /var/www/html
 sudo mkdir -p /etc/nginx/ssl
 curl https://ssl-config.mozilla.org/ffdhe2048.txt | sudo tee /etc/nginx/ssl/dhparams.pem > /dev/null
 # Copy server.crt and server.key to /etc/nginx/ssl
-docker container restart nginx
+docker exec nginx /etc/init.d/nginx reload
