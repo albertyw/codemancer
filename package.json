@@ -36,7 +36,7 @@
     "app-root-path": "^3.0.0",
     "axios": "^0.21.1",
     "browserify-middleware": "^8.1.1",
-    "dotenv": "^9.0.2",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "logfit": "^0.8.2",
     "morgan": "^1.10.0",
