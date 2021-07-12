@@ -6,7 +6,7 @@ import varsnap = require('./varsnap');
 
 const targetLocation = {
   // Generated from https://www.weather.gov/documentation/services-web-api#/default/get_points__point_
-  wfo: 'MTR', x: '88', y: '126',
+  wfo: 'MTR', x: '84', y: '104',
   lat: 37.778519, lng: -122.40564,
 };
 const geocodingAPIKey = process.env.GEOCODING_API_KEY;
