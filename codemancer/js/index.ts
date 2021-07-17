@@ -15,6 +15,7 @@ demo.bindDemo();
 
 require('./calendar');
 require('./logfit');
+require('./matomo');
 
 import pageRefresher = require('./refresh');
 pageRefresher();
