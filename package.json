@@ -17,7 +17,7 @@
     "stylelint": "stylelint codemancer/css/*",
     "shellcheck": "git ls-files | grep -F .sh | xargs shellcheck --exclude=SC1091",
     "test": "npm run shellcheck && npm run hadolint && npm run test-node",
-    "test-node": "npm run stylelint && npm run eslint && npm run cover",
+    "test-node": "npm run minify && npm run stylelint && npm run eslint && npm run cover",
     "install-hadolint": "curl -sL https://github.com/hadolint/hadolint/releases/download/v1.17.3/hadolint-Linux-x86_64 > node_modules/.bin/hadolint && chmod +x node_modules/.bin/hadolint",
     "hadolint": "hadolint Dockerfile --ignore=DL3008 --ignore=SC2046 --ignore=SC2006"
   },
