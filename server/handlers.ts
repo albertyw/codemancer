@@ -87,9 +87,11 @@ function jsHandler() {
   }
 }
 
-function jsMapHandler(req: express.Request, res: express.Response) {
+function jsMapHandler() {
   if (process.env.ENV === 'development') {
-    return res.sendStatus(404);
+    return function send404(req: express.Request, res: express.Response) {
+      return res.sendStatus(404);
+    };
   }
   const staticHandler = express.static(path.join(appRoot, 'codemancer', 'js', 'codemancer.min.js.map'));
   return staticHandler;
