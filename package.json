@@ -71,6 +71,7 @@
     "clean-css-cli": "^5.2.1",
     "common-shakeify": "^0.6.2",
     "eslint": "^7.18.0",
+    "exorcist": "^2.0.0",
     "jquery": "^3.5.1",
     "loose-envify": "^1.4.0",
     "minify-stream": "^2.1.0",

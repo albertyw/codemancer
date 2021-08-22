@@ -3,11 +3,13 @@ import path = require('path');
 
 import browserify = require('browserify');
 import dotenv = require('dotenv');
+import exorcist = require('exorcist');
 import minifyStream = require('minify-stream');
 
 dotenv.config();
 const inputFile = path.join(__dirname, '..', 'codemancer', 'js', 'index.ts');
 const outputFile = path.join(__dirname, '..', 'codemancer', 'js', 'codemancer.min.js');
+const mapFile = path.join(__dirname, '..', 'codemancer', 'js', 'codemancer.min.js.map');
 
 browserify(inputFile, {debug: true})
   .plugin('tsify', {target: 'es6'})
@@ -23,4 +25,5 @@ browserify(inputFile, {debug: true})
     keep_fnames: true,
     keep_classnames: true,
   }))
+  .pipe(exorcist(mapFile))
   .pipe(fs.createWriteStream(outputFile));
