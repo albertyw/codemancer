@@ -12,7 +12,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 body {
     line-height: 1;
-    font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', 'Open-Light', sans-serif;
+    font-family: HelveticaNeue-UltraLight, 'Helvetica Neue UltraLight', 'Helvetica Neue', Open-Light, sans-serif;
     background-color: #fff;
     margin: 0 auto;
     height: 100%;
@@ -92,19 +92,19 @@ ol, ul {
 }
 
 @font-face {
-    font-family: 'Weather';
+    font-family: Weather;
     src: url('../font/weather.woff') format('truetype');
     font-display: block;
 }
 
 @font-face {
-    font-family: 'Open-Light';
+    font-family: Open-Light;
     src: url('../font/OpenSans-Light.ttf') format('truetype');
     font-display: block;
 }
 
 @font-face {
-    font-family: 'Open-Reg';
+    font-family: Open-Reg;
     src: url('../font/OpenSans-Regular.ttf') format('truetype');
     font-display: block;
 }
@@ -135,19 +135,19 @@ a {
     text-align: center;
     font-weight: normal;
     margin: 30px 0;
-    font-family: 'Helvetica Neue', 'Open-Reg', sans-serif;
+    font-family: 'Helvetica Neue', Open-Reg, sans-serif;
 }
 
 .light-text {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 80%);
 }
 
 .light-text .title {
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 30%);
 }
 
 .light-text .wunder path {
-    fill: rgba(255, 255, 255, 0.3);
+    fill: rgba(255, 255, 255, 30%);
 }
 
 .hover-highlight:hover path {
@@ -155,7 +155,7 @@ a {
 }
 
 .light-text #weather .hour, .light-text #weather .now p {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 80%);
 }
 
 .clearfix {
@@ -163,7 +163,7 @@ a {
 }
 
 .clearfix::before, .clearfix::after {
-    content: "";
+    content: '';
     display: table;
 }
 
@@ -200,5 +200,5 @@ a {
 .wunder a {
     font-size: 1em;
     font-weight: normal;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 30%);
 }

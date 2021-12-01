@@ -19,7 +19,7 @@
 }
 
 #weather .now .condition {
-    font-family: 'Weather', sans-serif;
+    font-family: Weather, sans-serif;
     font-size: 7em;
     height: 170px;
     margin: 0 0 7px 10px;
@@ -36,7 +36,7 @@
 #weather .now b {
     font-size: 3em;
     font-weight: bold;
-    font-family: 'Helvetica Neue', 'Open-Reg', sans-serif;
+    font-family: 'Helvetica Neue', Open-Reg, sans-serif;
 }
 
 #weather .now p {
@@ -45,7 +45,7 @@
 
 #air-message {
     font-size: 1.8em;
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 80%);
 }
 
 .main-return, .wunder {
