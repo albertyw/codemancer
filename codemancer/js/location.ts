@@ -4,11 +4,18 @@ import Rollbar = require('./rollbar');
 import util = require('./util');
 import varsnap = require('./varsnap');
 
-const targetLocation = {
-  // Generated from https://www.weather.gov/documentation/services-web-api#/default/get_points__point_
-  wfo: 'MTR', x: '84', y: '104',
-  lat: 37.778519, lng: -122.40564,
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const sanFranciscoLocation = {
+  // Generated from https://api.weather.gov/points/37.7749,-122.4194
+  wfo: 'MTR', x: '88', y: '126',
+  lat: 37.7749, lng: -122.4194,
 };
+const ellicottCityLocation = {
+  // Generated from https://api.weather.gov/points/39.2673,-76.7983
+  wfo: 'LWX', x: '102', y: '88',
+  lat: 39.2673, lng: -76.7983,
+};
+const targetLocation = ellicottCityLocation;
 const geocodingAPIKey = process.env.GEOCODING_API_KEY;
 const geocodingURL = 'https://maps.googleapis.com/maps/api/geocode/json';
 const cacheDuration = 24 * 60 * 60 * 1000;
