@@ -20,7 +20,8 @@ function setupLogging(app: express.Express) {
   app.use(morgan('combined'));
   const accessLogStream = rfs.createStream('access.log', {
     interval: '7d',
-    path: path.join(appRoot, 'logs', 'app')
+    path: path.join(appRoot, 'logs', 'app'),
+    compress: true,
   });
   app.use(morgan('combined', {stream: accessLogStream }));
   app.use(Rollbar.errorHandler());
