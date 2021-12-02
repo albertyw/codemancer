@@ -1,6 +1,7 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
+    "alpha-value-notation": null,
     "at-rule-no-vendor-prefix": null,
     "color-function-notation": "legacy",
     "indentation": 4,
