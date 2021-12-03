@@ -2,8 +2,9 @@ import $ = require('jquery');
 
 import util = require('./util');
 import varsnap = require('./varsnap');
+import { targetLocation } from './location';
 
-const sunRiseSetAPI = 'https://api.sunrise-sunset.org/json?lat=37.778519&lng=-122.40564&formatted=0';
+const sunRiseSetAPI = `https://api.sunrise-sunset.org/json?lat=${targetLocation.lat}&lng=${targetLocation.lng}&formatted=0`;
 const cacheDuration = 24 * 60 * 60 * 1000;
 const backupDuration = 7 * 24 * 60 * 60 * 1000;
 
