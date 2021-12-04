@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM node:16
 
 LABEL maintainer="git@albertyw.com"
 EXPOSE 5002
@@ -17,11 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gpg-agent software-properties-common curl   `: Needed for add-apt-repository` \
     build-essential curl                        `: Basic-packages` \
-    gcc g++ make                                `: Needed for node native extensions` \
     git                                         `: Needed for pip install from github` \
-    && curl https://deb.nodesource.com/setup_16.x | bash \
-    && apt-get install -y --no-install-recommends \
-    nodejs                                      `: Javascript` \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up directory structures
