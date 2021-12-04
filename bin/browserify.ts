@@ -12,7 +12,7 @@ const outputFile = path.join(__dirname, '..', 'codemancer', 'js', 'codemancer.mi
 const mapFile = path.join(__dirname, '..', 'codemancer', 'js', 'codemancer.min.js.map');
 
 browserify(inputFile, {debug: true})
-  .plugin('tsify', {target: 'es6'})
+  .plugin('tsify', {target: 'es6', exclude: ['./test/*']})
   .transform('unassertify', {global: true})
   .transform('loose-envify', {global: true})
   .plugin('common-shakeify')

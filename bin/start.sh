@@ -10,8 +10,5 @@ cd "$BASE_DIR" || exit 1
 # Create minified files while host directories are mounted
 npm run minify
 
-# Need to make sure dev dependencies are available in case the container gets relaunched
-# npm prune --production
-
 # Run app
 node_modules/.bin/ts-node server/app.ts
