@@ -15,9 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    gpg-agent software-properties-common curl   `: Needed for add-apt-repository` \
-    build-essential curl                        `: Basic-packages` \
-    git                                         `: Needed for pip install from github` \
+    curl git                                    `: Needed for installing dependencies` \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up directory structures
