@@ -27,6 +27,6 @@ COPY . /var/www/app
 WORKDIR /var/www/app
 
 # App-specific setup
-RUN bin/container_setup.sh
+RUN npm ci --only=production
 
 CMD ["bin/start.sh"]
