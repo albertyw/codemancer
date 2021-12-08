@@ -40,7 +40,7 @@ const weatherConditions = [
   ['Thunderstorms', '\uf01e'],
   ['T-storms', '\uf01e'],
   ['Tstms', '\uf01e'],
-  ['Rain and Snow', '\uf017'],
+  ['Rain And Snow', '\uf017'],
   ['Rain/Sleet', '\uf017'],
   ['Sleet', '\uf017'],
   ['Snow/Sleet', '\uf017'],
