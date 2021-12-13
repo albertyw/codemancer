@@ -11,6 +11,7 @@ steps:
   - name: Test Node
     image: satantime/puppeteer-node:16-bullseye-slim
     commands:
+      - apt-get update && apt-get install -y curl
       - ln -fs .env.development .env
       - npm ci
       - npm run google
