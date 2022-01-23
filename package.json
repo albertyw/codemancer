@@ -33,7 +33,7 @@
   "dependencies": {
     "@babel/preset-env": "^7.12.11",
     "app-root-path": "^3.0.0",
-    "axios": "^0.24.0",
+    "axios": "^0.25.0",
     "babelify": "^10.0.0",
     "browser-pack-flat": "^3.4.2",
     "browserify": "^17.0.0",
