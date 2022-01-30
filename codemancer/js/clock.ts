@@ -36,15 +36,18 @@ export const Clock = {
       day: Clock.weekdays[date.getDay()],
       date: date.getDate(),
       month: Clock.months[date.getMonth()],
-      hour: Clock.prependZero(hour),
-      minute: Clock.prependZero(date.getMinutes()),
-      second: Clock.prependZero(date.getSeconds()),
+      hour: Clock.prependZero(hour, false),
+      minute: Clock.prependZero(date.getMinutes(), true),
+      second: Clock.prependZero(date.getSeconds(), true),
     };
   },
 
-  prependZero : function prependZero(num: number): string {
+  prependZero : function prependZero(num: number, visible: boolean): string {
     if(num < 10) {
-      return '0' + num;
+      if(visible) {
+        return '0' + num;
+      }
+      return '<span class="invisible">0</span>' + num;
     }
     return '' + num;
   },
@@ -63,7 +66,7 @@ export const Clock = {
     for (let i=0; i<units.length; i++) {
       const unit = units[i];
       if( parts[unit] !== oldParts[unit] ){
-        Clock.$el.digital.time.find('.' + unit).text(parts[unit]);
+        Clock.$el.digital.time.find('.' + unit).html(parts[unit]);
       }
     }
 

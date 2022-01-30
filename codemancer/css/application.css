@@ -202,3 +202,8 @@ a {
     font-weight: normal;
     color: rgba(255, 255, 255, 0.3);
 }
+
+#time span .invisible {
+    display: inline;
+    visibility: hidden;
+}
