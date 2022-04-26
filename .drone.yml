@@ -9,7 +9,7 @@ volumes:
 
 steps:
   - name: Test Node
-    image: satantime/puppeteer-node:16-bullseye-slim
+    image: satantime/puppeteer-node:18-bullseye-slim
     commands:
       - apt-get update && apt-get install -y curl
       - ln -fs .env.development .env
