@@ -32,7 +32,7 @@
   "private": true,
   "dependencies": {
     "@babel/preset-env": "^7.12.11",
-    "@types/gapi": "^0.0.41",
+    "@types/gapi": "0.0.42",
     "@types/gapi.auth2": "^0.0.56",
     "@types/gapi.client.calendar": "^3.0.10",
     "app-root-path": "^3.0.0",
