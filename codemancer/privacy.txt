@@ -201,9 +201,6 @@ For more information on the privacy practices of Google, please visit the Google
 
 We also encourage you to review the Google's policy for safeguarding your data: https://support.google.com/analytics/answer/6004245.
 
-Segment.io
-Segment.io is a web traffic analysis tool. You can read the Privacy Policy for Segment.io here: https://segment.com/legal/privacy/.
-
 14. CI/CD tools
 
 We may use third-party Service Providers to automate the development process of our Service.
