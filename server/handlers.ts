@@ -21,7 +21,6 @@ export function loadTemplateVars(app: express.Express) {
   app.locals.templateVars = {};
   util.getSVGs().then((svgs) => {
     app.locals.templateVars = {
-      SEGMENT_TOKEN: process.env.SEGMENT_TOKEN,
       LOGFIT_TOKEN: process.env.LOGFIT_TOKEN,
       GITHUB_SVG: svgs.github,
       SUNRISESUNSET_SVG: svgs.sunrisesunset,
