@@ -10,11 +10,6 @@ const sanFranciscoLocation = {
   wfo: 'MTR', x: '88', y: '126',
   lat: 37.7749, lng: -122.4194,
 };
-const ellicottCityLocation = {
-  // Generated from https://api.weather.gov/points/39.2673,-76.7983
-  wfo: 'LWX', x: '102', y: '88',
-  lat: 39.2673, lng: -76.7983,
-};
 export const targetLocation = sanFranciscoLocation;
 const geocodingAPIKey = process.env.GEOCODING_API_KEY;
 const geocodingURL = 'https://maps.googleapis.com/maps/api/geocode/json';
