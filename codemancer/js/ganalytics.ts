@@ -4,7 +4,7 @@ function setupGoogleAnalytics() {
   const script = document.createElement('script');
   script.onload = function () {
     window.dataLayer = window.dataLayer || [];
-    function gtag(){window.dataLayer.push(arguments);}
+    function gtag(){window.dataLayer.push(arguments);} // eslint-disable-line prefer-rest-params
     gtag('js', new Date());
     gtag('config', process.env.GOOGLE_ANALYTICS_TOKEN);
   };
