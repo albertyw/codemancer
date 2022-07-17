@@ -6,9 +6,9 @@ import varsnap = require('./varsnap');
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const sanFranciscoLocation = {
-  // Generated from https://api.weather.gov/points/37.7749,-122.4194
-  wfo: 'MTR', x: '88', y: '126',
-  lat: 37.7749, lng: -122.4194,
+  // Generated from https://api.weather.gov/points/37.78,-122.41
+  wfo: 'MTR', x: '85', y: '105',
+  lat: 37.78, lng: -122.41,
 };
 export const targetLocation = sanFranciscoLocation;
 const geocodingAPIKey = process.env.GEOCODING_API_KEY;
