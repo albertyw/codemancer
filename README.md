@@ -3,8 +3,6 @@
 
 [![Build Status](https://drone.albertyw.com/api/badges/albertyw/codemancer/status.svg)](https://drone.albertyw.com/albertyw/codemancer)
 [![Code Climate](https://codeclimate.com/github/albertyw/codemancer/badges/gpa.svg)](https://codeclimate.com/github/albertyw/codemancer)
-[![dependencies Status](https://david-dm.org/albertyw/codemancer/status.svg)](https://david-dm.org/albertyw/codemancer)
-[![devDependencies Status](https://david-dm.org/albertyw/codemancer/dev-status.svg)](https://david-dm.org/albertyw/codemancer?type=dev)
 [![Varsnap Status](https://www.varsnap.com/project/5760d307-1a12-4bc3-9688-eb5200da81ed/varsnap_badge.svg)](https://www.varsnap.com/project/5760d307-1a12-4bc3-9688-eb5200da81ed/)
 
 Currently extension as a website.
