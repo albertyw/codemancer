@@ -23,7 +23,6 @@ export function loadTemplateVars(app: express.Express) {
     app.locals.templateVars = {
       LOGFIT_TOKEN: process.env.LOGFIT_TOKEN,
       GITHUB_SVG: svgs.github,
-      SUNRISESUNSET_SVG: svgs.sunrisesunset,
       TOGGLEDEMO_SVG: svgs.toggledemo,
       CALENDAR_AUTH_SVG: svgs.calendarAuth,
       CALENDAR_SIGNOUT_SVG: svgs.calendarSignout,
