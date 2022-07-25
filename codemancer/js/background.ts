@@ -1,4 +1,5 @@
 import $ = require('jquery');
+import SunCalc = require('suncalc');
 
 import util = require('./util');
 import varsnap = require('./varsnap');
@@ -40,13 +41,11 @@ export function changeUpdateBackgroundColorPeriod(period: number): number {
 }
 
 const generateColorsArray = function generateColorsArray(){
-  util.requestPromise(sunRiseSetAPI, cacheDuration, backupDuration)
-    .then((xhrData) => {
-      const data = parseData(xhrData);
-      const sunrise = dateToMinutes(data['sunrise']);
-      const sunset = dateToMinutes(data['sunset']);
-      return [sunrise, sunset];
-    }).then((sunriseSunset) => {
+  const times = SunCalc.getTimes(new Date(), targetLocation.lat, targetLocation.lng);
+  const sunrise = new Date(times.sunrise.toLocaleString('en-US', {timeZone: 'America/Los_Angeles'}));
+  const sunset = new Date(times.sunset.toLocaleString('en-US', {timeZone: 'America/Los_Angeles'}));
+  Promise.resolve([dateToMinutes(sunrise), dateToMinutes(sunset)])
+    .then((sunriseSunset) => {
       const sunrise = sunriseSunset[0];
       const sunset = sunriseSunset[1];
       colors[(sunrise - 120).toString()] = fullNight;
