@@ -38,8 +38,8 @@ export function changeUpdateBackgroundColorPeriod(period: number): number {
 
 const generateColorsArray = function generateColorsArray(){
   const times = SunCalc.getTimes(new Date(), targetLocation.lat, targetLocation.lng);
-  const sunrise = new Date(times.sunrise.toLocaleString('en-US', {timeZone: 'America/Los_Angeles'}));
-  const sunset = new Date(times.sunset.toLocaleString('en-US', {timeZone: 'America/Los_Angeles'}));
+  const sunrise = new Date(times.sunrise.toLocaleString('en-US', {timeZone: targetLocation.timezone}));
+  const sunset = new Date(times.sunset.toLocaleString('en-US', {timeZone: targetLocation.timezone}));
   Promise.resolve([dateToMinutes(sunrise), dateToMinutes(sunset)])
     .then((sunriseSunset) => {
       const sunrise = sunriseSunset[0];
