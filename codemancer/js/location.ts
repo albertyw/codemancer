@@ -9,6 +9,7 @@ const sanFranciscoLocation = {
   // Generated from https://api.weather.gov/points/37.78,-122.41
   wfo: 'MTR', x: '85', y: '105',
   lat: 37.78, lng: -122.41,
+  timezone: 'America/Los_Angeles',
 };
 export const targetLocation = sanFranciscoLocation;
 const geocodingAPIKey = process.env.GEOCODING_API_KEY;

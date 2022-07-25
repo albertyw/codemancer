@@ -1,12 +1,9 @@
 import $ = require('jquery');
+import SunCalc = require('suncalc');
 
 import util = require('./util');
 import varsnap = require('./varsnap');
 import { targetLocation } from './location';
-
-const sunRiseSetAPI = `https://api.sunrise-sunset.org/json?lat=${targetLocation.lat}&lng=${targetLocation.lng}&formatted=0`;
-const cacheDuration = 24 * 60 * 60 * 1000;
-const backupDuration = 7 * 24 * 60 * 60 * 1000;
 
 const fullNight = [0, 0, 0];
 const fullDay = [0, 204, 255];
@@ -40,11 +37,13 @@ export function changeUpdateBackgroundColorPeriod(period: number): number {
 }
 
 const generateColorsArray = function generateColorsArray(){
-  util.requestPromise(sunRiseSetAPI, cacheDuration, backupDuration)
-    .then((xhrData) => {
-      const data = parseData(xhrData);
-      const sunrise = dateToMinutes(data['sunrise']);
-      const sunset = dateToMinutes(data['sunset']);
+  const times = SunCalc.getTimes(new Date(), targetLocation.lat, targetLocation.lng);
+  const sunrise = new Date(times.sunrise.toLocaleString('en-US', {timeZone: targetLocation.timezone}));
+  const sunset = new Date(times.sunset.toLocaleString('en-US', {timeZone: targetLocation.timezone}));
+  Promise.resolve([dateToMinutes(sunrise), dateToMinutes(sunset)])
+    .then((sunriseSunset) => {
+      const sunrise = sunriseSunset[0];
+      const sunset = sunriseSunset[1];
       colors[(sunrise - 120).toString()] = fullNight;
       colors[(sunrise - 60).toString()] = lateEvening;
       colors[sunrise.toString()] = midEvening;
@@ -62,16 +61,6 @@ const generateColorsArray = function generateColorsArray(){
       console.error(error);
     });
 };
-
-const parseData = varsnap(function parseData(data) {
-  data = data.results;
-  Object.keys(data).forEach(function(key) {
-    if (key !== 'day_length') {
-      data[key] = new Date(data[key]);
-    }
-  });
-  return data;
-});
 
 const dateToMinutes = function dateToMinutes(date) {
   const timestamp = date.getHours() * 60 + date.getMinutes();
