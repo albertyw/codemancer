@@ -45,6 +45,10 @@ const generateColorsArray = function generateColorsArray(){
       const data = parseData(xhrData);
       const sunrise = dateToMinutes(data['sunrise']);
       const sunset = dateToMinutes(data['sunset']);
+      return [sunrise, sunset];
+    }).then((sunriseSunset) => {
+      const sunrise = sunriseSunset[0];
+      const sunset = sunriseSunset[1];
       colors[(sunrise - 120).toString()] = fullNight;
       colors[(sunrise - 60).toString()] = lateEvening;
       colors[sunrise.toString()] = midEvening;
