@@ -5,10 +5,6 @@ import util = require('./util');
 import varsnap = require('./varsnap');
 import { targetLocation } from './location';
 
-const sunRiseSetAPI = `https://api.sunrise-sunset.org/json?lat=${targetLocation.lat}&lng=${targetLocation.lng}&formatted=0`;
-const cacheDuration = 24 * 60 * 60 * 1000;
-const backupDuration = 7 * 24 * 60 * 60 * 1000;
-
 const fullNight = [0, 0, 0];
 const fullDay = [0, 204, 255];
 const brightEvening = [255, 110, 30];
@@ -65,16 +61,6 @@ const generateColorsArray = function generateColorsArray(){
       console.error(error);
     });
 };
-
-const parseData = varsnap(function parseData(data) {
-  data = data.results;
-  Object.keys(data).forEach(function(key) {
-    if (key !== 'day_length') {
-      data[key] = new Date(data[key]);
-    }
-  });
-  return data;
-});
 
 const dateToMinutes = function dateToMinutes(date) {
   const timestamp = date.getHours() * 60 + date.getMinutes();
