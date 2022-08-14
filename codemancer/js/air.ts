@@ -1,6 +1,7 @@
 import $ = require('jquery');
 
 import {Location} from './location';
+import {LocationData} from '../../server/location';
 import util = require('./util');
 import varsnap = require('./varsnap');
 
@@ -11,25 +12,25 @@ const backupDuration = 3 * 60 * 60 * 1000;
 export const Air = {
   dom: $('#air-message'),
 
-  urlBuilder: varsnap(function urlBuilder(location) {
+  urlBuilder: varsnap(function urlBuilder(locationData: LocationData): string {
     let url = airnowProxyURL;
-    url += '?latitude=' + encodeURIComponent(location.lat);
-    url += '&longitude=' + encodeURIComponent(location.lng);
+    url += '?latitude=' + encodeURIComponent(locationData.lat);
+    url += '&longitude=' + encodeURIComponent(locationData.lng);
     return url;
   }, 'Air.urlBuilder'),
 
-  getAirQuality: function getAirQuality(): Promise<Record<string, unknown>> {
-    const url = Air.urlBuilder(Location.targetLocation);
-    return util.requestPromise(url, cacheDuration, backupDuration);
-  },
-
   showAirQuality: function showAirQuality(): void {
-    Air.getAirQuality().then(function(data: any) {
-      if (data[0].Category.Number > 2) {
-        const message = 'Air Quality: ' + data[0].Category.Name;
-        Air.dom.text(message);
-      }
-    });
+    Location.getLocation()
+      .then(Air.urlBuilder)
+      .then((url: string) => {
+        return util.requestPromise(url, cacheDuration, backupDuration);
+      })
+      .then(function(data: any) {
+        if (data[0].Category.Number > 2) {
+          const message = 'Air Quality: ' + data[0].Category.Name;
+          Air.dom.text(message);
+        }
+      });
   }
 
 };
