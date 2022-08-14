@@ -12,21 +12,11 @@ const sanFranciscoLocation = {
   timezone: 'America/Los_Angeles',
 };
 export const targetLocation = sanFranciscoLocation;
-const geocodingAPIKey = process.env.GEOCODING_API_KEY;
-const geocodingURL = 'https://maps.googleapis.com/maps/api/geocode/json';
 const cacheDuration = 24 * 60 * 60 * 1000;
 const backupDuration = 7 * 24 * 60 * 60 * 1000;
 
 export const Location = {
   targetLocation: targetLocation,
-
-  urlBuilder: varsnap(function urlBuilder(location: any): string {
-    let url = geocodingURL;
-    url += '?latlng=' + encodeURIComponent(location.lat + ',' + location.lng);
-    url += '&sensor=false';
-    url += '&key=' + encodeURIComponent(geocodingAPIKey);
-    return url;
-  }, 'Location.urlBuilder'),
 
   getDisplayName: function (location: any): Promise<string> {
     const url = '/location/';
