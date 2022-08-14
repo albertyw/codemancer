@@ -42,7 +42,7 @@ describe('Location.getLocation', function() {
     this.requestPromise.rejects('error');
     const promise = Location.getLocation();
     promise.then((data) => {
-      expect(data).to.equal('');
+      expect(data).to.equal(Location.targetLocation);
       expect(Rollbar.error.calledOnce).to.be.true;
       expect(Rollbar.error.getCall(0).args[0]).to.equal('Failed to geocode');
       done();
