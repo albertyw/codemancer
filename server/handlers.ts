@@ -2,12 +2,11 @@ import appRootPath = require('app-root-path');
 import browserifyMiddleware = require('browserify-middleware');
 import express = require('express');
 import path = require('path');
-import {Client as GoogleMapsClient, ReverseGeocodeResponse} from '@googlemaps/google-maps-services-js';
 
 const appRoot = appRootPath.toString();
 import dotenv = require('dotenv');
 dotenv.config({path: path.join(appRoot, '.env')});
-import {Location} from '../codemancer/js/location';
+import {Location, targetLocation} from './location';
 import frontendUtil = require('../codemancer/js/util');
 import util = require('./util');
 import varsnap = require('../codemancer/js/varsnap');
@@ -17,7 +16,6 @@ const airnowCacheDuration = 60 * 60 * 1000;
 const airnowBackupDuration = 3 * 60 * 60 * 1000;
 const weatherCacheDuration = 5 * 60 * 1000;
 const weatherBackupDuration = 1 * 60 * 60 * 1000;
-const googleMapsClient = new GoogleMapsClient({});
 
 export function loadTemplateVars(app: express.Express) {
   app.locals.templateVars = {};
@@ -66,30 +64,15 @@ function weatherHandler(req: express.Request, res: express.Response) {
       + location.x + ',' + location.y + '/forecast/hourly';
     return url;
   }, 'Weather.urlBuilder');
-  const url = new URL(urlBuilder(Location.targetLocation));
+  const url = new URL(urlBuilder(targetLocation));
   frontendUtil.requestPromise(url.href, weatherCacheDuration, weatherBackupDuration).then(function(data) {
     res.json(data);
   });
 }
 
 function locationHandler(req: express.Request, res: express.Response) {
-  googleMapsClient.reverseGeocode({
-    params: {
-      latlng: [37.78, -122.41],
-      key: process.env.GEOCODING_API_KEY_BACKEND,
-    },
-  }).then((response: ReverseGeocodeResponse) => {
-    if (response.data.status === 'OK') {
-      const displayName = Location.parseDisplayName(response.data);
-      res.json({
-        'displayName': displayName,
-      });
-    }
-    return '';
-  }, (error) => {
-    return '';
-  }).catch((error) => {
-    return '';
+  Location.getLocation().then((locationData: any) => {
+    res.json(locationData);
   });
 }
 
