@@ -8,7 +8,7 @@
   "scripts": {
     "run": "bin/start.sh",
     "postinstall": "npm run google",
-    "google": "curl -s https://apis.google.com/js/api.js > codemancer/js/google.js",
+    "google": "[ ! -f codemancer/js/google.js ] && curl -s https://apis.google.com/js/api.js > codemancer/js/google.js",
     "minify": "npm run minify-js && npm run minify-css",
     "minify-js": "npm run google && node_modules/.bin/ts-node bin/browserify.ts",
     "minify-css": "git ls-files codemancer/css | xargs node_modules/.bin/cleancss -o codemancer/css/codemancer.min.css -O2",
