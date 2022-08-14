@@ -18,11 +18,13 @@ describe('Location.targetLocation', function() {
 
 describe('Location.getLocation', function() {
   beforeEach(function() {
+    Location.locationData = undefined;
     this.requestPromise = sinon.stub(util, 'requestPromise');
     localStorage.clear();
     sinon.spy(Rollbar, 'error');
   });
   afterEach(function() {
+    Location.locationData = undefined;
     this.requestPromise.restore();
     localStorage.clear();
     Rollbar.error.restore();

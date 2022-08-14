@@ -19,10 +19,14 @@ const backupDuration = 7 * 24 * 60 * 60 * 1000;
 
 export const Location = {
   targetLocation: targetLocation,
+  locationData: undefined,
 
   getLocation: function (): Promise<LocationData> {
     const url = '/location/';
-    return util.requestPromise(url, cacheDuration, backupDuration)
+    if (this.locationData !== undefined) {
+      return this.locationData;
+    }
+    this.locationData = util.requestPromise(url, cacheDuration, backupDuration)
       .then((data) => {
         return data;
       }, (error) => {
@@ -33,6 +37,7 @@ export const Location = {
         Rollbar.error('Failed to geocode', error);
         return targetLocation;
       });
+    return this.locationData;
   },
 
   renderLocation: function (location: LocationData): void {
