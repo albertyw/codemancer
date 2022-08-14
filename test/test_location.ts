@@ -16,7 +16,7 @@ describe('Location.targetLocation', function() {
   });
 });
 
-describe('Location.getDisplayName', function() {
+describe('Location.getLocation', function() {
   beforeEach(function() {
     this.requestPromise = sinon.stub(util, 'requestPromise');
     localStorage.clear();
@@ -29,9 +29,9 @@ describe('Location.getDisplayName', function() {
   });
   it('it returns a location name', function(done) {
     this.requestPromise.resolves(JSON.parse(locationData));
-    const promise = Location.getDisplayName(Location.targetLocation);
+    const promise = Location.getLocation();
     promise.then((data) => {
-      expect(data).to.equal('San Francisco, CA');
+      expect(data.displayName).to.equal('San Francisco, CA');
       done();
     }, (error) => {
       expect.fail(error);
@@ -40,7 +40,7 @@ describe('Location.getDisplayName', function() {
   });
   it('will log an error if the xhr errors out', function(done) {
     this.requestPromise.rejects('error');
-    const promise = Location.getDisplayName(Location.targetLocation);
+    const promise = Location.getLocation();
     promise.then((data) => {
       expect(data).to.equal('');
       expect(Rollbar.error.calledOnce).to.be.true;

@@ -3,6 +3,7 @@ import $ = require('jquery');
 import Rollbar = require('./rollbar');
 import util = require('./util');
 
+// TODO: delete this
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const sanFranciscoLocation = {
   // Generated from https://api.weather.gov/points/37.78,-122.41
@@ -11,17 +12,18 @@ const sanFranciscoLocation = {
   timezone: 'America/Los_Angeles',
 };
 export const targetLocation = sanFranciscoLocation;
+
 const cacheDuration = 24 * 60 * 60 * 1000;
 const backupDuration = 7 * 24 * 60 * 60 * 1000;
 
 export const Location = {
   targetLocation: targetLocation,
 
-  getDisplayName: function (location: any): Promise<string> {
+  getLocation: function (): Promise<any> {
     const url = '/location/';
     return util.requestPromise(url, cacheDuration, backupDuration)
       .then((data) => {
-        return data.displayName;
+        return data;
       }, (error) => {
         Rollbar.error('Failed to geocode', error);
         return '';
@@ -32,13 +34,13 @@ export const Location = {
       });
   },
 
-  renderLocation: function (cityName: string): void {
+  renderLocation: function (location: any): void {
     const cityElement = $('#city');
-    cityElement.html(cityName).show();
+    cityElement.html(location.displayName).show();
   },
 
   showLocation: function(): void {
-    Location.getDisplayName(Location.targetLocation).
+    Location.getLocation().
       then(Location.renderLocation);
   },
 };
