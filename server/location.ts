@@ -4,8 +4,17 @@ import Rollbar = require('../codemancer/js/rollbar');
 import util = require('../codemancer/js/util');
 import varsnap = require('../codemancer/js/varsnap');
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const sanFranciscoLocation = {
+export interface LocationData {
+  wfo: string;
+  x: string;
+  y: string;
+  lat: number;
+  lng: number;
+  timezone: string;
+  displayName: string;
+}
+
+const sanFranciscoLocation: LocationData = {
   // Generated from https://api.weather.gov/points/37.78,-122.41
   wfo: 'MTR', x: '85', y: '105',
   lat: 37.78, lng: -122.41,
@@ -17,7 +26,7 @@ export const targetLocation = sanFranciscoLocation;
 const googleMapsClient = new GoogleMapsClient({});
 
 export const Location = {
-  getLocation: function(): Promise<any> {
+  getLocation: function(): Promise<LocationData> {
     return googleMapsClient.reverseGeocode({
       params: {
         latlng: [targetLocation.lat, targetLocation.lng],
