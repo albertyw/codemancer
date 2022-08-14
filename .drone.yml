@@ -14,7 +14,6 @@ steps:
       - apt-get update && apt-get install -y curl
       - ln -fs .env.development .env
       - npm ci
-      - npm run google
       - npm run test-node
 
   - name: Test Bash
