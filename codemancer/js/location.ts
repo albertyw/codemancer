@@ -29,14 +29,10 @@ export const Location = {
   }, 'Location.urlBuilder'),
 
   getDisplayName: function (location: any): Promise<string> {
-    const url = Location.urlBuilder(location);
+    const url = '/location/';
     return util.requestPromise(url, cacheDuration, backupDuration)
       .then((data) => {
-        if (data.status === 'OK') {
-          return Location.parseDisplayName(data);
-        }
-        Rollbar.error('Failed to geocode', data);
-        return '';
+        return data.displayName;
       }, (error) => {
         Rollbar.error('Failed to geocode', error);
         return '';
