@@ -30,11 +30,11 @@ export function loadTemplateVars(app: express.Express) {
   });
 }
 
-function generateHandlerIndex(app: express.Express): express.Handler {
-  function handlerIndex(req: express.Request, res: express.Response) {
+function generateIndexHandler(app: express.Express): express.Handler {
+  function indexHandler(req: express.Request, res: express.Response) {
     res.render('index', app.locals.templateVars);
   }
-  return handlerIndex;
+  return indexHandler;
 }
 
 function airnowHandler(req: express.Request, res: express.Response) {
@@ -96,7 +96,7 @@ function jsMapHandler() {
 }
 
 export function loadHandlers(app: express.Express) {
-  app.get('/', generateHandlerIndex(app));
+  app.get('/', generateIndexHandler(app));
   app.get('/airnow/', airnowHandler);
   app.get('/weather/', weatherHandler);
   app.use('/css', express.static(path.join(appRoot, 'codemancer', 'css')));
