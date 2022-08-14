@@ -2,6 +2,7 @@ import appRootPath = require('app-root-path');
 import browserifyMiddleware = require('browserify-middleware');
 import express = require('express');
 import path = require('path');
+import {Client as GoogleMapsClient, ReverseGeocodeResponse} from '@googlemaps/google-maps-services-js';
 
 const appRoot = appRootPath.toString();
 import dotenv = require('dotenv');
@@ -16,6 +17,7 @@ const airnowCacheDuration = 60 * 60 * 1000;
 const airnowBackupDuration = 3 * 60 * 60 * 1000;
 const weatherCacheDuration = 5 * 60 * 1000;
 const weatherBackupDuration = 1 * 60 * 60 * 1000;
+const googleMapsClient = new GoogleMapsClient({});
 
 export function loadTemplateVars(app: express.Express) {
   app.locals.templateVars = {};
@@ -70,6 +72,27 @@ function weatherHandler(req: express.Request, res: express.Response) {
   });
 }
 
+function locationHandler(req: express.Request, res: express.Response) {
+  googleMapsClient.reverseGeocode({
+    params: {
+      latlng: [37.78, -122.41],
+      key: process.env.GEOCODING_API_KEY_BACKEND,
+    },
+  }).then((response: ReverseGeocodeResponse) => {
+    if (response.data.status === 'OK') {
+      const displayName = Location.parseDisplayName(response.data);
+      res.json({
+        'displayName': displayName,
+      });
+    }
+    return '';
+  }, (error) => {
+    return '';
+  }).catch((error) => {
+    return '';
+  });
+}
+
 function jsHandler() {
   if (process.env.ENV == 'development') {
     const browserifyOptions = {
@@ -99,6 +122,7 @@ export function loadHandlers(app: express.Express) {
   app.get('/', generateIndexHandler(app));
   app.get('/airnow/', airnowHandler);
   app.get('/weather/', weatherHandler);
+  app.get('/location/', locationHandler);
   app.use('/css', express.static(path.join(appRoot, 'codemancer', 'css')));
   app.use('/font', express.static(path.join(appRoot, 'codemancer', 'font')));
   app.use('/img', express.static(path.join(appRoot, 'codemancer', 'img')));

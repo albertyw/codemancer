@@ -32,6 +32,7 @@
   "private": true,
   "dependencies": {
     "@babel/preset-env": "^7.12.11",
+    "@googlemaps/google-maps-services-js": "^3.3.16",
     "@types/gapi": "0.0.42",
     "@types/gapi.auth2": "^0.0.56",
     "@types/gapi.client.calendar": "^3.0.10",
