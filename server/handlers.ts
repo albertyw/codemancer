@@ -37,7 +37,7 @@ function generateHandlerIndex(app: express.Express): express.Handler {
   return handlerIndex;
 }
 
-function handlerAirnow(req: express.Request, res: express.Response) {
+function airnowHandler(req: express.Request, res: express.Response) {
   // Proxy for Airnow because their API doesn't support CORS
   const url = new URL(airnowURL);
   if (
@@ -97,7 +97,7 @@ function jsMapHandler() {
 
 export function loadHandlers(app: express.Express) {
   app.get('/', generateHandlerIndex(app));
-  app.get('/airnow/', handlerAirnow);
+  app.get('/airnow/', airnowHandler);
   app.get('/weather/', weatherHandler);
   app.use('/css', express.static(path.join(appRoot, 'codemancer', 'css')));
   app.use('/font', express.static(path.join(appRoot, 'codemancer', 'font')));
