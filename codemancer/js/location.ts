@@ -2,7 +2,6 @@ import $ = require('jquery');
 
 import Rollbar = require('./rollbar');
 import util = require('./util');
-import varsnap = require('./varsnap');
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const sanFranciscoLocation = {
@@ -32,26 +31,6 @@ export const Location = {
         return '';
       });
   },
-
-  parseDisplayName: varsnap(function parseDisplayName(data: any): string {
-    const result=data.results[0].address_components;
-    const info=[];
-    for(let i=0;i<result.length;++i) {
-      const type = result[i].types[0];
-      if(type==='country'){
-        info.push(result[i].long_name);
-      } else if(type==='administrative_area_level_1'){
-        info.push(result[i].short_name);
-      } else if(type==='locality'){
-        info.unshift(result[i].long_name);
-      }
-    }
-    const locData = util.unique(info);
-    if (locData.length === 3) {
-      locData.pop();
-    }
-    return locData.join(', ');
-  }),
 
   renderLocation: function (cityName: string): void {
     const cityElement = $('#city');
