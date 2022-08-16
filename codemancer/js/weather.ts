@@ -2,6 +2,7 @@ import $ = require('jquery');
 
 import Rollbar = require('./rollbar');
 import {Location} from './location';
+import { LocationData } from '../../server/location';
 import util = require('./util');
 import varsnap = require('./varsnap');
 
@@ -108,7 +109,7 @@ export const Weather = {
     city : $('#city')
   },
 
-  urlBuilder: varsnap(function urlBuilder(location) {
+  urlBuilder: varsnap(function urlBuilder(location: LocationData) {
     // Documentation at https://www.weather.gov/documentation/services-web-api#/
     // TODO: send params to backend
     location;
@@ -116,12 +117,6 @@ export const Weather = {
     const url = '/weather';
     return url;
   }, 'Weather.urlBuilderFrontend'),
-
-  getWeather: function (): Promise<Record<string, unknown>> {
-    const url = Weather.urlBuilder(Location.targetLocation);
-    const getWeather = util.requestPromise(url, 0, 0);
-    return getWeather;
-  },
 
   validate: varsnap(function validate(data) {
     if (!util.chainAccessor(data, ['properties', 'periods'])) {
@@ -211,10 +206,14 @@ export const Weather = {
   },
 
   load: function(): Promise<void> {
-    return Weather.getWeather().
-      then(Weather.validate).
-      then(Weather.parse).
-      then(Weather.render);
+    return Location.getLocation()
+      .then(Weather.urlBuilder)
+      .then((url: string) => {
+        return util.requestPromise(url, 0, 0);
+      })
+      .then(Weather.validate)
+      .then(Weather.parse)
+      .then(Weather.render);
   },
 };
 

@@ -3,7 +3,8 @@ import SunCalc = require('suncalc');
 
 import util = require('./util');
 import varsnap = require('./varsnap');
-import { targetLocation } from './location';
+import { Location } from './location';
+import { LocationData } from '../../server/location';
 
 const fullNight = [0, 0, 0];
 const fullDay = [0, 204, 255];
@@ -37,13 +38,13 @@ export function changeUpdateBackgroundColorPeriod(period: number): number {
 }
 
 const generateColorsArray = function generateColorsArray(){
-  const times = SunCalc.getTimes(new Date(), targetLocation.lat, targetLocation.lng);
-  const sunrise = new Date(times.sunrise.toLocaleString('en-US', {timeZone: targetLocation.timezone}));
-  const sunset = new Date(times.sunset.toLocaleString('en-US', {timeZone: targetLocation.timezone}));
-  Promise.resolve([dateToMinutes(sunrise), dateToMinutes(sunset)])
-    .then((sunriseSunset) => {
-      const sunrise = sunriseSunset[0];
-      const sunset = sunriseSunset[1];
+  Location.getLocation()
+    .then((locationData: LocationData) => {
+      const times = SunCalc.getTimes(new Date(), locationData.lat, locationData.lng);
+      const sunriseDate = new Date(times.sunrise.toLocaleString('en-US', {timeZone: locationData.timezone}));
+      const sunsetDate = new Date(times.sunset.toLocaleString('en-US', {timeZone: locationData.timezone}));
+      const sunrise = dateToMinutes(sunriseDate);
+      const sunset = dateToMinutes(sunsetDate);
       colors[(sunrise - 120).toString()] = fullNight;
       colors[(sunrise - 60).toString()] = lateEvening;
       colors[sunrise.toString()] = midEvening;
