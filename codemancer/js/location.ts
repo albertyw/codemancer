@@ -20,11 +20,11 @@ export const Location = {
         return data;
       }, (error) => {
         Rollbar.error('Failed to geocode', error);
-        return targetLocation;
+        return {};
       })
       .catch((error) => {
         Rollbar.error('Failed to geocode', error);
-        return targetLocation;
+        return {};
       });
     return this.locationData;
   },

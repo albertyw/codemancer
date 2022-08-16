@@ -6,16 +6,6 @@ import Rollbar = require('../codemancer/js/rollbar');
 import util = require('../codemancer/js/util');
 const locationData = '{"displayName": "San Francisco, CA"}';
 
-describe('Location.targetLocation', function() {
-  it('returns data', function() {
-    expect(Location.targetLocation.wfo).to.not.be.empty;
-    expect(Location.targetLocation.x).to.not.be.empty;
-    expect(Location.targetLocation.y).to.not.be.empty;
-    expect(Location.targetLocation.lat).to.be.a('number');
-    expect(Location.targetLocation.lng).to.be.a('number');
-  });
-});
-
 describe('Location.getLocation', function() {
   beforeEach(function() {
     Location.locationData = undefined;
@@ -44,7 +34,7 @@ describe('Location.getLocation', function() {
     this.requestPromise.rejects('error');
     const promise = Location.getLocation();
     promise.then((data) => {
-      expect(data).to.equal(Location.targetLocation);
+      expect(data).to.eql({});
       expect(Rollbar.error.calledOnce).to.be.true;
       expect(Rollbar.error.getCall(0).args[0]).to.equal('Failed to geocode');
       done();
