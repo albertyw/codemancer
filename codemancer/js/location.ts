@@ -4,21 +4,10 @@ import Rollbar = require('./rollbar');
 import util = require('./util');
 import {LocationData} from '../../server/location';
 
-// TODO: delete this
-const sanFranciscoLocation: LocationData = {
-  // Generated from https://api.weather.gov/points/37.78,-122.41
-  wfo: 'MTR', x: '85', y: '105',
-  lat: 37.78, lng: -122.41,
-  timezone: 'America/Los_Angeles',
-  displayName: '',
-};
-export const targetLocation = sanFranciscoLocation;
-
 const cacheDuration = 24 * 60 * 60 * 1000;
 const backupDuration = 7 * 24 * 60 * 60 * 1000;
 
 export const Location = {
-  targetLocation: targetLocation,
   locationData: undefined,
 
   getLocation: function (): Promise<LocationData> {
