@@ -20,6 +20,9 @@ if(typeof window === 'undefined') {
 
 const Storage = {
   setExpirableData: function setExpirableData(key: string, value: any): void {
+    if (process.env.ENV === 'development') {
+      return;
+    }
     localStorage.setItem(key, value);
     const expireKey = Storage.expireKey(key);
     const timestamp = Date.now().toString();
@@ -27,6 +30,9 @@ const Storage = {
   },
 
   getExpirableData: function getExpirableData(key: string, expirationDuration: number, removeExpired: boolean): any {
+    if (process.env.ENV === 'development') {
+      return null;
+    }
     const expireKey = Storage.expireKey(key);
     const timestampString = localStorage.getItem(expireKey);
     const timestamp = parseInt(timestampString, 10);
