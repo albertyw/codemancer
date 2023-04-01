@@ -55,7 +55,6 @@
     "rollbar": "^2.19.4",
     "rotating-file-stream": "^3.0.2",
     "suncalc": "^1.9.0",
-    "sweetalert2": "^11.0.18",
     "ts-node": "^10.0.0",
     "tsify": "^5.0.2",
     "typescript": "^4.1.3",
