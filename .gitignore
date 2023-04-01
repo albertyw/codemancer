@@ -69,7 +69,6 @@ codemancer/version
 # Test files
 instrumented
 
-codemancer/js/google.js
 *.min.js
 *.min.js.map
 *.min.css

@@ -7,10 +7,8 @@
   },
   "scripts": {
     "run": "bin/start.sh",
-    "postinstall": "npm run google",
-    "google": "[ ! -f codemancer/js/google.js ] && curl -s https://apis.google.com/js/api.js > codemancer/js/google.js || true",
     "minify": "npm run minify-js && npm run minify-css",
-    "minify-js": "npm run google && node_modules/.bin/ts-node bin/browserify.ts",
+    "minify-js": "node_modules/.bin/ts-node bin/browserify.ts",
     "minify-css": "git ls-files codemancer/css | xargs node_modules/.bin/cleancss -o codemancer/css/codemancer.min.css -O2",
     "eslint": "tsc --noEmit && eslint . --ext .ts",
     "cover": "nyc --require dotenv/config --require varsnap/gitbranchenv --instrumenter false mochify --transform loose-envify --plugin tsify --require ts-node/register --require source-map-support/register --transform [ babelify --ignore [ test ] --plugins [ babel-plugin-istanbul ] ] test/* --allow-chrome-as-root",
@@ -33,8 +31,6 @@
   "dependencies": {
     "@babel/preset-env": "^7.12.11",
     "@googlemaps/google-maps-services-js": "^3.3.16",
-    "@types/gapi": "0.0.42",
-    "@types/gapi.auth2": "^0.0.56",
     "app-root-path": "^3.0.0",
     "axios": "^0.27.0",
     "babelify": "^10.0.0",
