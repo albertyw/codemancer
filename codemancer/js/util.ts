@@ -39,13 +39,6 @@ export const chainAccessor = function chainAccessor(data: Record<string, any>, p
 };
 
 /**
- * Trim whitespace around a string
- **/
-export const trimString = function trimString(s: string): string {
-  return s.replace(/^\s+|\s+$/g, '');
-};
-
-/**
  * Return a copy of the array with only unique items
  **/
 export const unique = function unique(array: Array<any>): Array<any> {

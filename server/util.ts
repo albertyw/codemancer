@@ -22,8 +22,6 @@ export const getSVGs = varsnap(function getSVGs() {
     };
   }
   const readers = [
-    new Promise(readSVGFile('calendar-plus-o.svg', 'calendarAuth')),
-    new Promise(readSVGFile('calendar-minus-o.svg', 'calendarSignout')),
     new Promise(readSVGFile('github.svg', 'github')),
     new Promise(readSVGFile('toggledemo.svg', 'toggledemo')),
   ];

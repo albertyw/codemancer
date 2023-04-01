@@ -43,13 +43,6 @@ describe('getMockDate', () => {
   });
 });
 
-describe('trimString', function() {
-  it('should return a trimmed string', function() {
-    const trimmedString = util.trimString(' asdf  ');
-    expect(trimmedString).to.be.equal('asdf');
-  });
-});
-
 describe('unique', function() {
   it('should return a unique copy of the array', function() {
     const test = [1,2,2,3,3,4];
