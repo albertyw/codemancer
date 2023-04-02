@@ -16,6 +16,11 @@
     width: 500px;
 }
 
+#weather-inner {
+  margin: auto;
+  width: 200px;
+}
+
 #weather .now {
     float: left;
     text-align: center;
