@@ -35,7 +35,7 @@ docker container rm "$CONTAINER" || true
 docker run \
     --detach \
     --restart=always \
-    --publish="127.0.0.1:$PORT:$PORT" \
+    --publish="127.0.0.1:$PORT:3000" \
     --network="$NETWORK" \
     --mount type=bind,source="$(pwd)"/logs,target=/var/www/app/logs \
     --name="$CONTAINER" "$CONTAINER:$BRANCH"

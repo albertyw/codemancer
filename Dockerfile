@@ -1,7 +1,7 @@
 FROM node:18-slim
 
 LABEL maintainer="git@albertyw.com"
-EXPOSE 5002
+EXPOSE 3000
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Set locale

@@ -48,7 +48,7 @@ setupMustache(app);
 handlers.loadTemplateVars(app);
 handlers.loadHandlers(app);
 
-const port = process.env.LISTEN_PORT;
+const port = 3000;
 app.listen(port, () => {
-  console.log('Listening on port ' + port);
+  console.log('Listening on port ' + port.toString());
 });
