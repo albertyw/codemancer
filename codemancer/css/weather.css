@@ -24,7 +24,6 @@
 #weather .now {
     float: left;
     text-align: center;
-    margin-top: -15px;
     -ms-display: flexbox;
     display: flex;
 }
@@ -40,11 +39,18 @@
     font-size: 7em;
     height: 170px;
     margin: 0 0 7px 10px;
+
+    /* vertically center */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #weather .now .temp {
-    height: 110px;
+    height: 170px;
     margin: 0 0 7px 10px;
+
+    /* vertically center */
     display: flex;
     flex-direction: column;
     justify-content: center;
