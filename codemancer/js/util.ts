@@ -1,4 +1,4 @@
-const axios = require('axios/dist/browser/axios.cjs'); // eslint-disable-line @typescript-eslint/no-var-requires
+import axios from 'axios';
 import Rollbar = require('./rollbar');
 import Storage = require('./storage');
 
