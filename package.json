@@ -7,8 +7,7 @@
   },
   "scripts": {
     "run": "bin/start.sh",
-    "minify": "npm run minify-js && npm run minify-css",
-    "minify-js": "node_modules/.bin/ts-node bin/browserify.ts",
+    "minify": "npm run build && npm run minify-css",
     "minify-css": "git ls-files codemancer/css | xargs node_modules/.bin/cleancss -o codemancer/css/codemancer.min.css -O2",
     "eslint": "tsc --noEmit && eslint . --ext .ts",
     "cover": "nyc --require dotenv/config --instrumenter false mochify --transform loose-envify --plugin tsify --require ts-node/register --require source-map-support/register --transform [ babelify --global --ignore [ test ] --presets [ @babel/preset-env ] --plugins [ babel-plugin-istanbul ] ] test/* --allow-chrome-as-root",
