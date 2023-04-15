@@ -19,6 +19,9 @@ const config = {
       {
         test: /\.(ts|tsx)$/i,
         loader: "ts-loader",
+        options: {
+          onlyCompileBundledFiles: true,
+        },
         exclude: ["/node_modules/"],
       },
       {
