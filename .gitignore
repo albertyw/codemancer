@@ -71,4 +71,5 @@ instrumented
 
 *.min.js
 *.min.js.map
+*.min.js.LICENSE.txt
 *.min.css
