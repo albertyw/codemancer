@@ -15,7 +15,11 @@
     "stylelint": "stylelint codemancer/css/*",
     "shellcheck": "git ls-files | grep -F .sh | xargs shellcheck --exclude=SC1091",
     "test": "npm run shellcheck && npm run test-node",
-    "test-node": "npm run minify && npm run stylelint && npm run eslint && npm run cover"
+    "test-node": "npm run minify && npm run stylelint && npm run eslint && npm run cover",
+    "build": "webpack --mode=production --node-env=production",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -51,6 +55,7 @@
     "rollbar": "^2.19.4",
     "rotating-file-stream": "^3.0.2",
     "suncalc": "^1.9.0",
+    "ts-loader": "^9.4.2",
     "ts-node": "^10.0.0",
     "tsify": "^5.0.2",
     "typescript": "^5.0.0",
@@ -77,6 +82,7 @@
     "babel-plugin-istanbul": "^6.0.0",
     "chai": "^4.2.0",
     "eslint": "^8.3.0",
+    "html-webpack-plugin": "^5.5.0",
     "mocha": "^10.0.0",
     "mochify": "^9.0.0",
     "nyc": "^15.1.0",
