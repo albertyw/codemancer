@@ -109,14 +109,15 @@ export const Weather = {
     city : $('#city')
   },
 
-  urlBuilder: varsnap(function urlBuilder(location: LocationData) {
+  // TODO: add varsnap here
+  urlBuilder: function urlBuilder(location: LocationData) {
     // Documentation at https://www.weather.gov/documentation/services-web-api#/
     // TODO: send params to backend
     location;
 
     const url = '/weather';
     return url;
-  }, 'Weather.urlBuilderFrontend'),
+  },
 
   validate: varsnap(function validate(data) {
     if (!util.chainAccessor(data, ['properties', 'periods'])) {
