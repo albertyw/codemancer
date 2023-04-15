@@ -1,5 +1,4 @@
 import appRootPath = require('app-root-path');
-import browserifyMiddleware = require('browserify-middleware');
 import webpack = require('webpack');
 import middleware = require('webpack-dev-middleware');
 import express = require('express');
@@ -85,26 +84,11 @@ function webpackMiddleware() {
 }
 
 function jsHandler() {
-  if (process.env.ENV == 'development') {
-    const browserifyOptions = {
-      plugin: ['tsify'],
-      transform: ['loose-envify'],
-    };
-    const jsFile = path.join(appRoot, 'codemancer', 'js', 'index.ts');
-    const browserifyHandler = browserifyMiddleware(jsFile, browserifyOptions);
-    return browserifyHandler;
-  } else {
-    const staticHandler = express.static(path.join(appRoot, 'codemancer', 'js', 'codemancer.min.js'));
-    return staticHandler;
-  }
+  const staticHandler = express.static(path.join(appRoot, 'codemancer', 'js', 'codemancer.min.js'));
+  return staticHandler;
 }
 
 function jsMapHandler() {
-  if (process.env.ENV === 'development') {
-    return function send404(req: express.Request, res: express.Response) {
-      return res.sendStatus(404);
-    };
-  }
   const staticHandler = express.static(path.join(appRoot, 'codemancer', 'js', 'codemancer.min.js.map'));
   return staticHandler;
 }
