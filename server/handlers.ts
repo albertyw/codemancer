@@ -1,5 +1,7 @@
 import appRootPath = require('app-root-path');
 import browserifyMiddleware = require('browserify-middleware');
+import webpack = require('webpack');
+import middleware = require('webpack-dev-middleware');
 import express = require('express');
 import path = require('path');
 
@@ -10,6 +12,7 @@ import {Location, targetLocation} from './location';
 import frontendUtil = require('../codemancer/js/util');
 import util = require('./util');
 import varsnap = require('../codemancer/js/varsnap');
+import webpackConfig = require('../webpack.config.js');
 
 const airnowURL = 'https://www.airnowapi.org/aq/forecast/latlong/';
 const airnowCacheDuration = 60 * 60 * 1000;
@@ -74,6 +77,13 @@ function locationHandler(req: express.Request, res: express.Response) {
   });
 }
 
+function webpackMiddleware() {
+  const compiler = webpack(webpackConfig());
+  return middleware(compiler, {
+    publicPath: '/js/',
+  });
+}
+
 function jsHandler() {
   if (process.env.ENV == 'development') {
     const browserifyOptions = {
@@ -107,8 +117,12 @@ export function loadHandlers(app: express.Express) {
   app.use('/css', express.static(path.join(appRoot, 'codemancer', 'css')));
   app.use('/font', express.static(path.join(appRoot, 'codemancer', 'font')));
   app.use('/img', express.static(path.join(appRoot, 'codemancer', 'img')));
-  app.use('/js/codemancer.min.js', jsHandler());
-  app.use('/js/codemancer.min.js.map', jsMapHandler());
+  if (process.env.ENV == 'development') {
+    app.use(webpackMiddleware());
+  } else {
+    app.use('/js/codemancer.min.js', jsHandler());
+    app.use('/js/codemancer.min.js.map', jsMapHandler());
+  }
   app.use('/privacy.txt', express.static(path.join(appRoot, 'codemancer', 'privacy.txt')));
   app.use('/tos.txt', express.static(path.join(appRoot, 'codemancer', 'tos.txt')));
 }
