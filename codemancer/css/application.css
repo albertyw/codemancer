@@ -22,7 +22,7 @@ ol, ul {
     list-style: none;
 }
 
-@media all and (max-width: 750px) {
+@media all and (width <= 750px) {
     body #weather ul {
         display: none;
     }

@@ -4,10 +4,6 @@
     "alpha-value-notation": null,
     "at-rule-no-vendor-prefix": null,
     "color-function-notation": "legacy",
-    "indentation": 4,
-    "max-line-length": 1000,
     "property-no-vendor-prefix": null,
-    "selector-list-comma-newline-after": "never-multi-line",
-    "string-quotes": "single",
   }
 }
