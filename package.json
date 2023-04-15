@@ -41,6 +41,7 @@
     "browserify-middleware": "^8.1.1",
     "clean-css-cli": "^5.2.1",
     "dotenv": "^16.0.0",
+    "dotenv-webpack": "^8.0.1",
     "express": "^4.17.1",
     "jquery": "^3.5.1",
     "logfit": "^0.8.2",
