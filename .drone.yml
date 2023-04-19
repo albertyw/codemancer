@@ -7,7 +7,7 @@ steps:
     image: satantime/puppeteer-node:18-bullseye-slim
     commands:
       - ln -fs .env.development .env
-      - apt-get update && apt-get install -y curl chromium git
+      - apt-get update && apt-get install -y curl chromium
       - npm ci
       - npm run test-node
     environment:
