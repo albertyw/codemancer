@@ -105,6 +105,7 @@ export function loadHandlers(app: express.Express) {
   if (process.env.ENV == 'development') {
     app.use(webpackMiddleware());
   } else {
+    app.use('/dist', express.static(path.join(appRoot, 'dist')));
     app.use('/js/codemancer.min.js', jsHandler());
     app.use('/js/codemancer.min.js.map', jsMapHandler());
   }

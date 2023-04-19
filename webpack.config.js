@@ -9,8 +9,7 @@ const isProduction = process.env.NODE_ENV == "production";
 const config = {
   entry: "./codemancer/js/index.ts",
   output: {
-    path: path.resolve(__dirname, "codemancer", "js"),
-    filename: "codemancer.min.js",
+    path: path.resolve(__dirname, "dist"),
   },
   devtool: 'inline-source-map',
   plugins: [
