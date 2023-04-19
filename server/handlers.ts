@@ -84,30 +84,16 @@ function webpackMiddleware() {
   });
 }
 
-function jsHandler() {
-  const staticHandler = express.static(path.join(appRoot, 'codemancer', 'js', 'codemancer.min.js'));
-  return staticHandler;
-}
-
-function jsMapHandler() {
-  const staticHandler = express.static(path.join(appRoot, 'codemancer', 'js', 'codemancer.min.js.map'));
-  return staticHandler;
-}
-
 export function loadHandlers(app: express.Express) {
   app.get('/', generateIndexHandler(app));
   app.get('/airnow/', airnowHandler);
   app.get('/weather/', weatherHandler);
   app.get('/location/', locationHandler);
-  app.use('/css', express.static(path.join(appRoot, 'codemancer', 'css')));
-  app.use('/font', express.static(path.join(appRoot, 'codemancer', 'font')));
   app.use('/img', express.static(path.join(appRoot, 'codemancer', 'img')));
   if (process.env.ENV == 'development') {
     app.use(webpackMiddleware());
   } else {
     app.use('/dist', express.static(path.join(appRoot, 'dist')));
-    app.use('/js/codemancer.min.js', jsHandler());
-    app.use('/js/codemancer.min.js.map', jsMapHandler());
   }
   app.use('/privacy.txt', express.static(path.join(appRoot, 'codemancer', 'privacy.txt')));
   app.use('/tos.txt', express.static(path.join(appRoot, 'codemancer', 'tos.txt')));

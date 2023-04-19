@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl git                                    `: Needed for installing dependencies` \
+    curl                                        `: Needed for installing dependencies` \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up directory structures
