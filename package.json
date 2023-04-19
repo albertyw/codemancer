@@ -45,6 +45,7 @@
     "jquery": "^3.5.1",
     "logfit": "^0.8.2",
     "loose-envify": "^1.4.0",
+    "mini-css-extract-plugin": "^2.7.5",
     "morgan": "^1.10.0",
     "mustache": "^4.1.0",
     "rollbar": "^2.19.4",
