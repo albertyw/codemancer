@@ -1,3 +1,7 @@
+import '../css/animations.css';
+import '../css/application.css';
+import '../css/weather.css';
+
 import $ = require('jquery');
 
 require('./rollbar');
