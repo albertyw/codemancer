@@ -3,7 +3,10 @@ import Rollbar = require('rollbar');
 const rollbarClientAccess = process.env.ROLLBAR_CLIENT_ACCESS;
 const rollbarServerAccess = process.env.ROLLBAR_SERVER_ACCESS;
 const rollbarMock = {
-  error: function(e) { console.error(e); },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  error: function(e) {
+    // console.error(e);
+  },
   errorHandler: function() {
     return (err, req, res, next) => {
       this.error(err);
