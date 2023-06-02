@@ -13,8 +13,6 @@ const config = {
   },
   devtool: 'inline-source-map',
   plugins: [
-    // Add your plugins here
-    // Learn more about plugins from https://webpack.js.org/configuration/plugins/
     new Dotenv(),
     new MiniCssExtractPlugin(),
   ],
@@ -43,7 +41,6 @@ const config = {
   },
   optimization: {
     minimizer: [
-      // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
       "...",
       new CssMinimizerPlugin(),
     ],
