@@ -1,3 +1,4 @@
+import Rollbar = require('./rollbar');
 import util = require('./util');
 
 const refreshTime = parseInt(process.env.REFRESH_INTERVAL, 10);
@@ -9,7 +10,7 @@ export = function pageRefresher(): number {
       .then(() => {
         location.reload();
       }, () => {
-        console.error('cannot refresh current page');
+        Rollbar.error('cannot refresh current page');
       });
   }, refreshTime);
   return refreshTime;
