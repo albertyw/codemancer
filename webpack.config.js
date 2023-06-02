@@ -1,10 +1,16 @@
+const child_process = require("child_process");
 const path = require("path");
 
 const Dotenv = require('dotenv-webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const webpack = require('webpack');
 
 const isProduction = process.env.NODE_ENV == "production";
+
+function git_version() {
+  return child_process.execSync('git describe --always', { encoding: 'utf8' }).trim();
+}
 
 const config = {
   entry: "./codemancer/js/index.ts",
@@ -15,6 +21,9 @@ const config = {
   plugins: [
     new Dotenv(),
     new MiniCssExtractPlugin(),
+    new webpack.EnvironmentPlugin({
+      GIT_VERSION: git_version(),
+    }),
   ],
   module: {
     rules: [

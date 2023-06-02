@@ -22,8 +22,16 @@ function getRollbar(rollbarAccess) {
   const rollbarConfig = {
     accessToken: process.env.ROLLBAR_CLIENT_ACCESS,
     captureUncaught: true,
+    captureUnhandledRejections: true,
     payload: {
       environment: process.env.ENV,
+      client: {
+        javascript: {
+          source_map_enabled: true,
+          code_version: process.env.GIT_VERSION,
+          guess_uncaught_frames: true,
+        },
+      },
     }
   };
   return Rollbar.init(rollbarConfig);
