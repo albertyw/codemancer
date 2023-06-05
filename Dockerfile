@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl                                        `: Needed for installing dependencies` \
+    git                                         `: Needed for sourcemap versioning` \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up directory structures
