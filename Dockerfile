@@ -1,4 +1,4 @@
-FROM node:18-slim
+FROM node:21-slim
 
 LABEL maintainer="git@albertyw.com"
 EXPOSE 3000
