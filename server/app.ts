@@ -17,6 +17,7 @@ const app = express();
 
 // Set up logging
 function setupLogging(app: express.Express) {
+  morgan.token('remote-addr', function (req, res) {  return req.headers['cf-connecting-ip']  });
   app.use(morgan('combined'));
   const accessLogStream = rfs.createStream('access.log', {
     interval: '7d',
