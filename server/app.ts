@@ -18,7 +18,7 @@ const app = express();
 // Set up logging
 function setupLogging(app: express.Express) {
   morgan.token('remote-addr', function (req) {
-    let ip = req.headersDistinct['x-real-ip'];
+    const ip = req.headersDistinct['x-real-ip'];
     if (ip === undefined) {
       return '127.0.0.1';
     }
