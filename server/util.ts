@@ -1,9 +1,9 @@
-import appRootPath = require('app-root-path');
-import fs = require('fs');
-import path = require('path');
+import appRootPath from 'app-root-path';
+import fs from 'fs';
+import path from 'path';
 
-import getRollbar = require('../codemancer/js/rollbar');
-import varsnap = require('../codemancer/js/varsnap');
+import getRollbar from '../codemancer/js/rollbar.js';
+import varsnap from '../codemancer/js/varsnap.js';
 
 const appRoot = appRootPath.toString();
 

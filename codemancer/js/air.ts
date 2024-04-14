@@ -1,8 +1,8 @@
-import $ = require('jquery');
+import $ from 'jquery';
 
-import {Location} from './location';
-import {LocationData} from '../../server/location';
-import util = require('./util');
+import {Location} from './location.js';
+import {LocationData} from '../../server/location.js';
+import {requestPromise} from './util.js';
 
 const airnowProxyURL = '/airnow/';
 const cacheDuration = 20 * 60 * 1000;
@@ -23,7 +23,7 @@ export const Air = {
     Location.getLocation()
       .then(Air.urlBuilder)
       .then((url: string) => {
-        return util.requestPromise(url, cacheDuration, backupDuration);
+        return requestPromise(url, cacheDuration, backupDuration);
       })
       .then(function(data: any) {
         if (data[0].Category.Number > 2) {

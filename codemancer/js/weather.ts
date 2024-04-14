@@ -1,10 +1,10 @@
-import $ = require('jquery');
+import $ from 'jquery';
 
-import getRollbar = require('./rollbar');
-import {Location} from './location';
-import { LocationData } from '../../server/location';
-import util = require('./util');
-import varsnap = require('./varsnap');
+import getRollbar from './rollbar.js';
+import {Location} from './location.js';
+import { LocationData } from '../../server/location.js';
+import { chainAccessor, requestPromise } from './util.js';
+import varsnap from './varsnap.js';
 
 const weatherRefreshInterval = 20 * 60 * 1000;
 const defaultWeatherData = {'properties': {'periods': [{'shortForecast': 'Error'}]}};
@@ -120,7 +120,7 @@ export const Weather = {
   },
 
   validate: varsnap(function validate(data) {
-    if (!util.chainAccessor(data, ['properties', 'periods'])) {
+    if (!chainAccessor(data, ['properties', 'periods'])) {
       return defaultWeatherData;
     }
     return data;
@@ -135,17 +135,17 @@ export const Weather = {
       conditionSequence: [],
       worstCondition: '',
     };
-    w2.currentTemp = Math.round(util.chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
+    w2.currentTemp = Math.round(chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
     w2.minTemp = w2.currentTemp;
     w2.maxTemp = w2.currentTemp;
-    w2.conditionSequence = [util.chainAccessor(data, ['properties', 'periods', 0, 'shortForecast'])];
+    w2.conditionSequence = [chainAccessor(data, ['properties', 'periods', 0, 'shortForecast'])];
     for (let i = 0; i < weatherLookForwardHours; i++) {
-      const periodLength = util.chainAccessor(data, ['properties', 'periods', 'length']);
+      const periodLength = chainAccessor(data, ['properties', 'periods', 'length']);
       if (!periodLength || i >= periodLength) {
         break;
       }
       const period = data.properties.periods[i];
-      const temp = Math.round(util.chainAccessor(period, ['temperature']));
+      const temp = Math.round(chainAccessor(period, ['temperature']));
       w2.minTemp = Math.min(w2.minTemp, temp);
       if (temp < 140) {
         // the API sometimes breaks and returns 140 as a temperature
@@ -210,7 +210,7 @@ export const Weather = {
     return Location.getLocation()
       .then(Weather.urlBuilder)
       .then((url: string) => {
-        return util.requestPromise(url, 0, 0);
+        return requestPromise(url, 0, 0);
       })
       .then(Weather.validate)
       .then(Weather.parse)

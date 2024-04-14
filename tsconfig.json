@@ -1,7 +1,9 @@
 {
     "compilerOptions": {
         "declaration": true,
-        "module": "commonjs",
+        "sourceMap": true,
+        "allowSyntheticDefaultImports": true,
+        "module": "NodeNext",
         "outDir": "./built",
         "allowJs": true,
         "target": "es6",

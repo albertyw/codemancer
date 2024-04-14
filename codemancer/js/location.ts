@@ -1,8 +1,8 @@
-import $ = require('jquery');
+import $ from 'jquery';
 
-import getRollbar = require('./rollbar');
-import util = require('./util');
-import {LocationData} from '../../server/location';
+import getRollbar from './rollbar.js';
+import { requestPromise } from './util.js';
+import { LocationData } from '../../server/location.js';
 
 const cacheDuration = 24 * 60 * 60 * 1000;
 const backupDuration = 7 * 24 * 60 * 60 * 1000;
@@ -15,7 +15,7 @@ export const Location = {
     if (this.locationData !== undefined) {
       return this.locationData;
     }
-    this.locationData = util.requestPromise(url, cacheDuration, backupDuration)
+    this.locationData = requestPromise(url, cacheDuration, backupDuration)
       .then((data) => {
         return data;
       }, (error) => {

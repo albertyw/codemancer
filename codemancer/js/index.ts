@@ -2,26 +2,26 @@ import '../css/animations.css';
 import '../css/application.css';
 import '../css/weather.css';
 
-import $ = require('jquery');
+import $ from 'jquery';
 
-import getRollbar = require('./rollbar');
+import getRollbar from './rollbar.js';
 getRollbar();
-import clock = require('./clock');
-$(clock.style);
+import { style as clockStyle } from './clock.js';
+$(clockStyle);
 
-import weather = require('./weather');
-import location = require('./location');
-$(weather.main);
-$(location.load);
+import { main as weatherMain } from './weather.js';
+import { load as locationLoad } from './location.js';
+$(weatherMain);
+$(locationLoad);
 
-import demo = require('./demo');
-demo.bindDemo();
+import bindDemo from './demo.js';
+bindDemo();
 
-require('./logfit');
-require('./ganalytics');
+import './logfit.js';
+import './ganalytics.js';
 
-import pageRefresher = require('./refresh');
+import pageRefresher from './refresh.js';
 pageRefresher();
 
-import air = require('./air');
-$(air.main);
+import { main as airMain } from './air.js';
+$(airMain);

@@ -1,11 +1,11 @@
-import $ = require('jquery');
-import SunCalc = require('suncalc');
+import $ from 'jquery';
+import SunCalc from 'suncalc';
 
-import getRollbar = require('./rollbar');
-import util = require('./util');
-import varsnap = require('./varsnap');
-import { Location } from './location';
-import { LocationData } from '../../server/location';
+import getRollbar from './rollbar.js';
+import {getMockDate} from './util.js';
+import varsnap from './varsnap.js';
+import { Location } from './location.js';
+import { LocationData } from '../../server/location.js';
 
 const fullNight = [0, 0, 0];
 const fullDay = [0, 204, 255];
@@ -79,7 +79,7 @@ const rgbToHex = varsnap(function rgbToHex(r, g, b) {
 });
 
 function currentTimestamp() {
-  const currentDate = util.getMockDate();
+  const currentDate = getMockDate();
   return dateToMinutes(currentDate);
 }
 

@@ -1,6 +1,7 @@
 import axios from 'axios';
-import getRollbar = require('./rollbar');
-import Storage = require('./storage');
+
+import getRollbar from './rollbar.js';
+import Storage from './storage.js';
 
 let demoOn = false;
 
