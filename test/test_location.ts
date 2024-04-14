@@ -1,9 +1,9 @@
 import {expect} from 'chai';
-import sinon = require('sinon');
+import sinon from 'sinon';
 
-import {Location} from '../codemancer/js/location';
-import getRollbar = require('../codemancer/js/rollbar');
-import util = require('../codemancer/js/util');
+import {Location} from '../codemancer/js/location.js';
+import getRollbar from '../codemancer/js/rollbar.js';
+import * as util from '../codemancer/js/util.js';
 const locationData = '{"displayName": "San Francisco, CA"}';
 
 describe('Location.getLocation', function() {

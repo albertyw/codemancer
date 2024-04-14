@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 
-import pageRefresher = require('../codemancer/js/refresh');
+import pageRefresher from '../codemancer/js/refresh.js';
 
 describe('pageRefresher', () => {
   it('returns a refresh time', () => {

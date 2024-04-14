@@ -1,20 +1,20 @@
-import $ = require('jquery');
+import $ from 'jquery';
 
-import background = require('./background');
-import util = require('./util');
+import { changeUpdateBackgroundColorPeriod } from './background.js';
+import { toggleDemo } from './util.js';
 
 let originalUpdateBackgroundColorPeriod = 1000;
 
 function startDemo() {
-  originalUpdateBackgroundColorPeriod = background.changeUpdateBackgroundColorPeriod(500);
+  originalUpdateBackgroundColorPeriod = changeUpdateBackgroundColorPeriod(500);
 }
 
 function stopDemo() {
-  background.changeUpdateBackgroundColorPeriod(originalUpdateBackgroundColorPeriod);
+  changeUpdateBackgroundColorPeriod(originalUpdateBackgroundColorPeriod);
 }
 
-function toggleDemo() { // eslint-disable-line no-unused-vars
-  const demoOn = util.toggleDemo();
+function toggleDemoClick() { // eslint-disable-line no-unused-vars
+  const demoOn = toggleDemo();
   if (demoOn) {
     stopDemo();
   } else {
@@ -22,6 +22,6 @@ function toggleDemo() { // eslint-disable-line no-unused-vars
   }
 }
 
-export function bindDemo(): void {
-  $('#toggle_demo').click(toggleDemo);
+export default function bindDemo(): void {
+  $('#toggle_demo').click(toggleDemoClick);
 }

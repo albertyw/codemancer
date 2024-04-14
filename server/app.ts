@@ -1,17 +1,17 @@
-import appRootPath = require('app-root-path');
-import console = require('console');
-import express = require('express');
-import fs = require('fs');
-import morgan = require('morgan');
-import mustache = require('mustache');
-import path = require('path');
-import rfs = require('rotating-file-stream');
+import appRootPath from 'app-root-path';
+import console from 'console';
+import express from 'express';
+import fs from 'fs';
+import morgan from 'morgan';
+import mustache from 'mustache';
+import path from 'path';
+import rfs from 'rotating-file-stream';
 
 const appRoot = appRootPath.toString();
-import dotenv = require('dotenv');
+import dotenv from 'dotenv';
 dotenv.config({path: path.join(appRoot, '.env')});
-import getRollbar = require('../codemancer/js/rollbar');
-import handlers = require('./handlers');
+import getRollbar from '../codemancer/js/rollbar.js';
+import { loadHandlers, loadTemplateVars } from './handlers.js';
 
 const app = express();
 
@@ -52,8 +52,8 @@ function setupMustache(app: express.Express) {
 }
 setupMustache(app);
 
-handlers.loadTemplateVars(app);
-handlers.loadHandlers(app);
+loadTemplateVars(app);
+loadHandlers(app);
 
 const port = 3000;
 app.listen(port, () => {

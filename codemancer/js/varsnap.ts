@@ -1,4 +1,4 @@
-import varsnap = require('varsnap');
+import varsnap from 'varsnap';
 
 varsnap.updateConfig({
   varsnap: process.env.VARSNAP === 'true',
@@ -8,4 +8,4 @@ varsnap.updateConfig({
   consumerToken: process.env.VARSNAP_CONSUMER_TOKEN,
 });
 
-export = varsnap;
+export default varsnap;

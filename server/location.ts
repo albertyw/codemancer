@@ -1,8 +1,8 @@
 import {Client as GoogleMapsClient, ReverseGeocodeResponse} from '@googlemaps/google-maps-services-js';
 
-import getRollbar = require('../codemancer/js/rollbar');
-import util = require('../codemancer/js/util');
-import varsnap = require('../codemancer/js/varsnap');
+import getRollbar from '../codemancer/js/rollbar.js';
+import { unique } from '../codemancer/js/util.js';
+import varsnap from '../codemancer/js/varsnap.js';
 
 export interface LocationData {
   wfo: string;
@@ -61,7 +61,7 @@ export const Location = {
         info.unshift(result[i].long_name);
       }
     }
-    const locData = util.unique(info);
+    const locData = unique(info);
     if (locData.length === 3) {
       locData.pop();
     }

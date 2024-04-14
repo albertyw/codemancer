@@ -51,4 +51,4 @@ const Storage = {
     return key + 'Time';
   },
 };
-export = Storage;
+export default Storage;

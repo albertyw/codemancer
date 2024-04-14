@@ -1,8 +1,8 @@
 import {expect} from 'chai';
-import varsnap = require('varsnap');
+import varsnap from 'varsnap';
 
-require('../codemancer/js/background');
-// require('../server/util');
+import '../codemancer/js/background.js';
+// import '../server/util.js';
 
 context('Varsnap', function() {
   this.timeout(30 * 1000);

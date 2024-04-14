@@ -1,6 +1,6 @@
-import $ = require('jquery');
+import $ from 'jquery';
 
-import util = require('./util');
+import { getMockDate } from './util.js';
 
 export const Clock = {
   _parts : {
@@ -24,7 +24,7 @@ export const Clock = {
   months : ['January','February','March','April','May','June','July','August','September','October','November','December'],
 
   timeParts: function(): any {
-    const date = util.getMockDate();
+    const date = getMockDate();
     let hour = date.getHours();
 
     hour = hour % 12;

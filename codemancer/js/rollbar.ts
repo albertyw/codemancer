@@ -1,4 +1,4 @@
-import Rollbar = require('rollbar');
+import Rollbar from 'rollbar';
 
 const rollbarClientAccess = process.env.ROLLBAR_CLIENT_ACCESS;
 const rollbarServerAccess = process.env.ROLLBAR_SERVER_ACCESS;
@@ -24,7 +24,7 @@ function getRollbarAccess() {
 
 let rollbarClient = undefined;
 
-function getRollbar() {
+export default function getRollbar() {
   if (rollbarClient) {
     return rollbarClient;
   }
@@ -51,5 +51,3 @@ function getRollbar() {
   rollbarClient = Rollbar.init(rollbarConfig);
   return rollbarClient;
 }
-
-export = getRollbar;

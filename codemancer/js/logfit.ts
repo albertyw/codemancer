@@ -1,4 +1,4 @@
-import LogFit = require('logfit');
+import LogFit from 'logfit';
 
 if (process.env.LOGFIT_TOKEN) {
 

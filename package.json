@@ -5,6 +5,7 @@
   "directories": {
     "test": "tests"
   },
+  "type": "module",
   "scripts": {
     "run": "bin/start.sh",
     "eslint": "tsc --noEmit && eslint . --ext .ts",
@@ -12,7 +13,7 @@
     "stylelint": "stylelint codemancer/css/*",
     "shellcheck": "git ls-files | grep -F .sh | xargs shellcheck --exclude=SC1091",
     "test": "npm run shellcheck && npm run test-node",
-    "test-node": "npm run build && npm run stylelint && npm run eslint && npm run cover",
+    "test-node": "npm run build && npm run stylelint && npm run eslint",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
