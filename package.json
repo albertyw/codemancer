@@ -5,6 +5,7 @@
   "directories": {
     "test": "tests"
   },
+  "type": "module",
   "scripts": {
     "run": "bin/start.sh",
     "eslint": "tsc --noEmit && eslint . --ext .ts",
