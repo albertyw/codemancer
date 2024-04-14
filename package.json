@@ -42,7 +42,7 @@
     "dotenv-webpack": "^8.0.1",
     "express": "^4.17.1",
     "jquery": "^3.5.1",
-    "logfit": "^0.8.2",
+    "logfit": "^0.9.0",
     "loose-envify": "^1.4.0",
     "mini-css-extract-plugin": "^2.7.5",
     "morgan": "^1.10.0",
