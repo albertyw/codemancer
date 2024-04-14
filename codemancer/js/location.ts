@@ -1,6 +1,6 @@
 import $ = require('jquery');
 
-import Rollbar = require('./rollbar');
+import getRollbar = require('./rollbar');
 import util = require('./util');
 import {LocationData} from '../../server/location';
 
@@ -19,11 +19,11 @@ export const Location = {
       .then((data) => {
         return data;
       }, (error) => {
-        Rollbar.error('Failed to geocode', error);
+        getRollbar().error('Failed to geocode', error);
         return {};
       })
       .catch((error) => {
-        Rollbar.error('Failed to geocode', error);
+        getRollbar().error('Failed to geocode', error);
         return {};
       });
     return this.locationData;

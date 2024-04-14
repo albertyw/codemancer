@@ -1,6 +1,6 @@
 import {Client as GoogleMapsClient, ReverseGeocodeResponse} from '@googlemaps/google-maps-services-js';
 
-import Rollbar = require('../codemancer/js/rollbar');
+import getRollbar = require('../codemancer/js/rollbar');
 import util = require('../codemancer/js/util');
 import varsnap = require('../codemancer/js/varsnap');
 
@@ -36,14 +36,14 @@ export const Location = {
       if (response.data.status === 'OK') {
         targetLocation.displayName = Location.parseDisplayName(response.data);
       } else {
-        Rollbar.error('Failed to geocode', response);
+        getRollbar().error('Failed to geocode', response);
       }
       return targetLocation;
     }, (error) => {
-      Rollbar.error('Failed to geocode', error);
+      getRollbar().error('Failed to geocode', error);
       return targetLocation;
     }).catch((error) => {
-      Rollbar.error('Failed to geocode', error);
+      getRollbar().error('Failed to geocode', error);
       return targetLocation;
     });
   },

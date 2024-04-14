@@ -2,7 +2,7 @@ import appRootPath = require('app-root-path');
 import fs = require('fs');
 import path = require('path');
 
-import Rollbar = require('../codemancer/js/rollbar');
+import getRollbar = require('../codemancer/js/rollbar');
 import varsnap = require('../codemancer/js/varsnap');
 
 const appRoot = appRootPath.toString();
@@ -28,7 +28,7 @@ export const getSVGs = varsnap(function getSVGs() {
   return Promise.all(readers).then(() => {
     return svgs;
   }).catch(error => {
-    Rollbar.error(error);
+    getRollbar().error(error);
     return svgs;
   });
 });

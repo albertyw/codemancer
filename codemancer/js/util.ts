@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Rollbar = require('./rollbar');
+import getRollbar = require('./rollbar');
 import Storage = require('./storage');
 
 let demoOn = false;
@@ -62,7 +62,7 @@ export const requestPromise = function request(url: string, cacheDuration: numbe
     const responseText = Storage.getExpirableData(url, backupDuration, true);
     if (responseText === null) {
       const e = CustomError.create('Unrecoverable error when making request', error.response);
-      Rollbar.error(e);
+      getRollbar().error(e);
       throw e;
     }
     const response = JSON.parse(responseText);

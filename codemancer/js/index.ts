@@ -4,7 +4,8 @@ import '../css/weather.css';
 
 import $ = require('jquery');
 
-require('./rollbar');
+import getRollbar = require('./rollbar');
+getRollbar();
 import clock = require('./clock');
 $(clock.style);
 

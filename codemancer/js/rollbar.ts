@@ -14,10 +14,21 @@ const rollbarMock = {
     };
   },
 };
-let rollbarAccess = undefined;
+
+function getRollbarAccess() {
+  if (typeof window === 'undefined') {
+    return rollbarServerAccess;
+  }
+  return rollbarClientAccess;
+}
+
 let rollbarClient = undefined;
 
-function getRollbar(rollbarAccess) {
+function getRollbar() {
+  if (rollbarClient) {
+    return rollbarClient;
+  }
+  const rollbarAccess = getRollbarAccess();
   if (!rollbarAccess) {
     return rollbarMock;
   }
@@ -37,22 +48,8 @@ function getRollbar(rollbarAccess) {
       },
     }
   };
-  return Rollbar.init(rollbarConfig);
+  rollbarClient = Rollbar.init(rollbarConfig);
+  return rollbarClient;
 }
 
-function getRollbarAccess() {
-  if (typeof window === 'undefined') {
-    rollbarAccess = rollbarServerAccess;
-  } else {
-    rollbarAccess = rollbarClientAccess;
-  }
-  return rollbarAccess;
-}
-
-function setupRollbar() {
-  const access = getRollbarAccess();
-  rollbarClient = getRollbar(access);
-}
-setupRollbar();
-
-export = rollbarClient;
+export = getRollbar;

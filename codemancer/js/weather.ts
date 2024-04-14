@@ -1,6 +1,6 @@
 import $ = require('jquery');
 
-import Rollbar = require('./rollbar');
+import getRollbar = require('./rollbar');
 import {Location} from './location';
 import { LocationData } from '../../server/location';
 import util = require('./util');
@@ -187,7 +187,7 @@ export const Weather = {
     if (weatherIconCode !== undefined) {
       return weatherIconCode;
     }
-    Rollbar.error('cannot find image for "' + condition + '"');
+    getRollbar().error('cannot find image for "' + condition + '"');
     return '\uf04c';
   }),
 
@@ -220,6 +220,6 @@ export const Weather = {
 
 export function main(): void {
   Weather.load().
-    catch(error => { Rollbar.error(error); });
+    catch(error => { getRollbar().error(error); });
   setInterval(main, weatherRefreshInterval);
 }

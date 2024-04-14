@@ -10,7 +10,7 @@ import rfs = require('rotating-file-stream');
 const appRoot = appRootPath.toString();
 import dotenv = require('dotenv');
 dotenv.config({path: path.join(appRoot, '.env')});
-import Rollbar = require('../codemancer/js/rollbar');
+import getRollbar = require('../codemancer/js/rollbar');
 import handlers = require('./handlers');
 
 const app = express();
@@ -31,7 +31,7 @@ function setupLogging(app: express.Express) {
     compress: true,
   });
   app.use(morgan('combined', {stream: accessLogStream }));
-  app.use(Rollbar.errorHandler());
+  app.use(getRollbar().errorHandler());
 }
 setupLogging(app);
 

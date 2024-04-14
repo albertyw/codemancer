@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import sinon = require('sinon');
 
 import {Location} from '../codemancer/js/location';
-import Rollbar = require('../codemancer/js/rollbar');
+import getRollbar = require('../codemancer/js/rollbar');
 import util = require('../codemancer/js/util');
 const locationData = '{"displayName": "San Francisco, CA"}';
 
@@ -11,13 +11,13 @@ describe('Location.getLocation', function() {
     Location.locationData = undefined;
     this.requestPromise = sinon.stub(util, 'requestPromise');
     localStorage.clear();
-    sinon.spy(Rollbar, 'error');
+    sinon.spy(getRollbar(), 'error');
   });
   afterEach(function() {
     Location.locationData = undefined;
     this.requestPromise.restore();
     localStorage.clear();
-    Rollbar.error.restore();
+    getRollbar().error.restore();
   });
   it('it returns a location name', function(done) {
     this.requestPromise.resolves(JSON.parse(locationData));
@@ -35,8 +35,8 @@ describe('Location.getLocation', function() {
     const promise = Location.getLocation();
     promise.then((data) => {
       expect(data).to.eql({});
-      expect(Rollbar.error.calledOnce).to.be.true;
-      expect(Rollbar.error.getCall(0).args[0]).to.equal('Failed to geocode');
+      expect(getRollbar().error.calledOnce).to.be.true;
+      expect(getRollbar().error.getCall(0).args[0]).to.equal('Failed to geocode');
       done();
     }, (error) => {
       expect.fail(error);

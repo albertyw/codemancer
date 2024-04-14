@@ -1,7 +1,7 @@
 import $ = require('jquery');
 import SunCalc = require('suncalc');
 
-import Rollbar = require('./rollbar');
+import getRollbar = require('./rollbar');
 import util = require('./util');
 import varsnap = require('./varsnap');
 import { Location } from './location';
@@ -60,7 +60,7 @@ const generateColorsArray = function generateColorsArray(){
       updateBackgroundColor();
     })
     .catch((error) => {
-      Rollbar.error(error);
+      getRollbar().error(error);
     });
 };
 
