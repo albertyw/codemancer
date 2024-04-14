@@ -1,10 +1,10 @@
-const child_process = require("child_process");
-const path = require("path");
+import child_process from "child_process";
+import path from "path";
 
-const Dotenv = require('dotenv-webpack');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const webpack = require('webpack');
+import Dotenv from "dotenv-webpack";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import webpack from 'webpack';
 
 const isProduction = process.env.NODE_ENV == "production";
 
@@ -15,7 +15,7 @@ function git_version() {
 const config = {
   entry: "./codemancer/js/index.ts",
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve("dist"),
   },
   devtool: 'inline-source-map',
   plugins: [
@@ -56,7 +56,7 @@ const config = {
   },
 };
 
-module.exports = () => {
+export default () => {
   if (isProduction) {
     config.mode = "production";
   } else {
