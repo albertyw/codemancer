@@ -3,7 +3,7 @@ import sinon from 'sinon';
 
 import {Location} from '../codemancer/js/location.js';
 import getRollbar from '../codemancer/js/rollbar.js';
-import * as util from '../codemancer/js/util.js';
+import util from '../codemancer/js/util.js';
 const locationData = '{"displayName": "San Francisco, CA"}';
 
 describe('Location.getLocation', function() {
