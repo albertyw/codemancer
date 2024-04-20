@@ -85,3 +85,12 @@ export class CustomError extends Error {
     return error;
   }
 }
+
+export default {
+  toggleDemo,
+  getMockDate,
+  chainAccessor,
+  unique,
+  requestPromise,
+  CustomError,
+};
