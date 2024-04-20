@@ -17,7 +17,8 @@
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "wdio": "wdio run ./wdio.conf.ts"
   },
   "repository": {
     "type": "git",
@@ -52,7 +53,6 @@
     "rotating-file-stream": "^3.0.2",
     "suncalc": "^1.9.0",
     "ts-loader": "^9.4.2",
-    "ts-node": "^10.0.0",
     "tsify": "^5.0.2",
     "typescript": "^5.0.0",
     "varsnap": "^1.6.4",
@@ -74,6 +74,10 @@
     "@types/sinon": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
+    "@wdio/browser-runner": "^8.36.0",
+    "@wdio/cli": "^8.36.0",
+    "@wdio/mocha-framework": "^8.36.0",
+    "@wdio/spec-reporter": "^8.36.0",
     "babel-plugin-istanbul": "^6.0.0",
     "chai": "^5.0.0",
     "eslint": "^8.3.0",
@@ -85,6 +89,7 @@
     "source-map-support": "^0.5.19",
     "stylelint": "^16.2.0",
     "stylelint-config-standard": "^36.0.0",
-    "ts-mocha": "^10.0.0"
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.2"
   }
 }
