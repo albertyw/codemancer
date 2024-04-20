@@ -7,12 +7,9 @@ steps:
     image: satantime/puppeteer-node:21-bookworm-slim
     commands:
       - ln -fs .env.development .env
-      - apt-get update && apt-get install -y curl chromium git
+      - apt-get update && apt-get install -y curl git
       - npm ci
       - npm run test-node
-    environment:
-      PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
-      CHROME_PATH: /usr/bin/chromium
 
   - name: Test Bash
     image: koalaman/shellcheck-alpine:stable
