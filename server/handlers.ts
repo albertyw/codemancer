@@ -52,6 +52,8 @@ function airnowHandler(req: express.Request, res: express.Response) {
   url.searchParams.append('format', 'application/json');
   requestPromise(url.href, airnowCacheDuration, airnowBackupDuration).then(function(data) {
     res.json(data);
+  }).catch((error) => {
+    res.json({'error': error});
   });
 }
 
@@ -67,6 +69,8 @@ function weatherHandler(req: express.Request, res: express.Response) {
   const url = new URL(urlBuilder(targetLocation));
   requestPromise(url.href, weatherCacheDuration, weatherBackupDuration).then(function(data) {
     res.json(data);
+  }).catch((error) => {
+    res.json({'error': error});
   });
 }
 
