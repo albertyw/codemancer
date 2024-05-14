@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import getRollbar from './rollbar.js';
 import Storage from './storage.js';
@@ -73,15 +73,17 @@ export const requestPromise = function request(url: string, cacheDuration: numbe
 };
 
 export class CustomError extends Error {
-  public metadata = '';
+  public status = 200;
+  public data = '';
 
   constructor(message: string) {
     super(message);
   }
 
-  static create(message: string, metadata: any): CustomError {
+  static create(message: string, response: AxiosResponse): CustomError {
     const error = new CustomError(message);
-    error.metadata = metadata;
+    error.status = response.status;
+    error.data = response.data;
     return error;
   }
 }
