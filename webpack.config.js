@@ -1,21 +1,22 @@
-import child_process from "child_process";
-import path from "path";
+import child_process from 'child_process';
+import path from 'path';
+import process from 'process';
 
-import Dotenv from "dotenv-webpack";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
+import Dotenv from 'dotenv-webpack';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import webpack from 'webpack';
 
-const isProduction = process.env.NODE_ENV == "production";
+const isProduction = process.env.NODE_ENV == 'production';
 
 function git_version() {
   return child_process.execSync('git describe --always', { encoding: 'utf8' }).trim();
 }
 
 const config = {
-  entry: "./codemancer/js/index.ts",
+  entry: './codemancer/js/index.ts',
   output: {
-    path: path.resolve("dist"),
+    path: path.resolve('dist'),
   },
   devtool: 'inline-source-map',
   plugins: [
@@ -29,31 +30,31 @@ const config = {
     rules: [
       {
         test: /\.(ts|tsx)$/i,
-        loader: "ts-loader",
+        loader: 'ts-loader',
         options: {
           onlyCompileBundledFiles: true,
         },
-        exclude: ["/node_modules/"],
+        exclude: ['/node_modules/'],
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-        type: "asset",
+        type: 'asset',
       },
       {
         test: /.s?css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".js", "..."],
+    extensions: ['.tsx', '.ts', '.jsx', '.js', '...'],
     extensionAlias: {
-      ".js": [".ts", ".js"],
+      '.js': ['.ts', '.js'],
     },
   },
   optimization: {
     minimizer: [
-      "...",
+      '...',
       new CssMinimizerPlugin(),
     ],
   },
@@ -61,9 +62,9 @@ const config = {
 
 export default () => {
   if (isProduction) {
-    config.mode = "production";
+    config.mode = 'production';
   } else {
-    config.mode = "development";
+    config.mode = 'development';
   }
   return config;
 };

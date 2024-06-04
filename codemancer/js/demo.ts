@@ -13,7 +13,7 @@ function stopDemo() {
   changeUpdateBackgroundColorPeriod(originalUpdateBackgroundColorPeriod);
 }
 
-function toggleDemoClick() { // eslint-disable-line no-unused-vars
+function toggleDemoClick() {
   const demoOn = toggleDemo();
   if (demoOn) {
     stopDemo();
