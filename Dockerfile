@@ -5,9 +5,9 @@ EXPOSE 3000
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Set locale
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
 RUN apt-get update && apt-get install -y --no-install-recommends \
     locales                                     `: Basic-packages` \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
