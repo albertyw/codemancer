@@ -7,7 +7,7 @@ import varsnap from '../codemancer/js/varsnap.js';
 
 const appRoot = appRootPath.toString();
 
-export const getSVGs = varsnap(function getSVGs() {
+export const getSVGs: () => Promise<{ [key: string]: string }> = varsnap(function getSVGs(): Promise<{ [key: string]: string }> {
   const svgs = {};
   function readSVGFile(svgFile, svgName) {
     return (resolve, reject) => {
