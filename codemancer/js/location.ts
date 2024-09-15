@@ -8,14 +8,14 @@ const cacheDuration = 24 * 60 * 60 * 1000;
 const backupDuration = 7 * 24 * 60 * 60 * 1000;
 
 export class Location {
-  locationData;
+  #locationData;
 
   getLocation(): Promise<LocationData> {
     const url = '/location/';
-    if (this.locationData !== undefined) {
-      return this.locationData;
+    if (this.#locationData !== undefined) {
+      return this.#locationData;
     }
-    this.locationData = requestPromise(url, cacheDuration, backupDuration)
+    this.#locationData = requestPromise(url, cacheDuration, backupDuration)
       .then((data) => {
         return data;
       }, (error) => {
@@ -26,7 +26,7 @@ export class Location {
         getRollbar().error('Failed to geocode', error);
         return {};
       });
-    return this.locationData;
+    return this.#locationData;
   }
 
   renderLocation(location: LocationData): void {
