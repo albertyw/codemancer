@@ -29,14 +29,14 @@ export class Location {
     return this.#locationData;
   }
 
-  renderLocation(location: LocationData): void {
+  #renderLocation(location: LocationData): void {
     const cityElement = $('#city');
     cityElement.html(location.displayName).show();
   }
 
   showLocation(): void {
     this.getLocation().
-      then(this.renderLocation);
+      then(this.#renderLocation);
   }
 }
 
