@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 import getRollbar from './rollbar.js';
-import {Location} from './location.js';
+import {location} from './location.js';
 import { LocationData } from '../../server/location.js';
 import { chainAccessor, requestPromise } from './util.js';
 import varsnap from './varsnap.js';
@@ -207,7 +207,7 @@ export const Weather = {
   },
 
   load: function(): Promise<void> {
-    return Location.getLocation()
+    return location.getLocation()
       .then(Weather.urlBuilder)
       .then((url: string) => {
         return requestPromise(url, 0, 0);

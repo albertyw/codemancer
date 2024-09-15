@@ -4,7 +4,7 @@ import SunCalc from 'suncalc';
 import getRollbar from './rollbar.js';
 import {getMockDate} from './util.js';
 import varsnap from './varsnap.js';
-import { Location } from './location.js';
+import { location } from './location.js';
 import { LocationData } from '../../server/location.js';
 
 const fullNight = [0, 0, 0];
@@ -39,7 +39,7 @@ export function changeUpdateBackgroundColorPeriod(period: number): number {
 }
 
 const generateColorsArray = function generateColorsArray(){
-  Location.getLocation()
+  location.getLocation()
     .then((locationData: LocationData) => {
       const times = SunCalc.getTimes(new Date(), locationData.lat, locationData.lng);
       const sunriseDate = new Date(times.sunrise.toLocaleString('en-US', {timeZone: locationData.timezone}));

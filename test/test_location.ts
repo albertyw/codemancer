@@ -8,20 +8,19 @@ const locationData = '{"displayName": "San Francisco, CA"}';
 
 describe('Location.getLocation', function() {
   beforeEach(function() {
-    Location.locationData = undefined;
+    this.location = new Location();
     this.requestPromise = sinon.stub(util, 'requestPromise');
     localStorage.clear();
     sinon.spy(getRollbar(), 'error');
   });
   afterEach(function() {
-    Location.locationData = undefined;
     this.requestPromise.restore();
     localStorage.clear();
     getRollbar().error.restore();
   });
   it('it returns a location name', function(done) {
     this.requestPromise.resolves(JSON.parse(locationData));
-    const promise = Location.getLocation();
+    const promise = this.location.getLocation();
     promise.then((data) => {
       expect(data.displayName).to.equal('San Francisco, CA');
       done();
@@ -32,7 +31,7 @@ describe('Location.getLocation', function() {
   });
   it('will log an error if the xhr errors out', function(done) {
     this.requestPromise.rejects('error');
-    const promise = Location.getLocation();
+    const promise = this.location.getLocation();
     promise.then((data) => {
       expect(data).to.eql({});
       expect(getRollbar().error.calledOnce).to.be.true;

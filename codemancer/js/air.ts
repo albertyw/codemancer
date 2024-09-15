@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import {Location} from './location.js';
+import {location} from './location.js';
 import {LocationData} from '../../server/location.js';
 import {requestPromise} from './util.js';
 
@@ -20,7 +20,7 @@ export const Air = {
   },
 
   showAirQuality: function showAirQuality(): void {
-    Location.getLocation()
+    location.getLocation()
       .then(Air.urlBuilder)
       .then((url: string) => {
         return requestPromise(url, cacheDuration, backupDuration);

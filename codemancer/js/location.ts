@@ -7,10 +7,10 @@ import { LocationData } from '../../server/location.js';
 const cacheDuration = 24 * 60 * 60 * 1000;
 const backupDuration = 7 * 24 * 60 * 60 * 1000;
 
-export const Location = {
-  locationData: undefined,
+export class Location {
+  locationData;
 
-  getLocation: function (): Promise<LocationData> {
+  getLocation(): Promise<LocationData> {
     const url = '/location/';
     if (this.locationData !== undefined) {
       return this.locationData;
@@ -27,19 +27,21 @@ export const Location = {
         return {};
       });
     return this.locationData;
-  },
+  }
 
-  renderLocation: function (location: LocationData): void {
+  renderLocation(location: LocationData): void {
     const cityElement = $('#city');
     cityElement.html(location.displayName).show();
-  },
+  }
 
-  showLocation: function(): void {
-    Location.getLocation().
-      then(Location.renderLocation);
-  },
-};
+  showLocation(): void {
+    this.getLocation().
+      then(this.renderLocation);
+  }
+}
+
+export const location = new Location();
 
 export function load(): void {
-  Location.showLocation();
+  location.showLocation();
 }
