@@ -9,10 +9,10 @@ const cacheDuration = 20 * 60 * 1000;
 const backupDuration = 3 * 60 * 60 * 1000;
 
 export class Air {
-  dom = $('#air-message');
+  #dom = $('#air-message');
 
   // TODO: add varsnap here
-  static urlBuilder(locationData: LocationData): string {
+  static #urlBuilder(locationData: LocationData): string {
     let url = airnowProxyURL;
     url += '?latitude=' + encodeURIComponent(locationData.lat);
     url += '&longitude=' + encodeURIComponent(locationData.lng);
@@ -20,9 +20,9 @@ export class Air {
   }
 
   showAirQuality(): void {
-    const dom = this.dom;
+    const dom = this.#dom;
     location.getLocation()
-      .then(Air.urlBuilder)
+      .then(Air.#urlBuilder)
       .then((url: string) => {
         return requestPromise(url, cacheDuration, backupDuration);
       })
