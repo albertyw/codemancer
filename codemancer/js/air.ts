@@ -8,18 +8,19 @@ const airnowProxyURL = '/airnow/';
 const cacheDuration = 20 * 60 * 1000;
 const backupDuration = 3 * 60 * 60 * 1000;
 
-export const Air = {
-  dom: $('#air-message'),
+export class Air {
+  dom = $('#air-message');
 
   // TODO: add varsnap here
-  urlBuilder: function urlBuilder(locationData: LocationData): string {
+  static urlBuilder(locationData: LocationData): string {
     let url = airnowProxyURL;
     url += '?latitude=' + encodeURIComponent(locationData.lat);
     url += '&longitude=' + encodeURIComponent(locationData.lng);
     return url;
-  },
+  }
 
-  showAirQuality: function showAirQuality(): void {
+  showAirQuality(): void {
+    const dom = this.dom;
     location.getLocation()
       .then(Air.urlBuilder)
       .then((url: string) => {
@@ -28,13 +29,14 @@ export const Air = {
       .then(function(data: any) {
         if (data[0].Category.Number > 2) {
           const message = 'Air Quality: ' + data[0].Category.Name;
-          Air.dom.text(message);
+          dom.text(message);
         }
       });
   }
 
-};
+}
 
 export function main(): void {
-  Air.showAirQuality();
+  const air = new Air();
+  air.showAirQuality();
 }
