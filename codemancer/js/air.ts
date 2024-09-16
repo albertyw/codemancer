@@ -36,7 +36,7 @@ export class Air {
 
 }
 
-export function main(): void {
+export function load(): void {
   const air = new Air();
   air.showAirQuality();
 }

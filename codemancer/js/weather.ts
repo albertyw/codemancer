@@ -218,8 +218,8 @@ export const Weather = {
   },
 };
 
-export function main(): void {
+export function load(): void {
   Weather.load().
     catch(error => { getRollbar().error(error); });
-  setInterval(main, weatherRefreshInterval);
+  setInterval(load, weatherRefreshInterval);
 }

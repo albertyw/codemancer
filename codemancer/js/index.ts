@@ -9,9 +9,9 @@ getRollbar();
 import { style as clockStyle } from './clock.js';
 $(clockStyle);
 
-import { main as weatherMain } from './weather.js';
+import { load as weatherLoad } from './weather.js';
 import { load as locationLoad } from './location.js';
-$(weatherMain);
+$(weatherLoad);
 $(locationLoad);
 
 import bindDemo from './demo.js';
@@ -23,5 +23,5 @@ import './ganalytics.js';
 import pageRefresher from './refresh.js';
 pageRefresher();
 
-import { main as airMain } from './air.js';
-$(airMain);
+import { load as airLoad } from './air.js';
+$(airLoad);
