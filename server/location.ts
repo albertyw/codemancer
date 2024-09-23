@@ -25,8 +25,8 @@ export const targetLocation = sanFranciscoLocation;
 
 const googleMapsClient = new GoogleMapsClient({});
 
-export const Location = {
-  getLocation: function(): Promise<LocationData> {
+export class Location {
+  static getLocation(): Promise<LocationData> {
     return googleMapsClient.reverseGeocode({
       params: {
         latlng: [targetLocation.lat, targetLocation.lng],
@@ -46,25 +46,27 @@ export const Location = {
       getRollbar().error('Failed to geocode', error);
       return targetLocation;
     });
-  },
+  }
 
-  parseDisplayName: varsnap(function parseDisplayName(data: any): string {
-    const result=data.results[0].address_components;
-    const info=[];
-    for(let i=0;i<result.length;++i) {
-      const type = result[i].types[0];
-      if(type==='country'){
-        info.push(result[i].long_name);
-      } else if(type==='administrative_area_level_1'){
-        info.push(result[i].short_name);
-      } else if(type==='locality'){
-        info.unshift(result[i].long_name);
+  static parseDisplayName(data: any): string {
+    return varsnap(function parseDisplayName(data: any): string {
+      const result=data.results[0].address_components;
+      const info=[];
+      for(let i=0;i<result.length;++i) {
+        const type = result[i].types[0];
+        if(type==='country'){
+          info.push(result[i].long_name);
+        } else if(type==='administrative_area_level_1'){
+          info.push(result[i].short_name);
+        } else if(type==='locality'){
+          info.unshift(result[i].long_name);
+        }
       }
-    }
-    const locData = unique(info);
-    if (locData.length === 3) {
-      locData.pop();
-    }
-    return locData.join(', ');
-  }),
+      const locData = unique(info);
+      if (locData.length === 3) {
+        locData.pop();
+      }
+      return locData.join(', ');
+    })(data);
+  }
 };
