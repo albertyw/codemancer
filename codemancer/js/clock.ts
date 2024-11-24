@@ -94,11 +94,4 @@ export function style(): void {
   // Kick off the clock
   const clock = new Clock();
   clock.start();
-
-  // Text Color
-  const $main = $('main');
-  if ($main.is('[class*=\'-text\']')) {
-    $main[0].className = $main[0].className.replace(/\w*-text/g, '');
-  }
-  $main.addClass('light-text');
 }
