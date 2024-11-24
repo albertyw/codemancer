@@ -115,7 +115,7 @@ export class Weather {
   };
 
   // TODO: add varsnap here
-  urlBuilder(location: LocationData) {
+  static urlBuilder(location: LocationData) {
     // Documentation at https://www.weather.gov/documentation/services-web-api#/
     // TODO: send params to backend
     location;
@@ -125,7 +125,7 @@ export class Weather {
   };
 
   // TODO: add varsnap here
-  validate(data) {
+  static validate(data) {
     if (!chainAccessor(data, ['properties', 'periods'])) {
       return defaultWeatherData;
     }
@@ -217,11 +217,11 @@ export class Weather {
 
   load(): Promise<void> {
     return location.getLocation()
-      .then(data => this.urlBuilder(data))
+      .then(data => Weather.urlBuilder(data))
       .then((url: string) => {
         return requestPromise(url, 0, 0);
       })
-      .then(data => this.validate(data))
+      .then(data => Weather.validate(data))
       .then(data => this.parse(data))
       .then(data => this.render(data));
   };
