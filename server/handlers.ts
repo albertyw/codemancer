@@ -44,7 +44,8 @@ function airnowHandler(req: express.Request, res: express.Response) {
     typeof req.query.latitude !== 'string' ||
     typeof req.query.longitude !== 'string'
   ) {
-    return res.json({'error': 'latitude is not a string'});
+    res.json({'error': 'latitude is not a string'});
+    return;
   }
   url.searchParams.append('latitude', req.query.latitude);
   url.searchParams.append('longitude', req.query.longitude);
