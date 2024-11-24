@@ -4,7 +4,6 @@ import getRollbar from './rollbar.js';
 import {location} from './location.js';
 import { LocationData } from '../../server/location.js';
 import { chainAccessor, requestPromise } from './util.js';
-import varsnap from './varsnap.js';
 
 const weatherRefreshInterval = 20 * 60 * 1000;
 const defaultWeatherData = {'properties': {'periods': [{'shortForecast': 'Error'}]}};
@@ -101,34 +100,42 @@ const descriptors = [
   'Of',
 ];
 const weatherLookForwardHours = 24;
+interface WeatherData {
+  currentTemp: number;
+  minTemp: number;
+  maxTemp: number;
+  conditionSequence: string[];
+  worstCondition: string;
+}
 
-export const Weather = {
-
-  $el: {
+export class Weather {
+  #el = {
     now : $('.now'),
-    city : $('#city')
-  },
+    city : $('#city'),
+  };
 
   // TODO: add varsnap here
-  urlBuilder: function urlBuilder(location: LocationData) {
+  static urlBuilder(location: LocationData) {
     // Documentation at https://www.weather.gov/documentation/services-web-api#/
     // TODO: send params to backend
     location;
 
     const url = '/weather';
     return url;
-  },
+  };
 
-  validate: varsnap(function validate(data) {
+  // TODO: add varsnap here
+  static validate(data) {
     if (!chainAccessor(data, ['properties', 'periods'])) {
       return defaultWeatherData;
     }
     return data;
-  }),
+  };
 
-  parse: varsnap(function parse(data) {
+  // TODO: add varsnap here
+  parse(data): WeatherData {
     // Lets only keep what we need.
-    const w2 = {
+    const w2: WeatherData = {
       currentTemp: 0,
       minTemp: 0,
       maxTemp: 0,
@@ -158,13 +165,14 @@ export const Weather = {
       }
     }
     for (let i=0; i < w2.conditionSequence.length; i++) {
-      w2.conditionSequence[i] = Weather.conditionIcon(w2.conditionSequence[i]);
+      w2.conditionSequence[i] = this.conditionIcon(w2.conditionSequence[i]);
     }
-    w2.worstCondition = Weather.worstCondition(w2.conditionSequence);
+    w2.worstCondition = this.worstCondition(w2.conditionSequence);
     return w2;
-  }),
+  };
 
-  worstCondition: varsnap(function worstCondition(conditionSequence) {
+  // TODO: add varsnap here
+  worstCondition(conditionSequence) {
     let worstCondition = conditionSequence[0];
     for (let i=0; i < weatherConditions.length; i++) {
       if(conditionSequence.includes(weatherConditions[i][1])) {
@@ -172,9 +180,10 @@ export const Weather = {
       }
     }
     return worstCondition;
-  }),
+  };
 
-  conditionIcon: varsnap(function conditionIcon(condition){
+  // TODO: add varsnap here
+  conditionIcon(condition){
     let weatherIconCode = weatherIconConversions[condition];
     if (weatherIconCode !== undefined) {
       return weatherIconCode;
@@ -189,37 +198,34 @@ export const Weather = {
     }
     getRollbar().error('cannot find image for "' + condition + '"');
     return '\uf04c';
-  }),
+  };
 
-  render: function(wd: Record<string, unknown>): void {
+  render(wd: WeatherData): void {
     // Set Current Information
-    Weather.renderDay(Weather.$el.now, wd);
+    this.#el.now.find('.condition').html(wd.worstCondition);
+    this.#el.now.find('.min-temp').html(String(wd.minTemp));
+    this.#el.now.find('.current-temp').html(String(wd.currentTemp));
+    this.#el.now.find('.max-temp').html(String(wd.maxTemp));
 
     // Show Weather
     $('#weather-inner').removeClass('hidden').show();
-  },
+  };
 
-  renderDay: function(el, data: Record<string, unknown>): void {
-    el.find('.condition').html(data.worstCondition);
-    el.find('.min-temp').html(data.minTemp);
-    el.find('.current-temp').html(data.currentTemp);
-    el.find('.max-temp').html(data.maxTemp);
-  },
-
-  load: function(): Promise<void> {
+  load(): Promise<void> {
     return location.getLocation()
-      .then(Weather.urlBuilder)
+      .then(data => Weather.urlBuilder(data))
       .then((url: string) => {
         return requestPromise(url, 0, 0);
       })
-      .then(Weather.validate)
-      .then(Weather.parse)
-      .then(Weather.render);
-  },
+      .then(data => Weather.validate(data))
+      .then(data => this.parse(data))
+      .then(data => this.render(data));
+  };
 };
 
 export function load(): void {
-  Weather.load().
+  const weather = new Weather();
+  weather.load().
     catch(error => { getRollbar().error(error); });
   setInterval(load, weatherRefreshInterval);
 }

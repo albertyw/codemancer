@@ -2,28 +2,24 @@ import $ from 'jquery';
 
 import { getMockDate } from './util.js';
 
-export const Clock = {
-  _parts : {
+export class Clock {
+  #parts = {
     day: '',
     date: undefined,
     month: '',
     hour: '',
     minute: '',
     second: '',
-  },
-  _running : undefined,
+  };
+  #running = undefined;
+  #el = {
+    time: $('#time'),
+    date: $('#date'),
+  };
+  static weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  static months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-  $el : {
-    digital : {
-      time : $('#time'),
-      date : $('#date')
-    }
-  },
-
-  weekdays : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-  months : ['January','February','March','April','May','June','July','August','September','October','November','December'],
-
-  timeParts: function(): any {
+  timeParts(): any {
     const date = getMockDate();
     let hour = date.getHours();
 
@@ -40,9 +36,9 @@ export const Clock = {
       minute: Clock.prependZero(date.getMinutes(), true),
       second: Clock.prependZero(date.getSeconds(), true),
     };
-  },
+  }
 
-  prependZero : function prependZero(num: number, visible: boolean): string {
+  static prependZero(num: number, visible: boolean): string {
     if(num < 10) {
       if(visible) {
         return '0' + num;
@@ -50,40 +46,42 @@ export const Clock = {
       return '<span class="invisible">0</span>' + num;
     }
     return '' + num;
-  },
+  }
 
-  dateTemplate: function dateTemplate(parts: any): string{
+  static dateTemplate(parts: any): string{
     return parts.day + ', ' + parts.month + ' ' + parts.date;
-  },
+  }
 
-  refresh: function(): void {
-    const parts = Clock.timeParts();
-    const oldParts = Clock._parts;
+  refresh(): void {
+    const parts = this.timeParts();
+    const oldParts = this.#parts;
 
-    Clock.$el.digital.date.html(Clock.dateTemplate(parts));
+    this.#el.date.html(Clock.dateTemplate(parts));
 
     const units = ['hour', 'minute', 'second'];
     for (let i=0; i<units.length; i++) {
       const unit = units[i];
       if( parts[unit] !== oldParts[unit] ){
-        Clock.$el.digital.time.find('.' + unit).html(parts[unit]);
+        this.#el.time.find('.' + unit).html(parts[unit]);
       }
     }
 
-    Clock._parts = parts;
-  },
+    this.#parts = parts;
+  }
 
-  start: function(): void {
-    if (Clock._running) {
-      clearInterval(Clock._running);
+  start(): void {
+    if (this.#running) {
+      clearInterval(this.#running);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this;
     function tick() {
       const delayTime = 1000;
 
-      Clock.refresh();
+      self.refresh();
 
-      Clock._running = setTimeout(function(){
+      self.#running = setTimeout(function(){
         window.requestAnimationFrame( tick );
       }, delayTime);
     }
@@ -92,14 +90,8 @@ export const Clock = {
   }
 };
 
-export function style(): void {
-  // Kick off the clock
-  Clock.start();
-  const $main = $('main');
+export const clock = new Clock();
 
-  // Text Color
-  if ($main.is('[class*=\'-text\']')) {
-    $main[0].className = $main[0].className.replace(/\w*-text/g, '');
-  }
-  $main.addClass('light-text');
+export function load(): void {
+  clock.start();
 }

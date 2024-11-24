@@ -6,11 +6,11 @@ import $ from 'jquery';
 
 import getRollbar from './rollbar.js';
 getRollbar();
-import { style as clockStyle } from './clock.js';
-$(clockStyle);
 
+import { load as clockLoad } from './clock.js';
 import { load as weatherLoad } from './weather.js';
 import { load as locationLoad } from './location.js';
+$(clockLoad);
 $(weatherLoad);
 $(locationLoad);
 
