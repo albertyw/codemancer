@@ -19,6 +19,9 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    'linterOptions': {
+      'reportUnusedDisableDirectives': 'error',
+    },
     'rules': {
       'indent': [
         'error',
