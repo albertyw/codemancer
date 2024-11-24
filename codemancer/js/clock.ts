@@ -14,10 +14,8 @@ export const Clock = {
   _running : undefined,
 
   $el : {
-    digital : {
-      time : $('#time'),
-      date : $('#date')
-    }
+    time : $('#time'),
+    date : $('#date'),
   },
 
   weekdays : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
@@ -60,13 +58,13 @@ export const Clock = {
     const parts = Clock.timeParts();
     const oldParts = Clock._parts;
 
-    Clock.$el.digital.date.html(Clock.dateTemplate(parts));
+    Clock.$el.date.html(Clock.dateTemplate(parts));
 
     const units = ['hour', 'minute', 'second'];
     for (let i=0; i<units.length; i++) {
       const unit = units[i];
       if( parts[unit] !== oldParts[unit] ){
-        Clock.$el.digital.time.find('.' + unit).html(parts[unit]);
+        Clock.$el.time.find('.' + unit).html(parts[unit]);
       }
     }
 
