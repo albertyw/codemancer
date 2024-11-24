@@ -101,6 +101,13 @@ const descriptors = [
   'Of',
 ];
 const weatherLookForwardHours = 24;
+interface WeatherData {
+  currentTemp: number;
+  minTemp: number;
+  maxTemp: number;
+  conditionSequence: string[];
+  worstCondition: string;
+}
 
 export const Weather = {
 
@@ -126,9 +133,9 @@ export const Weather = {
     return data;
   }),
 
-  parse: varsnap(function parse(data) {
+  parse: varsnap(function parse(data): WeatherData {
     // Lets only keep what we need.
-    const w2 = {
+    const w2: WeatherData = {
       currentTemp: 0,
       minTemp: 0,
       maxTemp: 0,
@@ -191,7 +198,7 @@ export const Weather = {
     return '\uf04c';
   }),
 
-  render: function(wd: Record<string, unknown>): void {
+  render: function(wd: WeatherData): void {
     // Set Current Information
     Weather.renderDay(Weather.$el.now, wd);
 
@@ -199,11 +206,11 @@ export const Weather = {
     $('#weather-inner').removeClass('hidden').show();
   },
 
-  renderDay: function(el, data: Record<string, unknown>): void {
+  renderDay: function(el, data: WeatherData): void {
     el.find('.condition').html(data.worstCondition);
-    el.find('.min-temp').html(data.minTemp);
-    el.find('.current-temp').html(data.currentTemp);
-    el.find('.max-temp').html(data.maxTemp);
+    el.find('.min-temp').html(String(data.minTemp));
+    el.find('.current-temp').html(String(data.currentTemp));
+    el.find('.max-temp').html(String(data.maxTemp));
   },
 
   load: function(): Promise<void> {
