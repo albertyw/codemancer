@@ -5,7 +5,7 @@ import fs from 'fs';
 import morgan from 'morgan';
 import mustache from 'mustache';
 import path from 'path';
-import rfs from 'rotating-file-stream';
+import * as rfs from 'rotating-file-stream';
 
 const appRoot = appRootPath.toString();
 import dotenv from 'dotenv';
