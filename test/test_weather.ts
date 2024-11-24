@@ -8,7 +8,8 @@ const weatherSummary = JSON.parse('["Sunny","Mostly Sunny","Partly Sunny","Mostl
 
 describe('Weather.parse', () => {
   it('returns data', () => {
-    const data = Weather.parse(weatherFixture);
+    const weather = new Weather();
+    const data = weather.parse(weatherFixture);
     // expect(data.city).to.not.be.empty;
     expect(data.currentTemp).to.equal(54);
     expect(data.minTemp).to.equal(52);
@@ -20,48 +21,51 @@ describe('Weather.parse', () => {
 
 describe('Weather.worstConditions', () => {
   it('returns the worst condition', () => {
+    const weather = new Weather();
     const conditions = ['\uf013', '\uf00e', '\uf00d'];
-    expect(Weather.worstCondition(conditions)).to.equal('\uf00e');
+    expect(weather.worstCondition(conditions)).to.equal('\uf00e');
   });
   it('returns undefined if there are no conditions', () => {
-    expect(Weather.worstCondition([])).to.equal(undefined);
+    const weather = new Weather();
+    expect(weather.worstCondition([])).to.equal(undefined);
   });
 });
 
 describe('Weather.conditionIcon', () => {
-  beforeEach(() => {
+  beforeEach(function() {
+    this.weather = new Weather();
     sinon.spy(getRollbar(), 'error');
   });
-  afterEach(() => {
+  afterEach(function() {
     getRollbar().error.restore();
   });
-  it('returns an icon code', () => {
-    const icon = Weather.conditionIcon('Rain');
+  it('returns an icon code', function() {
+    const icon = this.weather.conditionIcon('Rain');
     expect(icon).to.equal('\uf008');
   });
-  it('can strip descriptors', () => {
-    const icon = Weather.conditionIcon('Slight Chance Rain');
+  it('can strip descriptors', function() {
+    const icon = this.weather.conditionIcon('Slight Chance Rain');
     expect(icon).to.equal('\uf008');
   });
-  it('does not strip descriptors unless needed', () => {
-    const icon1 = Weather.conditionIcon('Cloudy');
-    const icon2 = Weather.conditionIcon('Mostly Cloudly');
+  it('does not strip descriptors unless needed', function() {
+    const icon1 = this.weather.conditionIcon('Cloudy');
+    const icon2 = this.weather.conditionIcon('Mostly Cloudly');
     expect(icon1).to.not.equal(icon2);
   });
-  it('works with a variety of conditions', () => {
-    const icon = Weather.conditionIcon('Occasional Very Light Rain');
+  it('works with a variety of conditions', function() {
+    const icon = this.weather.conditionIcon('Occasional Very Light Rain');
     expect(icon).to.not.equal('');
     expect(getRollbar().callCount).to.equal(undefined);
   });
-  it('returns a default icon code if condition is unknown', () => {
-    const icon = Weather.conditionIcon('asdf');
+  it('returns a default icon code if condition is unknown', function() {
+    const icon = this.weather.conditionIcon('asdf');
     expect(icon).to.equal('\uf04c');
     expect(getRollbar().error.calledWithExactly('cannot find image for "asdf"')).to.be.true;
   });
-  it('works with all published conditions', () => {
+  it('works with all published conditions', function() {
     // data from https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
     for (const condition of weatherSummary) {
-      const icon = Weather.conditionIcon(condition);
+      const icon = this.weather.conditionIcon(condition);
       if (condition === 'none') {
         expect(icon).to.equal('\uf04c', condition);
       } else {
