@@ -202,17 +202,13 @@ export class Weather {
 
   render(wd: WeatherData): void {
     // Set Current Information
-    this.renderDay(wd);
+    this.#el.now.find('.condition').html(wd.worstCondition);
+    this.#el.now.find('.min-temp').html(String(wd.minTemp));
+    this.#el.now.find('.current-temp').html(String(wd.currentTemp));
+    this.#el.now.find('.max-temp').html(String(wd.maxTemp));
 
     // Show Weather
     $('#weather-inner').removeClass('hidden').show();
-  };
-
-  renderDay(data: WeatherData): void {
-    this.#el.now.find('.condition').html(data.worstCondition);
-    this.#el.now.find('.min-temp').html(String(data.minTemp));
-    this.#el.now.find('.current-temp').html(String(data.currentTemp));
-    this.#el.now.find('.max-temp').html(String(data.maxTemp));
   };
 
   load(): Promise<void> {
