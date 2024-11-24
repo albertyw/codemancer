@@ -90,8 +90,8 @@ export class Clock {
   }
 };
 
-export function style(): void {
-  // Kick off the clock
-  const clock = new Clock();
+export const clock = new Clock();
+
+export function load(): void {
   clock.start();
 }
