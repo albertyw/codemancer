@@ -32,7 +32,7 @@ Setup and Testing
 -----------------
 
 ```
-nvm use 16
+nvm use 22
 npm install
 npm test
 ln -s .env.development .env
