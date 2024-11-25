@@ -18,8 +18,8 @@ if(typeof window === 'undefined') {
   localStorage = window.localStorage;
 }
 
-const Storage = {
-  setExpirableData: function setExpirableData(key: string, value: any): void {
+class Storage {
+  static setExpirableData(key: string, value: any): void {
     if (process.env.ENV === 'development') {
       return;
     }
@@ -27,9 +27,9 @@ const Storage = {
     const expireKey = Storage.expireKey(key);
     const timestamp = Date.now().toString();
     localStorage.setItem(expireKey, timestamp);
-  },
+  };
 
-  getExpirableData: function getExpirableData(key: string, expirationDuration: number, removeExpired: boolean): any {
+  static getExpirableData(key: string, expirationDuration: number, removeExpired: boolean): any {
     if (process.env.ENV === 'development') {
       return null;
     }
@@ -45,10 +45,11 @@ const Storage = {
     }
     const data = localStorage.getItem(key);
     return data;
-  },
+  };
 
-  expireKey: function expireKey(key: string): string {
+  static expireKey(key: string): string {
     return key + 'Time';
-  },
+  };
 };
+
 export default Storage;
