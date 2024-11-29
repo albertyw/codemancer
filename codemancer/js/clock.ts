@@ -4,9 +4,7 @@ import { getMockDate } from './util.js';
 
 
 export class TimeParts {
-  day: string;
-  date: number;
-  month: string;
+  date: Date;
   hour: string;
   minute: string;
   second: string;
@@ -15,9 +13,7 @@ export class TimeParts {
   static months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
   constructor(date: Date) {
-    this.day = TimeParts.weekdays[date.getDay()];
-    this.date = date.getDate();
-    this.month = TimeParts.months[date.getMonth()];
+    this.date = date;
     this.hour = TimeParts.prependZero(date.getHours(), false);
     this.minute = TimeParts.prependZero(date.getMinutes(), true);
     this.second = TimeParts.prependZero(date.getSeconds(), true);
@@ -34,7 +30,10 @@ export class TimeParts {
   }
 
   dateTemplate(): string {
-    return this.day + ', ' + this.month + ' ' + this.date;
+    const day = TimeParts.weekdays[this.date.getDay()];
+    const month = TimeParts.months[this.date.getMonth()];
+    const date = this.date.getDate();
+    return day + ', ' + month + ' ' + date;
   }
 }
 
