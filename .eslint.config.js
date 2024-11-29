@@ -1,6 +1,7 @@
 import globals from 'globals';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import stylistic from '@stylistic/eslint-plugin';
 
 let globalVars = globals.browser;
 globalVars = {...globalVars, ...{
@@ -19,26 +20,37 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    'linterOptions': {
-      'reportUnusedDisableDirectives': 'error',
+    'plugins': {
+      '@stylistic': stylistic,
     },
     'rules': {
       'indent': [
         'error',
-        2
+        2,
       ],
       'linebreak-style': [
         'error',
-        'unix'
+        'unix',
       ],
       'quotes': [
         'error',
-        'single'
+        'single',
       ],
       'semi': [
         'error',
-        'always'
+        'always',
       ],
+      'comma-dangle': [
+        'error',
+        'always-multiline',
+      ],
+    },
+  },
+  {
+    'linterOptions': {
+      'reportUnusedDisableDirectives': 'error',
+    },
+    'rules': {
       '@typescript-eslint/no-unused-expressions': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
     },

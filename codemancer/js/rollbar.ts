@@ -45,7 +45,7 @@ export default function getRollbar() {
           guess_uncaught_frames: true,
         },
       },
-    }
+    },
   };
   rollbarClient = Rollbar.init(rollbarConfig);
   return rollbarClient;
