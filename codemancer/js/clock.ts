@@ -2,49 +2,15 @@ import $ from 'jquery';
 
 import { getMockDate } from './util.js';
 
-interface timeParts {
-  day: string;
-  date: number;
-  month: string;
-  hour: string;
-  minute: string;
-  second: string;
-}
 
-export class Clock {
-  #parts: timeParts = {
-    day: '',
-    date: undefined,
-    month: '',
-    hour: '',
-    minute: '',
-    second: '',
-  };
-  #running = undefined;
-  #el = {
-    time: $('#time'),
-    date: $('#date'),
-  };
+export class TimeParts {
+  date: Date;
+
   static weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   static months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-  timeParts(): timeParts {
-    const date = getMockDate();
-    let hour = date.getHours();
-
-    hour = hour % 12;
-    if(hour === 0) {
-      hour = 12;
-    }
-    return {
-      // Digital
-      day: Clock.weekdays[date.getDay()],
-      date: date.getDate(),
-      month: Clock.months[date.getMonth()],
-      hour: Clock.prependZero(hour, false),
-      minute: Clock.prependZero(date.getMinutes(), true),
-      second: Clock.prependZero(date.getSeconds(), true),
-    };
+  constructor(date: Date) {
+    this.date = date;
   }
 
   static prependZero(num: number, visible: boolean): string {
@@ -57,20 +23,53 @@ export class Clock {
     return '' + num;
   }
 
-  static dateTemplate(parts: timeParts): string {
-    return parts.day + ', ' + parts.month + ' ' + parts.date;
+  dateTemplate(): string {
+    const day = TimeParts.weekdays[this.date.getDay()];
+    const month = TimeParts.months[this.date.getMonth()];
+    const date = this.date.getDate();
+    return day + ', ' + month + ' ' + date;
+  }
+
+  hour(): string {
+    let hour = this.date.getHours() % 12;
+    if(hour === 0) {
+      hour = 12;
+    }
+    return TimeParts.prependZero(hour, false);
+  }
+
+  minute(): string {
+    return TimeParts.prependZero(this.date.getMinutes(), true);
+  }
+
+  second(): string {
+    return TimeParts.prependZero(this.date.getSeconds(), true);
+  }
+}
+
+export class Clock {
+  #parts: TimeParts;
+  #running = undefined;
+  #el = {
+    time: $('#time'),
+    date: $('#date'),
+  };
+
+  timeParts(): TimeParts {
+    const date = getMockDate();
+    return new TimeParts(date);
   }
 
   refresh(): void {
     const parts = this.timeParts();
     const oldParts = this.#parts;
 
-    this.#el.date.html(Clock.dateTemplate(parts));
+    this.#el.date.html(parts.dateTemplate());
 
     const units = ['hour', 'minute', 'second'];
     for (let i=0; i<units.length; i++) {
       const unit = units[i];
-      if( parts[unit] !== oldParts[unit] ){
+      if( parts[unit]() !== oldParts[unit]() ){
         this.#el.time.find('.' + unit).html(parts[unit]);
       }
     }
