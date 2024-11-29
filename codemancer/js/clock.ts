@@ -19,6 +19,10 @@ class TimeParts {
     this.minute = Clock.prependZero(date.getMinutes(), true);
     this.second = Clock.prependZero(date.getSeconds(), true);
   }
+
+  dateTemplate(): string {
+    return this.day + ', ' + this.month + ' ' + this.date;
+  }
 }
 
 export class Clock {
@@ -52,15 +56,11 @@ export class Clock {
     return '' + num;
   }
 
-  static dateTemplate(parts: TimeParts): string {
-    return parts.day + ', ' + parts.month + ' ' + parts.date;
-  }
-
   refresh(): void {
     const parts = this.timeParts();
     const oldParts = this.#parts;
 
-    this.#el.date.html(Clock.dateTemplate(parts));
+    this.#el.date.html(parts.dateTemplate());
 
     const units = ['hour', 'minute', 'second'];
     for (let i=0; i<units.length; i++) {
