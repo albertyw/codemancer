@@ -48,7 +48,7 @@ export class TimeParts {
 }
 
 export class Clock {
-  #parts: TimeParts;
+  #parts: TimeParts = new TimeParts(new Date(0));
   #running = undefined;
   #el = {
     time: $('#time'),
@@ -70,7 +70,7 @@ export class Clock {
     for (let i=0; i<units.length; i++) {
       const unit = units[i];
       if( parts[unit]() !== oldParts[unit]() ){
-        this.#el.time.find('.' + unit).html(parts[unit]);
+        this.#el.time.find('.' + unit).html(parts[unit]());
       }
     }
 
