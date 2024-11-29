@@ -5,22 +5,12 @@ import { getMockDate } from './util.js';
 
 export class TimeParts {
   date: Date;
-  hour: string;
-  minute: string;
-  second: string;
 
   static weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   static months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
   constructor(date: Date) {
     this.date = date;
-    let hour = date.getHours() % 12;
-    if(hour === 0) {
-      hour = 12;
-    }
-    this.hour = TimeParts.prependZero(hour, false);
-    this.minute = TimeParts.prependZero(date.getMinutes(), true);
-    this.second = TimeParts.prependZero(date.getSeconds(), true);
   }
 
   static prependZero(num: number, visible: boolean): string {
@@ -38,6 +28,22 @@ export class TimeParts {
     const month = TimeParts.months[this.date.getMonth()];
     const date = this.date.getDate();
     return day + ', ' + month + ' ' + date;
+  }
+
+  hour(): string {
+    let hour = this.date.getHours() % 12;
+    if(hour === 0) {
+      hour = 12;
+    }
+    return TimeParts.prependZero(hour, false);
+  }
+
+  minute(): string {
+    return TimeParts.prependZero(this.date.getMinutes(), true);
+  }
+
+  second(): string {
+    return TimeParts.prependZero(this.date.getSeconds(), true);
   }
 }
 
@@ -63,7 +69,7 @@ export class Clock {
     const units = ['hour', 'minute', 'second'];
     for (let i=0; i<units.length; i++) {
       const unit = units[i];
-      if( parts[unit] !== oldParts[unit] ){
+      if( parts[unit]() !== oldParts[unit]() ){
         this.#el.time.find('.' + unit).html(parts[unit]);
       }
     }
