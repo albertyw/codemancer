@@ -2,8 +2,17 @@ import $ from 'jquery';
 
 import { getMockDate } from './util.js';
 
+interface timeParts {
+  day: string;
+  date: number;
+  month: string;
+  hour: string;
+  minute: string;
+  second: string;
+}
+
 export class Clock {
-  #parts = {
+  #parts: timeParts = {
     day: '',
     date: undefined,
     month: '',
@@ -19,7 +28,7 @@ export class Clock {
   static weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   static months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-  timeParts(): any {
+  timeParts(): timeParts {
     const date = getMockDate();
     let hour = date.getHours();
 
@@ -48,7 +57,7 @@ export class Clock {
     return '' + num;
   }
 
-  static dateTemplate(parts: any): string{
+  static dateTemplate(parts: timeParts): string {
     return parts.day + ', ' + parts.month + ' ' + parts.date;
   }
 
