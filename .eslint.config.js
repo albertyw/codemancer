@@ -23,11 +23,6 @@ export default tseslint.config(
     'plugins': {
       '@stylistic': stylistic,
     },
-  },
-  {
-    'linterOptions': {
-      'reportUnusedDisableDirectives': 'error',
-    },
     'rules': {
       'indent': [
         'error',
@@ -45,6 +40,13 @@ export default tseslint.config(
         'error',
         'always'
       ],
+    },
+  },
+  {
+    'linterOptions': {
+      'reportUnusedDisableDirectives': 'error',
+    },
+    'rules': {
       '@typescript-eslint/no-unused-expressions': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
     },
