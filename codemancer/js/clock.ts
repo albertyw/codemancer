@@ -2,24 +2,27 @@ import $ from 'jquery';
 
 import { getMockDate } from './util.js';
 
-interface timeParts {
+
+class TimeParts {
   day: string;
   date: number;
   month: string;
   hour: string;
   minute: string;
   second: string;
+
+  constructor(date: Date) {
+    this.day = Clock.weekdays[date.getDay()];
+    this.date = date.getDate();
+    this.month = Clock.months[date.getMonth()];
+    this.hour = Clock.prependZero(date.getHours(), false);
+    this.minute = Clock.prependZero(date.getMinutes(), true);
+    this.second = Clock.prependZero(date.getSeconds(), true);
+  }
 }
 
 export class Clock {
-  #parts: timeParts = {
-    day: '',
-    date: undefined,
-    month: '',
-    hour: '',
-    minute: '',
-    second: '',
-  };
+  #parts: TimeParts;
   #running = undefined;
   #el = {
     time: $('#time'),
@@ -28,7 +31,7 @@ export class Clock {
   static weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   static months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-  timeParts(): timeParts {
+  timeParts(): TimeParts {
     const date = getMockDate();
     let hour = date.getHours();
 
@@ -36,15 +39,7 @@ export class Clock {
     if(hour === 0) {
       hour = 12;
     }
-    return {
-      // Digital
-      day: Clock.weekdays[date.getDay()],
-      date: date.getDate(),
-      month: Clock.months[date.getMonth()],
-      hour: Clock.prependZero(hour, false),
-      minute: Clock.prependZero(date.getMinutes(), true),
-      second: Clock.prependZero(date.getSeconds(), true),
-    };
+    return new TimeParts(date);
   }
 
   static prependZero(num: number, visible: boolean): string {
@@ -57,7 +52,7 @@ export class Clock {
     return '' + num;
   }
 
-  static dateTemplate(parts: timeParts): string {
+  static dateTemplate(parts: TimeParts): string {
     return parts.day + ', ' + parts.month + ' ' + parts.date;
   }
 
