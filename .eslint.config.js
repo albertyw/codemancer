@@ -1,6 +1,7 @@
 import globals from 'globals';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import stylistic from '@stylistic/eslint-plugin';
 
 let globalVars = globals.browser;
 globalVars = {...globalVars, ...{
@@ -18,6 +19,11 @@ globalVars = {...globalVars, ...{
 export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
+  {
+    'plugins': {
+      '@stylistic': stylistic,
+    },
+  },
   {
     'linterOptions': {
       'reportUnusedDisableDirectives': 'error',
