@@ -14,7 +14,11 @@ export class TimeParts {
 
   constructor(date: Date) {
     this.date = date;
-    this.hour = TimeParts.prependZero(date.getHours(), false);
+    let hour = date.getHours() % 12;
+    if(hour === 0) {
+      hour = 12;
+    }
+    this.hour = TimeParts.prependZero(hour, false);
     this.minute = TimeParts.prependZero(date.getMinutes(), true);
     this.second = TimeParts.prependZero(date.getSeconds(), true);
   }
@@ -47,12 +51,6 @@ export class Clock {
 
   timeParts(): TimeParts {
     const date = getMockDate();
-    let hour = date.getHours();
-
-    hour = hour % 12;
-    if(hour === 0) {
-      hour = 12;
-    }
     return new TimeParts(date);
   }
 
