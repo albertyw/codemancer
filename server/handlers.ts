@@ -40,11 +40,12 @@ function generateIndexHandler(app: express.Express): express.Handler {
 function airnowHandler(req: express.Request, res: express.Response) {
   // Proxy for Airnow because their API doesn't support CORS
   const url = new URL(airnowURL);
-  if (
-    typeof req.query.latitude !== 'string' ||
-    typeof req.query.longitude !== 'string'
-  ) {
+  if (typeof req.query.latitude !== 'string') {
     res.json({'error': 'latitude is not a string'});
+    return;
+  }
+  if (typeof req.query.longitude !== 'string') {
+    res.json({'error': 'longitude is not a string'});
     return;
   }
   url.searchParams.append('latitude', req.query.latitude);
