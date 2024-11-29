@@ -1,15 +1,15 @@
 import {expect} from 'chai';
-import { Clock, TimeParts } from '../codemancer/js/clock.js';
+import { TimeParts } from '../codemancer/js/clock.js';
 
-describe('Clock.weekdays', () => {
+describe('TimeParts.weekdays', () => {
   it('has weekdays', () => {
-    expect(Clock.weekdays.length).to.equal(7);
+    expect(TimeParts.weekdays.length).to.equal(7);
   });
 });
 
-describe('Clock.months', () => {
+describe('TimeParts.months', () => {
   it('has months', () => {
-    expect(Clock.months.length).to.equal(12);
+    expect(TimeParts.months.length).to.equal(12);
   });
 });
 

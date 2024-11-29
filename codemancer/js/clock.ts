@@ -11,10 +11,13 @@ export class TimeParts {
   minute: string;
   second: string;
 
+  static weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  static months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
   constructor(date: Date) {
-    this.day = Clock.weekdays[date.getDay()];
+    this.day = TimeParts.weekdays[date.getDay()];
     this.date = date.getDate();
-    this.month = Clock.months[date.getMonth()];
+    this.month = TimeParts.months[date.getMonth()];
     this.hour = TimeParts.prependZero(date.getHours(), false);
     this.minute = TimeParts.prependZero(date.getMinutes(), true);
     this.second = TimeParts.prependZero(date.getSeconds(), true);
@@ -42,8 +45,6 @@ export class Clock {
     time: $('#time'),
     date: $('#date'),
   };
-  static weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  static months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
   timeParts(): TimeParts {
     const date = getMockDate();
