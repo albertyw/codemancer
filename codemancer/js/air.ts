@@ -2,6 +2,7 @@ import $ from 'jquery';
 
 import {location} from './location.js';
 import {LocationData} from '../../server/location.js';
+import {AirnowResponse} from '../../server/handlers.js';
 import {requestPromise} from './util.js';
 
 const airnowProxyURL = '/airnow/';
@@ -26,7 +27,7 @@ export class Air {
       .then((url: string) => {
         return requestPromise(url, cacheDuration, backupDuration);
       })
-      .then(function(data: any) {
+      .then(function(data: AirnowResponse[]) {
         if (data[0].Category.Number > 2) {
           const message = 'Air Quality: ' + data[0].Category.Name;
           dom.text(message);

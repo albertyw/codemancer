@@ -19,7 +19,7 @@ const airnowBackupDuration = 3 * 60 * 60 * 1000;
 const weatherCacheDuration = 5 * 60 * 1000;
 const weatherBackupDuration = 1 * 60 * 60 * 1000;
 
-interface AirnowResponse {
+export interface AirnowResponse {
   DateIssue: string,
   DateForecast: string,
   ReportingArea: string,
