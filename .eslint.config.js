@@ -26,19 +26,23 @@ export default tseslint.config(
     'rules': {
       'indent': [
         'error',
-        2
+        2,
       ],
       'linebreak-style': [
         'error',
-        'unix'
+        'unix',
       ],
       'quotes': [
         'error',
-        'single'
+        'single',
       ],
       'semi': [
         'error',
-        'always'
+        'always',
+      ],
+      'comma-dangle': [
+        'error',
+        'always-multiline',
       ],
     },
   },

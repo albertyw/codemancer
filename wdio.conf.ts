@@ -17,8 +17,8 @@ export const config: Options.Testrunner = {
     autoCompile: true,
     tsNodeOpts: {
       project: './tsconfig.json',
-      transpileOnly: true
-    }
+      transpileOnly: true,
+    },
   },
 
   //
@@ -37,7 +37,7 @@ export const config: Options.Testrunner = {
   // of the config file unless it's absolute.
   //
   specs: [
-    './test/test.ts'
+    './test/test.ts',
   ],
   // Patterns to exclude.
   exclude: [
@@ -73,9 +73,9 @@ export const config: Options.Testrunner = {
     //
     browserName: 'firefox',
     'moz:firefoxOptions': {
-      args: ['-headless']
+      args: ['-headless'],
     },
-    acceptInsecureCerts: true
+    acceptInsecureCerts: true,
     // If outputDir is provided WebdriverIO can capture driver session logs
     // it is possible to configure which logTypes to include/exclude.
     // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
@@ -158,7 +158,7 @@ export const config: Options.Testrunner = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    timeout: 60000
+    timeout: 60000,
   },
 
   //
