@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import { Clock } from '../codemancer/js/clock.js';
+import { Clock, TimeParts } from '../codemancer/js/clock.js';
 
 describe('Clock.weekdays', () => {
   it('has weekdays', () => {
@@ -13,12 +13,12 @@ describe('Clock.months', () => {
   });
 });
 
-describe('Clock.prependZero', () => {
+describe('timeParts.prependZero', () => {
   it('prepends zero when needed', () => {
-    expect(Clock.prependZero(1, true)).to.equal('01');
-    expect(Clock.prependZero(9, true)).to.equal('09');
-    expect(Clock.prependZero(10, true)).to.equal('10');
-    expect(Clock.prependZero(90, true)).to.equal('90');
-    expect(Clock.prependZero(100, true)).to.equal('100');
+    expect(TimeParts.prependZero(1, true)).to.equal('01');
+    expect(TimeParts.prependZero(9, true)).to.equal('09');
+    expect(TimeParts.prependZero(10, true)).to.equal('10');
+    expect(TimeParts.prependZero(90, true)).to.equal('90');
+    expect(TimeParts.prependZero(100, true)).to.equal('100');
   });
 });

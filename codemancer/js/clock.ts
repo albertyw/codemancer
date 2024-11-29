@@ -3,7 +3,7 @@ import $ from 'jquery';
 import { getMockDate } from './util.js';
 
 
-class TimeParts {
+export class TimeParts {
   day: string;
   date: number;
   month: string;
@@ -15,9 +15,19 @@ class TimeParts {
     this.day = Clock.weekdays[date.getDay()];
     this.date = date.getDate();
     this.month = Clock.months[date.getMonth()];
-    this.hour = Clock.prependZero(date.getHours(), false);
-    this.minute = Clock.prependZero(date.getMinutes(), true);
-    this.second = Clock.prependZero(date.getSeconds(), true);
+    this.hour = TimeParts.prependZero(date.getHours(), false);
+    this.minute = TimeParts.prependZero(date.getMinutes(), true);
+    this.second = TimeParts.prependZero(date.getSeconds(), true);
+  }
+
+  static prependZero(num: number, visible: boolean): string {
+    if(num < 10) {
+      if(visible) {
+        return '0' + num;
+      }
+      return '<span class="invisible">0</span>' + num;
+    }
+    return '' + num;
   }
 
   dateTemplate(): string {
@@ -44,16 +54,6 @@ export class Clock {
       hour = 12;
     }
     return new TimeParts(date);
-  }
-
-  static prependZero(num: number, visible: boolean): string {
-    if(num < 10) {
-      if(visible) {
-        return '0' + num;
-      }
-      return '<span class="invisible">0</span>' + num;
-    }
-    return '' + num;
   }
 
   refresh(): void {
