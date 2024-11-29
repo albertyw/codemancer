@@ -19,6 +19,22 @@ const airnowBackupDuration = 3 * 60 * 60 * 1000;
 const weatherCacheDuration = 5 * 60 * 1000;
 const weatherBackupDuration = 1 * 60 * 60 * 1000;
 
+interface AirnowResponse {
+  DateIssue: string,
+  DateForecast: string,
+  ReportingArea: string,
+  StateCode: string,
+  Latitude: number,
+  Longitude: number,
+  ParameterName: string,
+  AQI: number,
+  Category: {
+    Number: number,
+    Name: string,
+  },
+  ActionDay: boolean,
+}
+
 export function loadTemplateVars(app: express.Express) {
   app.locals.templateVars = {};
   getSVGs().then((svgs) => {
@@ -39,6 +55,7 @@ function generateIndexHandler(app: express.Express): express.Handler {
 
 function airnowHandler(req: express.Request, res: express.Response) {
   // Proxy for Airnow because their API doesn't support CORS
+  // See test/data for example response
   const url = new URL(airnowURL);
   if (typeof req.query.latitude !== 'string') {
     res.json({'error': 'latitude is not a string'});
@@ -52,7 +69,7 @@ function airnowHandler(req: express.Request, res: express.Response) {
   url.searchParams.append('longitude', req.query.longitude);
   url.searchParams.append('API_KEY', process.env.AIRNOW_API_KEY);
   url.searchParams.append('format', 'application/json');
-  requestPromise(url.href, airnowCacheDuration, airnowBackupDuration).then(function(data) {
+  requestPromise(url.href, airnowCacheDuration, airnowBackupDuration).then(function(data: AirnowResponse[]) {
     res.json(data);
   }).catch((error) => {
     res.json({'error': error});
