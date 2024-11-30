@@ -64,7 +64,9 @@ export class Clock {
     const parts = this.timeParts();
     const oldParts = this.#parts;
 
-    this.#el.date.html(parts.dateTemplate());
+    if(parts.dateTemplate() !== oldParts.dateTemplate()) {
+      this.#el.date.html(parts.dateTemplate());
+    }
 
     const units = ['hour', 'minute', 'second'];
     for (let i=0; i<units.length; i++) {
