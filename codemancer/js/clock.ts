@@ -23,7 +23,7 @@ export class TimeParts {
     return '' + num;
   }
 
-  dateTemplate(): string {
+  dateFormatted(): string {
     const day = TimeParts.weekdays[this.date.getDay()];
     const month = TimeParts.months[this.date.getMonth()];
     const date = this.date.getDate();
@@ -64,8 +64,8 @@ export class Clock {
     const parts = this.timeParts();
     const oldParts = this.#parts;
 
-    if(parts.dateTemplate() !== oldParts.dateTemplate()) {
-      this.#el.date.html(parts.dateTemplate());
+    if(parts.dateFormatted() !== oldParts.dateFormatted()) {
+      this.#el.date.html(parts.dateFormatted());
     }
 
     const units = ['hour', 'minute', 'second'];
