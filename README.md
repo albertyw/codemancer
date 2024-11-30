@@ -31,8 +31,8 @@ Changes from Currently Extension
 Setup and Testing
 -----------------
 
-```
-nvm use 22
+```bash
+nvm use 23
 npm install
 npm test
 ln -s .env.development .env
