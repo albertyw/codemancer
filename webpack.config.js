@@ -18,7 +18,7 @@ const config = {
   output: {
     path: path.resolve('dist'),
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   plugins: [
     new Dotenv(),
     new MiniCssExtractPlugin(),
