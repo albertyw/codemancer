@@ -8,7 +8,7 @@ BASE_DIR="$DIR"/..
 cd "$BASE_DIR" || exit 1
 
 # Create minified files while host directories are mounted
-npm run build
+npm run build:prod
 
 # Run app
 node --loader ts-node/esm server/app.ts
