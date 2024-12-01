@@ -44,8 +44,8 @@ export class BackgroundColor {
         const times = SunCalc.getTimes(new Date(), locationData.lat, locationData.lng);
         const sunriseDate = new Date(times.sunrise.toLocaleString('en-US', {timeZone: locationData.timezone}));
         const sunsetDate = new Date(times.sunset.toLocaleString('en-US', {timeZone: locationData.timezone}));
-        const sunrise = dateToMinutes(sunriseDate);
-        const sunset = dateToMinutes(sunsetDate);
+        const sunrise = BackgroundColor.dateToMinutes(sunriseDate);
+        const sunset = BackgroundColor.dateToMinutes(sunsetDate);
         colors[(sunrise - 120).toString()] = fullNight;
         colors[(sunrise - 60).toString()] = lateEvening;
         colors[sunrise.toString()] = midEvening;
@@ -63,12 +63,12 @@ export class BackgroundColor {
         getRollbar().error(error);
       });
   }
-}
 
-const dateToMinutes = function dateToMinutes(date) {
-  const timestamp = date.getHours() * 60 + date.getMinutes();
-  return timestamp;
-};
+  static dateToMinutes(date): number {
+    const timestamp = date.getHours() * 60 + date.getMinutes();
+    return timestamp;
+  }
+}
 
 const componentToHex = varsnap(function componentToHex(c) {
   const hex = c.toString(16);
@@ -81,7 +81,7 @@ const rgbToHex = varsnap(function rgbToHex(r, g, b) {
 
 function currentTimestamp() {
   const currentDate = getMockDate();
-  return dateToMinutes(currentDate);
+  return BackgroundColor.dateToMinutes(currentDate);
 }
 
 const getCurrentColor = function getCurrentColor(current) {
