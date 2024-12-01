@@ -83,32 +83,32 @@ export class BackgroundColor {
     const currentDate = getMockDate();
     return BackgroundColor.dateToMinutes(currentDate);
   }
-}
 
-const getCurrentColor = function getCurrentColor(current) {
-  let before = 0;
-  let after = 0;
-  for (let i=0; i<colorsTimestamp.length; i++) {
-    if (colorsTimestamp[i] <= current && colorsTimestamp[i+1] > current) {
-      before = parseInt(colorsTimestamp[i], 10);
-      after = parseInt(colorsTimestamp[i+1], 10);
-      break;
+  static getCurrentColor(current) {
+    let before = 0;
+    let after = 0;
+    for (let i=0; i<colorsTimestamp.length; i++) {
+      if (colorsTimestamp[i] <= current && colorsTimestamp[i+1] > current) {
+        before = parseInt(colorsTimestamp[i], 10);
+        after = parseInt(colorsTimestamp[i+1], 10);
+        break;
+      }
     }
+    const percentage = (current - before) / (after - before);
+    const colorBefore = colors[before];
+    const colorAfter = colors[after];
+    const currentColor = [0, 0, 0];
+    for (let i=0; i<colorBefore.length; i++) {
+      currentColor[i] = colorBefore[i] + (colorAfter[i] - colorBefore[i]) * percentage;
+      currentColor[i] = Math.round(currentColor[i]);
+    }
+    return BackgroundColor.rgbToHex(currentColor[0], currentColor[1], currentColor[2]);
   }
-  const percentage = (current - before) / (after - before);
-  const colorBefore = colors[before];
-  const colorAfter = colors[after];
-  const currentColor = [0, 0, 0];
-  for (let i=0; i<colorBefore.length; i++) {
-    currentColor[i] = colorBefore[i] + (colorAfter[i] - colorBefore[i]) * percentage;
-    currentColor[i] = Math.round(currentColor[i]);
-  }
-  return BackgroundColor.rgbToHex(currentColor[0], currentColor[1], currentColor[2]);
-};
+}
 
 export function updateBackgroundColor(): void {
   const current = BackgroundColor.currentTimestamp();
-  const currentColor = getCurrentColor(current);
+  const currentColor = BackgroundColor.getCurrentColor(current);
   document.body.style.backgroundColor = currentColor;
   if (updateBackgroundColorInterval === undefined) {
     updateBackgroundColorInterval = window.setInterval(function() {
