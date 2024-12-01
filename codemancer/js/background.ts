@@ -2,7 +2,6 @@ import SunCalc from 'suncalc';
 
 import getRollbar from './rollbar.js';
 import {getMockDate} from './util.js';
-import varsnap from './varsnap.js';
 import { location } from './location.js';
 import { LocationData } from '../../server/location.js';
 
@@ -68,16 +67,18 @@ export class BackgroundColor {
     const timestamp = date.getHours() * 60 + date.getMinutes();
     return timestamp;
   }
+
+  // TODO: add varsnap here
+  static componentToHex(c) {
+    const hex = c.toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
+  }
+
+  // TODO: add varsnap here
+  static rgbToHex(r, g, b) {
+    return '#' + BackgroundColor.componentToHex(r) + BackgroundColor.componentToHex(g) + BackgroundColor.componentToHex(b);
+  }
 }
-
-const componentToHex = varsnap(function componentToHex(c) {
-  const hex = c.toString(16);
-  return hex.length === 1 ? '0' + hex : hex;
-});
-
-const rgbToHex = varsnap(function rgbToHex(r, g, b) {
-  return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
-});
 
 function currentTimestamp() {
   const currentDate = getMockDate();
@@ -102,7 +103,7 @@ const getCurrentColor = function getCurrentColor(current) {
     currentColor[i] = colorBefore[i] + (colorAfter[i] - colorBefore[i]) * percentage;
     currentColor[i] = Math.round(currentColor[i]);
   }
-  return rgbToHex(currentColor[0], currentColor[1], currentColor[2]);
+  return BackgroundColor.rgbToHex(currentColor[0], currentColor[1], currentColor[2]);
 };
 
 export function updateBackgroundColor(): void {
