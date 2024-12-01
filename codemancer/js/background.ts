@@ -31,10 +31,12 @@ let colorsTimestamp = Object.keys(colors);
 let updateBackgroundColorPeriod = 5 * 60 * 1000;
 let updateBackgroundColorInterval: number|undefined = undefined;
 
-export function changeUpdateBackgroundColorPeriod(period: number): number {
-  const original = updateBackgroundColorPeriod;
-  updateBackgroundColorPeriod = period;
-  return original;
+export class BackgroundColor {
+  static changeUpdateBackgroundColorPeriod(period: number): number {
+    const original = updateBackgroundColorPeriod;
+    updateBackgroundColorPeriod = period;
+    return original;
+  }
 }
 
 const generateColorsArray = function generateColorsArray(){
@@ -119,5 +121,5 @@ export function prepare(): void {
 }
 
 export function load(): void {
-  generateColorsArray;
+  generateColorsArray();
 }
