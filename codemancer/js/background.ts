@@ -37,33 +37,33 @@ export class BackgroundColor {
     updateBackgroundColorPeriod = period;
     return original;
   }
-}
 
-const generateColorsArray = function generateColorsArray(){
-  location.getLocation()
-    .then((locationData: LocationData) => {
-      const times = SunCalc.getTimes(new Date(), locationData.lat, locationData.lng);
-      const sunriseDate = new Date(times.sunrise.toLocaleString('en-US', {timeZone: locationData.timezone}));
-      const sunsetDate = new Date(times.sunset.toLocaleString('en-US', {timeZone: locationData.timezone}));
-      const sunrise = dateToMinutes(sunriseDate);
-      const sunset = dateToMinutes(sunsetDate);
-      colors[(sunrise - 120).toString()] = fullNight;
-      colors[(sunrise - 60).toString()] = lateEvening;
-      colors[sunrise.toString()] = midEvening;
-      colors[(sunrise + 60).toString()] = brightEvening;
-      colors[(sunrise + 120).toString()] = fullDay;
-      colors[(sunset - 120).toString()] = fullDay;
-      colors[(sunset - 60).toString()] = brightEvening;
-      colors[sunset.toString()] = midEvening;
-      colors[(sunset + 60).toString()] = lateEvening;
-      colors[(sunset + 120).toString()] = fullNight;
-      colorsTimestamp = Object.keys(colors);
-      updateBackgroundColor();
-    })
-    .catch((error) => {
-      getRollbar().error(error);
-    });
-};
+  generateColorsArray(): void {
+    location.getLocation()
+      .then((locationData: LocationData) => {
+        const times = SunCalc.getTimes(new Date(), locationData.lat, locationData.lng);
+        const sunriseDate = new Date(times.sunrise.toLocaleString('en-US', {timeZone: locationData.timezone}));
+        const sunsetDate = new Date(times.sunset.toLocaleString('en-US', {timeZone: locationData.timezone}));
+        const sunrise = dateToMinutes(sunriseDate);
+        const sunset = dateToMinutes(sunsetDate);
+        colors[(sunrise - 120).toString()] = fullNight;
+        colors[(sunrise - 60).toString()] = lateEvening;
+        colors[sunrise.toString()] = midEvening;
+        colors[(sunrise + 60).toString()] = brightEvening;
+        colors[(sunrise + 120).toString()] = fullDay;
+        colors[(sunset - 120).toString()] = fullDay;
+        colors[(sunset - 60).toString()] = brightEvening;
+        colors[sunset.toString()] = midEvening;
+        colors[(sunset + 60).toString()] = lateEvening;
+        colors[(sunset + 120).toString()] = fullNight;
+        colorsTimestamp = Object.keys(colors);
+        updateBackgroundColor();
+      })
+      .catch((error) => {
+        getRollbar().error(error);
+      });
+  }
+}
 
 const dateToMinutes = function dateToMinutes(date) {
   const timestamp = date.getHours() * 60 + date.getMinutes();
@@ -116,10 +116,12 @@ export function updateBackgroundColor(): void {
   }
 }
 
+export const backgroundColor = new BackgroundColor();
+
 export function prepare(): void {
   updateBackgroundColor();
 }
 
 export function load(): void {
-  generateColorsArray();
+  backgroundColor.generateColorsArray();
 }
