@@ -1,4 +1,3 @@
-import $ from 'jquery';
 import SunCalc from 'suncalc';
 
 import getRollbar from './rollbar.js';
@@ -115,5 +114,10 @@ export function updateBackgroundColor(): void {
   }
 }
 
-updateBackgroundColor();
-$(generateColorsArray);
+export function prepare(): void {
+  updateBackgroundColor();
+}
+
+export function load(): void {
+  generateColorsArray;
+}
