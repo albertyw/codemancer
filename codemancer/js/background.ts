@@ -78,11 +78,11 @@ export class BackgroundColor {
   static rgbToHex(r, g, b) {
     return '#' + BackgroundColor.componentToHex(r) + BackgroundColor.componentToHex(g) + BackgroundColor.componentToHex(b);
   }
-}
 
-function currentTimestamp() {
-  const currentDate = getMockDate();
-  return BackgroundColor.dateToMinutes(currentDate);
+  static currentTimestamp() {
+    const currentDate = getMockDate();
+    return BackgroundColor.dateToMinutes(currentDate);
+  }
 }
 
 const getCurrentColor = function getCurrentColor(current) {
@@ -107,7 +107,7 @@ const getCurrentColor = function getCurrentColor(current) {
 };
 
 export function updateBackgroundColor(): void {
-  const current = currentTimestamp();
+  const current = BackgroundColor.currentTimestamp();
   const currentColor = getCurrentColor(current);
   document.body.style.backgroundColor = currentColor;
   if (updateBackgroundColorInterval === undefined) {
