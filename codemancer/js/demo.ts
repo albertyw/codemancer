@@ -1,16 +1,16 @@
 import $ from 'jquery';
 
-import { changeUpdateBackgroundColorPeriod } from './background.js';
+import { backgroundColor } from './background.js';
 import { toggleDemo } from './util.js';
 
 let originalUpdateBackgroundColorPeriod = 1000;
 
 function startDemo() {
-  originalUpdateBackgroundColorPeriod = changeUpdateBackgroundColorPeriod(500);
+  originalUpdateBackgroundColorPeriod = backgroundColor.changeUpdateBackgroundColorPeriod(500);
 }
 
 function stopDemo() {
-  changeUpdateBackgroundColorPeriod(originalUpdateBackgroundColorPeriod);
+  backgroundColor.changeUpdateBackgroundColorPeriod(originalUpdateBackgroundColorPeriod);
 }
 
 function toggleDemoClick() {
