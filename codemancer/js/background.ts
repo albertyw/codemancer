@@ -29,12 +29,12 @@ const colors = {
 let colorsTimestamp = Object.keys(colors);
 
 export class BackgroundColor {
-  #updateBackgroundColorPeriod = 5 * 60 * 1000;
-  #updateBackgroundColorInterval: number|undefined = undefined;
+  #updatePeriod = 5 * 60 * 1000;
+  #updateInterval: number|undefined = undefined;
 
   changeUpdateBackgroundColorPeriod(period: number): number {
-    const original = this.#updateBackgroundColorPeriod;
-    this.#updateBackgroundColorPeriod = period;
+    const original = this.#updatePeriod;
+    this.#updatePeriod = period;
     return original;
   }
 
@@ -57,7 +57,7 @@ export class BackgroundColor {
         colors[(sunset + 60).toString()] = lateEvening;
         colors[(sunset + 120).toString()] = fullNight;
         colorsTimestamp = Object.keys(colors);
-        this.updateBackgroundColor();
+        this.update();
       })
       .catch((error) => {
         getRollbar().error(error);
@@ -106,14 +106,14 @@ export class BackgroundColor {
     return BackgroundColor.rgbToHex(currentColor[0], currentColor[1], currentColor[2]);
   }
 
-  updateBackgroundColor(): void {
+  update(): void {
     const current = BackgroundColor.currentTimestamp();
     const currentColor = BackgroundColor.getCurrentColor(current);
     document.body.style.backgroundColor = currentColor;
-    if (this.#updateBackgroundColorInterval === undefined) {
-      this.#updateBackgroundColorInterval = window.setInterval(() => {
-        this.updateBackgroundColor();
-      }, this.#updateBackgroundColorPeriod);
+    if (this.#updateInterval === undefined) {
+      this.#updateInterval = window.setInterval(() => {
+        this.update();
+      }, this.#updatePeriod);
     }
   }
 }
@@ -121,7 +121,7 @@ export class BackgroundColor {
 export const backgroundColor = new BackgroundColor();
 
 export function prepare(): void {
-  backgroundColor.updateBackgroundColor();
+  backgroundColor.update();
 }
 
 export function load(): void {
