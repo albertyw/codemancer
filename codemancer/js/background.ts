@@ -11,24 +11,23 @@ const brightEvening = [255, 110, 30];
 const midEvening = [255, 155, 0];
 const lateEvening = [0, 0, 255];
 
-const colors = {
-  '0':[0,0,0],
-  '235':[0,0,0],
-  '295':[0,0,255],
-  '355':[255,155,0],
-  '415':[255,110,30],
-  '475':[0,204,255],
-  '1096':[0,204,255],
-  '1156':[255,110,30],
-  '1216':[255,155,0],
-  '1276':[0,0,255],
-  '1336':[0,0,0],
-  '1440':[0,0,0],
-};
-
-let colorsTimestamp = Object.keys(colors);
-
 export class BackgroundColor {
+  #colors = {
+    '0':[0,0,0],
+    '235':[0,0,0],
+    '295':[0,0,255],
+    '355':[255,155,0],
+    '415':[255,110,30],
+    '475':[0,204,255],
+    '1096':[0,204,255],
+    '1156':[255,110,30],
+    '1216':[255,155,0],
+    '1276':[0,0,255],
+    '1336':[0,0,0],
+    '1440':[0,0,0],
+  };
+  #colorsTimestamp = Object.keys(this.#colors);
+
   #updatePeriod = 5 * 60 * 1000;
   #updateInterval: number|undefined = undefined;
 
@@ -46,17 +45,17 @@ export class BackgroundColor {
         const sunsetDate = new Date(times.sunset.toLocaleString('en-US', {timeZone: locationData.timezone}));
         const sunrise = BackgroundColor.dateToMinutes(sunriseDate);
         const sunset = BackgroundColor.dateToMinutes(sunsetDate);
-        colors[(sunrise - 120).toString()] = fullNight;
-        colors[(sunrise - 60).toString()] = lateEvening;
-        colors[sunrise.toString()] = midEvening;
-        colors[(sunrise + 60).toString()] = brightEvening;
-        colors[(sunrise + 120).toString()] = fullDay;
-        colors[(sunset - 120).toString()] = fullDay;
-        colors[(sunset - 60).toString()] = brightEvening;
-        colors[sunset.toString()] = midEvening;
-        colors[(sunset + 60).toString()] = lateEvening;
-        colors[(sunset + 120).toString()] = fullNight;
-        colorsTimestamp = Object.keys(colors);
+        this.#colors[(sunrise - 120).toString()] = fullNight;
+        this.#colors[(sunrise - 60).toString()] = lateEvening;
+        this.#colors[sunrise.toString()] = midEvening;
+        this.#colors[(sunrise + 60).toString()] = brightEvening;
+        this.#colors[(sunrise + 120).toString()] = fullDay;
+        this.#colors[(sunset - 120).toString()] = fullDay;
+        this.#colors[(sunset - 60).toString()] = brightEvening;
+        this.#colors[sunset.toString()] = midEvening;
+        this.#colors[(sunset + 60).toString()] = lateEvening;
+        this.#colors[(sunset + 120).toString()] = fullNight;
+        this.#colorsTimestamp = Object.keys(this.#colors);
         this.update();
       })
       .catch((error) => {
@@ -85,19 +84,19 @@ export class BackgroundColor {
     return BackgroundColor.dateToMinutes(currentDate);
   }
 
-  static getCurrentColor(current) {
+  getCurrentColor(current) {
     let before = 0;
     let after = 0;
-    for (let i=0; i<colorsTimestamp.length; i++) {
-      if (colorsTimestamp[i] <= current && colorsTimestamp[i+1] > current) {
-        before = parseInt(colorsTimestamp[i], 10);
-        after = parseInt(colorsTimestamp[i+1], 10);
+    for (let i=0; i<this.#colorsTimestamp.length; i++) {
+      if (this.#colorsTimestamp[i] <= current && this.#colorsTimestamp[i+1] > current) {
+        before = parseInt(this.#colorsTimestamp[i], 10);
+        after = parseInt(this.#colorsTimestamp[i+1], 10);
         break;
       }
     }
     const percentage = (current - before) / (after - before);
-    const colorBefore = colors[before];
-    const colorAfter = colors[after];
+    const colorBefore = this.#colors[before];
+    const colorAfter = this.#colors[after];
     const currentColor = [0, 0, 0];
     for (let i=0; i<colorBefore.length; i++) {
       currentColor[i] = colorBefore[i] + (colorAfter[i] - colorBefore[i]) * percentage;
@@ -108,7 +107,7 @@ export class BackgroundColor {
 
   update(): void {
     const current = BackgroundColor.currentTimestamp();
-    const currentColor = BackgroundColor.getCurrentColor(current);
+    const currentColor = this.getCurrentColor(current);
     document.body.style.backgroundColor = currentColor;
     if (this.#updateInterval === undefined) {
       this.#updateInterval = window.setInterval(() => {
