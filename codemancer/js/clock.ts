@@ -48,7 +48,6 @@ export class TimeParts {
 }
 
 export class Clock {
-  #parts: TimeParts = new TimeParts(new Date(0));
   #running = undefined;
   #el = {
     time: $('#time'),
@@ -62,21 +61,22 @@ export class Clock {
 
   refresh(): void {
     const parts = this.timeParts();
-    const oldParts = this.#parts;
 
-    if(parts.dateFormatted() !== oldParts.dateFormatted()) {
+    if(parts.dateFormatted() !== this.#el.date.html()) {
       this.#el.date.html(parts.dateFormatted());
     }
 
-    const units = ['hour', 'minute', 'second'];
-    for (let i=0; i<units.length; i++) {
-      const unit = units[i];
-      if( parts[unit]() !== oldParts[unit]() ){
-        this.#el.time.find('.' + unit).html(parts[unit]());
-      }
+    if(parts.hour() !== this.#el.time.find('.hour').html()) {
+      this.#el.time.find('.hour').html(parts.hour());
     }
 
-    this.#parts = parts;
+    if(parts.minute() !== this.#el.time.find('.minute').html()) {
+      this.#el.time.find('.minute').html(parts.minute());
+    }
+
+    if(parts.second() !== this.#el.time.find('.second').html()) {
+      this.#el.time.find('.second').html(parts.second());
+    }
   }
 
   start(): void {
