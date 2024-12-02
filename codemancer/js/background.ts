@@ -27,13 +27,14 @@ const colors = {
 };
 
 let colorsTimestamp = Object.keys(colors);
-let updateBackgroundColorPeriod = 5 * 60 * 1000;
-let updateBackgroundColorInterval: number|undefined = undefined;
 
 export class BackgroundColor {
-  static changeUpdateBackgroundColorPeriod(period: number): number {
-    const original = updateBackgroundColorPeriod;
-    updateBackgroundColorPeriod = period;
+  #updateBackgroundColorPeriod = 5 * 60 * 1000;
+  #updateBackgroundColorInterval: number|undefined = undefined;
+
+  changeUpdateBackgroundColorPeriod(period: number): number {
+    const original = this.#updateBackgroundColorPeriod;
+    this.#updateBackgroundColorPeriod = period;
     return original;
   }
 
@@ -109,10 +110,10 @@ export class BackgroundColor {
     const current = BackgroundColor.currentTimestamp();
     const currentColor = BackgroundColor.getCurrentColor(current);
     document.body.style.backgroundColor = currentColor;
-    if (updateBackgroundColorInterval === undefined) {
-      updateBackgroundColorInterval = window.setInterval(() => {
+    if (this.#updateBackgroundColorInterval === undefined) {
+      this.#updateBackgroundColorInterval = window.setInterval(() => {
         this.updateBackgroundColor();
-      }, updateBackgroundColorPeriod);
+      }, this.#updateBackgroundColorPeriod);
     }
   }
 }
