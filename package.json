@@ -6,6 +6,14 @@
     "test": "tests"
   },
   "type": "module",
+  "sideEffects": [
+    "./codemancer/js/ganalytics.ts",
+    "./codemancer/js/index.ts",
+    "./codemancer/js/logfit.ts",
+    "./codemancer/js/varsnap.ts",
+    "./server/app.ts",
+    "*.css"
+  ],
   "scripts": {
     "run": "bin/start.sh",
     "eslint": "tsc --noEmit && eslint -c .eslint.config.js .",

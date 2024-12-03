@@ -57,6 +57,7 @@ const config = {
       '...',
       new CssMinimizerPlugin(),
     ],
+    usedExports: true,
   },
 };
 
