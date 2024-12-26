@@ -100,7 +100,6 @@ function locationHandler(req: express.Request, res: express.Response) {
 }
 
 function webpackMiddleware() {
-  // @ts-expect-error Ignore '...' shortcut in webpack.config.js
   const compiler = webpack(webpackConfig());
   return middleware(compiler, {
     publicPath: '/dist/',

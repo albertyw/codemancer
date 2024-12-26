@@ -6,6 +6,7 @@ import Dotenv from 'dotenv-webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import webpack from 'webpack';
+import type {Configuration} from 'webpack';
 
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -13,7 +14,7 @@ function git_version() {
   return child_process.execSync('git describe --always', { encoding: 'utf8' }).trim();
 }
 
-const config = {
+const config: Configuration = {
   entry: './codemancer/js/index.ts',
   output: {
     path: path.resolve('dist'),
