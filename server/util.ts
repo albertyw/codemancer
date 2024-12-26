@@ -7,9 +7,17 @@ import varsnap from '../codemancer/js/varsnap.js';
 
 const appRoot = appRootPath.toString();
 
-export const getSVGs: () => Promise<{ [key: string]: string }> = varsnap(function getSVGs(): Promise<{ [key: string]: string }> {
-  const svgs: { [key: string]: string } = {};
-  function readSVGFile(svgFile: string, svgName: string) {
+interface SVGs {
+  github: string;
+  toggledemo: string;
+}
+
+export const getSVGs: () => Promise<SVGs> = varsnap(function getSVGs(): Promise<SVGs> {
+  const svgs: SVGs = {
+    github: '',
+    toggledemo: '',
+  };
+  function readSVGFile(svgFile: string, svgName: 'github' | 'toggledemo'): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       const svgPath = path.join(appRoot, 'codemancer', 'img', svgFile);
       fs.readFile(svgPath, (err, data) => {
