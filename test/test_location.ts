@@ -2,6 +2,7 @@ import {expect} from 'chai';
 import sinon from 'sinon';
 
 import {Location} from '../codemancer/js/location.js';
+import {LocationData} from '../server/location.js';
 import getRollbar from '../codemancer/js/rollbar.js';
 import util from '../codemancer/js/util.js';
 const locationData = '{"displayName": "San Francisco, CA"}';
@@ -21,10 +22,10 @@ describe('Location.getLocation', function() {
   it('it returns a location name', function(done) {
     this.requestPromise.resolves(JSON.parse(locationData));
     const promise = this.location.getLocation();
-    promise.then((data) => {
+    promise.then((data: LocationData) => {
       expect(data.displayName).to.equal('San Francisco, CA');
       done();
-    }, (error) => {
+    }, (error: string) => {
       expect.fail(error);
       done();
     });
@@ -32,12 +33,12 @@ describe('Location.getLocation', function() {
   it('will log an error if the xhr errors out', function(done) {
     this.requestPromise.rejects('error');
     const promise = this.location.getLocation();
-    promise.then((data) => {
+    promise.then((data: LocationData) => {
       expect(data).to.eql({});
       expect(getRollbar().error.calledOnce).to.be.true;
       expect(getRollbar().error.getCall(0).args[0]).to.equal('Failed to geocode');
       done();
-    }, (error) => {
+    }, (error: string) => {
       expect.fail(error);
       done();
     });
