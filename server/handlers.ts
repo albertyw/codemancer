@@ -65,9 +65,10 @@ function airnowHandler(req: express.Request, res: express.Response) {
     res.json({'error': 'longitude is not a string'});
     return;
   }
+  const airnowKey = process.env.AIRNOW_API_KEY || '';
   url.searchParams.append('latitude', req.query.latitude);
   url.searchParams.append('longitude', req.query.longitude);
-  url.searchParams.append('API_KEY', process.env.AIRNOW_API_KEY);
+  url.searchParams.append('API_KEY', airnowKey);
   url.searchParams.append('format', 'application/json');
   requestPromise(url.href, airnowCacheDuration, airnowBackupDuration).then(function(data: AirnowResponse[]) {
     res.json(data);
