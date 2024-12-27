@@ -11,4 +11,4 @@ cd "$BASE_DIR" || exit 1
 npm run build:prod
 
 # Run app
-node --loader ts-node/esm server/app.ts
+tsx server/app.ts

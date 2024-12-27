@@ -21,9 +21,9 @@
     "shellcheck": "git ls-files | grep -F .sh | xargs shellcheck --exclude=SC1091",
     "test": "npm run shellcheck && npm run stylelint && npm run test-node",
     "test-node": "npm run eslint && npm run build:dev && npm run wdio",
-    "build:dev": "node --loader ts-node/esm node_modules/.bin/webpack-cli --mode=development",
-    "build:prod": "node --loader ts-node/esm node_modules/.bin/webpack-cli --mode=production --node-env=production",
-    "watch": "node --loader ts-node/esm node_modules/.bin/webpack-cli --watch",
+    "build:dev": "tsx node_modules/.bin/webpack-cli --mode=development",
+    "build:prod": "tsx node_modules/.bin/webpack-cli --mode=production --node-env=production",
+    "watch": "tsx node_modules/.bin/webpack-cli --watch",
     "wdio": "wdio run ./wdio.conf.ts"
   },
   "repository": {
