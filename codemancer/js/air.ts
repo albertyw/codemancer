@@ -25,7 +25,7 @@ export class Air {
     location.getLocation()
       .then(Air.#urlBuilder)
       .then((url: string) => {
-        return requestPromise(url, cacheDuration, backupDuration);
+        return <Promise<AirnowResponse[]>>requestPromise(url, cacheDuration, backupDuration);
       })
       .then(function(data: AirnowResponse[]) {
         if (data[0].Category.Number > 2) {

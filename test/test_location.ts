@@ -12,12 +12,12 @@ describe('Location.getLocation', function() {
     this.location = new Location();
     this.requestPromise = sinon.stub(util, 'requestPromise');
     localStorage.clear();
-    sinon.spy(getRollbar(), 'error');
+    this.rollbarError = sinon.spy(getRollbar(), 'error');
   });
   afterEach(function() {
     this.requestPromise.restore();
     localStorage.clear();
-    getRollbar().error.restore();
+    this.rollbarError.restore();
   });
   it('it returns a location name', function(done) {
     this.requestPromise.resolves(JSON.parse(locationData));
@@ -35,8 +35,8 @@ describe('Location.getLocation', function() {
     const promise = this.location.getLocation();
     promise.then((data: LocationData) => {
       expect(data).to.eql({});
-      expect(getRollbar().error.calledOnce).to.be.true;
-      expect(getRollbar().error.getCall(0).args[0]).to.equal('Failed to geocode');
+      expect(this.rollbarError.calledOnce).to.be.true;
+      expect(this.rollbarError.getCall(0).args[0]).to.equal('Failed to geocode');
       done();
     }, (error: string) => {
       expect.fail(error);

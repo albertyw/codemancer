@@ -4,7 +4,7 @@
         "allowSyntheticDefaultImports": true,
         "module": "NodeNext",
         "outDir": "./built",
-        "allowJs": true,
+        "strict": true,
         "target": "es6",
         "skipLibCheck": true
     },

@@ -8,14 +8,14 @@ const cacheDuration = 24 * 60 * 60 * 1000;
 const backupDuration = 7 * 24 * 60 * 60 * 1000;
 
 export class Location {
-  #locationData;
+  #locationData: Promise<LocationData>|undefined = undefined;
 
   getLocation(): Promise<LocationData> {
     const url = '/location/';
     if (this.#locationData !== undefined) {
       return this.#locationData;
     }
-    this.#locationData = requestPromise(url, cacheDuration, backupDuration)
+    this.#locationData = <Promise<LocationData>>requestPromise(url, cacheDuration, backupDuration)
       .then((data) => {
         return data;
       }, (error) => {

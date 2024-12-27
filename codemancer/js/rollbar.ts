@@ -1,8 +1,13 @@
 import Rollbar from 'rollbar';
 
+interface RollbarClient {
+  error: (...e: any[]) => void;
+  errorHandler: () => (err: any, req: any, res: any, next: any) => any;
+}
+
 const rollbarClientAccess = process.env.ROLLBAR_CLIENT_ACCESS;
 const rollbarServerAccess = process.env.ROLLBAR_SERVER_ACCESS;
-const rollbarMock = {
+const rollbarMock: RollbarClient = {
   error: function(...e) {
     console.error(e);
   },
@@ -21,9 +26,9 @@ function getRollbarAccess() {
   return rollbarClientAccess;
 }
 
-let rollbarClient = undefined;
+let rollbarClient: RollbarClient|undefined = undefined;
 
-export default function getRollbar() {
+export default function getRollbar(): RollbarClient {
   if (rollbarClient) {
     return rollbarClient;
   }
