@@ -133,7 +133,7 @@ export class Weather {
   };
 
   // TODO: add varsnap here
-  static urlBuilder(location: LocationData) {
+  static urlBuilder(location: LocationData): string {
     // Documentation at https://www.weather.gov/documentation/services-web-api#/
     // TODO: send params to backend
     location;
@@ -143,7 +143,7 @@ export class Weather {
   };
 
   // TODO: add varsnap here
-  static validate(data: ResponseData) {
+  static validate(data: ResponseData): ResponseData {
     if (!chainAccessor(data, ['properties', 'periods'])) {
       return defaultWeatherData;
     }
@@ -166,17 +166,17 @@ export class Weather {
       conditionSequence: [],
       worstCondition: '',
     };
-    w2.currentTemp = Math.round(chainAccessor(data, ['properties', 'periods', 0, 'temperature']));
+    w2.currentTemp = Math.round(data.properties.periods[0].temperature);
     w2.minTemp = w2.currentTemp;
     w2.maxTemp = w2.currentTemp;
-    w2.conditionSequence = [chainAccessor(data, ['properties', 'periods', 0, 'shortForecast'])];
+    w2.conditionSequence = [data.properties.periods[0].shortForecast];
     for (let i = 0; i < weatherLookForwardHours; i++) {
-      const periodLength = chainAccessor(data, ['properties', 'periods', 'length']);
+      const periodLength = data.properties.periods.length;
       if (!periodLength || i >= periodLength) {
         break;
       }
       const period = data.properties.periods[i];
-      const temp = Math.round(chainAccessor(period, ['temperature']));
+      const temp = Math.round(period.temperature);
       w2.minTemp = Math.min(w2.minTemp, temp);
       if (temp < 140) {
         // the API sometimes breaks and returns 140 as a temperature
@@ -196,7 +196,7 @@ export class Weather {
   };
 
   // TODO: add varsnap here
-  worstCondition(conditionSequence: string[]) {
+  worstCondition(conditionSequence: string[]): string {
     let worstCondition = conditionSequence[0];
     for (let i=0; i < weatherConditions.length; i++) {
       if(conditionSequence.includes(weatherConditions[i][1])) {
@@ -207,7 +207,7 @@ export class Weather {
   };
 
   // TODO: add varsnap here
-  conditionIcon(condition: string) {
+  conditionIcon(condition: string): string {
     let weatherIconCode = weatherIconConversions[condition];
     if (weatherIconCode !== undefined) {
       return weatherIconCode;
