@@ -1,6 +1,15 @@
 const gitVersion = process.env.GIT_VERSION;
 
-let localStorage = undefined;
+interface LocalStorage {
+  setItem: (key: string, value: any) => void;
+  getItem: (key: string) => any;
+  removeItem: (key: string) => void;
+  length: number;
+  clear: () => void;
+  key: (index: number) => string | null;
+}
+
+let localStorage: LocalStorage;
 if(typeof window === 'undefined') {
   localStorage = {
     setItem: function setItem() {
