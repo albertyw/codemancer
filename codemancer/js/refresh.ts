@@ -1,9 +1,9 @@
 import getRollbar from './rollbar.js';
 import { requestPromise } from './util.js';
 
-const refreshTime = parseInt(process.env.REFRESH_INTERVAL, 10);
+const refreshTime = 1000 * 60 * 60;
 
-// Reload the page once an hour
+// Reload the page once every refreshTime
 export default function pageRefresher(): number {
   setInterval(() => {
     requestPromise(location.href, 0, 0)
