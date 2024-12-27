@@ -34,10 +34,10 @@ describe('Weather.worstConditions', () => {
 describe('Weather.conditionIcon', () => {
   beforeEach(function() {
     this.weather = new Weather();
-    sinon.spy(getRollbar(), 'error');
+    this.rollbarError = sinon.spy(getRollbar(), 'error');
   });
   afterEach(function() {
-    getRollbar().error.restore();
+    this.rollbarError.restore();
   });
   it('returns an icon code', function() {
     const icon = this.weather.conditionIcon('Rain');
@@ -55,12 +55,12 @@ describe('Weather.conditionIcon', () => {
   it('works with a variety of conditions', function() {
     const icon = this.weather.conditionIcon('Occasional Very Light Rain');
     expect(icon).to.not.equal('');
-    expect(getRollbar().error.callCount).to.equal(0);
+    expect(this.rollbarError.callCount).to.equal(0);
   });
   it('returns a default icon code if condition is unknown', function() {
     const icon = this.weather.conditionIcon('asdf');
     expect(icon).to.equal('\uf04c');
-    expect(getRollbar().error.calledWithExactly('cannot find image for "asdf"')).to.be.true;
+    expect(this.rollbarError.calledWithExactly('cannot find image for "asdf"')).to.be.true;
   });
   it('works with all published conditions', function() {
     // data from https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
