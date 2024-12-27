@@ -55,7 +55,7 @@ describe('Weather.conditionIcon', () => {
   it('works with a variety of conditions', function() {
     const icon = this.weather.conditionIcon('Occasional Very Light Rain');
     expect(icon).to.not.equal('');
-    expect(getRollbar().callCount).to.equal(undefined);
+    expect(getRollbar().error.callCount).to.equal(0);
   });
   it('returns a default icon code if condition is unknown', function() {
     const icon = this.weather.conditionIcon('asdf');
