@@ -36,10 +36,11 @@ const googleMapsClient = new GoogleMapsClient({});
 
 export class Location {
   static getLocation(): Promise<LocationData> {
+    const geocodingKey = process.env.GEOCODING_API_KEY_BACKEND || '';
     return googleMapsClient.reverseGeocode({
       params: {
         latlng: [targetLocation.lat, targetLocation.lng],
-        key: process.env.GEOCODING_API_KEY_BACKEND,
+        key: geocodingKey,
       },
     }).then((response: ReverseGeocodeResponse) => {
       if (response.data.status === 'OK') {

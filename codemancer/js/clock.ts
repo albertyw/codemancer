@@ -48,7 +48,7 @@ export class TimeParts {
 }
 
 export class Clock {
-  #running = undefined;
+  #running: ReturnType<typeof setTimeout>|undefined = undefined;
   #el = {
     time: $('#time'),
     date: $('#date'),
