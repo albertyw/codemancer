@@ -6,11 +6,10 @@ import { LocationData } from '../../server/location.js';
 import { chainAccessor, requestPromise } from './util.js';
 
 const weatherRefreshInterval = 20 * 60 * 1000;
-const defaultWeatherData = {'properties': {'periods': [{'shortForecast': 'Error'}]}};
 // Icons are from https://erikflowers.github.io/weather-icons/
 // Conditions and Descriptors are from observed responses and from
 // https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
-const weatherConditions = [
+const weatherConditions: [string, string][] = [
   ['Hot', '\uf072'],
   ['Cold', '\uf076'],
   ['Sunny', '\uf00d'],
@@ -65,10 +64,13 @@ const weatherConditions = [
   ['Error', '\uf04c'],
   ['none', '\uf04c'],
 ];
-const weatherIconConversions = weatherConditions.reduce((map, obj) => {
-  map[obj[0]] = obj[1];
-  return map;
-}, {});
+const weatherIconConversions: {[key: string]: string} = weatherConditions.reduce(
+  (map: {[key: string]: string}, obj: [string, string]) => {
+    map[obj[0]] = obj[1];
+    return map;
+  },
+  <{[key: string]: string}>{},
+);
 const descriptors = [
   'Volcanic',
   'Severe',
@@ -100,6 +102,22 @@ const descriptors = [
   'Of',
 ];
 const weatherLookForwardHours = 24;
+interface ResponseData {
+  properties: {
+    periods: {
+      temperature: number;
+      shortForecast: string;
+    }[];
+  };
+}
+const defaultWeatherData: ResponseData = {
+  properties: {
+    periods: [{
+      shortForecast: 'Error',
+      temperature: 0,
+    }],
+  },
+};
 interface WeatherData {
   currentTemp: number;
   minTemp: number;
@@ -125,15 +143,21 @@ export class Weather {
   };
 
   // TODO: add varsnap here
-  static validate(data) {
+  static validate(data: ResponseData) {
     if (!chainAccessor(data, ['properties', 'periods'])) {
+      return defaultWeatherData;
+    }
+    if (!chainAccessor(data, ['properties', 'periods', 0, 'temperature'])) {
+      return defaultWeatherData;
+    }
+    if (!chainAccessor(data, ['properties', 'periods', 0, 'shortForecast'])) {
       return defaultWeatherData;
     }
     return data;
   };
 
   // TODO: add varsnap here
-  parse(data): WeatherData {
+  parse(data: ResponseData): WeatherData {
     // Lets only keep what we need.
     const w2: WeatherData = {
       currentTemp: 0,
@@ -172,7 +196,7 @@ export class Weather {
   };
 
   // TODO: add varsnap here
-  worstCondition(conditionSequence) {
+  worstCondition(conditionSequence: string[]) {
     let worstCondition = conditionSequence[0];
     for (let i=0; i < weatherConditions.length; i++) {
       if(conditionSequence.includes(weatherConditions[i][1])) {
@@ -183,7 +207,7 @@ export class Weather {
   };
 
   // TODO: add varsnap here
-  conditionIcon(condition){
+  conditionIcon(condition: string) {
     let weatherIconCode = weatherIconConversions[condition];
     if (weatherIconCode !== undefined) {
       return weatherIconCode;
@@ -215,10 +239,10 @@ export class Weather {
     return location.getLocation()
       .then(data => Weather.urlBuilder(data))
       .then((url: string) => {
-        return requestPromise(url, 0, 0);
+        return <Promise<ResponseData>>requestPromise(url, 0, 0);
       })
-      .then(data => Weather.validate(data))
-      .then(data => this.parse(data))
+      .then((data: ResponseData) => Weather.validate(data))
+      .then((data: ResponseData): WeatherData => this.parse(data))
       .then(data => this.render(data));
   };
 };

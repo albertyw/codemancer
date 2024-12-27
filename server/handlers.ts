@@ -70,7 +70,8 @@ function airnowHandler(req: express.Request, res: express.Response) {
   url.searchParams.append('longitude', req.query.longitude);
   url.searchParams.append('API_KEY', airnowKey);
   url.searchParams.append('format', 'application/json');
-  requestPromise(url.href, airnowCacheDuration, airnowBackupDuration).then(function(data: AirnowResponse[]) {
+  const request = <Promise<AirnowResponse[]>>requestPromise(url.href, airnowCacheDuration, airnowBackupDuration);
+  request.then(function(data: AirnowResponse[]) {
     res.json(data);
   }).catch((error) => {
     res.json({'error': error});

@@ -49,7 +49,7 @@ export const unique = function unique(array: Array<any>): Array<any> {
 /**
  * AJAX request Promise that caches responses
  **/
-export const requestPromise = function request(url: string, cacheDuration: number, backupDuration: number): Promise<any> {
+export const requestPromise = function request(url: string, cacheDuration: number, backupDuration: number): Promise<unknown> {
   const responseText = Storage.getExpirableData(url, cacheDuration, false);
   if(responseText !== null) {
     const response = JSON.parse(responseText);
