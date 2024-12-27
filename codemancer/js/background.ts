@@ -5,14 +5,15 @@ import {getMockDate} from './util.js';
 import { location } from './location.js';
 import { LocationData } from '../../server/location.js';
 
-const fullNight = [0, 0, 0];
-const fullDay = [0, 204, 255];
-const brightEvening = [255, 110, 30];
-const midEvening = [255, 155, 0];
-const lateEvening = [0, 0, 255];
+type Color = [number, number, number];
+const fullNight: Color = [0, 0, 0];
+const fullDay: Color = [0, 204, 255];
+const brightEvening: Color = [255, 110, 30];
+const midEvening: Color = [255, 155, 0];
+const lateEvening: Color = [0, 0, 255];
 
 export class BackgroundColor {
-  #colors = {
+  #colors: {[key: string]: Color} = {
     '0':[0,0,0],
     '235':[0,0,0],
     '295':[0,0,255],
@@ -63,34 +64,34 @@ export class BackgroundColor {
       });
   }
 
-  static dateToMinutes(date): number {
+  static dateToMinutes(date: Date): number {
     const timestamp = date.getHours() * 60 + date.getMinutes();
     return timestamp;
   }
 
   // TODO: add varsnap here
-  static componentToHex(c) {
+  static componentToHex(c: number): string {
     const hex = c.toString(16);
     return hex.length === 1 ? '0' + hex : hex;
   }
 
   // TODO: add varsnap here
-  static rgbToHex(r, g, b) {
+  static rgbToHex(r: number, g: number, b: number): string {
     return '#' + BackgroundColor.componentToHex(r) + BackgroundColor.componentToHex(g) + BackgroundColor.componentToHex(b);
   }
 
-  static currentTimestamp() {
+  static currentTimestamp(): number {
     const currentDate = getMockDate();
     return BackgroundColor.dateToMinutes(currentDate);
   }
 
-  getCurrentColor(current) {
+  getCurrentColor(current: number): string {
     let before = 0;
     let after = 0;
     for (let i=0; i<this.#colorsTimestamp.length; i++) {
-      if (this.#colorsTimestamp[i] <= current && this.#colorsTimestamp[i+1] > current) {
-        before = parseInt(this.#colorsTimestamp[i], 10);
-        after = parseInt(this.#colorsTimestamp[i+1], 10);
+      before = parseInt(this.#colorsTimestamp[i], 10);
+      after = parseInt(this.#colorsTimestamp[i+1], 10);
+      if (before <= current && after > current) {
         break;
       }
     }
