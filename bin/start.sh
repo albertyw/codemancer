@@ -11,4 +11,4 @@ cd "$BASE_DIR" || exit 1
 npm run build:prod
 
 # Run app
-tsx server/app.ts
+npx tsx server/app.ts
