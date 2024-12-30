@@ -4,7 +4,7 @@ name: test
 
 steps:
   - name: Test Node
-    image: satantime/puppeteer-node:22-bookworm-slim
+    image: satantime/puppeteer-node:23-bookworm-slim
     commands:
       - apt-get update && apt-get install -y xz-utils  # Remove when https://github.com/satanTime/puppeteer-node/issues/26 is resolved
       - ln -fs .env.development .env
@@ -46,7 +46,7 @@ steps:
     environment:
       SSH_KEY:
         from_secret: ssh_key
-    image: albertyw/ssh-client:4.1.6
+    image: albertyw/ssh-client:4.1.7
     commands:
       - ssh-keyscan direct.albertyw.com >> /root/.ssh/known_hosts
       - echo "$${SSH_KEY}" > /root/.ssh/id_ed25519
@@ -59,7 +59,7 @@ steps:
   - name: Purge Cache
     depends_on:
       - Deploy
-    image: curlimages/curl:8.11.0
+    image: curlimages/curl:8.11.1
     commands:
       - |-
         curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$${CLOUDFLARE_ZONE_ID}/purge_cache" -H "Authorization: Bearer $${CLOUDFLARE_API_KEY}" -H "Content-Type: application/json" --data '{"purge_everything":true}'
