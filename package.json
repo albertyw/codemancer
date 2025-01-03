@@ -63,7 +63,7 @@
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",
     "typescript": "^5.0.0",
-    "varsnap": "^1.6.4",
+    "varsnap": "albertyw/varsnap.js#gen-dist",
     "webpack": "^5.79.0",
     "webpack-cli": "^6.0.0",
     "webpack-dev-middleware": "^7.0.0"
