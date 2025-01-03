@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import varsnap from 'varsnap';
 
 import {location} from './location.js';
 import {LocationData} from '../../server/location.js';
@@ -36,6 +37,7 @@ export class Air {
     return url;
   }
 
+  @varsnap.decorate
   load(locationData: Promise<LocationData>): void {
     const dom = this.#dom;
     locationData
