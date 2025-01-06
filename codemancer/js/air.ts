@@ -28,6 +28,9 @@ export class Air {
         return <Promise<AirnowResponse[]>>requestPromise(url, cacheDuration, backupDuration);
       })
       .then(function(data: AirnowResponse[]) {
+        if (data.length === 0) {
+          return;
+        }
         if (data[0].Category.Number > 2) {
           const message = 'Air Quality: ' + data[0].Category.Name;
           dom.text(message);
