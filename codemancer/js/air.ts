@@ -24,7 +24,7 @@ export class Air {
     const dom = this.#dom;
     location.getLocation()
       .then(Air.#urlBuilder)
-      .then((url: string) => {
+      .then((url: string): Promise<AirnowResponse[]> => {
         return <Promise<AirnowResponse[]>>requestPromise(url, cacheDuration, backupDuration);
       })
       .then(function(data: AirnowResponse[]) {
