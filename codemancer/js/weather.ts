@@ -3,7 +3,7 @@ import $ from 'jquery';
 import getRollbar from './rollbar.js';
 import {location} from './location.js';
 import { LocationData } from '../../server/location.js';
-import { chainAccessor, requestPromise } from './util.js';
+import { requestPromise } from './util.js';
 
 const weatherRefreshInterval = 20 * 60 * 1000;
 // Icons are from https://erikflowers.github.io/weather-icons/
@@ -144,13 +144,11 @@ export class Weather {
 
   // TODO: add varsnap here
   static validate(data: ResponseData): ResponseData {
-    if (!chainAccessor(data, ['properties', 'periods'])) {
+    if (!data.properties || !data.properties.periods) {
       return defaultWeatherData;
     }
-    if (!chainAccessor(data, ['properties', 'periods', 0, 'temperature'])) {
-      return defaultWeatherData;
-    }
-    if (!chainAccessor(data, ['properties', 'periods', 0, 'shortForecast'])) {
+    const period = data.properties.periods[0];
+    if (!period.temperature || !period.shortForecast) {
       return defaultWeatherData;
     }
     return data;
