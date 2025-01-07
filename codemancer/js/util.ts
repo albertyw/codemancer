@@ -28,18 +28,6 @@ export function getMockDate(): Date {
 }
 
 /**
- * Return the value after a chain of accessors;
- * returns undefined instead of an exception if the chain is broken
- **/
-export const chainAccessor = function chainAccessor(data: Record<string, any>, properties: Array<any>): any {
-  let value = data;
-  for(let x=0; x<properties.length; x++) {
-    value = value && value[properties[x]];
-  }
-  return value;
-};
-
-/**
  * Return a copy of the array with only unique items
  **/
 export const unique = function unique(array: Array<any>): Array<any> {
@@ -91,7 +79,6 @@ export class CustomError extends Error {
 export default {
   toggleDemo,
   getMockDate,
-  chainAccessor,
   unique,
   requestPromise,
   CustomError,
