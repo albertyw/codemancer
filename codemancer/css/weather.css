@@ -1,5 +1,4 @@
 #weather-calendar {
-    -ms-display: flexbox;
     display: flex;
     flex-direction: row;
 }
@@ -24,7 +23,6 @@
 #weather .now {
     float: left;
     text-align: center;
-    -ms-display: flexbox;
     display: flex;
 }
 
