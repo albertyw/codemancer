@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 
-import getRollbar from './rollbar.js';
 import Storage from './storage.js';
 
 let demoOn = false;
