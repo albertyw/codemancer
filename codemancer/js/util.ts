@@ -51,7 +51,8 @@ export const requestPromise = function request(url: string, cacheDuration: numbe
     const responseText = Storage.getExpirableData(url, backupDuration, true);
     if (responseText === null) {
       const e = CustomError.create('Unrecoverable error when making request', error.response);
-      getRollbar().error(e);
+      // Reduce errors reported to rollbar
+      // getRollbar().error(e);
       throw e;
     }
     const response = JSON.parse(responseText);
