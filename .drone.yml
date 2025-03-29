@@ -23,7 +23,7 @@ steps:
       - hadolint Dockerfile --ignore=DL3008 --ignore=SC2046 --ignore=SC2006
 
   - name: Test Nginx
-    image: albertyw/gixy:0.2.2
+    image: albertyw/gixy:0.2.4
     commands:
       - gixy config/nginx/*
 
@@ -45,7 +45,7 @@ steps:
     environment:
       SSH_KEY:
         from_secret: ssh_key
-    image: albertyw/ssh-client:4.1.7
+    image: albertyw/ssh-client:4.1.8
     commands:
       - ssh-keyscan direct.albertyw.com >> /root/.ssh/known_hosts
       - echo "$${SSH_KEY}" > /root/.ssh/id_ed25519
@@ -58,7 +58,7 @@ steps:
   - name: Purge Cache
     depends_on:
       - Deploy
-    image: curlimages/curl:8.11.1
+    image: curlimages/curl:8.12.1
     commands:
       - |-
         curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$${CLOUDFLARE_ZONE_ID}/purge_cache" -H "Authorization: Bearer $${CLOUDFLARE_API_KEY}" -H "Content-Type: application/json" --data '{"purge_everything":true}'
