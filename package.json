@@ -70,7 +70,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.4.0",
-    "@stylistic/eslint-plugin": "^3.0.0",
+    "@stylistic/eslint-plugin": "^4.0.0",
     "@types/app-root-path": "^1.2.4",
     "@types/chai": "^5.0.0",
     "@types/eslint__js": "^8.42.3",
