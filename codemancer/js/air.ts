@@ -9,6 +9,8 @@ const airnowProxyURL = '/airnow/';
 const cacheDuration = 20 * 60 * 1000;
 const backupDuration = 3 * 60 * 60 * 1000;
 
+type OptionalAirnowResponse = AirnowResponse | undefined;
+
 export class Air {
   #dom = $('#air-message');
 
@@ -24,10 +26,11 @@ export class Air {
     const dom = this.#dom;
     location.getLocation()
       .then(Air.#urlBuilder)
-      .then((url: string): Promise<AirnowResponse[]> => {
-        return <Promise<AirnowResponse[]>>requestPromise(url, cacheDuration, backupDuration);
+      .then((url: string): Promise<OptionalAirnowResponse[]> => {
+        return <Promise<OptionalAirnowResponse[]>>requestPromise(url, cacheDuration, backupDuration);
       })
-      .then(function(data: AirnowResponse[]) {
+      .then(function(dataOptional: OptionalAirnowResponse[]) {
+        const data = dataOptional.filter((item) => item !== undefined);
         if (data.length === 0) {
           return;
         }
