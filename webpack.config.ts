@@ -10,7 +10,7 @@ import type {Configuration} from 'webpack';
 
 const isProduction = process.env.NODE_ENV == 'production';
 
-function git_version() {
+function gitVersion() {
   return child_process.execSync('git describe --always', { encoding: 'utf8' }).trim();
 }
 
@@ -24,7 +24,7 @@ const config: Configuration = {
     new Dotenv(),
     new MiniCssExtractPlugin(),
     new webpack.EnvironmentPlugin({
-      GIT_VERSION: git_version(),
+      GIT_VERSION: gitVersion(),
     }),
   ],
   module: {
