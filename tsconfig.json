@@ -14,6 +14,5 @@
         "./server/*",
         "./test/*"
     ],
-    "exclude": ["built"],
-    "sourceMap": true
+    "exclude": ["built"]
 }
