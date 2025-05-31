@@ -1,5 +1,7 @@
 FROM node:23-slim
 
+ARG GIT_VERSION="master"
+ENV GIT_VERSION=${GIT_VERSION}
 LABEL maintainer="git@albertyw.com"
 EXPOSE 3000
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -16,7 +18,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl                                        `: Needed for installing dependencies` \
-    git                                         `: Needed for sourcemap versioning` \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up directory structures
