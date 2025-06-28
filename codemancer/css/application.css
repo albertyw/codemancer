@@ -139,15 +139,15 @@ a {
 }
 
 .light-text {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgb(255, 255, 255, 0.8);
 }
 
 .light-text .title {
-    color: rgba(255, 255, 255, 0.3);
+    color: rgb(255, 255, 255, 0.3);
 }
 
 .light-text .wunder path {
-    fill: rgba(255, 255, 255, 0.3);
+    fill: rgb(255, 255, 255, 0.3);
 }
 
 .hover-highlight:hover path {
@@ -155,7 +155,7 @@ a {
 }
 
 .light-text #weather .hour, .light-text #weather .now p {
-    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+    -webkit-text-stroke: 1px rgb(255, 255, 255, 0.8);
 }
 
 .clearfix {
@@ -200,7 +200,7 @@ a {
 .wunder a {
     font-size: 1em;
     font-weight: normal;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgb(255, 255, 255, 0.3);
 }
 
 #time span .invisible {

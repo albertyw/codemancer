@@ -4,7 +4,7 @@ name: test
 
 steps:
   - name: Test Node
-    image: satantime/puppeteer-node:23-bookworm-slim
+    image: satantime/puppeteer-node:24-bookworm-slim
     commands:
       - ln -fs .env.development .env
       - apt-get update && apt-get install -y curl git
@@ -58,7 +58,7 @@ steps:
   - name: Purge Cache
     depends_on:
       - Deploy
-    image: curlimages/curl:8.12.1
+    image: curlimages/curl:8.13.0
     commands:
       - |-
         curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$${CLOUDFLARE_ZONE_ID}/purge_cache" -H "Authorization: Bearer $${CLOUDFLARE_API_KEY}" -H "Content-Type: application/json" --data '{"purge_everything":true}'
