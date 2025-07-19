@@ -90,7 +90,7 @@
     "globals": "^16.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mocha": "^11.0.0",
-    "sinon": "^20.0.0",
+    "sinon": "^21.0.0",
     "stylelint": "^16.2.0",
     "stylelint-config-standard": "^38.0.0",
     "ts-mocha": "^11.0.0",
