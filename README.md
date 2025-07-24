@@ -2,7 +2,8 @@
 =========================================
 
 [![Build Status](https://drone.albertyw.com/api/badges/albertyw/codemancer/status.svg)](https://drone.albertyw.com/albertyw/codemancer)
-[![Code Climate](https://codeclimate.com/github/albertyw/codemancer/badges/gpa.svg)](https://codeclimate.com/github/albertyw/codemancer)
+[![Maintainability](https://qlty.sh/gh/albertyw/projects/codemancer/maintainability.svg)](https://qlty.sh/gh/albertyw/projects/codemancer)
+[![Code Coverage](https://qlty.sh/gh/albertyw/projects/codemancer/coverage.svg)](https://qlty.sh/gh/albertyw/projects/codemancer)
 [![Varsnap Status](https://www.varsnap.com/project/5760d307-1a12-4bc3-9688-eb5200da81ed/varsnap_badge.svg)](https://www.varsnap.com/project/5760d307-1a12-4bc3-9688-eb5200da81ed/)
 
 Currently extension as a website.
