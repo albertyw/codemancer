@@ -7,9 +7,13 @@ steps:
     image: satantime/puppeteer-node:24-bookworm-slim
     commands:
       - ln -fs .env.development .env
-      - apt-get update && apt-get install -y curl git
+      - apt-get update && apt-get install -y curl git xz-utils
+      - curl https://qlty.sh | sh
       - npm ci
       - npm run test-node
+      - ~/.qlty/bin/qlty coverage publish .coverage/clover.xml --override-commit-sha "$DRONE_COMMIT_SHA" --override-branch "$DRONE_BRANCH" --override-build-id "$DRONE_BUILD_NUMBER"
+    environment:
+      QLTY_COVERAGE_TOKEN: qltcp_9wA53zyfwdF3cRxZ
 
   - name: Test Bash
     image: koalaman/shellcheck-alpine:stable
