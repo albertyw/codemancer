@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "run": "bin/start.sh",
-    "eslint": "tsc --noEmit && eslint -c .eslint.config.js .",
+    "eslint": "tsc --noEmit && eslint -c .eslint.config.ts .",
     "stylelint": "stylelint codemancer/css/*",
     "shellcheck": "git ls-files | grep -F .sh | xargs shellcheck --exclude=SC1091",
     "test": "npm run shellcheck && npm run stylelint && npm run test-node",
