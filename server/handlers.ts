@@ -103,6 +103,9 @@ function locationHandler(req: express.Request, res: express.Response) {
 
 function webpackMiddleware() {
   const compiler = webpack(webpackConfig());
+  if (compiler === null) {
+    throw new Error('Failed to create webpack compiler');
+  }
   return middleware(compiler, {
     publicPath: '/dist/',
   });
