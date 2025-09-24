@@ -44,7 +44,7 @@
     "@types/jquery": "^3.5.5",
     "@types/suncalc": "^1.9.2",
     "app-root-path": "^3.0.0",
-    "axios": "^1.0.0",
+    "axios": "^1.12.2",
     "core-js": "^3.36.1",
     "css-loader": "^7.0.0",
     "css-minimizer-webpack-plugin": "^7.0.0",
