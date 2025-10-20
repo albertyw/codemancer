@@ -56,7 +56,7 @@
     "mini-css-extract-plugin": "^2.7.5",
     "morgan": "^1.10.0",
     "mustache": "^4.1.0",
-    "rollbar": "^2.19.4",
+    "rollbar": "^2.26.5",
     "rotating-file-stream": "^3.0.2",
     "suncalc": "^1.9.0",
     "ts-loader": "^9.4.2",
