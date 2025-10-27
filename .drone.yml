@@ -4,7 +4,7 @@ name: test
 
 steps:
   - name: Test Node
-    image: satantime/puppeteer-node:24-trixie-slim
+    image: satantime/puppeteer-node:25-trixie-slim
     commands:
       - ln -fs .env.development .env
       - apt-get update && apt-get install -y curl git xz-utils
@@ -27,7 +27,7 @@ steps:
       - hadolint Dockerfile --ignore=DL3008 --ignore=SC2046 --ignore=SC2006
 
   - name: Test Nginx
-    image: getpagespeed/gixy:v0.2.7
+    image: getpagespeed/gixy:v0.2.12
     commands:
       - gixy config/nginx/*
 
@@ -62,7 +62,7 @@ steps:
   - name: Purge Cache
     depends_on:
       - Deploy
-    image: curlimages/curl:8.15.0
+    image: curlimages/curl:8.16.0
     commands:
       - |-
         curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$${CLOUDFLARE_ZONE_ID}/purge_cache" -H "Authorization: Bearer $${CLOUDFLARE_API_KEY}" -H "Content-Type: application/json" --data '{"purge_everything":true}'
