@@ -7,7 +7,7 @@ import $ from 'jquery';
 import getRollbar from './rollbar.js';
 getRollbar();
 
-import { load as backgroundLoad } from './background.js';
+import { load as backgroundLoad } from './horizon/background.js';
 $(backgroundLoad);
 // import { prepare as backgroundColorPrepare } from './background.js';
 // backgroundColorPrepare();

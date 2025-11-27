@@ -1,8 +1,9 @@
-import renderGradient from '../gradient.js';
+import renderGradient from './gradient.js';
 import suncalc from 'suncalc';
 
 export function load() {
-  const { latitude = '0', longitude = '0' } = Astro.locals.runtime.cf || {};
+  const latitude = '0';
+  const longitude = '0';
 
   const now = new Date();
   const sunPos = suncalc.getPosition(
