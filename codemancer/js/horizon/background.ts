@@ -1,8 +1,8 @@
-import renderGradient from "../gradient.js";
-import suncalc from "suncalc";
+import renderGradient from '../gradient.js';
+import suncalc from 'suncalc';
 
 export function load() {
-  const { latitude = "0", longitude = "0" } = Astro.locals.runtime.cf || {};
+  const { latitude = '0', longitude = '0' } = Astro.locals.runtime.cf || {};
 
   const now = new Date();
   const sunPos = suncalc.getPosition(
@@ -15,5 +15,5 @@ export function load() {
 
   const top = `rgb(${topVec[0]}, ${topVec[1]}, ${topVec[2]})`;
   const bottom = `rgb(${bottomVec[0]}, ${bottomVec[1]}, ${bottomVec[2]})`;
-  console.log("Background gradient:", { gradient, top, bottom });
+  console.log('Background gradient:', { gradient, top, bottom });
 }

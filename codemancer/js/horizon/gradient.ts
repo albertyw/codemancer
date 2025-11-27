@@ -8,8 +8,8 @@
  * MIT License). Source: https://www.shadertoy.com/view/slSXRW
  */
 
-import { clamp, dot, len, norm, add, scale, exp } from "./utils.js";
-import type { Vec3 } from "./utils.js";
+import { clamp, dot, len, norm, add, scale, exp } from './utils.js';
+import type { Vec3 } from './utils.js';
 
 const PI = Math.PI;
 
@@ -161,7 +161,7 @@ export default function renderGradient(altitude: number): [string, Vec3, Vec3] {
 
     const viewDirection = norm([0, s, focalZ]);
 
-    let inscattered: Vec3 = [0, 0, 0];
+    const inscattered: Vec3 = [0, 0, 0];
 
     const tExitTop = intersectSphere(cameraPosition, viewDirection, TOP_RADIUS);
     if (tExitTop !== null && tExitTop > 0) {
@@ -277,7 +277,7 @@ export default function renderGradient(altitude: number): [string, Vec3, Vec3] {
           Math.round(percent * 100) / 100
         }%`,
     )
-    .join(", ");
+    .join(', ');
   return [
     `linear-gradient(to bottom, ${colorStops})`,
     stops[0].rgb,
