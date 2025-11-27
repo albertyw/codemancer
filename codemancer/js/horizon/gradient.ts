@@ -8,8 +8,8 @@
  * MIT License). Source: https://www.shadertoy.com/view/slSXRW
  */
 
-import { clamp, dot, len, norm, add, scale, exp } from "./utils";
-import type { Vec3 } from "./utils";
+import { clamp, dot, len, norm, add, scale, exp } from "./utils.js";
+import type { Vec3 } from "./utils.js";
 
 const PI = Math.PI;
 
