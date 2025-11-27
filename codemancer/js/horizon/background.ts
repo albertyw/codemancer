@@ -17,4 +17,6 @@ export function load() {
   const top = `rgb(${topVec[0]}, ${topVec[1]}, ${topVec[2]})`;
   const bottom = `rgb(${bottomVec[0]}, ${bottomVec[1]}, ${bottomVec[2]})`;
   console.log('Background gradient:', { gradient, top, bottom });
+
+  document.getElementsByTagName('body')[0].style.background = gradient;
 }
