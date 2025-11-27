@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import varsnap from 'varsnap';
 
-import '../codemancer/js/background.js';
+// import '../codemancer/js/background.js';
 // import '../server/util.js';
 
 context('Varsnap', function() {
