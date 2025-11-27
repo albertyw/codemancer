@@ -3,6 +3,7 @@ import suncalc from 'suncalc';
 import renderGradient from './gradient.js';
 import { location } from '../location.js';
 import { targetLocation, LocationData } from '../../../server/location.js';
+import { getMockDate } from '../util.js';
 
 export class BackgroundColor {
   locationData: LocationData = targetLocation;
@@ -11,7 +12,7 @@ export class BackgroundColor {
   #updatePeriod: number = 5 * 60 * 1000; // 5 minutes
 
   update(): void {
-    const sunPos = suncalc.getPosition(new Date(), this.locationData.lat, this.locationData.lng);
+    const sunPos = suncalc.getPosition(getMockDate(), this.locationData.lat, this.locationData.lng);
 
     const [gradient, topVec, bottomVec] = renderGradient(sunPos.altitude);
 
