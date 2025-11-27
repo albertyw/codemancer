@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import { backgroundColor } from './background.js';
+import { backgroundColor } from './horizon/background.js';
 import { toggleDemo } from './util.js';
 
 let originalUpdateBackgroundColorPeriod = 1000;

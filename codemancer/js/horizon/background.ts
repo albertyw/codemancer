@@ -22,17 +22,30 @@ export class BackgroundColor {
 
     document.getElementsByTagName('body')[0].style.background = gradient;
 
-    if (this.#updateInterval === undefined) {
-      this.#updateInterval = window.setInterval(() => {
-        this.update();
-      }, this.#updatePeriod);
+    this.setupRefresh();
+  }
+
+  setupRefresh(): void {
+    if (this.#updateInterval !== undefined) {
+      window.clearInterval(this.#updateInterval);
     }
+    this.#updateInterval = window.setInterval(() => {
+      this.update();
+    }, this.#updatePeriod);
+  }
+
+  changeUpdateBackgroundColorPeriod(newPeriod: number): number {
+    const originalUpdatePeriod = this.#updatePeriod;
+    this.#updatePeriod = newPeriod;
+    this.setupRefresh();
+    return originalUpdatePeriod;
   }
 }
 
+export const backgroundColor = new BackgroundColor();
+
 export function load() {
   location.getLocation().then((locationData: LocationData) => {
-    const backgroundColor = new BackgroundColor();
     backgroundColor['locationData'] = locationData;
     backgroundColor.update();
   });
