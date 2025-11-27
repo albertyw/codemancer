@@ -7,14 +7,12 @@ import $ from 'jquery';
 import getRollbar from './rollbar.js';
 getRollbar();
 
-import { prepare as backgroundColorPrepare } from './background.js';
-backgroundColorPrepare();
+import { load as backgroundLoad } from './horizon/background.js';
+$(backgroundLoad);
 
-import { load as backgroundColorLoad } from './background.js';
 import { load as clockLoad } from './clock.js';
 import { load as weatherLoad } from './weather.js';
 import { load as locationLoad } from './location.js';
-$(backgroundColorLoad);
 $(clockLoad);
 $(weatherLoad);
 $(locationLoad);

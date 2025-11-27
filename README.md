@@ -29,6 +29,8 @@ Changes from Currently Extension
  - Made background color change based on time of day
  - Minor code cleanup, updated javascript libraries, refactored some code.
 
+Background from [dnlzro/horizon](https://github.com/dnlzro/horizon).
+
 Setup and Testing
 -----------------
 
