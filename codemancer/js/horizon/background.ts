@@ -7,6 +7,9 @@ import { targetLocation, LocationData } from '../../../server/location.js';
 export class BackgroundColor {
   locationData: LocationData = targetLocation;
 
+  #updateInterval: number | undefined = undefined;
+  #updatePeriod: number = 5 * 60 * 1000; // 5 minutes
+
   update(): void {
     const sunPos = suncalc.getPosition(new Date(), this.locationData.lat, this.locationData.lng);
 
@@ -17,6 +20,12 @@ export class BackgroundColor {
     console.log('Background gradient:', { gradient, top, bottom });
 
     document.getElementsByTagName('body')[0].style.background = gradient;
+
+    if (this.#updateInterval === undefined) {
+      this.#updateInterval = window.setInterval(() => {
+        this.update();
+      }, this.#updatePeriod);
+    }
   }
 }
 
