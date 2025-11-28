@@ -53,18 +53,6 @@ body {
         stroke-width: 1;
     }
 
-    body #hourhand {
-        stroke-width: 4px;
-    }
-
-    body #minutehand {
-        stroke-width: 2px;
-    }
-
-    body #secondhand {
-        stroke-width: 1px;
-    }
-
     body #numbers {
         font-family: sans-serif;
         font-size: 7pt;
