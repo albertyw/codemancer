@@ -18,39 +18,6 @@ body {
     height: 100%;
 }
 
-@media all and (width <= 750px) {
-    body #weather {
-        position: static;
-        width: 100%;
-        padding: 0;
-    }
-
-    body #weather #weather-now {
-        margin: 0 auto;
-        float: none;
-    }
-
-    body #content {
-        width: 100%;
-        height: 100%;
-        left: auto;
-        margin-left: 0;
-    }
-
-    body .second {
-        display: none !important;
-    }
-
-    body #time {
-        display: none;
-    }
-
-    body .wunder {
-        bottom: 5px;
-        right: 60px;
-    }
-}
-
 @font-face {
     font-family: Weather;
     src: url('../font/weather.woff') format('truetype');
@@ -166,4 +133,40 @@ a {
 #time span .invisible {
     display: inline;
     visibility: hidden;
+}
+
+@media all and (width <= 750px) {
+    body #weather {
+        position: static;
+        width: 100%;
+        padding: 0;
+    }
+
+    body #weather #weather-now {
+        margin: 0 auto;
+        float: none;
+    }
+
+    body #content {
+        width: 100%;
+        height: 100%;
+        left: auto;
+        margin-left: 0;
+    }
+
+    body #time {
+        font-size: 5em;
+    }
+
+    #time span {
+        display: inline-block;
+        width: 30%;
+        max-width: 1.5em;
+        text-align: center;
+    }
+
+    body .wunder {
+        bottom: 5px;
+        right: 60px;
+    }
 }
