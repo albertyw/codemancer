@@ -172,7 +172,7 @@ a {
 }
 
 .hidden {
-    display: none;
+    opacity: 0;
 }
 
 #content {
