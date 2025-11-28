@@ -231,10 +231,12 @@ export class Weather {
 
     // Show Weather
     $('#weather-inner').removeClass('hidden');
+    this.#el.now.addClass('animated bouncein smooth');
   };
 
   hide(): void {
     $('#weather-inner').addClass('hidden');
+    this.#el.now.removeClass('animated bouncein smooth');
   }
 
   load(): Promise<void> {
