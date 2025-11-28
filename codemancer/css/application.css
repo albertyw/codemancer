@@ -33,7 +33,7 @@ ol, ul {
         padding: 0;
     }
 
-    body #weather .now {
+    body #weather #weather-now {
         margin: 0 auto;
         float: none;
     }
@@ -154,7 +154,7 @@ a {
     fill: #fff;
 }
 
-.light-text #weather .hour, .light-text #weather .now p {
+.light-text #weather .hour, .light-text #weather #weather-now p {
     -webkit-text-stroke: 1px rgb(255, 255, 255, 0.8);
 }
 

@@ -20,19 +20,19 @@
     width: 200px;
 }
 
-#weather .now {
+#weather #weather-now {
     float: left;
     text-align: center;
     display: flex;
 }
 
-#weather .now > span {
+#weather #weather-now > span {
     -ms-flex: 1;
     flex: 1;
     height: 100%;
 }
 
-#weather .now .condition {
+#weather #weather-now .condition {
     font-family: Weather, sans-serif;
     font-size: 7em;
     height: 170px;
@@ -44,7 +44,7 @@
     justify-content: center;
 }
 
-#weather .now .temp {
+#weather #weather-now .temp {
     height: 170px;
     margin: 0 0 7px 10px;
 
@@ -54,13 +54,13 @@
     justify-content: center;
 }
 
-#weather .now b {
+#weather #weather-now b {
     font-size: 3em;
     font-weight: bold;
     font-family: 'Helvetica Neue', Open-Reg, sans-serif;
 }
 
-#weather .now p {
+#weather #weather-now p {
     font-size: 2em;
 }
 

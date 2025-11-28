@@ -128,7 +128,7 @@ interface WeatherData {
 
 export class Weather {
   #el = {
-    now : $('.now'),
+    now : $('#weather-now'),
     city : $('#city'),
   };
 
