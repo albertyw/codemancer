@@ -69,7 +69,7 @@
     -webkit-text-stroke: 1px rgb(255, 255, 255, 0.8);
 }
 
-.main-return, .wunder {
+.wunder {
     cursor: pointer;
     position: fixed;
     bottom: 10px;

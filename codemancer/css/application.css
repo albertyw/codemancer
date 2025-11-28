@@ -45,26 +45,6 @@ body {
         display: none;
     }
 
-    body #face {
-        stroke-width: 5px;
-    }
-
-    body #ticks {
-        stroke-width: 1;
-    }
-
-    body #numbers {
-        font-family: sans-serif;
-        font-size: 7pt;
-        text-anchor: middle;
-        stroke: none;
-    }
-
-    body .main-return {
-        font-size: 1.3em;
-        bottom: 5px;
-    }
-
     body .wunder {
         bottom: 5px;
         right: 60px;
