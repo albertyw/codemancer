@@ -18,10 +18,13 @@ export function getMockDate(): Date {
   if(!demoOn) {
     return date;
   }
-  const timestep = date.getSeconds() + date.getMinutes() * 60;
-  const hours = timestep % 24;
+  const timestamp = Date.now();
+  const millisecondsPerDay = 24 * 1000;
+  const millisecondsPerHour = millisecondsPerDay / 24;
+  const hours = Math.floor((timestamp % millisecondsPerDay) / 1000);
+  const minutes = Math.floor((timestamp % millisecondsPerHour) / 1000 * 60);
   date.setHours(hours);
-  date.setMinutes(0);
+  date.setMinutes(minutes);
   date.setSeconds(0);
   return date;
 }
