@@ -23,8 +23,9 @@ export function getMockDate(): Date {
   const millisecondsPerHour = millisecondsPerDay / 24;
   const hours = Math.floor((timestamp % millisecondsPerDay) / 1000);
   const minutes = Math.floor((timestamp % millisecondsPerHour) / 1000 * 60);
+  const minutesRounded = Math.floor(minutes / 10) * 10;
   date.setHours(hours);
-  date.setMinutes(minutes);
+  date.setMinutes(minutesRounded);
   date.setSeconds(0);
   return date;
 }
