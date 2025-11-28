@@ -31,7 +31,7 @@ export class Location {
 
   #renderLocation(location: LocationData): void {
     const cityElement = $('#city');
-    cityElement.html(location.displayName).show();
+    cityElement.html(location.displayName);
   }
 
   showLocation(): void {

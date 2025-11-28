@@ -230,7 +230,7 @@ export class Weather {
     this.#el.now.find('.max-temp').html(String(wd.maxTemp));
 
     // Show Weather
-    $('#weather-inner').removeClass('hidden').show();
+    $('#weather-inner').removeClass('hidden');
   };
 
   load(): Promise<void> {
