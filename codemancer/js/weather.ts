@@ -233,6 +233,10 @@ export class Weather {
     $('#weather-inner').removeClass('hidden');
   };
 
+  hide(): void {
+    $('#weather-inner').addClass('hidden');
+  }
+
   load(): Promise<void> {
     return location.getLocation()
       .then(data => Weather.urlBuilder(data))
@@ -245,8 +249,9 @@ export class Weather {
   };
 };
 
+export const weather = new Weather();
+
 export function load(): void {
-  const weather = new Weather();
   weather.load().
     catch(error => { getRollbar().error(error); });
   setInterval(load, weatherRefreshInterval);
