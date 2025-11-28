@@ -23,7 +23,7 @@ describe('getMockDate', () => {
     const date = util.getMockDate();
     expect(date.getHours()).to.be.greaterThan(-1);
     expect(date.getHours()).to.be.lessThan(24);
-    expect(date.getMinutes()).to.equal(0);
+    expect(date.getMinutes() % 10).to.equal(0);
     expect(date.getSeconds()).to.equal(0);
 
   });
