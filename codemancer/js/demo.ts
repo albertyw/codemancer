@@ -6,11 +6,11 @@ import { toggleDemo } from './util.js';
 let originalUpdateBackgroundColorPeriod = 1000;
 
 function startDemo() {
-  originalUpdateBackgroundColorPeriod = backgroundColor.changeUpdateBackgroundColorPeriod(500);
+  originalUpdateBackgroundColorPeriod = backgroundColor.changePeriod(500);
 }
 
 function stopDemo() {
-  backgroundColor.changeUpdateBackgroundColorPeriod(originalUpdateBackgroundColorPeriod);
+  backgroundColor.changePeriod(originalUpdateBackgroundColorPeriod);
 }
 
 function toggleDemoClick() {

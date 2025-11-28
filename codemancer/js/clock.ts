@@ -49,6 +49,7 @@ export class TimeParts {
 
 export class Clock {
   #running: ReturnType<typeof setTimeout>|undefined = undefined;
+  #updatePeriod: number = 1000; // 1 second
   #el = {
     time: $('#time'),
     date: $('#date'),
@@ -87,16 +88,21 @@ export class Clock {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
     function tick() {
-      const delayTime = 1000;
-
       self.refresh();
 
       self.#running = setTimeout(function(){
         window.requestAnimationFrame( tick );
-      }, delayTime);
+      }, self.#updatePeriod);
     }
 
     tick();
+  }
+
+  changePeriod(newPeriod: number): number {
+    const originalUpdatePeriod = this.#updatePeriod;
+    this.#updatePeriod = newPeriod;
+    this.start();
+    return originalUpdatePeriod;
   }
 };
 

@@ -22,10 +22,10 @@ export class BackgroundColor {
 
     document.getElementsByTagName('body')[0].style.background = gradient;
 
-    this.setupRefresh();
+    this.start();
   }
 
-  setupRefresh(): void {
+  start(): void {
     if (this.#updateInterval !== undefined) {
       window.clearInterval(this.#updateInterval);
     }
@@ -34,10 +34,10 @@ export class BackgroundColor {
     }, this.#updatePeriod);
   }
 
-  changeUpdateBackgroundColorPeriod(newPeriod: number): number {
+  changePeriod(newPeriod: number): number {
     const originalUpdatePeriod = this.#updatePeriod;
     this.#updatePeriod = newPeriod;
-    this.setupRefresh();
+    this.start();
     return originalUpdatePeriod;
   }
 }
