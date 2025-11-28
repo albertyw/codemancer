@@ -18,15 +18,7 @@ body {
     height: 100%;
 }
 
-ol, ul {
-    list-style: none;
-}
-
 @media all and (width <= 750px) {
-    body #weather ul {
-        display: none;
-    }
-
     body #weather {
         position: static;
         width: 100%;
