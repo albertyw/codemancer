@@ -15,7 +15,7 @@
     "*.css"
   ],
   "scripts": {
-    "run": "bin/start.sh",
+    "start": "bin/start.sh",
     "eslint": "tsc --noEmit && eslint -c .eslint.config.ts .",
     "stylelint": "stylelint codemancer/css/*",
     "shellcheck": "git ls-files | grep -F .sh | xargs shellcheck --exclude=SC1091",

@@ -39,4 +39,5 @@ nvm use 23
 npm install
 npm test
 ln -s .env.development .env
+npm start
 ```
