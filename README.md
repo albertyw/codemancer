@@ -35,7 +35,7 @@ Setup and Testing
 -----------------
 
 ```bash
-nvm use 23
+nvm use 25
 npm install
 npm test
 ln -s .env.development .env
