@@ -78,13 +78,10 @@
     font-size: 2em;
     -webkit-transition: all 200ms ease-in-out;
     z-index: 999999;
+    right: 90px;
 }
 
 .wunder path {
     -webkit-transition: all 200ms ease-in-out;
     fill: #555;
-}
-
-.wunder {
-    right: 90px;
 }
