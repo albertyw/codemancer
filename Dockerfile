@@ -17,8 +17,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl                                        `: Needed for installing dependencies` \
+    curl ca-certificates                        `: Needed for installing dependencies` \
     && rm -rf /var/lib/apt/lists/*
+ENV PNPM_HOME="/root/.local/share/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN curl -fsSL https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
 
 # Set up directory structures
 RUN mkdir -p /var/www/app
@@ -26,6 +29,6 @@ COPY . /var/www/app
 WORKDIR /var/www/app
 
 # App-specific setup
-RUN npm ci --only=production
+RUN pnpm install --prod --frozen-lockfile
 
 CMD ["bin/start.sh"]

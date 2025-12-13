@@ -36,8 +36,8 @@ Setup and Testing
 
 ```bash
 nvm use 25
-npm install
-npm test
+pnpm install
+pnpm test
 ln -s .env.development .env
-npm start
+pnpm start
 ```

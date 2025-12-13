@@ -8,7 +8,7 @@ BASE_DIR="$DIR"/..
 cd "$BASE_DIR" || exit 1
 
 # Create minified files while host directories are mounted
-npm run build:prod
+pnpm run build:prod
 
 # Run app
 npx tsx server/app.ts
