@@ -47,7 +47,7 @@
     "axios": "^1.13.2",
     "core-js": "^3.47.0",
     "css-loader": "^7.1.2",
-    "css-minimizer-webpack-plugin": "^7.0.3",
+    "css-minimizer-webpack-plugin": "^7.0.4",
     "dotenv": "^17.2.3",
     "dotenv-webpack": "^8.1.1",
     "express": "^5.2.1",
@@ -69,7 +69,7 @@
     "webpack-dev-middleware": "^7.4.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
+    "@eslint/js": "^9.39.2",
     "@stylistic/eslint-plugin": "^5.6.1",
     "@types/app-root-path": "^1.2.8",
     "@types/chai": "^5.2.3",
@@ -77,16 +77,16 @@
     "@types/mocha": "^10.0.10",
     "@types/morgan": "^1.9.10",
     "@types/mustache": "^4.2.6",
-    "@types/node": "^24.10.1",
+    "@types/node": "^24.10.3",
     "@types/sinon": "^17.0.4",
-    "@typescript-eslint/eslint-plugin": "^8.48.1",
-    "@typescript-eslint/parser": "^8.48.1",
+    "@typescript-eslint/eslint-plugin": "^8.49.0",
+    "@typescript-eslint/parser": "^8.49.0",
     "@wdio/browser-runner": "^9.21.0",
     "@wdio/cli": "^9.21.1",
     "@wdio/mocha-framework": "^9.21.0",
     "@wdio/spec-reporter": "^9.20.0",
     "chai": "^6.2.1",
-    "eslint": "^9.39.1",
+    "eslint": "^9.39.2",
     "globals": "^16.5.0",
     "html-webpack-plugin": "^5.6.5",
     "mocha": "^11.7.5",
@@ -94,6 +94,6 @@
     "stylelint": "^16.26.1",
     "stylelint-config-standard": "^39.0.1",
     "ts-mocha": "^11.1.0",
-    "typescript-eslint": "^8.48.1"
+    "typescript-eslint": "^8.49.0"
   }
 }
