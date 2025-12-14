@@ -11,4 +11,4 @@ cd "$BASE_DIR" || exit 1
 pnpm run build:prod
 
 # Run app
-npx tsx server/app.ts
+pnpx tsx server/app.ts
