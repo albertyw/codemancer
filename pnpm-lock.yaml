@@ -103,8 +103,8 @@ importers:
         specifier: ^5.6.1
         version: 5.6.1(eslint@9.39.2(jiti@2.6.1))
       '@types/app-root-path':
-        specifier: ^1.2.8
-        version: 1.2.8
+        specifier: ^3.0.0
+        version: 3.1.0
       '@types/chai':
         specifier: ^5.2.3
         version: 5.2.3
@@ -1223,8 +1223,9 @@ packages:
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
 
-  '@types/app-root-path@1.2.8':
-    resolution: {integrity: sha512-l12miuN6JXAi3yuADZNhRKbyN7IIyaUP9hFVZ/BbHhWYpBkHLbOaX2WkQoXGJyAgMcP9iZ0S9+tz/FN40VrwWQ==}
+  '@types/app-root-path@3.1.0':
+    resolution: {integrity: sha512-wZsDCkNcLUSGR+mM6NXy8tj4XUius6wBvbt4TaqZNmp9S+PNocQg9AwjS71tabcHWVWVag0O+lX+FkyuCdO8Ng==}
+    deprecated: This is a stub types definition. app-root-path provides its own type definitions, so you do not need this installed.
 
   '@types/body-parser@1.19.6':
     resolution: {integrity: sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g==}
@@ -5825,7 +5826,9 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
-  '@types/app-root-path@1.2.8': {}
+  '@types/app-root-path@3.1.0':
+    dependencies:
+      app-root-path: 3.1.0
 
   '@types/body-parser@1.19.6':
     dependencies:
