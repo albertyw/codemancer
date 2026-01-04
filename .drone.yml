@@ -16,6 +16,7 @@ steps:
       - ~/.qlty/bin/qlty coverage publish .coverage/clover.xml --override-commit-sha "$DRONE_COMMIT_SHA" --override-branch "$DRONE_BRANCH" --override-build-id "$DRONE_BUILD_NUMBER"
     environment:
       QLTY_COVERAGE_TOKEN: qltcp_9wA53zyfwdF3cRxZ
+      PNPM_VERSION: 10.26.2  # Use an older version until wdio works again
 
   - name: Test Bash
     image: koalaman/shellcheck-alpine:stable
