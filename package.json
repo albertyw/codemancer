@@ -73,7 +73,6 @@
     "@stylistic/eslint-plugin": "^5.6.1",
     "@types/app-root-path": "^1.2.8",
     "@types/chai": "^5.2.3",
-    "@types/eslint__js": "^8.42.3",
     "@types/mocha": "^10.0.10",
     "@types/morgan": "^1.9.10",
     "@types/mustache": "^4.2.6",
