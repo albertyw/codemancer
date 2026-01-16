@@ -64,7 +64,7 @@ steps:
   - name: Purge Cache
     depends_on:
       - Deploy
-    image: curlimages/curl:8.17.0
+    image: curlimages/curl:8.18.0
     commands:
       - |-
         curl -X DELETE "https://api.cloudflare.com/client/v4/zones/$${CLOUDFLARE_ZONE_ID}/purge_cache" -H "Authorization: Bearer $${CLOUDFLARE_API_KEY}" -H "Content-Type: application/json" --data '{"purge_everything":true}'
