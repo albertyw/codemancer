@@ -51,7 +51,7 @@
     "dotenv": "^17.3.1",
     "dotenv-webpack": "^8.1.1",
     "express": "^5.2.1",
-    "jquery": "^3.7.1",
+    "jquery": "^4.0.0",
     "logfit": "^0.9.3",
     "mini-css-extract-plugin": "^2.10.0",
     "morgan": "^1.10.1",
