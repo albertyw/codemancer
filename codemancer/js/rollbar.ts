@@ -38,7 +38,7 @@ export default function getRollbar(): RollbarClient {
   }
 
   const rollbarConfig = {
-    accessToken: process.env.ROLLBAR_CLIENT_ACCESS,
+    accessToken: rollbarAccess,
     captureUncaught: true,
     captureUnhandledRejections: true,
     payload: {
