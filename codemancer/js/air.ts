@@ -3,6 +3,7 @@ import $ from 'jquery';
 import {location} from './location.js';
 import {LocationData} from '../../server/location.js';
 import {AirnowResponse} from '../../server/handlers.js';
+import getRollbar from './rollbar.js';
 import {requestPromise} from './util.js';
 
 const airnowProxyURL = '/airnow/';
@@ -30,7 +31,11 @@ export class Air {
         return <Promise<OptionalAirnowResponse[]>>requestPromise(url, cacheDuration, backupDuration);
       })
       .then(function(dataOptional: OptionalAirnowResponse[]) {
-        const data = dataOptional.filter((item) => item !== undefined);
+        if (!Array.isArray(dataOptional)) {
+          getRollbar().error('Unexpected air quality response', dataOptional);
+          return;
+        }
+        const data = dataOptional.filter((item): item is AirnowResponse => item !== undefined);
         if (data.length === 0) {
           return;
         }
