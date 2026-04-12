@@ -22,7 +22,6 @@ const config: Configuration = {
   output: {
     path: path.resolve('dist'),
   },
-  devtool: 'source-map',
   plugins: [
     new Dotenv(),
     new MiniCssExtractPlugin(),
@@ -68,8 +67,10 @@ const config: Configuration = {
 export default () => {
   if (isProduction) {
     config.mode = 'production';
+    config.devtool = 'source-map';
   } else {
     config.mode = 'development';
+    config.devtool = 'eval-cheap-module-source-map';
   }
   return config;
 };
