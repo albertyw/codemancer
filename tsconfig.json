@@ -6,7 +6,8 @@
         "outDir": "./built",
         "strict": true,
         "target": "es6",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "types": ["mocha", "node"]
     },
     "include": [
         "./bin/*",

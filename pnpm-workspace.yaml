@@ -10,3 +10,5 @@ publicHoistPattern:
 - "lodash.zip"
 - "rgb2hex"
 - "webdriverio"
+minimumReleaseAgeExclude:
+- "axios"
