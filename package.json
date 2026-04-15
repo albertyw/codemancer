@@ -47,7 +47,7 @@
     "axios": "^1.15.0",
     "core-js": "^3.49.0",
     "css-loader": "^7.1.4",
-    "css-minimizer-webpack-plugin": "^7.0.4",
+    "css-minimizer-webpack-plugin": "^8.0.0",
     "dotenv": "^17.4.1",
     "dotenv-webpack": "^8.1.1",
     "express": "^5.2.1",
