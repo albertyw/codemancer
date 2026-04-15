@@ -7,7 +7,6 @@
         "strict": true,
         "target": "es6",
         "skipLibCheck": true,
-        "types": ["mocha", "node"]
     },
     "include": [
         "./bin/*",
