@@ -18,8 +18,8 @@ importers:
         specifier: ^5.0.6
         version: 5.0.6
       '@types/jquery':
-        specifier: ^3.5.34
-        version: 3.5.34
+        specifier: ^4.0.0
+        version: 4.0.0
       '@types/suncalc':
         specifier: ^1.9.2
         version: 1.9.2
@@ -1412,8 +1412,8 @@ packages:
   '@types/istanbul-reports@3.0.4':
     resolution: {integrity: sha512-pk2B1NWalF9toCRu6gjBzR69syFjP4Od8WRAX+0mmf9lAjCRicLOWc+ZrxZHx/0XRjotgkF9t6iaMJ+aXcOdZQ==}
 
-  '@types/jquery@3.5.34':
-    resolution: {integrity: sha512-3m3939S3erqmTLJANS/uy0B6V7BorKx7RorcGZVjZ62dF5PAGbKEDZK1CuLtKombJkFA2T1jl8LAIIs7IV6gBQ==}
+  '@types/jquery@4.0.0':
+    resolution: {integrity: sha512-Z+to+A2VkaHq1DfI2oSwsoCdhCHMpTSgjWzNcbNlRGYzksDBpPUgEcAL+RQjOBJRaLoEAOHXxqDGBVP+BblBwg==}
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
@@ -1456,9 +1456,6 @@ packages:
 
   '@types/sinonjs__fake-timers@8.1.5':
     resolution: {integrity: sha512-mQkU2jY8jJEF7YHjHvsQO8+3ughTL1mcnn96igfhONmR+fUPSKIkefQYpSe8bsly2Ep7oQbn/6VG5/9/0qcArQ==}
-
-  '@types/sizzle@2.3.10':
-    resolution: {integrity: sha512-TC0dmN0K8YcWEAEfiPi5gJP14eJe30TTGjkvek3iM/1NdHHsdCA/Td6GvNndMOo/iSnIsZ4HuuhrYPDAmbxzww==}
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
@@ -6163,9 +6160,7 @@ snapshots:
     dependencies:
       '@types/istanbul-lib-report': 3.0.3
 
-  '@types/jquery@3.5.34':
-    dependencies:
-      '@types/sizzle': 2.3.10
+  '@types/jquery@4.0.0': {}
 
   '@types/json-schema@7.0.15': {}
 
@@ -6207,8 +6202,6 @@ snapshots:
   '@types/sinonjs__fake-timers@15.0.1': {}
 
   '@types/sinonjs__fake-timers@8.1.5': {}
-
-  '@types/sizzle@2.3.10': {}
 
   '@types/stack-utils@2.0.3': {}
 
