@@ -1,4 +1,4 @@
-import {Client as GoogleMapsClient, ReverseGeocodeResponse} from '@googlemaps/google-maps-services-js';
+import {Client as GoogleMapsClient, ReverseGeocodeResponse, ReverseGeocodeResponseData} from '@googlemaps/google-maps-services-js';
 
 import getRollbar from '../codemancer/js/rollbar.js';
 import { unique } from '../codemancer/js/util.js';
@@ -58,8 +58,8 @@ export class Location {
     });
   }
 
-  static parseDisplayName(data: any): string {
-    return varsnap(function parseDisplayName(data: any): string {
+  static parseDisplayName(data: ReverseGeocodeResponseData): string {
+    return varsnap(function parseDisplayName(data: ReverseGeocodeResponseData): string {
       const result=data.results[0].address_components;
       const info=[];
       for(let i=0;i<result.length;++i) {
