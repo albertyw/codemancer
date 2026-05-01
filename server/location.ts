@@ -1,4 +1,8 @@
-import {Client as GoogleMapsClient, ReverseGeocodeResponse, ReverseGeocodeResponseData} from '@googlemaps/google-maps-services-js';
+import {
+  Client as GoogleMapsClient,
+  ReverseGeocodeResponse,
+  ReverseGeocodeResponseData,
+} from '@googlemaps/google-maps-services-js';
 
 import getRollbar from '../codemancer/js/rollbar.js';
 import { unique } from '../codemancer/js/util.js';

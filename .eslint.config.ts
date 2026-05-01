@@ -44,6 +44,12 @@ export default tseslint.config(
         'error',
         'always-multiline',
       ],
+      '@stylistic/object-curly-newline': [
+        'error',
+        {
+          'ImportDeclaration': { 'multiline': true, 'minProperties': 3 },
+        },
+      ],
     },
   },
   {
