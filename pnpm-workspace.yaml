@@ -1,5 +1,6 @@
 allowBuilds:
   "@swc/core": false
+  "core-js": false
   "edgedriver": false
   "esbuild": false
   "geckodriver": false
