@@ -1,4 +1,4 @@
-FROM node:25-slim
+FROM node:26-slim
 
 ARG GIT_VERSION="master"
 ENV GIT_VERSION=${GIT_VERSION}
