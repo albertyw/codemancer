@@ -1,11 +1,21 @@
 import {expect} from 'chai';
 import sinon from 'sinon';
 
-import {Location} from '../codemancer/js/location.js';
+import {Location, targetLocation} from '../codemancer/js/location.js';
 import {LocationData} from '../server/location.js';
 import getRollbar from '../codemancer/js/rollbar.js';
 import util from '../codemancer/js/util.js';
 const locationData = '{"displayName": "San Francisco, CA"}';
+
+describe('targetLocation', function() {
+  it('returns data', function() {
+    expect(targetLocation.wfo).to.not.be.empty;
+    expect(targetLocation.x).to.not.be.empty;
+    expect(targetLocation.y).to.not.be.empty;
+    expect(targetLocation.lat).to.be.a('number');
+    expect(targetLocation.lng).to.be.a('number');
+  });
+});
 
 describe('Location.getLocation', function() {
   beforeEach(function() {
