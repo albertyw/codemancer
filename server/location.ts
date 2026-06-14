@@ -39,26 +39,35 @@ export const targetLocation = losAltosLocation;
 const googleMapsClient = new GoogleMapsClient({});
 
 export class Location {
-  static getLocation(): Promise<LocationData> {
+  static getLocation(latitude: number, longitude: number): Promise<LocationData> {
+    const locationData: LocationData = {
+      wfo: '',
+      x: '',
+      y: '',
+      lat: latitude,
+      lng: longitude,
+      timezone: '',
+      displayName: '',
+    };
     const geocodingKey = process.env.GEOCODING_API_KEY_BACKEND || '';
     return googleMapsClient.reverseGeocode({
       params: {
-        latlng: [targetLocation.lat, targetLocation.lng],
+        latlng: [locationData.lat, locationData.lng],
         key: geocodingKey,
       },
     }).then((response: ReverseGeocodeResponse) => {
       if (response.data.status === 'OK') {
-        targetLocation.displayName = Location.parseDisplayName(response.data);
+        locationData.displayName = Location.parseDisplayName(response.data);
       } else {
         getRollbar().error('Failed to geocode', response);
       }
-      return targetLocation;
+      return locationData;
     }, (error) => {
       getRollbar().error('Failed to geocode', error);
-      return targetLocation;
+      return locationData;
     }).catch((error) => {
       getRollbar().error('Failed to geocode', error);
-      return targetLocation;
+      return locationData;
     });
   }
 

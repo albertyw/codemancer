@@ -96,7 +96,9 @@ function weatherHandler(req: express.Request, res: express.Response) {
 }
 
 function locationHandler(req: express.Request, res: express.Response) {
-  Location.getLocation().then((locationData: any) => {
+  const latitude = parseFloat(req.query.latitude as string);
+  const longitude = parseFloat(req.query.longitude as string);
+  Location.getLocation(latitude, longitude).then((locationData: any) => {
     res.json(locationData);
   });
 }
