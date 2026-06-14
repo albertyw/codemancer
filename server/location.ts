@@ -2,6 +2,7 @@ import {
   Client as GoogleMapsClient,
   ReverseGeocodeResponse,
   ReverseGeocodeResponseData,
+  TimeZoneResponse,
 } from '@googlemaps/google-maps-services-js';
 
 import getRollbar from '../codemancer/js/rollbar.js';
@@ -32,7 +33,7 @@ export class Location {
       displayName: '',
     };
     const geocodingKey = process.env.GEOCODING_API_KEY_BACKEND || '';
-    return googleMapsClient.reverseGeocode({
+    const geocodePromise = googleMapsClient.reverseGeocode({
       params: {
         latlng: [locationData.lat, locationData.lng],
         key: geocodingKey,
@@ -43,14 +44,25 @@ export class Location {
       } else {
         getRollbar().error('Failed to geocode', response);
       }
-      return locationData;
-    }, (error) => {
-      getRollbar().error('Failed to geocode', error);
-      return locationData;
     }).catch((error) => {
       getRollbar().error('Failed to geocode', error);
-      return locationData;
     });
+    const timezonePromise = googleMapsClient.timezone({
+      params: {
+        location: [latitude, longitude],
+        timestamp: Math.floor(Date.now() / 1000),
+        key: geocodingKey,
+      },
+    }).then((response: TimeZoneResponse) => {
+      if (response.data.status === 'OK') {
+        locationData.timezone = response.data.timeZoneId;
+      } else {
+        getRollbar().error('Failed to get timezone', response);
+      }
+    }).catch((error) => {
+      getRollbar().error('Failed to get timezone', error);
+    });
+    return Promise.all([geocodePromise, timezonePromise]).then(() => locationData);
   }
 
   static parseDisplayName(data: ReverseGeocodeResponseData): string {
