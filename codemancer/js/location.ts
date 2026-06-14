@@ -23,20 +23,14 @@ export class Location {
         reject(error);
       });
     }).then((coordinates: GeolocationCoordinates) => {
-      const params = new URLSearchParams({
-        latitude: coordinates.latitude.toString(),
-        longitude: coordinates.longitude.toString(),
-      });
-      const url = `${baseURL}?${params.toString()}`;
-      return requestPromise(url, cacheDuration, backupDuration);
-    }).then((data) => {
-      return data;
-    }, (error) => {
-      getRollbar().error('Failed to geocode', error);
-      return {};
+      const url = new URL(baseURL, window.location.href);
+      url.searchParams.set('latitude', coordinates.latitude.toString());
+      url.searchParams.set('longitude', coordinates.longitude.toString());
+      return requestPromise(url.href, cacheDuration, backupDuration);
     }).catch((error) => {
       getRollbar().error('Failed to geocode', error);
-      return {};
+      this.#locationData = undefined;
+      return {displayName: ''} as LocationData;
     }) as Promise<LocationData>;
     return this.#locationData;
   }
