@@ -1,15 +1,11 @@
 import {expect} from 'chai';
 import { TimeParts } from '../codemancer/js/clock.js';
 
-describe('TimeParts.weekdays', () => {
-  it('has weekdays', () => {
-    expect(TimeParts.weekdays.length).to.equal(7);
-  });
-});
-
-describe('TimeParts.months', () => {
-  it('has months', () => {
-    expect(TimeParts.months.length).to.equal(12);
+describe('TimeParts', () => {
+  it('formats date in the given timezone', () => {
+    const date = new Date('2024-03-15T20:00:00Z'); // noon PT (UTC-8)
+    const parts = new TimeParts(date, 'America/Los_Angeles');
+    expect(parts.dateFormatted()).to.equal('Friday, March 15');
   });
 });
 

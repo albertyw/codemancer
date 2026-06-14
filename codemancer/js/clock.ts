@@ -6,26 +6,21 @@ import { targetLocation, location } from './location.js';
 
 export class TimeParts {
   date: Date;
-  #tzParts: { [key: string]: string } | undefined;
+  #tzParts: { [key: string]: string };
 
-  static weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  static months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-
-  constructor(date: Date, timezone?: string) {
+  constructor(date: Date, timezone: string) {
     this.date = date;
-    if (timezone) {
-      const parts = new Intl.DateTimeFormat('en-US', {
-        timeZone: timezone,
-        weekday: 'long',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: true,
-      }).formatToParts(date);
-      this.#tzParts = Object.fromEntries(parts.map(p => [p.type, p.value]));
-    }
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: timezone,
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: true,
+    }).formatToParts(date);
+    this.#tzParts = Object.fromEntries(parts.map(p => [p.type, p.value]));
   }
 
   static prependZero(num: number, visible: boolean): string {
@@ -39,38 +34,19 @@ export class TimeParts {
   }
 
   dateFormatted(): string {
-    if (this.#tzParts) {
-      return `${this.#tzParts.weekday}, ${this.#tzParts.month} ${this.#tzParts.day}`;
-    }
-    const day = TimeParts.weekdays[this.date.getDay()];
-    const month = TimeParts.months[this.date.getMonth()];
-    const date = this.date.getDate();
-    return day + ', ' + month + ' ' + date;
+    return `${this.#tzParts.weekday}, ${this.#tzParts.month} ${this.#tzParts.day}`;
   }
 
   hour(): string {
-    if (this.#tzParts) {
-      return TimeParts.prependZero(parseInt(this.#tzParts.hour), false);
-    }
-    let hour = this.date.getHours() % 12;
-    if(hour === 0) {
-      hour = 12;
-    }
-    return TimeParts.prependZero(hour, false);
+    return TimeParts.prependZero(parseInt(this.#tzParts.hour), false);
   }
 
   minute(): string {
-    if (this.#tzParts) {
-      return TimeParts.prependZero(parseInt(this.#tzParts.minute), true);
-    }
-    return TimeParts.prependZero(this.date.getMinutes(), true);
+    return TimeParts.prependZero(parseInt(this.#tzParts.minute), true);
   }
 
   second(): string {
-    if (this.#tzParts) {
-      return TimeParts.prependZero(parseInt(this.#tzParts.second), true);
-    }
-    return TimeParts.prependZero(this.date.getSeconds(), true);
+    return TimeParts.prependZero(parseInt(this.#tzParts.second), true);
   }
 }
 
