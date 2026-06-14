@@ -7,7 +7,7 @@ import path from 'path';
 const appRoot = appRootPath.toString();
 import dotenv from 'dotenv';
 dotenv.config({path: path.join(appRoot, '.env')});
-import {Location, targetLocation} from './location.js';
+import {Location} from './location.js';
 import { requestPromise } from '../codemancer/js/util.js';
 import { getSVGs } from './util.js';
 import varsnap from '../codemancer/js/varsnap.js';
@@ -18,6 +18,14 @@ const airnowCacheDuration = 60 * 60 * 1000;
 const airnowBackupDuration = 3 * 60 * 60 * 1000;
 const weatherCacheDuration = 5 * 60 * 1000;
 const weatherBackupDuration = 1 * 60 * 60 * 1000;
+
+export interface WeatherPointsResponse {
+  properties: {
+    gridId: string,
+    gridX: number,
+    gridY: number,
+  },
+}
 
 export interface AirnowResponse {
   DateIssue: string,
@@ -80,16 +88,45 @@ function airnowHandler(req: express.Request, res: express.Response) {
 
 function weatherHandler(req: express.Request, res: express.Response) {
   // Proxy for weather API
-  // TODO: accept params for weather
-  const urlBuilder = varsnap(function urlBuilder(location) {
+  const latitude = parseFloat(req.query.latitude as string);
+  const longitude = parseFloat(req.query.longitude as string);
+  if (isNaN(latitude) || isNaN(longitude)) {
+    res.json({'error': 'Invalid latitude or longitude'});
+    return;
+  }
+  const pointsURLBuilder = varsnap(function pointsURLBuilder(latitude, longitude) {
     // Documentation at https://www.weather.gov/documentation/services-web-api#/
-    const url = 'https://api.weather.gov/gridpoints/' + location.wfo + '/'
-      + location.x + ',' + location.y + '/forecast/hourly';
+    // https://api.weather.gov/points/37.78,-122.41
+    const url = 'https://api.weather.gov/points/' + latitude + ',' + longitude;
     return url;
-  }, 'Weather.urlBuilder');
-  const url = new URL(urlBuilder(targetLocation));
-  requestPromise(url.href, weatherCacheDuration, weatherBackupDuration).then(function(data) {
-    res.json(data);
+  }, 'Weather.pointsURLBuilder');
+  const pointsURL = new URL(pointsURLBuilder(latitude, longitude));
+  const request = <Promise<WeatherPointsResponse>>requestPromise(pointsURL.href, weatherCacheDuration, weatherBackupDuration);
+  request.then(function(data: WeatherPointsResponse) {
+    if (data.properties === undefined) {
+      res.json({'error': 'Invalid response from points API'});
+      return;
+    }
+    return {
+      gridId: data.properties.gridId,
+      gridX: data.properties.gridX,
+      gridY: data.properties.gridY,
+    };
+  }).then(function(location) {
+    if (location === undefined) {
+      return;
+    }
+    const urlBuilder = varsnap(function urlBuilder(location) {
+      // Documentation at https://www.weather.gov/documentation/services-web-api#/
+      // https://api.weather.gov/gridpoints/MTR/85,105/forecast/hourly
+      const url = 'https://api.weather.gov/gridpoints/' + location.gridId + '/'
+        + location.gridX + ',' + location.gridY + '/forecast/hourly';
+      return url;
+    }, 'Weather.urlBuilder');
+    const url = new URL(urlBuilder(location));
+    return requestPromise(url.href, weatherCacheDuration, weatherBackupDuration).then(function(data) {
+      res.json(data);
+    });
   }).catch((error) => {
     res.json({'error': error});
   });
@@ -98,6 +135,10 @@ function weatherHandler(req: express.Request, res: express.Response) {
 function locationHandler(req: express.Request, res: express.Response) {
   const latitude = parseFloat(req.query.latitude as string);
   const longitude = parseFloat(req.query.longitude as string);
+  if (isNaN(latitude) || isNaN(longitude)) {
+    res.json({'error': 'Invalid latitude or longitude'});
+    return;
+  }
   Location.getLocation(latitude, longitude).then((locationData: any) => {
     res.json(locationData);
   });

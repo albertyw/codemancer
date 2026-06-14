@@ -5,6 +5,7 @@ import {location} from './location.js';
 import { LocationData } from '../../server/location.js';
 import { requestPromise } from './util.js';
 
+const baseURL = '/weather';
 const weatherRefreshInterval = 20 * 60 * 1000;
 // Icons are from https://erikflowers.github.io/weather-icons/
 // Conditions and Descriptors are from observed responses and from
@@ -134,12 +135,10 @@ export class Weather {
 
   // TODO: add varsnap here
   static urlBuilder(location: LocationData): string {
-    // Documentation at https://www.weather.gov/documentation/services-web-api#/
-    // TODO: send params to backend
-    location;
-
-    const url = '/weather';
-    return url;
+    const url = new URL(baseURL, window.location.href);
+    url.searchParams.set('latitude', String(location.lat));
+    url.searchParams.set('longitude', String(location.lng));
+    return url.toString();
   };
 
   // TODO: add varsnap here
