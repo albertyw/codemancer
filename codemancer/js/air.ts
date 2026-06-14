@@ -2,7 +2,7 @@ import $ from 'jquery';
 
 import {location} from './location.js';
 import {LocationData} from '../../server/location.js';
-import {AirnowResponse} from '../../server/handlers.js';
+import {AirnowResponse} from '../../server/weather.js';
 import getRollbar from './rollbar.js';
 import {requestPromise} from './util.js';
 

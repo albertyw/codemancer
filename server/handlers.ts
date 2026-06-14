@@ -7,41 +7,12 @@ import path from 'path';
 const appRoot = appRootPath.toString();
 import dotenv from 'dotenv';
 dotenv.config({path: path.join(appRoot, '.env')});
-import {Location} from './location.js';
-import { requestPromise } from '../codemancer/js/util.js';
+import { Location } from './location.js';
+import {
+  getAirnowData, getWeatherData, AirnowResponse,
+} from './weather.js';
 import { getSVGs } from './util.js';
-import varsnap from '../codemancer/js/varsnap.js';
 import webpackConfig from '../webpack.config.js';
-
-const airnowURL = 'https://www.airnowapi.org/aq/forecast/latlong/';
-const airnowCacheDuration = 60 * 60 * 1000;
-const airnowBackupDuration = 3 * 60 * 60 * 1000;
-const weatherCacheDuration = 5 * 60 * 1000;
-const weatherBackupDuration = 1 * 60 * 60 * 1000;
-
-export interface WeatherPointsResponse {
-  properties: {
-    gridId: string,
-    gridX: number,
-    gridY: number,
-  },
-}
-
-export interface AirnowResponse {
-  DateIssue: string,
-  DateForecast: string,
-  ReportingArea: string,
-  StateCode: string,
-  Latitude: number,
-  Longitude: number,
-  ParameterName: string,
-  AQI: number,
-  Category: {
-    Number: number,
-    Name: string,
-  },
-  ActionDay: boolean,
-}
 
 export function loadTemplateVars(app: express.Express) {
   app.locals.templateVars = {};
@@ -62,27 +33,16 @@ function generateIndexHandler(app: express.Express): express.Handler {
 }
 
 function airnowHandler(req: express.Request, res: express.Response) {
-  // Proxy for Airnow because their API doesn't support CORS
-  // See test/data for example response
-  const url = new URL(airnowURL);
-  if (typeof req.query.latitude !== 'string') {
-    res.json({'error': 'latitude is not a string'});
+  const latitude = parseFloat(req.query.latitude as string);
+  const longitude = parseFloat(req.query.longitude as string);
+  if (isNaN(latitude) || isNaN(longitude)) {
+    res.json({'error': 'Invalid latitude or longitude'});
     return;
   }
-  if (typeof req.query.longitude !== 'string') {
-    res.json({'error': 'longitude is not a string'});
-    return;
-  }
-  const airnowKey = process.env.AIRNOW_API_KEY || '';
-  url.searchParams.append('latitude', req.query.latitude);
-  url.searchParams.append('longitude', req.query.longitude);
-  url.searchParams.append('API_KEY', airnowKey);
-  url.searchParams.append('format', 'application/json');
-  const request = <Promise<AirnowResponse[]>>requestPromise(url.href, airnowCacheDuration, airnowBackupDuration);
-  request.then(function(data: AirnowResponse[]) {
+  getAirnowData(latitude, longitude).then(function(data: AirnowResponse[]) {
     res.json(data);
   }).catch((error) => {
-    res.json({'error': error});
+    res.json({'error': String(error)});
   });
 }
 
@@ -94,41 +54,10 @@ function weatherHandler(req: express.Request, res: express.Response) {
     res.json({'error': 'Invalid latitude or longitude'});
     return;
   }
-  const pointsURLBuilder = varsnap(function pointsURLBuilder(latitude, longitude) {
-    // Documentation at https://www.weather.gov/documentation/services-web-api#/
-    // https://api.weather.gov/points/37.78,-122.41
-    const url = 'https://api.weather.gov/points/' + latitude + ',' + longitude;
-    return url;
-  }, 'Weather.pointsURLBuilder');
-  const pointsURL = new URL(pointsURLBuilder(latitude, longitude));
-  const request = <Promise<WeatherPointsResponse>>requestPromise(pointsURL.href, weatherCacheDuration, weatherBackupDuration);
-  request.then(function(data: WeatherPointsResponse) {
-    if (data.properties === undefined) {
-      res.json({'error': 'Invalid response from points API'});
-      return;
-    }
-    return {
-      gridId: data.properties.gridId,
-      gridX: data.properties.gridX,
-      gridY: data.properties.gridY,
-    };
-  }).then(function(location) {
-    if (location === undefined) {
-      return;
-    }
-    const urlBuilder = varsnap(function urlBuilder(location) {
-      // Documentation at https://www.weather.gov/documentation/services-web-api#/
-      // https://api.weather.gov/gridpoints/MTR/85,105/forecast/hourly
-      const url = 'https://api.weather.gov/gridpoints/' + location.gridId + '/'
-        + location.gridX + ',' + location.gridY + '/forecast/hourly';
-      return url;
-    }, 'Weather.urlBuilder');
-    const url = new URL(urlBuilder(location));
-    return requestPromise(url.href, weatherCacheDuration, weatherBackupDuration).then(function(data) {
-      res.json(data);
-    });
+  getWeatherData(latitude, longitude).then(function(data) {
+    res.json(data);
   }).catch((error) => {
-    res.json({'error': error});
+    res.json({'error': String(error)});
   });
 }
 
