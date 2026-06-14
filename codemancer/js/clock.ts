@@ -1,16 +1,31 @@
 import $ from 'jquery';
 
 import { getMockDate } from './util.js';
+import { targetLocation, location } from './location.js';
 
 
 export class TimeParts {
   date: Date;
+  #tzParts: { [key: string]: string } | undefined;
 
   static weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   static months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-  constructor(date: Date) {
+  constructor(date: Date, timezone?: string) {
     this.date = date;
+    if (timezone) {
+      const parts = new Intl.DateTimeFormat('en-US', {
+        timeZone: timezone,
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true,
+      }).formatToParts(date);
+      this.#tzParts = Object.fromEntries(parts.map(p => [p.type, p.value]));
+    }
   }
 
   static prependZero(num: number, visible: boolean): string {
@@ -24,6 +39,9 @@ export class TimeParts {
   }
 
   dateFormatted(): string {
+    if (this.#tzParts) {
+      return `${this.#tzParts.weekday}, ${this.#tzParts.month} ${this.#tzParts.day}`;
+    }
     const day = TimeParts.weekdays[this.date.getDay()];
     const month = TimeParts.months[this.date.getMonth()];
     const date = this.date.getDate();
@@ -31,6 +49,9 @@ export class TimeParts {
   }
 
   hour(): string {
+    if (this.#tzParts) {
+      return TimeParts.prependZero(parseInt(this.#tzParts.hour), false);
+    }
     let hour = this.date.getHours() % 12;
     if(hour === 0) {
       hour = 12;
@@ -39,13 +60,21 @@ export class TimeParts {
   }
 
   minute(): string {
+    if (this.#tzParts) {
+      return TimeParts.prependZero(parseInt(this.#tzParts.minute), true);
+    }
     return TimeParts.prependZero(this.date.getMinutes(), true);
   }
 
   second(): string {
+    if (this.#tzParts) {
+      return TimeParts.prependZero(parseInt(this.#tzParts.second), true);
+    }
     return TimeParts.prependZero(this.date.getSeconds(), true);
   }
 }
+
+let clockTimezone = targetLocation.timezone;
 
 export class Clock {
   #running: ReturnType<typeof setTimeout>|undefined = undefined;
@@ -56,8 +85,7 @@ export class Clock {
   };
 
   timeParts(): TimeParts {
-    const date = getMockDate();
-    return new TimeParts(date);
+    return new TimeParts(getMockDate(), clockTimezone);
   }
 
   refresh(): void {
@@ -110,4 +138,9 @@ export const clock = new Clock();
 
 export function load(): void {
   clock.start();
+  location.getLocation().then(data => {
+    if (data.timezone) {
+      clockTimezone = data.timezone;
+    }
+  });
 }
