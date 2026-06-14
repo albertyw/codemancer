@@ -13,7 +13,7 @@ const sanFranciscoLocation: LocationData = {
   wfo: 'MTR', x: '85', y: '105',
   lat: 37.78, lng: -122.41,
   timezone: 'America/Los_Angeles',
-  displayName: '',
+  displayName: 'San Francisco, CA',
 };
 export const targetLocation = sanFranciscoLocation;
 /*
@@ -60,14 +60,14 @@ export class Location {
     cityElement.html(location.displayName);
   }
 
-  showLocation(): void {
-    this.getLocation().
-      then(this.#renderLocation);
+  showLocation(locationData: Promise<LocationData>): void {
+    locationData.then(this.#renderLocation);
   }
 }
 
 export const location = new Location();
 
 export function load(): void {
-  location.showLocation();
+  location.showLocation(Promise.resolve(targetLocation));
+  location.showLocation(location.getLocation());
 }

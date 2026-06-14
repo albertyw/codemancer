@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 import getRollbar from './rollbar.js';
-import {location} from './location.js';
+import { targetLocation, location} from './location.js';
 import { LocationData } from '../../server/location.js';
 import { requestPromise } from './util.js';
 
@@ -238,8 +238,8 @@ export class Weather {
     this.#el.now.removeClass('animated bouncein smooth');
   }
 
-  load(): Promise<void> {
-    return location.getLocation()
+  load(locationData: Promise<LocationData>): Promise<void> {
+    return locationData
       .then(data => Weather.urlBuilder(data))
       .then((url: string) => {
         return <Promise<ResponseData>>requestPromise(url, 0, 0);
@@ -251,9 +251,11 @@ export class Weather {
 };
 
 export const weather = new Weather();
+weather.load(Promise.resolve(targetLocation))
+  .catch(error => { getRollbar().error(error); });
 
 export function load(): void {
-  weather.load().
-    catch(error => { getRollbar().error(error); });
+  weather.load(location.getLocation())
+    .catch(error => { getRollbar().error(error); });
   setInterval(load, weatherRefreshInterval);
 }

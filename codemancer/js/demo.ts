@@ -2,6 +2,7 @@ import $ from 'jquery';
 
 import { backgroundColor } from './horizon/background.js';
 import { clock } from './clock.js';
+import { location } from './location.js';
 import { toggleDemo } from './util.js';
 import { weather } from './weather.js';
 
@@ -18,7 +19,7 @@ function startDemo() {
 function stopDemo() {
   backgroundColor.changePeriod(originalUpdateBackgroundColorPeriod);
   clock.changePeriod(originalUpdateClockPeriod);
-  weather.load();
+  weather.load(location.getLocation());
 }
 
 function toggleDemoClick() {
