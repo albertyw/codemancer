@@ -45,6 +45,7 @@ export class BackgroundColor {
 export const backgroundColor = new BackgroundColor();
 
 export function load() {
+  backgroundColor.update();
   location.getLocation().then((locationData: LocationData) => {
     backgroundColor['locationData'] = locationData;
     backgroundColor.update();
