@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 import getRollbar from './rollbar.js';
-import { targetLocation, location} from './location.js';
+import { location} from './location.js';
 import { LocationData } from '../../server/location.js';
 import { requestPromise } from './util.js';
 
@@ -251,7 +251,7 @@ export class Weather {
 };
 
 export const weather = new Weather();
-weather.load(Promise.resolve(targetLocation))
+weather.load(location.getLocation())
   .catch(error => { getRollbar().error(error); });
 
 export function load(): void {

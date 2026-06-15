@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import {targetLocation, location} from './location.js';
+import {location} from './location.js';
 import {LocationData} from '../../server/location.js';
 import {AirnowResponse} from '../../server/weather.js';
 import getRollbar from './rollbar.js';
@@ -49,7 +49,7 @@ export class Air {
 }
 
 export const air = new Air();
-air.load(Promise.resolve(targetLocation));
+air.load(location.getLocation());
 
 export function load(): void {
   air.load(location.getLocation());

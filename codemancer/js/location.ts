@@ -2,11 +2,14 @@ import $ from 'jquery';
 
 import getRollbar from './rollbar.js';
 import { requestPromise } from './util.js';
+import Storage from './storage.js';
 import { LocationData } from '../../server/location.js';
 
 const baseURL = '/location/';
 const cacheDuration = 24 * 60 * 60 * 1000;
 const backupDuration = 7 * 24 * 60 * 60 * 1000;
+const locationStorageKey = 'userLocation';
+const locationStorageDuration = 365 * 24 * 60 * 60 * 1000;
 
 const sanFranciscoLocation: LocationData = {
   // Generated from https://api.weather.gov/points/37.78,-122.41
@@ -28,8 +31,20 @@ export const targetLocation = losAltosLocation;
 */
 
 
+function loadCachedLocation(): LocationData {
+  const cached = Storage.getExpirableData(locationStorageKey, locationStorageDuration, false);
+  if (cached) {
+    try {
+      return JSON.parse(cached) as LocationData;
+    } catch {
+      // ignore malformed cache
+    }
+  }
+  return targetLocation;
+}
+
 export class Location {
-  #locationData: Promise<LocationData> = Promise.resolve(targetLocation);
+  #locationData: Promise<LocationData> = Promise.resolve(loadCachedLocation());
 
   getLocation(): Promise<LocationData> {
     return this.#locationData;
@@ -48,6 +63,9 @@ export class Location {
       url.searchParams.set('latitude', coordinates.latitude.toString());
       url.searchParams.set('longitude', coordinates.longitude.toString());
       return requestPromise(url.href, cacheDuration, backupDuration);
+    }).then((data) => {
+      Storage.setExpirableData(locationStorageKey, JSON.stringify(data));
+      return data;
     }).catch((error) => {
       getRollbar().error('Failed to geocode', error);
       this.#locationData = Promise.resolve(targetLocation);
@@ -70,5 +88,5 @@ export class Location {
 export const location = new Location();
 
 export function load(): void {
-  location.showLocation(Promise.resolve(targetLocation));
+  location.showLocation(location.getLocation());
 }

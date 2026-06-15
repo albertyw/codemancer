@@ -44,10 +44,14 @@ export class BackgroundColor {
 
 export const backgroundColor = new BackgroundColor();
 
-export function load() {
-  backgroundColor.update();
-  location.getLocation().then((locationData: LocationData) => {
-    backgroundColor['locationData'] = locationData;
+export function updateBackground(locationData: Promise<LocationData>): void {
+  locationData.then((data: LocationData) => {
+    backgroundColor.locationData = data;
     backgroundColor.update();
   });
+}
+
+export function load() {
+  backgroundColor.update();
+  updateBackground(location.getLocation());
 }

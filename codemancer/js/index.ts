@@ -7,7 +7,7 @@ import $ from 'jquery';
 import getRollbar from './rollbar.js';
 getRollbar();
 
-import { load as backgroundLoad } from './horizon/background.js';
+import { load as backgroundLoad, updateBackground } from './horizon/background.js';
 $(backgroundLoad);
 
 import { load as clockLoad, loadTimezone } from './clock.js';
@@ -18,12 +18,20 @@ $(clockLoad);
 $(weatherLoad);
 $(locationLoad);
 
+function refreshLocation(): void {
+  const locationData = location.loadLocation();
+  loadTimezone(locationData);
+  updateBackground(locationData);
+  weather.load(locationData).catch(error => { getRollbar().error(error); });
+  air.load(locationData);
+}
+
 $(() => {
-  $('#load_location').on('click', () => {
-    const locationData = location.loadLocation();
-    loadTimezone(locationData);
-    weather.load(locationData).catch(error => { getRollbar().error(error); });
-    air.load(locationData);
+  $('#load_location').on('click', refreshLocation);
+  navigator.permissions.query({ name: 'geolocation' }).then(result => {
+    if (result.state === 'granted') {
+      refreshLocation();
+    }
   });
 });
 
