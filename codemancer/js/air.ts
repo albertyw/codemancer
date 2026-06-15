@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import {location} from './location.js';
+import {targetLocation, location} from './location.js';
 import {LocationData} from '../../server/location.js';
 import {AirnowResponse} from '../../server/weather.js';
 import getRollbar from './rollbar.js';
@@ -23,9 +23,9 @@ export class Air {
     return url;
   }
 
-  showAirQuality(): void {
+  load(locationData: Promise<LocationData>): void {
     const dom = this.#dom;
-    location.getLocation()
+    locationData
       .then(Air.#urlBuilder)
       .then((url: string): Promise<OptionalAirnowResponse[]> => {
         return <Promise<OptionalAirnowResponse[]>>requestPromise(url, cacheDuration, backupDuration);
@@ -48,7 +48,9 @@ export class Air {
 
 }
 
+export const air = new Air();
+air.load(Promise.resolve(targetLocation));
+
 export function load(): void {
-  const air = new Air();
-  air.showAirQuality();
+  air.load(location.getLocation());
 }

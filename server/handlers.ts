@@ -21,6 +21,7 @@ export function loadTemplateVars(app: express.Express) {
       LOGFIT_TOKEN: process.env.LOGFIT_TOKEN,
       GITHUB_SVG: svgs.github,
       TOGGLEDEMO_SVG: svgs.toggledemo,
+      LOCATION_SVG: svgs.location,
     };
   });
 }

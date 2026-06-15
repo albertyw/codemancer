@@ -29,12 +29,13 @@ export const targetLocation = losAltosLocation;
 
 
 export class Location {
-  #locationData: Promise<LocationData>|undefined = undefined;
+  #locationData: Promise<LocationData> = Promise.resolve(targetLocation);
 
   getLocation(): Promise<LocationData> {
-    if (this.#locationData !== undefined) {
-      return this.#locationData;
-    }
+    return this.#locationData;
+  }
+
+  loadLocation(): Promise<LocationData> {
     this.#locationData = new Promise<GeolocationCoordinates>((resolve, reject) => {
       return navigator.geolocation.getCurrentPosition((position) => {
         return resolve(position.coords);
@@ -49,9 +50,10 @@ export class Location {
       return requestPromise(url.href, cacheDuration, backupDuration);
     }).catch((error) => {
       getRollbar().error('Failed to geocode', error);
-      this.#locationData = undefined;
-      return {displayName: ''} as LocationData;
+      this.#locationData = Promise.resolve(targetLocation);
+      return targetLocation;
     }) as Promise<LocationData>;
+    this.showLocation(this.#locationData);
     return this.#locationData;
   }
 
@@ -69,5 +71,4 @@ export const location = new Location();
 
 export function load(): void {
   location.showLocation(Promise.resolve(targetLocation));
-  location.showLocation(location.getLocation());
 }
