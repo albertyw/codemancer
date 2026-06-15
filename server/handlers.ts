@@ -37,13 +37,13 @@ function airnowHandler(req: express.Request, res: express.Response) {
   const latitude = parseFloat(req.query.latitude as string);
   const longitude = parseFloat(req.query.longitude as string);
   if (isNaN(latitude) || isNaN(longitude)) {
-    res.json({'error': 'Invalid latitude or longitude'});
+    res.status(400).json({'error': 'Invalid latitude or longitude'});
     return;
   }
   getAirnowData(latitude, longitude).then(function(data: AirnowResponse[]) {
     res.json(data);
   }).catch((error) => {
-    res.json({'error': String(error)});
+    res.status(500).json({'error': String(error)});
   });
 }
 
@@ -52,13 +52,13 @@ function weatherHandler(req: express.Request, res: express.Response) {
   const latitude = parseFloat(req.query.latitude as string);
   const longitude = parseFloat(req.query.longitude as string);
   if (isNaN(latitude) || isNaN(longitude)) {
-    res.json({'error': 'Invalid latitude or longitude'});
+    res.status(400).json({'error': 'Invalid latitude or longitude'});
     return;
   }
   getWeatherData(latitude, longitude).then(function(data) {
     res.json(data);
   }).catch((error) => {
-    res.json({'error': String(error)});
+    res.status(500).json({'error': String(error)});
   });
 }
 
@@ -66,7 +66,7 @@ function locationHandler(req: express.Request, res: express.Response) {
   const latitude = parseFloat(req.query.latitude as string);
   const longitude = parseFloat(req.query.longitude as string);
   if (isNaN(latitude) || isNaN(longitude)) {
-    res.json({'error': 'Invalid latitude or longitude'});
+    res.status(400).json({'error': 'Invalid latitude or longitude'});
     return;
   }
   Location.getLocation(latitude, longitude).then((locationData: any) => {
