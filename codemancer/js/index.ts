@@ -32,6 +32,8 @@ $(() => {
     if (result.state === 'granted') {
       refreshLocation();
     }
+  }).catch(() => {
+    // Permissions API unavailable; fall back to cached/default location
   });
 });
 

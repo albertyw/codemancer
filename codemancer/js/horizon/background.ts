@@ -52,6 +52,5 @@ export function updateBackground(locationData: Promise<LocationData>): void {
 }
 
 export function load() {
-  backgroundColor.update();
   updateBackground(location.getLocation());
 }

@@ -251,8 +251,6 @@ export class Weather {
 };
 
 export const weather = new Weather();
-weather.load(location.getLocation())
-  .catch(error => { getRollbar().error(error); });
 
 export function load(): void {
   weather.load(location.getLocation())

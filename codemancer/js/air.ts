@@ -49,7 +49,6 @@ export class Air {
 }
 
 export const air = new Air();
-air.load(location.getLocation());
 
 export function load(): void {
   air.load(location.getLocation());

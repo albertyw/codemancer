@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 import { getMockDate } from './util.js';
-import { targetLocation } from './location.js';
+import { location, targetLocation } from './location.js';
 import { LocationData } from '../../server/location.js';
 
 
@@ -114,11 +114,14 @@ export class Clock {
 export const clock = new Clock();
 
 export function loadTimezone(locationData: Promise<LocationData>): void {
-  locationData.then(() => {
-    clockTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  locationData.then((data: LocationData) => {
+    if (data.timezone) {
+      clockTimezone = data.timezone;
+    }
   });
 }
 
 export function load(): void {
+  loadTimezone(location.getLocation());
   clock.start();
 }

@@ -35,7 +35,10 @@ function loadCachedLocation(): LocationData {
   const cached = Storage.getExpirableData(locationStorageKey, locationStorageDuration, false);
   if (cached) {
     try {
-      return JSON.parse(cached) as LocationData;
+      const data = JSON.parse(cached) as LocationData;
+      if (typeof data.lat === 'number' && typeof data.lng === 'number') {
+        return data;
+      }
     } catch {
       // ignore malformed cache
     }
