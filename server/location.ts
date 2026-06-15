@@ -2,6 +2,7 @@ import {
   Client as GoogleMapsClient,
   ReverseGeocodeResponse,
   ReverseGeocodeResponseData,
+  TimeZoneResponse,
 } from '@googlemaps/google-maps-services-js';
 
 import getRollbar from '../codemancer/js/rollbar.js';
@@ -18,48 +19,50 @@ export interface LocationData {
   displayName: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const sanFranciscoLocation: LocationData = {
-  // Generated from https://api.weather.gov/points/37.78,-122.41
-  wfo: 'MTR', x: '85', y: '105',
-  lat: 37.78, lng: -122.41,
-  timezone: 'America/Los_Angeles',
-  displayName: '',
-};
-const losAltosLocation: LocationData = {
-  // Generated from https://api.weather.gov/points/37.39,-122.11
-  wfo: 'MTR', x: '92', y: '86',
-  lat: 37.39, lng: -122.11,
-  timezone: 'America/Los_Angeles',
-  displayName: '',
-};
-// export const targetLocation = sanFranciscoLocation;
-export const targetLocation = losAltosLocation;
-
 const googleMapsClient = new GoogleMapsClient({});
 
 export class Location {
-  static getLocation(): Promise<LocationData> {
+  static getLocation(latitude: number, longitude: number): Promise<LocationData> {
+    const locationData: LocationData = {
+      wfo: '',
+      x: '',
+      y: '',
+      lat: latitude,
+      lng: longitude,
+      timezone: '',
+      displayName: '',
+    };
     const geocodingKey = process.env.GEOCODING_API_KEY_BACKEND || '';
-    return googleMapsClient.reverseGeocode({
+    const geocodePromise = googleMapsClient.reverseGeocode({
       params: {
-        latlng: [targetLocation.lat, targetLocation.lng],
+        latlng: [locationData.lat, locationData.lng],
         key: geocodingKey,
       },
     }).then((response: ReverseGeocodeResponse) => {
       if (response.data.status === 'OK') {
-        targetLocation.displayName = Location.parseDisplayName(response.data);
+        locationData.displayName = Location.parseDisplayName(response.data);
       } else {
         getRollbar().error('Failed to geocode', response);
       }
-      return targetLocation;
-    }, (error) => {
-      getRollbar().error('Failed to geocode', error);
-      return targetLocation;
     }).catch((error) => {
       getRollbar().error('Failed to geocode', error);
-      return targetLocation;
     });
+    const timezonePromise = googleMapsClient.timezone({
+      params: {
+        location: [latitude, longitude],
+        timestamp: Math.floor(Date.now() / 1000),
+        key: geocodingKey,
+      },
+    }).then((response: TimeZoneResponse) => {
+      if (response.data.status === 'OK') {
+        locationData.timezone = response.data.timeZoneId;
+      } else {
+        getRollbar().error('Failed to get timezone', response);
+      }
+    }).catch((error) => {
+      getRollbar().error('Failed to get timezone', error);
+    });
+    return Promise.all([geocodePromise, timezonePromise]).then(() => locationData);
   }
 
   static parseDisplayName(data: ReverseGeocodeResponseData): string {

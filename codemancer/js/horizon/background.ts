@@ -1,8 +1,8 @@
 import suncalc from 'suncalc';
 
 import renderGradient from './gradient.js';
-import { location } from '../location.js';
-import { targetLocation, LocationData } from '../../../server/location.js';
+import { location, targetLocation } from '../location.js';
+import { LocationData } from '../../../server/location.js';
 import { getMockDate } from '../util.js';
 
 export class BackgroundColor {
@@ -44,9 +44,13 @@ export class BackgroundColor {
 
 export const backgroundColor = new BackgroundColor();
 
-export function load() {
-  location.getLocation().then((locationData: LocationData) => {
-    backgroundColor['locationData'] = locationData;
+export function updateBackground(locationData: Promise<LocationData>): void {
+  locationData.then((data: LocationData) => {
+    backgroundColor.locationData = data;
     backgroundColor.update();
   });
+}
+
+export function load() {
+  updateBackground(location.getLocation());
 }
