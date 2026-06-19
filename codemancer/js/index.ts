@@ -28,6 +28,12 @@ function refreshLocation(): void {
 
 $(() => {
   $('#load_location').on('click', refreshLocation);
+
+  if (navigator.permissions === undefined || navigator.permissions.query === undefined) {
+    // Permissions API unavailable; fall back to cached/default location
+    return;
+  }
+
   navigator.permissions.query({ name: 'geolocation' }).then(result => {
     if (result.state === 'granted') {
       refreshLocation();
