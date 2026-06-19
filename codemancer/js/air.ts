@@ -5,7 +5,7 @@ import {LocationData} from '../../server/location.js';
 import getRollbar from './rollbar.js';
 import {requestPromise} from './util.js';
 
-const airnowProxyURL = '/airnow/';
+const airQualityProxyURL = '/airquality/';
 const cacheDuration = 20 * 60 * 1000;
 const backupDuration = 3 * 60 * 60 * 1000;
 
@@ -30,7 +30,7 @@ export class Air {
 
   // TODO: add varsnap here
   static #urlBuilder(locationData: LocationData): string {
-    let url = airnowProxyURL;
+    let url = airQualityProxyURL;
     url += '?latitude=' + encodeURIComponent(locationData.lat);
     url += '&longitude=' + encodeURIComponent(locationData.lng);
     return url;

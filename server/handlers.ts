@@ -31,7 +31,7 @@ function generateIndexHandler(app: express.Express): express.Handler {
   return indexHandler;
 }
 
-function airnowHandler(req: express.Request, res: express.Response) {
+function airQualityHandler(req: express.Request, res: express.Response) {
   const latitude = parseFloat(req.query.latitude as string);
   const longitude = parseFloat(req.query.longitude as string);
   if (isNaN(latitude) || isNaN(longitude)) {
@@ -84,7 +84,7 @@ function webpackMiddleware() {
 
 export function loadHandlers(app: express.Express) {
   app.get('/', generateIndexHandler(app));
-  app.get('/airnow/', airnowHandler);
+  app.get('/airquality/', airQualityHandler);
   app.get('/weather/', weatherHandler);
   app.get('/location/', locationHandler);
   app.use('/img', express.static(path.join(appRoot, 'codemancer', 'img')));

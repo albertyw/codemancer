@@ -1,7 +1,7 @@
 import { requestPromise } from '../codemancer/js/util.js';
 
-const airnowCacheDuration = 60 * 60 * 1000;
-const airnowBackupDuration = 3 * 60 * 60 * 1000;
+const airQualityCacheDuration = 60 * 60 * 1000;
+const airQualityBackupDuration = 3 * 60 * 60 * 1000;
 const weatherCacheDuration = 5 * 60 * 1000;
 const weatherBackupDuration = 1 * 60 * 60 * 1000;
 
@@ -11,7 +11,7 @@ export function getAirnowData(latitude: number, longitude: number) {
   url.searchParams.set('latitude', String(latitude));
   url.searchParams.set('longitude', String(longitude));
   url.searchParams.set('current', 'us_aqi');
-  return requestPromise(url.href, airnowCacheDuration, airnowBackupDuration);
+  return requestPromise(url.href, airQualityCacheDuration, airQualityBackupDuration);
 }
 
 export function getWeatherData(latitude: number, longitude: number) {
