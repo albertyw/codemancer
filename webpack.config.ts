@@ -36,6 +36,11 @@ const config: Configuration = {
         loader: 'ts-loader',
         options: {
           onlyCompileBundledFiles: true,
+          // The bundle no longer transitively pulls in @types/node, so make
+          // the node ambient types (e.g. `process`) explicit for this build.
+          compilerOptions: {
+            types: ['node'],
+          },
         },
         exclude: ['/node_modules/'],
       },
