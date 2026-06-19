@@ -7,6 +7,27 @@ import varsnap from '../codemancer/js/varsnap.js';
 
 const appRoot = appRootPath.toString();
 
+import { type AssetPaths, parseManifest } from './manifest.js';
+
+// Resolve the asset paths used by the index template. In development,
+// webpack-dev-middleware serves the unhashed assets (main.js/main.css) from
+// memory, so use the unhashed defaults and ignore any on-disk manifest (which
+// bin/start.sh writes with hashed names from a production build). In production
+// the hashed paths come from the manifest webpack emits to disk.
+export function getAssetPaths(): AssetPaths {
+  if (process.env.ENV === 'development') {
+    return parseManifest(null);
+  }
+  const manifestPath = path.join(appRoot, 'dist', 'manifest.json');
+  let content: string | null;
+  try {
+    content = fs.readFileSync(manifestPath, 'utf8');
+  } catch {
+    content = null;
+  }
+  return parseManifest(content);
+}
+
 interface SVGs {
   github: string;
   toggledemo: string;
