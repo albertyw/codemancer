@@ -4,9 +4,6 @@ import {Location, targetLocation} from '../codemancer/js/location.js';
 
 describe('targetLocation', function() {
   it('returns data', function() {
-    expect(targetLocation.wfo).to.not.be.empty;
-    expect(targetLocation.x).to.not.be.empty;
-    expect(targetLocation.y).to.not.be.empty;
     expect(targetLocation.lat).to.be.a('number');
     expect(targetLocation.lng).to.be.a('number');
   });

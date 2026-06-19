@@ -12,8 +12,6 @@ const locationStorageKey = 'userLocation';
 const locationStorageDuration = 365 * 24 * 60 * 60 * 1000;
 
 const sanFranciscoLocation: LocationData = {
-  // Generated from https://api.weather.gov/points/37.78,-122.41
-  wfo: 'MTR', x: '85', y: '105',
   lat: 37.78, lng: -122.41,
   timezone: 'America/Los_Angeles',
   displayName: 'San Francisco, CA',
@@ -21,8 +19,6 @@ const sanFranciscoLocation: LocationData = {
 export const targetLocation = sanFranciscoLocation;
 /*
 const losAltosLocation: LocationData = {
-  // Generated from https://api.weather.gov/points/37.39,-122.11
-  wfo: 'MTR', x: '92', y: '86',
   lat: 37.39, lng: -122.11,
   timezone: 'America/Los_Angeles',
   displayName: '',

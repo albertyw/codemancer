@@ -10,9 +10,6 @@ import { unique } from '../codemancer/js/util.js';
 import varsnap from '../codemancer/js/varsnap.js';
 
 export interface LocationData {
-  wfo: string;
-  x: string;
-  y: string;
   lat: number;
   lng: number;
   timezone: string;
@@ -24,9 +21,6 @@ const googleMapsClient = new GoogleMapsClient({});
 export class Location {
   static getLocation(latitude: number, longitude: number): Promise<LocationData> {
     const locationData: LocationData = {
-      wfo: '',
-      x: '',
-      y: '',
       lat: latitude,
       lng: longitude,
       timezone: '',
