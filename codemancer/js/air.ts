@@ -2,7 +2,6 @@ import $ from 'jquery';
 
 import {location} from './location.js';
 import {LocationData} from '../../server/location.js';
-import {AirnowResponse} from '../../server/weather.js';
 import getRollbar from './rollbar.js';
 import {requestPromise} from './util.js';
 
@@ -10,7 +9,21 @@ const airnowProxyURL = '/airnow/';
 const cacheDuration = 20 * 60 * 1000;
 const backupDuration = 3 * 60 * 60 * 1000;
 
-type OptionalAirnowResponse = AirnowResponse | undefined;
+interface AirQualityResponse {
+  current: {
+    us_aqi: number;
+  };
+}
+
+// US AQI breakpoints per EPA standard
+function aqiCategoryName(aqi: number): string {
+  if (aqi <= 50) return 'Good';
+  if (aqi <= 100) return 'Moderate';
+  if (aqi <= 150) return 'Unhealthy for Sensitive Groups';
+  if (aqi <= 200) return 'Unhealthy';
+  if (aqi <= 300) return 'Very Unhealthy';
+  return 'Hazardous';
+}
 
 export class Air {
   #dom = $('#air-message');
@@ -27,21 +40,17 @@ export class Air {
     const dom = this.#dom;
     locationData
       .then(Air.#urlBuilder)
-      .then((url: string): Promise<OptionalAirnowResponse[]> => {
-        return <Promise<OptionalAirnowResponse[]>>requestPromise(url, cacheDuration, backupDuration);
+      .then((url: string): Promise<AirQualityResponse> => {
+        return <Promise<AirQualityResponse>>requestPromise(url, cacheDuration, backupDuration);
       })
-      .then(function(dataOptional: OptionalAirnowResponse[]) {
-        if (!Array.isArray(dataOptional)) {
-          getRollbar().error('Unexpected air quality response', dataOptional);
+      .then(function(data: AirQualityResponse) {
+        if (!data?.current || typeof data.current.us_aqi !== 'number') {
+          getRollbar().error('Unexpected air quality response', data);
           return;
         }
-        const data = dataOptional.filter((item): item is AirnowResponse => item !== undefined);
-        if (data.length === 0) {
-          return;
-        }
-        if (data[0].Category.Number > 2) {
-          const message = 'Air Quality: ' + data[0].Category.Name;
-          dom.text(message);
+        const aqi = data.current.us_aqi;
+        if (aqi > 100) {
+          dom.text('Air Quality: ' + aqiCategoryName(aqi));
         }
       });
   }

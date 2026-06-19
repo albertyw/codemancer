@@ -1,77 +1,19 @@
-[
-  {
-    "DateIssue": "2024-11-28",
-    "DateForecast": "2024-11-29",
-    "ReportingArea": "Redwood City",
-    "StateCode": "CA",
-    "Latitude": 37.48,
-    "Longitude": -122.22,
-    "ParameterName": "PM2.5",
-    "AQI": 79,
-    "Category": {
-      "Number": 2,
-      "Name": "Moderate"
-    },
-    "ActionDay": false
+{
+  "latitude": 37.7749,
+  "longitude": -122.4194,
+  "generationtime_ms": 0.43,
+  "utc_offset_seconds": 0,
+  "timezone": "GMT",
+  "timezone_abbreviation": "GMT",
+  "elevation": 18.0,
+  "current_units": {
+    "time": "iso8601",
+    "interval": "seconds",
+    "us_aqi": "USAQI"
   },
-  {
-    "DateIssue": "2024-11-28",
-    "DateForecast": "2024-11-30",
-    "ReportingArea": "Redwood City",
-    "StateCode": "CA",
-    "Latitude": 37.48,
-    "Longitude": -122.22,
-    "ParameterName": "PM2.5",
-    "AQI": -1,
-    "Category": {
-      "Number": 2,
-      "Name": "Moderate"
-    },
-    "ActionDay": false
-  },
-  {
-    "DateIssue": "2024-11-28",
-    "DateForecast": "2024-12-01",
-    "ReportingArea": "Redwood City",
-    "StateCode": "CA",
-    "Latitude": 37.48,
-    "Longitude": -122.22,
-    "ParameterName": "PM2.5",
-    "AQI": -1,
-    "Category": {
-      "Number": 2,
-      "Name": "Moderate"
-    },
-    "ActionDay": false
-  },
-  {
-    "DateIssue": "2024-11-28",
-    "DateForecast": "2024-12-02",
-    "ReportingArea": "Redwood City",
-    "StateCode": "CA",
-    "Latitude": 37.48,
-    "Longitude": -122.22,
-    "ParameterName": "PM2.5",
-    "AQI": -1,
-    "Category": {
-      "Number": 2,
-      "Name": "Moderate"
-    },
-    "ActionDay": false
-  },
-  {
-    "DateIssue": "2024-11-28",
-    "DateForecast": "2024-12-03",
-    "ReportingArea": "Redwood City",
-    "StateCode": "CA",
-    "Latitude": 37.48,
-    "Longitude": -122.22,
-    "ParameterName": "PM2.5",
-    "AQI": -1,
-    "Category": {
-      "Number": 2,
-      "Name": "Moderate"
-    },
-    "ActionDay": false
+  "current": {
+    "time": "2026-06-14T06:00",
+    "interval": 3600,
+    "us_aqi": 58
   }
-]
+}
