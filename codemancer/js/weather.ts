@@ -7,116 +7,64 @@ import { requestPromise } from './util.js';
 
 const baseURL = '/weather';
 const weatherRefreshInterval = 20 * 60 * 1000;
+
+// WMO weather interpretation codes (WW) → weather-icons unicode.
 // Icons are from https://erikflowers.github.io/weather-icons/
-// Conditions and Descriptors are from observed responses and from
-// https://graphical.weather.gov/xml/xml_fields_icon_weather_conditions.php
-const weatherConditions: [string, string][] = [
-  ['Hot', '\uf072'],
-  ['Cold', '\uf076'],
-  ['Sunny', '\uf00d'],
-  ['Clear', '\uf00d'],
-  ['Clearing', '\uf00d'],
-  ['Cloudy', '\uf013'],
-  ['Partly Cloudy', '\uf002'],
-  ['Clouds', '\uf013'],
-  ['Mostly Cloudy', '\uf041'],
-  ['Breezy', '\uf011'],
-  ['Windy', '\uf011'],
-  ['Blustery', '\uf050'],
-  ['Haze', '\uf014'],
-  ['Fog', '\uf014'],
-  ['Smoke', '\uf062'],
-  ['Drizzle', '\uf009'],
-  ['Rain Showers', '\uf009'],
-  ['Showers', '\uf009'],
-  ['Light Rain', '\uf009'],
-  ['Rain', '\uf008'],
-  ['Heavy Rain', '\uf04e'],
-  ['Spray', '\uf04e'],
-  ['Dust', '\uf063'],
-  ['Sand', '\uf082'],
-  ['Smoke', '\uf0c7'],
-  ['Showers And Thunderstorms', '\uf00e'],
-  ['Thunderstorms', '\uf01e'],
-  ['T-storms', '\uf01e'],
-  ['Tstms', '\uf01e'],
-  ['Rain And Snow Showers', '\uf017'],
-  ['Rain And Snow', '\uf017'],
-  ['Rain/Sleet', '\uf017'],
-  ['Sleet', '\uf017'],
-  ['Snow/Sleet', '\uf017'],
-  ['Snow Showers', '\uf017'],
-  ['Rain/Snow', '\uf017'],
-  ['Rain/Freezing', '\uf017'],
-  ['Freezing Fog', '\uf076'],
-  ['Freezing Spray', '\uf017'],
-  ['Freezing Rain', '\uf017'],
-  ['Rain/Freezing Rain', '\uf017'],
-  ['Freezing Drizzle', '\uf017'],
-  ['Freezing', '\uf076'],
-  ['Mix', '\uf017'],
-  ['Snow', '\uf01b'],
-  ['Flurries', '\uf064'],
-  ['Blizzard', '\uf064'],
-  ['Frost', '\uf076'],
-  ['Crystals', '\uf076'],
-  ['Ash', '\uf0c8'],
-  ['Spouts', '\uf056'],
-  ['Error', '\uf04c'],
-  ['none', '\uf04c'],
-];
-const weatherIconConversions: {[key: string]: string} = weatherConditions.reduce(
-  (map: {[key: string]: string}, obj: [string, string]) => {
-    map[obj[0]] = obj[1];
-    return map;
-  },
-  <{[key: string]: string}>{},
-);
-const descriptors = [
-  'Volcanic',
-  'Severe',
-  'Heavy',
-  'Very',
-  'Dense',
-  'Widespread',
-  'Mostly',
-  'Ice',
-  'Wintry',
-  'Water',
-  'Blowing',
-  'Partly',
-  'Increasing',
-  'Occasional',
-  'Becoming',
-  'Light',
-  'Patchy',
-  'Decreasing',
-  'Likely',
-  'Gradual',
-  'Scattered',
-  'Areas',
-  'Periods Of',
-  'Isolated',
-  'Late',
-  'Chance',
-  'Slight',
-  'Of',
-];
+// Codes are from https://open-meteo.com/en/docs
+const wmoIconMap: {[key: number]: string} = {
+  0: '\uf00d',   // Clear sky
+  1: '\uf00d',   // Mainly clear
+  2: '\uf002',   // Partly cloudy
+  3: '\uf013',   // Overcast
+  45: '\uf014',  // Fog
+  48: '\uf014',  // Depositing rime fog
+  51: '\uf009',  // Light drizzle
+  53: '\uf009',  // Moderate drizzle
+  55: '\uf009',  // Dense drizzle
+  56: '\uf017',  // Light freezing drizzle
+  57: '\uf017',  // Dense freezing drizzle
+  61: '\uf008',  // Slight rain
+  63: '\uf008',  // Moderate rain
+  65: '\uf04e',  // Heavy rain
+  66: '\uf017',  // Light freezing rain
+  67: '\uf017',  // Heavy freezing rain
+  71: '\uf01b',  // Slight snowfall
+  73: '\uf01b',  // Moderate snowfall
+  75: '\uf064',  // Heavy snowfall
+  77: '\uf064',  // Snow grains
+  80: '\uf009',  // Slight rain showers
+  81: '\uf008',  // Moderate rain showers
+  82: '\uf04e',  // Violent rain showers
+  85: '\uf017',  // Slight snow showers
+  86: '\uf064',  // Heavy snow showers
+  95: '\uf01e',  // Thunderstorm
+  96: '\uf01e',  // Thunderstorm with slight hail
+  99: '\uf01e',  // Thunderstorm with heavy hail
+};
+
 const weatherLookForwardHours = 24;
 interface ResponseData {
-  properties: {
-    periods: {
-      temperature: number;
-      shortForecast: string;
-    }[];
+  current: {
+    time: string;
+    temperature_2m: number;
+    weathercode: number;
+  };
+  hourly: {
+    time: string[];
+    temperature_2m: number[];
+    weathercode: number[];
   };
 }
 const defaultWeatherData: ResponseData = {
-  properties: {
-    periods: [{
-      shortForecast: 'Error',
-      temperature: 0,
-    }],
+  current: {
+    time: '',
+    temperature_2m: 0,
+    weathercode: 0,
+  },
+  hourly: {
+    time: [],
+    temperature_2m: [0],
+    weathercode: [0],
   },
 };
 interface WeatherData {
@@ -133,7 +81,6 @@ export class Weather {
     city : $('#city'),
   };
 
-  // TODO: add varsnap here
   static urlBuilder(location: LocationData): string {
     const url = new URL(baseURL, window.location.href);
     url.searchParams.set('latitude', String(location.lat));
@@ -141,83 +88,70 @@ export class Weather {
     return url.toString();
   };
 
-  // TODO: add varsnap here
   static validate(data: ResponseData): ResponseData {
-    if (!data.properties || !data.properties.periods) {
+    if (!data.current || typeof data.current.temperature_2m !== 'number' || typeof data.current.weathercode !== 'number') {
       return defaultWeatherData;
     }
-    const period = data.properties.periods[0];
-    if (!period.temperature || !period.shortForecast) {
+    if (!data.hourly || !Array.isArray(data.hourly.time) || !Array.isArray(data.hourly.temperature_2m) || !Array.isArray(data.hourly.weathercode)) {
+      return defaultWeatherData;
+    }
+    if (data.hourly.temperature_2m.length === 0 || data.hourly.weathercode.length === 0) {
       return defaultWeatherData;
     }
     return data;
   };
 
-  // TODO: add varsnap here
   parse(data: ResponseData): WeatherData {
-    // Lets only keep what we need.
+    const times = data.hourly.time;
+    const temps = data.hourly.temperature_2m;
+    const codes = data.hourly.weathercode;
+    const currentTemp = Math.round(data.current.temperature_2m);
     const w2: WeatherData = {
-      currentTemp: 0,
-      minTemp: 0,
-      maxTemp: 0,
-      conditionSequence: [],
+      currentTemp: currentTemp,
+      minTemp: currentTemp,
+      maxTemp: currentTemp,
+      conditionSequence: [this.conditionIcon(data.current.weathercode)],
       worstCondition: '',
     };
-    w2.currentTemp = Math.round(data.properties.periods[0].temperature);
-    w2.minTemp = w2.currentTemp;
-    w2.maxTemp = w2.currentTemp;
-    w2.conditionSequence = [data.properties.periods[0].shortForecast];
-    for (let i = 0; i < weatherLookForwardHours; i++) {
-      const periodLength = data.properties.periods.length;
-      if (!periodLength || i >= periodLength) {
-        break;
-      }
-      const period = data.properties.periods[i];
-      const temp = Math.round(period.temperature);
+    // hourly times are local (timezone=auto) and start at midnight, so find the
+    // current hour and look forward from now rather than from the start of day.
+    const currentHour = data.current.time.slice(0, 13);
+    let start = times.findIndex(time => time.slice(0, 13) === currentHour);
+    if (start < 0) {
+      start = 0;
+    }
+    const windowCodes: number[] = [data.current.weathercode];
+    for (let i = start; i < start + weatherLookForwardHours && i < temps.length; i++) {
+      const temp = Math.round(temps[i]);
       w2.minTemp = Math.min(w2.minTemp, temp);
-      if (temp < 140) {
-        // the API sometimes breaks and returns 140 as a temperature
-        w2.maxTemp = Math.max(w2.maxTemp, temp);
-      }
-
-      const condition = period.shortForecast;
-      if(w2.conditionSequence[w2.conditionSequence.length-1] != condition) {
-        w2.conditionSequence.push(condition);
+      w2.maxTemp = Math.max(w2.maxTemp, temp);
+      windowCodes.push(codes[i]);
+      const icon = this.conditionIcon(codes[i]);
+      if (w2.conditionSequence[w2.conditionSequence.length - 1] !== icon) {
+        w2.conditionSequence.push(icon);
       }
     }
-    for (let i=0; i < w2.conditionSequence.length; i++) {
-      w2.conditionSequence[i] = this.conditionIcon(w2.conditionSequence[i]);
-    }
-    w2.worstCondition = this.worstCondition(w2.conditionSequence);
+    w2.worstCondition = this.conditionIcon(this.worstCondition(windowCodes));
     return w2;
   };
 
-  // TODO: add varsnap here
-  worstCondition(conditionSequence: string[]): string {
-    let worstCondition = conditionSequence[0];
-    for (let i=0; i < weatherConditions.length; i++) {
-      if(conditionSequence.includes(weatherConditions[i][1])) {
-        worstCondition = weatherConditions[i][1];
+  // Higher WMO codes are more severe weather.
+  worstCondition(codes: number[]): number {
+    let worst = codes[0];
+    for (const code of codes) {
+      if (code > worst) {
+        worst = code;
       }
     }
-    return worstCondition;
+    return worst;
   };
 
-  // TODO: add varsnap here
-  conditionIcon(condition: string): string {
-    let weatherIconCode = weatherIconConversions[condition];
-    if (weatherIconCode !== undefined) {
-      return weatherIconCode;
+  conditionIcon(code: number): string {
+    const icon = wmoIconMap[code];
+    if (icon !== undefined) {
+      return icon;
     }
-    for (let i=0; i<descriptors.length; i++) {
-      condition = condition.replace(descriptors[i], '');
-    }
-    condition = condition.replace(/^\s+|\s+$/g, '');
-    weatherIconCode = weatherIconConversions[condition];
-    if (weatherIconCode !== undefined) {
-      return weatherIconCode;
-    }
-    getRollbar().error('cannot find image for "' + condition + '"');
+    getRollbar().error('cannot find icon for WMO code ' + String(code));
     return '\uf04c';
   };
 
