@@ -9,17 +9,20 @@ import dotenv from 'dotenv';
 dotenv.config({path: path.join(appRoot, '.env')});
 import { Location } from './location.js';
 import { getAirnowData, getWeatherData } from './weather.js';
-import { getSVGs } from './util.js';
+import { getAssetPaths, getSVGs } from './util.js';
 import webpackConfig from '../webpack.config.js';
 
 export function loadTemplateVars(app: express.Express) {
   app.locals.templateVars = {};
+  const assetPaths = getAssetPaths();
   getSVGs().then((svgs) => {
     app.locals.templateVars = {
       LOGFIT_TOKEN: process.env.LOGFIT_TOKEN,
       GITHUB_SVG: svgs.github,
       TOGGLEDEMO_SVG: svgs.toggledemo,
       LOCATION_SVG: svgs.location,
+      MAIN_JS: assetPaths.MAIN_JS,
+      MAIN_CSS: assetPaths.MAIN_CSS,
     };
   });
 }

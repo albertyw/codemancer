@@ -37,8 +37,9 @@ server {
         include           snippets/headers.conf;
         proxy_pass        http://127.0.0.1:5002;
         proxy_buffering   off;
-        add_header        Cache-Control 'public, no-cache';
-        expires           7d;
+        # The HTML references content-hashed assets, so it must always be
+        # revalidated to pick up new asset URLs after a deploy.
+        add_header        Cache-Control 'no-cache';
     }
 
     location /dist/ {
@@ -49,8 +50,9 @@ server {
         add_header       'Access-Control-Allow-Headers'  'range';
         add_header       'Access-Control-Expose-Headers' 'content-length';
         add_header       'Access-Control-Max-Age'        '1728000';
-        add_header       'Cache-Control'                 'public';
-        expires          24h;
+        # Asset filenames are content-hashed, so they can be cached forever; a
+        # content change produces a new filename and therefore a new URL.
+        add_header       'Cache-Control'                 'public, max-age=31536000, immutable';
     }
 
     location /img/ {
