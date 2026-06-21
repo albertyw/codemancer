@@ -21,14 +21,13 @@ export class BackgroundColor {
     console.log('Background gradient:', { gradient, top, bottom });
 
     document.getElementsByTagName('body')[0].style.background = gradient;
-
-    this.start();
   }
 
   start(): void {
     if (this.#updateInterval !== undefined) {
       window.clearInterval(this.#updateInterval);
     }
+    this.update();
     this.#updateInterval = window.setInterval(() => {
       this.update();
     }, this.#updatePeriod);
@@ -47,7 +46,7 @@ export const backgroundColor = new BackgroundColor();
 export function updateBackground(locationData: Promise<LocationData>): void {
   locationData.then((data: LocationData) => {
     backgroundColor.locationData = data;
-    backgroundColor.update();
+    backgroundColor.start();
   });
 }
 
