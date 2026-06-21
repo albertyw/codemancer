@@ -11,7 +11,7 @@ export class BackgroundColor {
   #updateInterval: number | undefined = undefined;
   #updatePeriod: number = 5 * 60 * 1000; // 5 minutes
 
-  update(): void {
+  #update(): void {
     const sunPos = suncalc.getPosition(getMockDate(), this.locationData.lat, this.locationData.lng);
 
     const [gradient, topVec, bottomVec] = renderGradient(sunPos.altitude);
@@ -27,9 +27,9 @@ export class BackgroundColor {
     if (this.#updateInterval !== undefined) {
       window.clearInterval(this.#updateInterval);
     }
-    this.update();
+    this.#update();
     this.#updateInterval = window.setInterval(() => {
-      this.update();
+      this.#update();
     }, this.#updatePeriod);
   }
 
