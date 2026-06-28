@@ -1,4 +1,4 @@
-import suncalc from 'suncalc';
+import * as suncalc from 'suncalc';
 
 import renderGradient from './gradient.js';
 import { location, targetLocation } from '../location.js';
@@ -14,7 +14,8 @@ export class BackgroundColor {
   #update(): void {
     const sunPos = suncalc.getPosition(getMockDate(), this.locationData.lat, this.locationData.lng);
 
-    const [gradient, topVec, bottomVec] = renderGradient(sunPos.altitude);
+    const altitudeRadians = sunPos.altitude / 360 * 2 * Math.PI;
+    const [gradient, topVec, bottomVec] = renderGradient(altitudeRadians);
 
     const top = `rgb(${topVec[0]}, ${topVec[1]}, ${topVec[2]})`;
     const bottom = `rgb(${bottomVec[0]}, ${bottomVec[1]}, ${bottomVec[2]})`;
