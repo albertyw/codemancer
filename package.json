@@ -59,7 +59,7 @@
     "mustache": "^4.2.0",
     "rollbar": "^3.1.0",
     "rotating-file-stream": "^3.2.9",
-    "suncalc": "^1.9.0",
+    "suncalc": "^2.0.0",
     "ts-loader": "^9.6.2",
     "ts-node": "^10.9.2",
     "tsx": "^4.22.4",
