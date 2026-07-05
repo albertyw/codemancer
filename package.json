@@ -19,7 +19,7 @@
     "eslint": "tsc --noEmit && eslint -c .eslint.config.ts .",
     "stylelint": "stylelint codemancer/css/*",
     "shellcheck": "git ls-files | grep -F .sh | xargs shellcheck --exclude=SC1091",
-    "test": "pnpm run shellcheck && pnpm run stylelint && pnpm run test-node",
+    "test": "pnpm run test-node && pnpm run stylelint && pnpm run shellcheck",
     "test-node": "pnpm run eslint && pnpm run build:dev && pnpm run wdio",
     "build:dev": "webpack-cli --mode=development",
     "build:prod": "webpack-cli --mode=production --config-node-env=production",
