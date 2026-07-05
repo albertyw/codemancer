@@ -9,7 +9,11 @@ import dotenv from 'dotenv';
 dotenv.config({path: path.join(appRoot, '.env')});
 import { Location } from './location.js';
 import { getAirnowData, getWeatherData } from './weather.js';
-import { getAssetPaths, getSVGs } from './util.js';
+import {
+  getAssetPaths,
+  getSVGs,
+  getLatLngFromRequest,
+} from './util.js';
 import webpackConfig from '../webpack.config.js';
 
 export function loadTemplateVars(app: express.Express) {
@@ -35,8 +39,7 @@ function generateIndexHandler(app: express.Express): express.Handler {
 }
 
 function airQualityHandler(req: express.Request, res: express.Response) {
-  const latitude = parseFloat(req.query.latitude as string);
-  const longitude = parseFloat(req.query.longitude as string);
+  const [latitude, longitude] = getLatLngFromRequest(req);
   if (isNaN(latitude) || isNaN(longitude)) {
     res.status(400).json({'error': 'Invalid latitude or longitude'});
     return;
@@ -50,8 +53,7 @@ function airQualityHandler(req: express.Request, res: express.Response) {
 
 function weatherHandler(req: express.Request, res: express.Response) {
   // Proxy for weather API
-  const latitude = parseFloat(req.query.latitude as string);
-  const longitude = parseFloat(req.query.longitude as string);
+  const [latitude, longitude] = getLatLngFromRequest(req);
   if (isNaN(latitude) || isNaN(longitude)) {
     res.status(400).json({'error': 'Invalid latitude or longitude'});
     return;
@@ -64,8 +66,7 @@ function weatherHandler(req: express.Request, res: express.Response) {
 }
 
 function locationHandler(req: express.Request, res: express.Response) {
-  const latitude = parseFloat(req.query.latitude as string);
-  const longitude = parseFloat(req.query.longitude as string);
+  const [latitude, longitude] = getLatLngFromRequest(req);
   if (isNaN(latitude) || isNaN(longitude)) {
     res.status(400).json({'error': 'Invalid latitude or longitude'});
     return;

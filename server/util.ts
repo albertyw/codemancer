@@ -1,4 +1,5 @@
 import appRootPath from 'app-root-path';
+import express from 'express';
 import fs from 'fs';
 import path from 'path';
 
@@ -64,3 +65,15 @@ export const getSVGs: () => Promise<SVGs> = varsnap(function getSVGs(): Promise<
     return svgs;
   });
 });
+
+export function getLatLngFromRequest(req: express.Request): [number, number] {
+  let latitude = parseFloat(req.query.latitude as string);
+  let longitude = parseFloat(req.query.longitude as string);
+  if (isNaN(latitude) || isNaN(longitude)) {
+    return [NaN, NaN];
+  }
+  // round to 1 decimal place to improve caching
+  latitude = Math.round(latitude * 10) / 10;
+  longitude = Math.round(longitude * 10) / 10;
+  return [latitude, longitude];
+}
