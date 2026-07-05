@@ -1,0 +1,8 @@
+{
+  "all": true,
+  "src": ["server"],
+  "include": ["server/**/*.ts"],
+  "exclude": ["server/app.ts"],
+  "reporter": ["text", "text-summary"],
+  "temp-directory": "./coverage/tmp"
+}
