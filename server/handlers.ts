@@ -76,6 +76,15 @@ function locationHandler(req: express.Request, res: express.Response) {
   });
 }
 
+function healthHandler(req: express.Request, res: express.Response) {
+  // The response must always reach the origin; a cached 200 from Cloudflare
+  // would make a dead backend look live.  CDN-Cache-Control is what Cloudflare
+  // honors when a Cache Everything rule would otherwise override Cache-Control.
+  res.set('Cache-Control', 'no-store, max-age=0');
+  res.set('CDN-Cache-Control', 'no-store');
+  res.json({'status': 'ok'});
+}
+
 function webpackMiddleware() {
   const compiler = webpack(webpackConfig());
   if (compiler === null) {
@@ -91,6 +100,7 @@ export function loadHandlers(app: express.Express) {
   app.get('/airquality/', airQualityHandler);
   app.get('/weather/', weatherHandler);
   app.get('/location/', locationHandler);
+  app.get('/health/', healthHandler);
   app.use('/img', express.static(path.join(appRoot, 'codemancer', 'img')));
   if (process.env.ENV == 'development') {
     app.use(webpackMiddleware());
