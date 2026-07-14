@@ -31,4 +31,9 @@ WORKDIR /var/www/app
 # App-specific setup
 RUN pnpm install --prod --frozen-lockfile
 
+# start-period covers bin/start.sh running a production webpack build before the
+# server begins listening; failures during that window do not count as unhealthy.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 \
+    CMD curl --fail http://localhost:3000/health/ || exit 1
+
 CMD ["bin/start.sh"]
