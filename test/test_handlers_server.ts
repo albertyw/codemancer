@@ -14,8 +14,10 @@ type Handler = (req: express.Request, res: FakeResponse) => void;
 interface FakeResponse {
   statusCode: number;
   body?: unknown;
+  headers: Record<string, string>;
   rendered?: {view: string; vars: unknown};
   status(code: number): FakeResponse;
+  set(name: string, value: string): FakeResponse;
   json(obj: unknown): FakeResponse;
   render(view: string, vars: unknown): FakeResponse;
 }
@@ -31,7 +33,9 @@ function makeResponse(): {res: FakeResponse; done: Promise<void>} {
   const done = new Promise<void>((resolve) => { resolveDone = resolve; });
   const res: FakeResponse = {
     statusCode: 200,
+    headers: {},
     status(code: number) { this.statusCode = code; return this; },
+    set(name: string, value: string) { this.headers[name] = value; return this; },
     json(obj: unknown) { this.body = obj; resolveDone(); return this; },
     render(view: string, vars: unknown) { this.rendered = {view, vars}; resolveDone(); return this; },
   };
@@ -50,9 +54,27 @@ describe('handlers', function() {
   });
 
   it('registers the expected routes', function() {
-    for (const path of ['/', '/airquality/', '/weather/', '/location/']) {
+    for (const path of ['/', '/airquality/', '/weather/', '/location/', '/health/']) {
       expect(getHandler(app, path)).to.be.a('function');
     }
+  });
+
+  describe('health handler', function() {
+    it('reports that the backend is live', async function() {
+      const {res, done} = makeResponse();
+      getHandler(app, '/health/')(makeRequest({}), res);
+      await done;
+      expect(res.statusCode).to.equal(200);
+      expect(res.body).to.deep.equal({status: 'ok'});
+    });
+
+    it('is not cacheable by a CDN', async function() {
+      const {res, done} = makeResponse();
+      getHandler(app, '/health/')(makeRequest({}), res);
+      await done;
+      expect(res.headers['Cache-Control']).to.equal('no-store, max-age=0');
+      expect(res.headers['CDN-Cache-Control']).to.equal('no-store');
+    });
   });
 
   describe('index handler', function() {
