@@ -67,8 +67,9 @@ export class Location {
       return data;
     }).catch((error) => {
       getRollbar().error('Failed to geocode', error);
-      this.#locationData = Promise.resolve(targetLocation);
-      return targetLocation;
+      const fallback = loadCachedLocation();
+      this.#locationData = Promise.resolve(fallback);
+      return fallback;
     }) as Promise<LocationData>;
     this.showLocation(this.#locationData);
     return this.#locationData;
