@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import sinon from 'sinon';
 import axios from 'axios';
 
-import {getAirnowData, getWeatherData} from '../server/weather.js';
+import {getAirQualityData, getWeatherData} from '../server/weather.js';
 
 // Under Node the Storage cache is a no-op, so requestPromise always falls
 // through to axios.get. Stubbing it keeps these tests off the network.
@@ -15,9 +15,9 @@ describe('weather', function() {
     axiosGet.restore();
   });
 
-  describe('getAirnowData', function() {
+  describe('getAirQualityData', function() {
     it('requests the air quality API with the given coordinates', async function() {
-      const data = await getAirnowData(37.8, -122.4);
+      const data = await getAirQualityData(37.8, -122.4);
       expect(data).to.deep.equal({stubbed: true});
       const url = new URL(axiosGet.firstCall.args[0]);
       expect(url.origin + url.pathname).to.equal('https://air-quality-api.open-meteo.com/v1/air-quality');

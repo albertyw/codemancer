@@ -5,7 +5,7 @@ const airQualityBackupDuration = 3 * 60 * 60 * 1000;
 const weatherCacheDuration = 5 * 60 * 1000;
 const weatherBackupDuration = 1 * 60 * 60 * 1000;
 
-export function getAirnowData(latitude: number, longitude: number) {
+export function getAirQualityData(latitude: number, longitude: number) {
   // Documentation at https://open-meteo.com/en/docs/air-quality-api
   const url = new URL('https://air-quality-api.open-meteo.com/v1/air-quality');
   url.searchParams.set('latitude', String(latitude));

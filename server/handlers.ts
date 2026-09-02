@@ -8,7 +8,7 @@ const appRoot = appRootPath.toString();
 import dotenv from 'dotenv';
 dotenv.config({path: path.join(appRoot, '.env')});
 import { Location } from './location.js';
-import { getAirnowData, getWeatherData } from './weather.js';
+import { getAirQualityData, getWeatherData } from './weather.js';
 import {
   getAssetPaths,
   getSVGs,
@@ -44,7 +44,7 @@ function airQualityHandler(req: express.Request, res: express.Response) {
     res.status(400).json({'error': 'Invalid latitude or longitude'});
     return;
   }
-  getAirnowData(latitude, longitude).then(function(data) {
+  getAirQualityData(latitude, longitude).then(function(data) {
     res.json(data);
   }).catch((error) => {
     res.status(500).json({'error': String(error)});
