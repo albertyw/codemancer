@@ -1,6 +1,7 @@
 import {expect} from 'chai';
 import sinon from 'sinon';
 
+import getRollbar from '../codemancer/js/rollbar.js';
 import Storage from '../codemancer/js/storage.js';
 import {Location, targetLocation} from '../codemancer/js/location.js';
 
@@ -49,6 +50,7 @@ describe('Location.loadLocation', function() {
     const getData = sinon.stub(Storage, 'getExpirableData').returns(JSON.stringify(cachedLocation));
     const getCurrentPosition = sinon.stub(navigator.geolocation, 'getCurrentPosition')
       .callsFake((_success, error) => error?.(new Error('denied') as unknown as GeolocationPositionError));
+    const rollbarError = sinon.stub(getRollbar(), 'error');
     try {
       const loc = new Location();
       const data = await loc.loadLocation();
@@ -56,6 +58,7 @@ describe('Location.loadLocation', function() {
     } finally {
       getData.restore();
       getCurrentPosition.restore();
+      rollbarError.restore();
     }
   });
 
@@ -63,6 +66,7 @@ describe('Location.loadLocation', function() {
     const getData = sinon.stub(Storage, 'getExpirableData').returns(null);
     const getCurrentPosition = sinon.stub(navigator.geolocation, 'getCurrentPosition')
       .callsFake((_success, error) => error?.(new Error('denied') as unknown as GeolocationPositionError));
+    const rollbarError = sinon.stub(getRollbar(), 'error');
     try {
       const loc = new Location();
       const data = await loc.loadLocation();
@@ -70,6 +74,7 @@ describe('Location.loadLocation', function() {
     } finally {
       getData.restore();
       getCurrentPosition.restore();
+      rollbarError.restore();
     }
   });
 });
