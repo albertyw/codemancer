@@ -1,5 +1,15 @@
 import type { Options } from '@wdio/types';
 
+// WebdriverIO downloads a matching Chrome for Testing build by default, but
+// Google only publishes those for linux-x86_64. On other architectures (e.g.
+// arm64 laptops) point these at a locally installed Chrome/Chromium instead.
+// CHROME_BINARY must be the real executable rather than a launcher wrapper, e.g. for
+// snap-packaged Chromium:
+//   CHROME_BINARY=/snap/chromium/current/usr/lib/chromium-browser/chrome
+//   CHROMEDRIVER_BINARY=/snap/bin/chromium.chromedriver
+const chromeBinary = process.env.CHROME_BINARY;
+const chromedriverBinary = process.env.CHROMEDRIVER_BINARY;
+
 export const config: Options.Testrunner = {
   //
   // ====================
@@ -66,14 +76,16 @@ export const config: Options.Testrunner = {
   //
   capabilities: [{
     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-    // grid with only 5 firefox instances available you can make sure that not more than
+    // grid with only 5 chrome instances available you can make sure that not more than
     // 5 instances get started at a time.
     maxInstances: 5,
     //
-    browserName: 'firefox',
-    'moz:firefoxOptions': {
-      args: ['-headless'],
+    browserName: 'chrome',
+    'goog:chromeOptions': {
+      args: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
+      ...(chromeBinary ? { binary: chromeBinary } : {}),
     },
+    ...(chromedriverBinary ? { 'wdio:chromedriverOptions': { binary: chromedriverBinary } } : {}),
     acceptInsecureCerts: true,
     // If outputDir is provided WebdriverIO can capture driver session logs
     // it is possible to configure which logTypes to include/exclude.
