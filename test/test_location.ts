@@ -40,10 +40,19 @@ describe('Location.getLocation', function() {
 });
 
 describe('Location.loadLocation', function() {
-  it('returns a Promise', function() {
-    const loc = new Location();
-    const result = loc.loadLocation();
-    expect(result).to.be.instanceOf(Promise);
+  it('returns a Promise', async function() {
+    const getCurrentPosition = sinon.stub(navigator.geolocation, 'getCurrentPosition')
+      .callsFake((_success, error) => error?.(new Error('denied') as unknown as GeolocationPositionError));
+    const rollbarError = sinon.stub(getRollbar(), 'error');
+    try {
+      const loc = new Location();
+      const result = loc.loadLocation();
+      expect(result).to.be.instanceOf(Promise);
+      await result;
+    } finally {
+      getCurrentPosition.restore();
+      rollbarError.restore();
+    }
   });
 
   it('falls back to the cached location when geolocation is denied', async function() {
