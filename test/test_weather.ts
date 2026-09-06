@@ -61,7 +61,7 @@ describe('Weather.worstConditions', () => {
 describe('Weather.conditionIcon', () => {
   beforeEach(function() {
     this.weather = new Weather();
-    this.rollbarError = sinon.spy(getRollbar(), 'error');
+    this.rollbarError = sinon.stub(getRollbar(), 'error');
   });
   afterEach(function() {
     this.rollbarError.restore();
