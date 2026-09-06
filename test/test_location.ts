@@ -1,6 +1,7 @@
 import {expect} from 'chai';
 import sinon from 'sinon';
 
+import getRollbar from '../codemancer/js/rollbar.js';
 import Storage from '../codemancer/js/storage.js';
 import {Location, targetLocation} from '../codemancer/js/location.js';
 
