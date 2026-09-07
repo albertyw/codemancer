@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 
-import type { Options } from '@wdio/types';
+import type { Capabilities, Options } from '@wdio/types';
 
 /**
  * WebdriverIO downloads a Chrome for Testing build and a matching chromedriver by
@@ -44,7 +44,11 @@ const chromedriverBinary = findBinary('CHROMEDRIVER_BINARY', process.env.CHROMED
   '/usr/lib/chromium/chromedriver',
 ]);
 
-export const config: Options.Testrunner = {
+// Options.Testrunner omits `capabilities`, which wdio declares separately, so
+// the config type is the intersection of the two.
+export const config: Options.Testrunner & {
+  capabilities: Capabilities.RequestedStandaloneCapabilities[];
+} = {
   //
   // ====================
   // Runner Configuration
