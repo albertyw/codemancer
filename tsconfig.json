@@ -19,7 +19,9 @@
         "./bin/*",
         "codemancer/js/*",
         "./server/*",
-        "./test/*"
+        "./test/*",
+        "./wdio.conf.ts",
+        "./.eslint.config.ts"
     ],
     "exclude": ["built"]
 }

@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 
-import type { Options } from '@wdio/types';
+import type { Capabilities, Options } from '@wdio/types';
 
 /**
  * WebdriverIO downloads a Chrome for Testing build and a matching chromedriver by
@@ -44,7 +44,11 @@ const chromedriverBinary = findBinary('CHROMEDRIVER_BINARY', process.env.CHROMED
   '/usr/lib/chromium/chromedriver',
 ]);
 
-export const config: Options.Testrunner = {
+// Options.Testrunner omits `capabilities`, which wdio declares separately, so
+// the config type is the intersection of the two.
+export const config: Options.Testrunner & {
+  capabilities: Capabilities.RequestedStandaloneCapabilities[];
+} = {
   //
   // ====================
   // Runner Configuration
@@ -57,13 +61,6 @@ export const config: Options.Testrunner = {
       reportsDirectory: '.coverage',
     },
   }],
-  autoCompileOpts: {
-    autoCompile: true,
-    tsNodeOpts: {
-      project: './tsconfig.json',
-      transpileOnly: true,
-    },
-  },
   //
   // ==================
   // Specify Test Files
@@ -111,8 +108,9 @@ export const config: Options.Testrunner = {
   capabilities: [{
     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
     // grid with only 5 chrome instances available you can make sure that not more than
-    // 5 instances get started at a time.
-    maxInstances: 5,
+    // 5 instances get started at a time.  v9 renamed the per-capability key; a
+    // bare `maxInstances` here is silently ignored.
+    'wdio:maxInstances': 5,
     //
     browserName: 'chrome',
     'goog:chromeOptions': {
