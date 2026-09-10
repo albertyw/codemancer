@@ -57,7 +57,7 @@
     "jquery": "^4.0.0",
     "logfit": "^0.9.3",
     "mini-css-extract-plugin": "^2.10.2",
-    "morgan": "^1.11.0",
+    "morgan": "^1.12.0",
     "mustache": "^4.2.0",
     "rollbar": "^3.1.0",
     "rotating-file-stream": "^3.2.9",

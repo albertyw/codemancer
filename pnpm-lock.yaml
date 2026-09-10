@@ -60,8 +60,8 @@ importers:
         specifier: ^2.10.2
         version: 2.10.2(webpack@5.109.2)
       morgan:
-        specifier: ^1.11.0
-        version: 1.11.0(supports-color@8.1.1)
+        specifier: ^1.12.0
+        version: 1.12.0(supports-color@8.1.1)
       mustache:
         specifier: ^4.2.0
         version: 4.2.0
@@ -3775,8 +3775,8 @@ packages:
     resolution: {integrity: sha512-t9VmxaqrmANnEOBhpSDI6HD192Ge48k8vmWqQQL7hSFEqHEYwZbbsu49+aKLWZeRvFs3j1pMhXOqqF4kPlvjkQ==}
     engines: {node: '>=18.0.0'}
 
-  morgan@1.11.0:
-    resolution: {integrity: sha512-zSkVu3t18r39pw4ixfBKvfZi3y2UOqr7d4WYwcj3m8nXpEQK4rPO6GLzs/CExoRgmX3y9EjmmcXqv6jq0SK46g==}
+  morgan@1.12.0:
+    resolution: {integrity: sha512-OHpTRQwn2ezasILW8iKe+Yww1XsfWsZIpUOLF7RDb2g5GwO3trPaRwi7+8BDiJ7HFx2Kg2mfUdCBcVhwYlOz2g==}
     engines: {node: '>= 0.8.0'}
 
   ms@2.0.0:
@@ -8993,7 +8993,7 @@ snapshots:
 
   modern-tar@0.7.7: {}
 
-  morgan@1.11.0(supports-color@8.1.1):
+  morgan@1.12.0(supports-color@8.1.1):
     dependencies:
       basic-auth: 2.0.1
       debug: 2.6.9(supports-color@8.1.1)
