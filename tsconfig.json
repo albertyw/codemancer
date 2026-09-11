@@ -21,6 +21,7 @@
         "./server/*",
         "./test/*",
         "./wdio.conf.ts",
+        "./webpack.config.ts",
         "./.eslint.config.ts"
     ],
     "exclude": ["built"]
