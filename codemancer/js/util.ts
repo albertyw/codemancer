@@ -53,6 +53,12 @@ export const requestPromise = function request(url: string, cacheDuration: numbe
   }).catch((error) => {
     const responseText = Storage.getExpirableData(url, backupDuration, true);
     if (responseText === null) {
+      if (error.response === undefined) {
+        const e = new CustomError('Unrecoverable error when making request');
+        // Reduce errors reported to rollbar
+        // getRollbar().error(e);
+        throw e;
+      }
       const e = CustomError.create('Unrecoverable error when making request', error.response);
       // Reduce errors reported to rollbar
       // getRollbar().error(e);
