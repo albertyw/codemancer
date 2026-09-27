@@ -2,6 +2,9 @@ import axios, { AxiosResponse } from 'axios';
 
 import Storage from './storage.js';
 
+// Backend response formats can change with any deploy
+const responseCacheVersion = process.env.GIT_VERSION ?? '';
+
 let demoOn = false;
 
 export function toggleDemo(): boolean {
@@ -41,17 +44,17 @@ export const unique = function unique(array: Array<any>): Array<any> {
  * AJAX request Promise that caches responses
  **/
 export const requestPromise = function request(url: string, cacheDuration: number, backupDuration: number): Promise<unknown> {
-  const responseText = Storage.getExpirableData(url, cacheDuration, false);
+  const responseText = Storage.getExpirableData(url, cacheDuration, false, responseCacheVersion);
   if(responseText !== null) {
     const response = JSON.parse(responseText);
     return Promise.resolve(response);
   }
 
   const request = axios.get(url).then((response) => {
-    Storage.setExpirableData(url, JSON.stringify(response.data));
+    Storage.setExpirableData(url, JSON.stringify(response.data), responseCacheVersion);
     return response.data;
   }).catch((error) => {
-    const responseText = Storage.getExpirableData(url, backupDuration, true);
+    const responseText = Storage.getExpirableData(url, backupDuration, true, responseCacheVersion);
     if (responseText === null) {
       if (error.response === undefined) {
         const e = new CustomError('Unrecoverable error when making request');

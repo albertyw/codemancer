@@ -1,5 +1,3 @@
-const gitVersion = process.env.GIT_VERSION;
-
 interface LocalStorage {
   setItem: (key: string, value: any) => void;
   getItem: (key: string) => any;
@@ -30,28 +28,28 @@ if(typeof window === 'undefined') {
 }
 
 class Storage {
-  static setExpirableData(key: string, value: any): void {
+  static setExpirableData(key: string, value: any, version: string): void {
     if (process.env.ENV === 'development') {
       return;
     }
     localStorage.setItem(key, value);
-    const expireKey = Storage.expireKey(key);
-    const timestamp = Date.now().toString();
-    localStorage.setItem(expireKey, timestamp);
+    localStorage.setItem(Storage.expireKey(key), Date.now().toString());
+    localStorage.setItem(Storage.versionKey(key), version);
   };
 
-  static getExpirableData(key: string, expirationDuration: number, removeExpired: boolean): any {
+  static getExpirableData(key: string, expirationDuration: number, removeExpired: boolean, version: string): any {
     if (process.env.ENV === 'development') {
       return null;
     }
-    Storage.checkVersion();
-    const expireKey = Storage.expireKey(key);
-    const timestampString = localStorage.getItem(expireKey);
+    if (localStorage.getItem(Storage.versionKey(key)) !== version) {
+      Storage.removeData(key);
+      return null;
+    }
+    const timestampString = localStorage.getItem(Storage.expireKey(key));
     const timestamp = parseInt(timestampString, 10);
     if (timestamp + expirationDuration < Date.now()) {
       if (removeExpired) {
-        localStorage.removeItem(key);
-        localStorage.removeItem(expireKey);
+        Storage.removeData(key);
       }
       return null;
     }
@@ -59,17 +57,19 @@ class Storage {
     return data;
   };
 
+  static removeData(key: string): void {
+    localStorage.removeItem(key);
+    localStorage.removeItem(Storage.expireKey(key));
+    localStorage.removeItem(Storage.versionKey(key));
+  };
+
   static expireKey(key: string): string {
     return key + 'Time';
   };
 
-  static checkVersion(): void {
-    const version = localStorage.getItem('version');
-    if (version !== gitVersion) {
-      localStorage.clear();
-      localStorage.setItem('version', gitVersion);
-    }
-  }
+  static versionKey(key: string): string {
+    return key + 'Version';
+  };
 };
 
 export default Storage;

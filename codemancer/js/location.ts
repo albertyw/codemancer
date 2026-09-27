@@ -9,6 +9,7 @@ const baseURL = '/location/';
 const cacheDuration = 24 * 60 * 60 * 1000;
 const backupDuration = 7 * 24 * 60 * 60 * 1000;
 const locationStorageKey = 'userLocation';
+const locationStorageVersion = '1';
 const locationStorageDuration = 365 * 24 * 60 * 60 * 1000;
 
 const sanFranciscoLocation: LocationData = {
@@ -28,7 +29,7 @@ export const targetLocation = losAltosLocation;
 
 
 function loadCachedLocation(): LocationData {
-  const cached = Storage.getExpirableData(locationStorageKey, locationStorageDuration, false);
+  const cached = Storage.getExpirableData(locationStorageKey, locationStorageDuration, false, locationStorageVersion);
   if (cached) {
     try {
       const data = JSON.parse(cached) as LocationData;
@@ -63,7 +64,7 @@ export class Location {
       url.searchParams.set('longitude', coordinates.longitude.toString());
       return requestPromise(url.href, cacheDuration, backupDuration);
     }).then((data) => {
-      Storage.setExpirableData(locationStorageKey, JSON.stringify(data));
+      Storage.setExpirableData(locationStorageKey, JSON.stringify(data), locationStorageVersion);
       return data;
     }).catch((error) => {
       getRollbar().error('Failed to geocode', error);
