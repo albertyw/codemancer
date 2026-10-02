@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM node:26-slim
 
 ARG GIT_VERSION="master"
@@ -25,7 +26,7 @@ RUN curl -fsSL https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(whi
 
 # Set up directory structures
 RUN mkdir -p /var/www/app
-COPY . /var/www/app
+COPY --exclude=.env* . /var/www/app
 WORKDIR /var/www/app
 
 # App-specific setup

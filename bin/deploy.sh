@@ -43,6 +43,7 @@ docker run \
     --publish="127.0.0.1:$PORT:3000" \
     --network="$NETWORK" \
     --mount type=bind,source="$(pwd)"/logs,target=/var/www/app/logs \
+    --mount type=bind,source="$(pwd)"/.env,target=/var/www/app/.env,readonly \
     --mount type=bind,source="$(pwd)"/dist,target=/var/www/app/dist \
     --name="$CONTAINER" "$CONTAINER:$BRANCH"
 
