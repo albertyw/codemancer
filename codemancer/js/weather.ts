@@ -188,8 +188,12 @@ export class Weather {
 
 export const weather = new Weather();
 
-export function load(): void {
+function refresh(): void {
   weather.load(location.getLocation())
     .catch(error => { getRollbar().error(error); });
-  setInterval(load, weatherRefreshInterval);
+}
+
+export function load(): void {
+  refresh();
+  setInterval(refresh, weatherRefreshInterval);
 }
