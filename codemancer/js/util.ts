@@ -4,6 +4,8 @@ import Storage from './storage.js';
 
 // Backend response formats can change with any deploy
 const responseCacheVersion = process.env.GIT_VERSION ?? '';
+// Fail before nginx's 60s proxy timeout so callers can fall back to cached data
+export const requestTimeout = 10 * 1000;
 
 let demoOn = false;
 
@@ -50,7 +52,7 @@ export const requestPromise = function request(url: string, cacheDuration: numbe
     return Promise.resolve(response);
   }
 
-  const request = axios.get(url).then((response) => {
+  const request = axios.get(url, {timeout: requestTimeout}).then((response) => {
     Storage.setExpirableData(url, JSON.stringify(response.data), responseCacheVersion);
     return response.data;
   }).catch((error) => {

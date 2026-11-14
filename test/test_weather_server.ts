@@ -2,6 +2,7 @@ import {expect} from 'chai';
 import sinon from 'sinon';
 import axios from 'axios';
 
+import {requestTimeout} from '../codemancer/js/util.js';
 import {getAirQualityData, getWeatherData} from '../server/weather.js';
 
 // Under Node the Storage cache is a no-op, so requestPromise always falls
@@ -38,6 +39,11 @@ describe('weather', function() {
       expect(url.searchParams.get('temperature_unit')).to.equal('fahrenheit');
       expect(url.searchParams.get('forecast_days')).to.equal('2');
       expect(url.searchParams.get('timezone')).to.equal('auto');
+    });
+
+    it('times out instead of hanging on a slow upstream', async function() {
+      await getWeatherData(37.8, -122.4);
+      expect(axiosGet.firstCall.args[1]).to.deep.equal({timeout: requestTimeout});
     });
   });
 });
