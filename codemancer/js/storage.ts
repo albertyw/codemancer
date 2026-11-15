@@ -7,22 +7,59 @@ interface LocalStorage {
   key: (index: number) => string | null;
 }
 
+// Each cached response uses three keys: value, expire time, and version
+export const serverCacheKeys = 3 * 1000;
+
+/**
+ * In-memory localStorage replacement for Node that evicts the least recently
+ * used keys so caching arbitrary coordinates cannot grow memory unbounded.
+ **/
+export class LRUStorage implements LocalStorage {
+  #items = new Map<string, string>();
+  #capacity: number;
+
+  constructor(capacity: number) {
+    this.#capacity = capacity;
+  }
+
+  get length(): number {
+    return this.#items.size;
+  }
+
+  setItem(key: string, value: any): void {
+    this.#items.delete(key);
+    this.#items.set(key, String(value));
+    while (this.#items.size > this.#capacity) {
+      this.#items.delete(this.#items.keys().next().value as string);
+    }
+  }
+
+  getItem(key: string): string | null {
+    const value = this.#items.get(key);
+    if (value === undefined) {
+      return null;
+    }
+    this.#items.delete(key);
+    this.#items.set(key, value);
+    return value;
+  }
+
+  removeItem(key: string): void {
+    this.#items.delete(key);
+  }
+
+  clear(): void {
+    this.#items.clear();
+  }
+
+  key(index: number): string | null {
+    return Array.from(this.#items.keys())[index] ?? null;
+  }
+}
+
 let localStorage: LocalStorage;
 if(typeof window === 'undefined') {
-  localStorage = {
-    setItem: function setItem() {
-      // mock
-    },
-    getItem: function getItem() { return null; },
-    removeItem: function removeItem() {
-      //mock
-    },
-    length: 0,
-    clear: function clear() {
-      //mock
-    },
-    key: function key() {return null; },
-  };
+  localStorage = new LRUStorage(serverCacheKeys);
 } else {
   localStorage = window.localStorage;
 }
@@ -61,6 +98,10 @@ class Storage {
     localStorage.removeItem(key);
     localStorage.removeItem(Storage.expireKey(key));
     localStorage.removeItem(Storage.versionKey(key));
+  };
+
+  static clear(): void {
+    localStorage.clear();
   };
 
   static expireKey(key: string): string {
