@@ -7,6 +7,8 @@ import { requestPromise } from './util.js';
 
 const baseURL = '/weather';
 const weatherRefreshInterval = 20 * 60 * 1000;
+// Show stale weather rather than none when a refresh fails
+const weatherBackupDuration = 3 * 60 * 60 * 1000;
 
 // WMO weather interpretation codes (WW) → weather-icons unicode.
 // Icons are from https://erikflowers.github.io/weather-icons/
@@ -176,7 +178,7 @@ export class Weather {
     return locationData
       .then(data => Weather.urlBuilder(data))
       .then((url: string) => {
-        return <Promise<ResponseData>>requestPromise(url, 0, 0);
+        return <Promise<ResponseData>>requestPromise(url, 0, weatherBackupDuration);
       })
       .then((data: ResponseData) => Weather.validate(data))
       .then((data: ResponseData): WeatherData => this.parse(data))
@@ -186,8 +188,12 @@ export class Weather {
 
 export const weather = new Weather();
 
-export function load(): void {
+function refresh(): void {
   weather.load(location.getLocation())
     .catch(error => { getRollbar().error(error); });
-  setInterval(load, weatherRefreshInterval);
+}
+
+export function load(): void {
+  refresh();
+  setInterval(refresh, weatherRefreshInterval);
 }

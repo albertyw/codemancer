@@ -2,7 +2,11 @@ import {expect} from 'chai';
 import sinon from 'sinon';
 
 import getRollbar from '../codemancer/js/rollbar.js';
-import { Weather } from '../codemancer/js/weather.js';
+import {
+  load,
+  Weather,
+  weather,
+} from '../codemancer/js/weather.js';
 
 const weatherFixture = {
   current: {
@@ -80,6 +84,21 @@ describe('Weather.conditionIcon', () => {
       expect(this.weather.conditionIcon(code)).to.not.equal('', `code ${code}`);
     }
     expect(this.rollbarError.callCount).to.equal(0);
+  });
+});
+
+describe('load', () => {
+  it('refreshes once per interval', () => {
+    const clock = sinon.useFakeTimers();
+    const weatherLoad = sinon.stub(weather, 'load').resolves();
+    try {
+      load();
+      clock.tick(3 * 20 * 60 * 1000);
+      expect(weatherLoad.callCount).to.equal(4);
+    } finally {
+      weatherLoad.restore();
+      clock.restore();
+    }
   });
 });
 

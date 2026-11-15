@@ -5,6 +5,7 @@ import axios from 'axios';
 import {Client} from '@googlemaps/google-maps-services-js';
 
 import getRollbar from '../codemancer/js/rollbar.js';
+import Storage from '../codemancer/js/storage.js';
 // Keep webpack out of loadHandlers (only wired up when ENV === development).
 process.env.ENV = 'production';
 import {loadHandlers, loadTemplateVars} from '../server/handlers.js';
@@ -102,7 +103,10 @@ describe('handlers', function() {
 
   describe('airquality handler', function() {
     let axiosGet: sinon.SinonStub;
-    afterEach(function() { axiosGet.restore(); });
+    afterEach(function() {
+      axiosGet.restore();
+      Storage.clear();
+    });
     it('returns the air quality data on success', async function() {
       axiosGet = sinon.stub(axios, 'get').resolves({data: {aqi: 42}});
       const {res, done} = makeResponse();
@@ -122,7 +126,10 @@ describe('handlers', function() {
 
   describe('weather handler', function() {
     let axiosGet: sinon.SinonStub;
-    afterEach(function() { axiosGet.restore(); });
+    afterEach(function() {
+      axiosGet.restore();
+      Storage.clear();
+    });
     it('returns the weather data on success', async function() {
       axiosGet = sinon.stub(axios, 'get').resolves({data: {temperature: 53}});
       const {res, done} = makeResponse();
